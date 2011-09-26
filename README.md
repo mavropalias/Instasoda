@@ -50,22 +50,22 @@ Install required software
 
 1. **NodeJS (v4.9)**
 
-	sudo apt-get install g++ curl libssl-dev apache2-utils
-	git clone git://github.com/joyent/node.git
-	git checkout v.04.12
-	./configure
-	make
-	sudo make install
+		sudo apt-get install g++ curl libssl-dev apache2-utils
+		git clone git://github.com/joyent/node.git
+		git checkout v.04.12
+		./configure
+		make
+		sudo make install
 	
 2. **NodeJS Package Manager (NPM)**
 
-	git clone https://github.com/isaacs/npm.git
-	cd npm
-	sudo make install
+		git clone https://github.com/isaacs/npm.git
+		cd npm
+		sudo make install
 
 3. **ExpressJS**
 
-	npm install -g express	
+		npm install -g express	
 	
 4. **MongoDB (v2.0.0)**
 
@@ -92,7 +92,7 @@ Install required software
 
 5. **Mongoose (MongoDB ORM for NodeJS)**
 
-	npm install mongoose
+		npm install mongoose
 	
 	
 	
