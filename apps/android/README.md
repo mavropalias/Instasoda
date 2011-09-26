@@ -1,6 +1,5 @@
-============================
-== Instasoda/apps/android ==
-============================
+Instasoda/apps/android
+======================
 
 Code repository for the Android app.
 
@@ -10,4 +9,4 @@ It can be easily compiled via Eclipse using the Android SDK's and Phonegap's plu
 
 The files for Instasoda's mobile site must be copied into android/assets/www
 
-//TODO add compilation guidelines.
+### TODO: add compilation guidelines.

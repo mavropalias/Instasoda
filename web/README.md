@@ -1,13 +1,10 @@
-===================
-== Instasoda/web ==
-===================
+Instasoda/web
+=============
 
 This is the main code repo of the project (public website, API, mobile website/app).
 
-/api
-----
+### /api
 Instasoda's API
 
-/m
---
+### /m
 Mobile version of instasoda. The files that reside there use /api to interact with the server.
