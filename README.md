@@ -28,15 +28,15 @@ Getting the code
 Git tips
 ========
 
-#### Add all new files to the repo:
+**Add all new files to the repo:**
 	
 	git add .
 
-#### Add a specific file to the repo (newfile.js in the /web folder):
+**Add a specific file to the repo (newfile.js in the /web folder):**
 	
 	git add web/\newfile.js
 	
-#### Delete files from the repo, which have been deleted locally:
+**Delete files from the repo, which have been deleted locally:**
 	
 	git add . -A 
 	git commit -m "removed some files"
