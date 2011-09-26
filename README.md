@@ -48,7 +48,8 @@ Git tips
 Install required software
 =========================
 
-### NodeJS (v4.9)
+1. **NodeJS (v4.9)**
+
 	sudo apt-get install g++ curl libssl-dev apache2-utils
 	git clone git://github.com/joyent/node.git
 	git checkout v.04.12
@@ -56,32 +57,41 @@ Install required software
 	make
 	sudo make install
 	
-### NodeJS Package Manager (NPM)
+2. **NodeJS Package Manager (NPM)**
+
 	git clone https://github.com/isaacs/npm.git
 	cd npm
 	sudo make install
 
-### ExpressJS
+3. **ExpressJS**
+
 	npm install -g express	
 	
-### MongoDB (v2.0.0)
+4. **MongoDB (v2.0.0)**
+
 64-bit (recommended):
+
 	curl http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.0.0.tgz > mongo.tgz
 
 32-bit:
+
 	curl http://downloads.mongodb.org/linux/mongodb-linux-i686-2.0.0.tgz > mongo.tgz
 
 and then:
+
 	tar xzf mongo.tgz
 
 By default MongoDB will store data in /data/db, but it won't automatically create that directory. To create it, do:
+
 	sudo mkdir -p /data/db/
 	sudo chown `id -u` /data/db
 
 Run and connect to the server (replace 'x86_64' with 'i686' for 32-bit):
+
 	./mongodb-linux-x86_64-2.0.0/bin/mongod
 
-### Mongoose (MongoDB ORM for NodeJS)
+5. **Mongoose (MongoDB ORM for NodeJS)**
+
 	npm install mongoose
 	
 	
