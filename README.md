@@ -48,7 +48,7 @@ Git tips
 Install required software
 =========================
 
-1. **NodeJS (v4.9)**
+1. **NodeJS (v4.12)**
 
 		sudo apt-get install g++ curl libssl-dev apache2-utils
 		git clone git://github.com/joyent/node.git
