@@ -25,7 +25,7 @@ git pull origin master
 
 	< do some coding >
 
-git commit -am "my changes"
+git commit -m "my changes"
 git push origin master
 
 
@@ -42,3 +42,7 @@ git push origin master
 * Delete files from the repo, after they've been deleted locally:
 	git add . -A 
 	git commit -m "removed some files"
+	
+	OR (in a single line):
+	
+	git commit -am "my changes, including deleted files"
