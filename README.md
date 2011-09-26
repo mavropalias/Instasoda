@@ -30,17 +30,17 @@ Git tips
 
 1. **Add all new files to the repo:**
 	
-	git add .
+		git add .
 
 2. **Add a specific file to the repo (newfile.js in the /web folder):**
 	
-	git add web/\newfile.js
+		git add web/\newfile.js
 	
 3. **Delete files from the repo, which have been deleted locally:**
 	
-	git add . -A 
-	git commit -m "removed some files"
+		git add . -A 
+		git commit -m "removed some files"
 	
 OR (in a single line):
 	
-	git commit -am "my changes, including deleted files"
+		git commit -am "my changes, including deleted files"
