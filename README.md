@@ -67,13 +67,17 @@ Install required software
 ### MongoDB (v2.0.0)
 64-bit (recommended):
 	curl http://downloads.mongodb.org/linux/mongodb-linux-x86_64-2.0.0.tgz > mongo.tgz
+
 32-bit:
 	curl http://downloads.mongodb.org/linux/mongodb-linux-i686-2.0.0.tgz > mongo.tgz
+
 and then:
 	tar xzf mongo.tgz
+
 By default MongoDB will store data in /data/db, but it won't automatically create that directory. To create it, do:
 	sudo mkdir -p /data/db/
 	sudo chown `id -u` /data/db
+
 Run and connect to the server (replace 'x86_64' with 'i686' for 32-bit):
 	./mongodb-linux-x86_64-2.0.0/bin/mongod
 
