@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Instasoda</title>
+
+<link rel="stylesheet" href="scripts/jqueryMobile/jquery.mobile.min.css" />
+<style>
+
+
+</style>
+
+<!-- Scripts -->
+<script>
+	//Loading JS in maximum warp - SPEEEEEEEEEEEEED
+	(function(global, oDOC, handler) {
+		var head = oDOC.head || oDOC.getElementsByTagName("head");
+
+		function LABjsLoaded() {
+			//Spam the user with external scripts
+			$LAB
+			//Load -> PHONEGAP
+			.script("scripts/phonegap.js").wait()
+			//Load -> JQUERY
+			.script("scripts/jquery-1.6.2.js").wait()
+			//Load -> JQUERY MOBILE
+			.script("scripts/jqueryMobile/jquery.mobile.js").wait()
+			//Run -> MY CODE
+			.wait(function() {
+
+			})
+		}
+
+		//load LABjs asyncrh ... asychroo ... asyncr ... asychrounosly ... IN ASYNC MODE!
+		setTimeout(
+				function() {
+					if ("item" in head) { // check if ref is still a live node list
+						if (!head[0]) { // append_to node not yet ready
+							setTimeout(arguments.callee, 25);
+							return;
+						}
+						head = head[0]; // reassign from live node list ref to pure node ref -- avoids nasty IE bug where changes to DOM invalidate live node lists
+					}
+					var scriptElem = oDOC.createElement("script"), scriptdone = false;
+					scriptElem.onload = scriptElem.onreadystatechange = function() {
+						if ((scriptElem.readyState
+								&& scriptElem.readyState !== "complete" && scriptElem.readyState !== "loaded")
+								|| scriptdone) {
+							return false;
+						}
+						scriptElem.onload = scriptElem.onreadystatechange = null;
+						scriptdone = true;
+						LABjsLoaded();
+					};
+					scriptElem.src = "scripts/LAB.min.js";
+					head.insertBefore(scriptElem, head.firstChild);
+				}, 0);
+	})(window, document);
+</script>
+-->
+</head>
+<body>
+	<!--  ******************************************* -->
+	<!--  *** DASHBOARD *** -->
+	<!--  ******************************************* -->
+	<div data-role="page" id="dashboard" class="page">
+		<div data-role="header" data-position="fixed">
+			<h1>instasoda</h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<p>Dashboard</p>
+		</div>
+		<!-- /content -->
+
+		<a data-role="footer" data-position="fixed" href="#notifications" data-transition="slideup">
+			<h4>Notifications</h4>
+		</a>
+		<!-- /footer -->
+	</div>
+	
+	
+	<!--  ******************************************* -->
+	<!--  *** NOTIFICATIONS *** -->
+	<!--  ******************************************* -->
+	<div data-role="page" id="notifications" class="page" data-position="fixed">
+		<a data-role="header" data-position="fixed" href="#dashboard" data-transition="slidedown">
+			<h1>Notifications</h1>
+		</a>
+
+		<div data-role="content">
+			<p>Kostas send you a message.</p>
+		</div>
+		
+	</div>
+
+
+
+</body>
+</html>

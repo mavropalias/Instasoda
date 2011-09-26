@@ -1,0 +1,108 @@
+/* 
+    Document   : style
+    Created on : 19-Apr-2011, 10:40:52
+    Author     : Kostas
+    Description:
+        Main CSS file.
+*/
+body{
+  padding: 0;
+  margin: 0;
+  font-family: tahoma;
+  font-size: 12px;
+  background: #000;
+}
+#instasoda{
+  z-index: 10;
+  background-color: #000;
+  background: rgba(0,0,0,0.8);
+  width: 480px;
+  height: 480px;
+  position: absolute;
+  top: 0;
+  left: 160px;
+  
+  box-shadow:0 0 20px 5px #000;
+}
+#instasoda_logo{
+  position: relative;
+  top:80px;
+}
+#register{
+  background: url(images/homebar.png) transparent;
+  width: 460px;
+  height: 80px;
+  position: asbsolute;
+  top: 240px;
+  text-align: center;
+}
+#log{
+  width: 300px;
+  height: 200px;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-family: monospace;
+  background: #333;
+  color: #0f0;
+  padding: 10px;
+  font-size: 11px;
+  z-index: 999;
+  display: none;
+}
+#boxes{
+  position: fixed;
+}
+.row{
+  position: fixed;
+  overflow: visible;
+  height:80px
+}
+.box{
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  overflow: hidden;
+  float: left;
+  background: #eee;
+  z-index:1;
+}
+  
+#tooltip{
+  display: none;
+  height: 80px;
+  width: 161px;
+  background: transparent none;
+  z-index: 2;
+  position: fixed;
+  padding-left:79px;
+  cursor: default;
+  border: 1px solid #09f;
+  
+  box-shadow: 0 0 40px -5px #000;
+  pointer-events: none;
+}
+#tooltip #tipContent{
+  background: #000;
+  padding: 5px;
+  height: 70px;
+  width: 151px;
+}
+#tooltip .name{
+  color: #fff;
+  font-weight: bold;
+  display: block;
+}
+#tooltip .details{
+  color: #09f;
+  font-weight: bold;
+  display: block;
+  font-size: 10px;
+}
+#tooltip .desc{
+  color: #eee;
+  display: block;
+  font-size: 11px;
+  line-height: 11px;
+}
+

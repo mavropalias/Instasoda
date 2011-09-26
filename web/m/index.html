@@ -1,0 +1,245 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Instasoda</title>
+
+<link rel="stylesheet" href="scripts/jqueryMobile/jquery.mobile.min.css" />
+<style>
+html,body {
+	/*width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;*/
+	background-image: url(images/bg.png);
+	background: url(images/bg.png) top left no-repeat scroll #000;
+}
+
+.ui-body-c {
+	background: #000;
+	background-image: none;
+	background: none transparent;
+	border: 0 transparent;
+	color: #fff;
+	text-shadow: 1px 1px #000;
+}
+
+/* SKING OVERRIDES */
+.page {
+	text-align: center;
+	background: #000;
+	background-image: none;
+	background: none transparent;
+	border: 0 transparent;
+	color: #fff;
+	text-shadow: 1px 1px #000;
+	/*width: 100%;
+	height: 100%;*/
+}
+
+/* WELCOME PAGE */
+#welcomeContent {
+	overflow: hidden;
+	padding: 15px;
+}
+
+.logo {
+	background: url(images/logo.png) top left no-repeat;
+	width: 206px;
+	height: 65px;
+	margin: 40px auto 0;
+}
+
+.message {
+	margin: 40px 0;
+}
+
+.action {
+	background: url(images/button_start.png) top left no-repeat;
+	width: 304px;
+	height: 105px;
+	margin: 40px auto 0;
+	display: none;
+}
+
+.action_facebook {
+	background: url(images/button_facebookAuth.png) top left no-repeat;
+	width: 166px;
+	height: 34px;
+	margin: 40px auto 0;
+}
+</style>
+
+<!-- Scripts -->
+<script type="text/javascript">
+	document.addEventListener("deviceready", function() {
+		//initialized
+	}, true);
+	
+	function doFacebookAuth(){
+		var appId = 159444727449256; // facebook app id
+
+		window.plugins.facebook.setPermissions(["user_relationships","user_birthday"]);
+		window.plugins.facebook.authorize(appId, function(res) {
+			if (res.token !== undefined) {
+				alert("Hello " + res.name);// we have a token, save it (user has authenticated before)
+			} else {
+				// we have to call authorize
+				window.plugins.facebook.getAccess(function(res) {
+					if (res.token !== undefined) {
+						// we got a token (user has authenticated
+						//                 just in that moment)
+						//$('#fbConnect .message').html(dump(res));
+						window.plugins.facebook.request("me" ,function(res){
+					        //alert("Hello "+res.name);
+							$.mobile.changePage('#dashboard');
+					    });
+					} else {
+						alert("error :(");
+					}
+				});
+			}
+		});
+	}
+</script>
+ 
+    <script>
+      //Loading JS in maximum warp - SPEEEEEEEEEEEEED
+      (function (global, oDOC, handler) {
+          var head = oDOC.head || oDOC.getElementsByTagName("head");
+
+          function LABjsLoaded() {
+            //Spam the user with external scripts
+            $LAB
+            //Load -> JQUERY
+              .script("scripts/jquery-1.6.2.js").wait()
+            //Load -> JQUERY MOBILE
+              .script("scripts/jqueryMobile/jquery.mobile.js").wait()
+            //Run -> MY CODE
+              .wait(function(){
+          		$('.action').fadeIn("slow");
+
+        		$('.action_facebook').click(function() {
+        			//doFacebookAuth();
+              window.location.href = "dashboard.html";
+        		});
+              })
+          }
+
+          //load LABjs asyncrh ... asychroo ... asyncr ... asychrounosly ... IN ASYNC MODE!
+          setTimeout(function () {
+              if ("item" in head) { // check if ref is still a live node list
+                  if (!head[0]) { // append_to node not yet ready
+                      setTimeout(arguments.callee, 25);
+                      return;
+                  }
+                  head = head[0]; // reassign from live node list ref to pure node ref -- avoids nasty IE bug where changes to DOM invalidate live node lists
+              }
+              var scriptElem = oDOC.createElement("script"),
+                  scriptdone = false;
+              scriptElem.onload = scriptElem.onreadystatechange = function () {
+                  if ((scriptElem.readyState && scriptElem.readyState !== "complete" && scriptElem.readyState !== "loaded") || scriptdone) {
+                      return false;
+                  }
+                  scriptElem.onload = scriptElem.onreadystatechange = null;
+                  scriptdone = true;
+                  LABjsLoaded();
+              };
+              scriptElem.src = "scripts/LAB.min.js";
+              head.insertBefore(scriptElem, head.firstChild);
+          }, 0);
+      })(window, document);
+            
+      function dump(arr,level) {
+    	  var dumped_text = "";
+    	  if(!level) level = 0;
+
+    	  //The padding given at the beginning of the line.
+    	  var level_padding = "";
+    	  for(var j=0;j<level+1;j++) level_padding += "    ";
+
+    	  if(typeof(arr) == 'object') { //Array/Hashes/Objects
+    	   for(var item in arr) {
+    	    var value = arr[item];
+    	   
+    	    if(typeof(value) == 'object') { //If it is an array,
+    	     dumped_text += level_padding + "'" + item + "' ...\n";
+    	     dumped_text += dump(value,level+1);
+    	    } else {
+    	     dumped_text += level_padding + "'" + item + "' => \"" + value + "\"\n";
+    	    }
+    	   }
+    	  } else { //Stings/Chars/Numbers etc.
+    	   dumped_text = "===>"+arr+"<===("+typeof(arr)+")";
+    	  }
+    	  return dumped_text;
+   	  }     
+    </script>
+
+</head>
+<body>
+	<!--  ******************************************* -->
+	<!--  *** WELCOME *** -->
+	<!--  ******************************************* -->
+	<div data-role="page" id="welcome" class="page">
+		<div data-role="content" id="welcomeContent">
+			<div class="logo"></div>
+			<div class="message">An easy & smart dating platform built on a	powerful social engine, based on academic research.</div>
+			<div class="action"
+				onclick="javascript:$.mobile.changePage('#fbConnect');"></div>
+		</div>
+	</div>
+
+
+	<!--  ******************************************* -->
+	<!--  *** CONNECT WITH FACEBOOK *** -->
+	<!--  ******************************************* -->
+	<div data-role="page" id="fbConnect">
+		<div data-role="content">
+			<div class="logo"></div>
+			<div class="message">You probably have typed your personal details a
+				thousand times elsewhere, and we will not let you do it
+				again.</div>
+			<div class="action_facebook"></div>
+			<div class="message">Your Facebook info will only be used to set your age and relationship status in Instasoda and to log you in. Your real name will NOT be used.</div>
+		</div>
+	</div>
+	
+	
+	<!--  ******************************************* -->
+	<!--  *** DASHBOARD *** -->
+	<!--  ******************************************* -->
+	<div data-role="page" id="dashboard" class="page">
+		<div data-role="header" data-position="fixed">
+			<h1>instasoda</h1>
+		</div>
+		<!-- /header -->
+
+		<div data-role="content">
+			<p>Dashboard</p>
+		</div>
+		<!-- /content -->
+
+		<a data-role="footer" data-position="fixed" href="#notifications" data-transition="slideup">
+			<h4>Notifications</h4>
+		</a>
+		<!-- /footer -->
+	</div>
+	
+	
+	<!--  ******************************************* -->
+	<!--  *** NOTIFICATIONS *** -->
+	<!--  ******************************************* -->
+	<div data-role="page" id="notifications" class="page" data-position="fixed">
+		<a data-role="header" data-position="fixed" href="#dashboard" data-transition="slidedown">
+			<h1>Notifications</h1>
+		</a>
+
+		<div data-role="content">
+			<p>Kostas send you a message.</p>
+		</div>
+		
+	</div>
+
+
+</body>
+</html>
