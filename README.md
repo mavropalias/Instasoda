@@ -41,6 +41,6 @@ Git tips
 		git add . -A 
 		git commit -m "removed some files"
 	
-OR (in a single line):
+	OR (in a single line):
 	
 		git commit -am "my changes, including deleted files"
