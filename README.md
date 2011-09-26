@@ -61,7 +61,8 @@ Install required software
 	cd npm
 	sudo make install
 
-### NodeJS Package Manager (NPM)
+### ExpressJS
+	npm install -g express	
 	
 ### MongoDB (v2.0.0)
 64-bit (recommended):
