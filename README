@@ -39,7 +39,7 @@ git push origin master
 * Add a specific file to the repo (newfile.js in the /web folder):
 	git add web/\newfile.js
 	
-* Delete files from the repo, after they've been deleted locally:
+* Delete files from the repo, which have been deleted locally:
 	git add . -A 
 	git commit -m "removed some files"
 	
