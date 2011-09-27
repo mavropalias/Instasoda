@@ -64,7 +64,7 @@ Install required software
 		cd npm
 		sudo make install
 
-3. **Journey (JSON-only HTTP request routing for node)**
+3. **Journey (API router for NodeJS)**
 
 		npm install journey
 	

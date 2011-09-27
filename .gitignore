@@ -3,9 +3,10 @@
 *.project
 *.buildpath
 
-# Logs and databases #
-######################
+# Logs and temp files #
+#######################
 *.log
+temp.*
 
 # OS generated files #
 ######################
