@@ -52,20 +52,21 @@ Install required software
 
 		sudo apt-get install g++ curl libssl-dev apache2-utils
 		git clone git://github.com/joyent/node.git
+		cd node
 		git checkout v.04.12
 		./configure
 		make
 		sudo make install
 	
-2. **NodeJS Package Manager (NPM)**
+2. **NPM (NodeJS Package Manager)**
 
 		git clone https://github.com/isaacs/npm.git
 		cd npm
 		sudo make install
 
-3. **ExpressJS**
+3. **Journey (JSON-only HTTP request routing for node)**
 
-		npm install -g express	
+		npm install journey
 	
 4. **MongoDB (v2.0.0)**
 
@@ -90,7 +91,7 @@ Install required software
 	
 		./mongodb-linux-x86_64-2.0.0/bin/mongod
 
-5. **Mongoose (MongoDB ORM for NodeJS)**
+5. **Mongoose (MongoDB DRM for NodeJS)**
 
 		npm install mongoose
 	
