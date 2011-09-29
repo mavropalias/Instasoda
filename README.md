@@ -1,14 +1,17 @@
 Instasoda
 =========
 
+### /api
+The API code repo of instasoda.
+
 ### /apps
-Code repository for our phone & tablets apps.
+Code repo for our phone & tablets apps.
 
 ### /instalabs
 A place to experiment with new features, mockups and ideas and showcase them to the rest of the team.
 
 ### /web
-Code repository for the main website, mobile website and API. This is where the magic happens!
+Code repo for the main + mobile website.
 
 
 Getting the code
