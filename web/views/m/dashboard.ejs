@@ -3,7 +3,7 @@
 <head>
 <title>Instasoda</title>
 
-<link rel="stylesheet" href="scripts/jqueryMobile/jquery.mobile.min.css" />
+<link rel="stylesheet" href="/mobile/scripts/jqueryMobile/jquery.mobile.min.css" />
 <style>
 
 
@@ -19,11 +19,11 @@
 			//Spam the user with external scripts
 			$LAB
 			//Load -> PHONEGAP
-			.script("scripts/phonegap.js").wait()
+			.script("/mobile/scripts/phonegap.js").wait()
 			//Load -> JQUERY
-			.script("scripts/jquery-1.6.2.js").wait()
+			.script("/mobile/scripts/jquery-1.6.2.js").wait()
 			//Load -> JQUERY MOBILE
-			.script("scripts/jqueryMobile/jquery.mobile.js").wait()
+			.script("/mobile/scripts/jqueryMobile/jquery.mobile.js").wait()
 			//Run -> MY CODE
 			.wait(function() {
 
@@ -51,7 +51,7 @@
 						scriptdone = true;
 						LABjsLoaded();
 					};
-					scriptElem.src = "scripts/LAB.min.js";
+					scriptElem.src = "/mobile/scripts/LAB.min.js";
 					head.insertBefore(scriptElem, head.firstChild);
 				}, 0);
 	})(window, document);

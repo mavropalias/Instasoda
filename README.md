@@ -67,8 +67,13 @@ Install required software
 3. **Journey (API router for NodeJS)**
 
 		npm install journey
+		
+4. **Express (NodeJS MCV framework + EJS template engine)**
+
+		sudo npm install -g express
+		npm install ejs
 	
-4. **MongoDB (v2.0.0)**
+5. **MongoDB (v2.0.0)**
 
 	64-bit (recommended):
 	
@@ -91,7 +96,7 @@ Install required software
 	
 		./mongodb-linux-x86_64-2.0.0/bin/mongod
 
-5. **Mongoose (MongoDB DRM for NodeJS)**
+6. **Mongoose (MongoDB DRM for NodeJS)**
 
 		npm install mongoose
 	
