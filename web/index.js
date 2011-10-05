@@ -38,7 +38,7 @@ app.get('/', function(req, res) {
 		title : 'Express'
 	});
 });
-app.get('/m/', function(req, res) {
+app.get('/m', function(req, res) {
 	res.render('m/index', {
 		title : 'Express'
 	});
