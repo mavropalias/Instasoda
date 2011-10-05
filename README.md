@@ -102,6 +102,11 @@ Install required software
 6. **Mongoose (MongoDB DRM for NodeJS)**
 
 		npm install mongoose
+		
+7. **Forever (NodeJS server process management)**
+
+		sudo npm install forever -g
+	
 	
 	
 	

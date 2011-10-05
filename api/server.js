@@ -21,8 +21,8 @@ function start(router) {
 		var pathname = url.parse(request.url).pathname;
 		console.log("Request for " + pathname + " received.");
 
-	}).listen(8000);
-	console.log("Server has started at 8000.");
+	}).listen(1337);
+	console.log("== SUCCESS: API server has started at port 1337.  ==");
 }
 
 exports.start = start;

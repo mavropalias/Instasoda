@@ -50,5 +50,7 @@ app.get('/m/dashboard', function(req, res) {
 });
 
 app.listen(80);
-console.log("Express server listening on port %d in %s mode",
+console.log("==         INSTASODA activation sequence          ==")
+console.log("== SUCCESS: Web server started                    ==");
+console.log("==          port: %d, mode: %s           ==",
 		app.address().port, app.settings.env);
