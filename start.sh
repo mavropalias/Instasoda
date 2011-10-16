@@ -7,6 +7,7 @@ echo "==         INSTASODA activation sequence          =="
 echo "===================================================="
 echo "==  Activating Instasoda website and API service  =="
 echo "===================================================="
+sudo start mongodb
 forever stopall
 forever start api/index.js
 forever start web/index.js
