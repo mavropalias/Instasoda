@@ -1,8 +1,18 @@
-//
-// GET /ping:
-// * Responds with 200
-// * Responds with `{ pong: true }`
-//
+/**
+ * Load Node modules
+ */
+var journey = require('journey');
+var mongoose = require('mongoose');
+
+/**
+ * Connect to the database
+ */
+mongoose.connect('mongodb://localhost/instasoda');
+
+/**
+ * GET /ping:
+ * @return {Object} 200 `{ pong: true }`
+ */
 function ping(res){
 	res.send(200, {}, {
 		pong : true
@@ -10,4 +20,4 @@ function ping(res){
 }
 
 
-exports.ping = ping;
+exports.ping = ping; 
