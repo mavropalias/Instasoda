@@ -1,21 +1,37 @@
-// load Node modules
+/**
+ * Load Node modules
+ */
 var journey = require('journey');
+var mongoose = require('mongoose');
 
-// load Instasoda files
+/**
+ * Load Instasoda files
+ */
 var server = require("./server");
 var routes = require("./routes");
 
-//Create a Journey router
-var token, router = new journey.Router({
+/**
+ * Create a Journey router
+ */
+var router = new journey.Router({
 	strict : false,
 	strictUrls : false,
 	api : 'basic'
 });
 
-//Create the routing table
+/**
+ * Create the routing table
+ */
 router.map(function () {
 	this.get('/ping').bind(routes.ping);
 });
 
-// start the server
+/**
+ * Load fixtures (default data) into the database
+ */
+var fixtures = require("./fixtures");
+
+/**
+ * start the server
+ */
 server.start(router);
