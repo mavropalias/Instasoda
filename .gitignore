@@ -2,6 +2,7 @@
 #################
 *.project
 *.buildpath
+*.komodoproject
 
 # Logs and temp files #
 #######################
