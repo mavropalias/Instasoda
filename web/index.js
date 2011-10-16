@@ -1,13 +1,12 @@
 /**
  * Module dependencies.
  */
-
 var express = require('express');
-
 var app = module.exports = express.createServer();
 
-// Configuration
-
+/**
+ * Configuration
+ */
 app.configure(function() {
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'ejs');
@@ -20,6 +19,7 @@ app.configure(function() {
 	app.use(express.static(__dirname + '/public'));
 });
 
+// settings for dev environment
 app.configure('development', function() {
 	app.use(express.errorHandler({
 		dumpExceptions : true,
@@ -27,12 +27,14 @@ app.configure('development', function() {
 	}));
 });
 
+// settings for production environment
 app.configure('production', function() {
 	app.use(express.errorHandler());
 });
 
-// Routes
-
+/**
+ * Routes
+ */
 app.get('/', function(req, res) {
 	res.render('index', {
 		title : 'Express'
@@ -49,6 +51,9 @@ app.get('/m/dashboard', function(req, res) {
 	});
 });
 
+/**
+ * Run server
+ */
 app.listen(80);
 console.log("==         INSTASODA activation sequence          ==")
 console.log("== SUCCESS: Web server started                    ==");
