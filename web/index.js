@@ -50,9 +50,6 @@ app.get('/m/dashboard', function(req, res) {
 		title : 'Express'
 	});
 });
-app.get('/github_update', function(req, res) {
-
-});
 
 
 /**
