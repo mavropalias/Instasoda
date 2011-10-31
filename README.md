@@ -66,27 +66,23 @@ Install required software
 		git clone https://github.com/isaacs/npm.git
 		cd npm
 		sudo make install
-
-3. **Journey (API router for NodeJS)**
-
-		npm install journey
 		
-4. **Express (NodeJS MCV framework + EJS template engine)**
+3. **Express (NodeJS MCV framework + EJS template engine)**
 
 		sudo npm install -g express
 		npm install ejs
 	
-5. **MongoDB (v2.0.0)**
+4. **MongoDB (v2.0.0)**
 
 	Install your distro's package following the guidelines provided here:
 	
 		http://www.mongodb.org/downloads#packages
 
-6. **Mongoose (MongoDB ODM for NodeJS)**
+5. **Mongoose (MongoDB ODM for NodeJS)**
 
 		npm install mongoose
 		
-7. **Forever (NodeJS server process management)**
+6. **Forever (NodeJS server process management)**
 
 		sudo npm install forever -g
 	
