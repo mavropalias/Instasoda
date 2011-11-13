@@ -55,19 +55,18 @@ body {font-family: helvetica, arial, sans-serif;}
 /*
  *  Dashboard page styles
  */
-#dashboard-body {background: url(../img/textures/texture_B.jpg) repeat;}
+#dashboard-body {background: url(../img/textures/texture_A.png) repeat ;}
 #dashboard-header {height: 40px; line-height: 0.5em; background: linear-gradient(rgba(204, 204, 204, 0.25), rgba(0, 0, 0, 0.25)), url(../img/textures/texture_C.jpg) top left repeat; border: none; -webkit-box-shadow: 0 20px 50px black; -moz-box-shadow: 0 20px 50px black; box-shadow: 0 20px 50px black;}
 #dashboard-header .ui-grid-b {height: 40px; line-height: 40px; margin:0; margin-bottom: 20px; }
 #dashboard-header .ui-block-b {font-family: Trebuchet MS; font-size: 25px;}
 #dashboard-header .ui-block-b a {color: white; text-decoration: none;}
 #dashboard-header img {padding-top: 10px;}
-#dashboard-menu {padding-top: 20px; padding-bottom: 20px;}
+#dashboard-menu {padding-top: 20px; padding-bottom: 20px; background: url("../img/textures/texture_B.jpg") repeat}
 #dashboard-menu img, #dashboard-header img {border: none!important;}
 #dashboard-menu a {color: white; text-shadow: none; text-decoration: none;}
 #dashboard-faces {padding-top: 20px; padding-bottom: 20px; background: url(../img/textures/texture_A.png) repeat;}
-#dashboard-footer {height: 40px; line-height: 0.5em; background: linear-gradient(rgba(204, 204, 204, 0.25), rgba(0, 0, 0, 0.25)), url(../img/textures/texture_C.jpg) top left repeat; border: none; -webkit-box-shadow: 0px -10px 20px 0px #999; -moz-box-shadow: 0px -10px 20px 0px #999; box-shadow: 0px -10px 20px 0px #999;}
-#dashboard-footer .ui-grid-b {margin-top: 20px; height: 40px; line-height: 40px; margin:0;}
-#dashboard-footer .ui-block-a {font-family: Trebuchet MS; font-size: 15px; margin: 0 auto; width: 100%;}
+.ui-footer {-webkit-box-shadow: 0px -10px 20px 0px #999; -moz-box-shadow: 0px -10px 20px 0px #999; box-shadow: 0px -10px 20px 0px #999;}
+.ui-footer .ui-title, .ui-body-c .ui-link, .ui-body-c .ui-link:hover {color: white; text-decoration: none;}
 
 /*
  *  Activity page styles
