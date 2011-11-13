@@ -9,7 +9,7 @@
     <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
   </head>
   <body>
-    <div data-role="page" data-title="Instasoda" id="activity-body">
+    <div data-role="page" data-title="Instasoda" id="activity-body" class="page">
       <!-- 'Header' ~> Logo area -->
       <div data-role="header" id="activity-header">
         <div class="ui-grid-b">
@@ -101,7 +101,23 @@
             </div>
           </li>            
         </ul>
-      </div>      
+      </div> 
+      <a data-role="footer" data-position="fixed" href="#notifications" data-transition="slideup">
+			 <h4>Notifications</h4>
+		  </a>             
     </div>
+    
+  	<!--  ******************************************* -->
+  	<!--  *** NOTIFICATIONS *** -->
+  	<!--  ******************************************* -->
+  	<div data-role="page" id="notifications" class="page" data-position="fixed">
+  		<a data-role="header" data-position="fixed" href="#activity-body" data-transition="slidedown">
+  			<h1>Notifications</h1>
+  		</a>  
+  		<div data-role="content">
+  			<p>Kostas send you a message.</p>
+  		</div>  		
+  	</div>      
+    
   </body>
 </html>

@@ -52,7 +52,7 @@
   	    
   </head>
   <body>
-    <div data-role="page" data-title="Instasoda" id="profile-body">
+    <div data-role="page" data-title="Instasoda" id="profile-body" class="page">
     
       <!-- 'Header' ~> Logo area -->
       <div data-role="header" id="profile-header">
@@ -203,6 +203,22 @@
           <div class="ui-block-c"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/6.png" alt /></a></div>
         </div><!-- /grid-b -->        
       </div>       
-    </div>
+      <a data-role="footer" data-position="fixed" href="#notifications" data-transition="slideup">
+			 <h4>Notifications</h4>
+		  </a>      
+    </div> 
+
+  	<!--  ******************************************* -->
+  	<!--  *** NOTIFICATIONS *** -->
+  	<!--  ******************************************* -->
+  	<div data-role="page" id="notifications" class="page" data-position="fixed">
+  		<a data-role="header" data-position="fixed" href="#profile-body" data-transition="slidedown">
+  			<h1>Notifications</h1>
+  		</a>  
+  		<div data-role="content">
+  			<p>Kostas send you a message.</p>
+  		</div>  		
+  	</div>             
+    
   </body>
 </html>
