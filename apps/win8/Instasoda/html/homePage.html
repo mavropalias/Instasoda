@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>homePage</title>
+    
+    <!-- WinJS references -->
+    <link rel="stylesheet" href="/winjs/css/ui-light.css" />
+    <script type="ms-deferred/javascript" src="/winjs/js/base.js"></script>
+    <script type="ms-deferred/javascript" src="/winjs/js/ui.js"></script>
+    <script type="ms-deferred/javascript" src="/winjs/js/binding.js"></script>
+    <script type="ms-deferred/javascript" src="/winjs/js/controls.js"></script>
+    <script type="ms-deferred/javascript" src="/winjs/js/animations.js"></script>
+    <script type="ms-deferred/javascript" src="/winjs/js/uicollections.js"></script>
+    <script type="ms-deferred/javascript" src="/winjs/js/wwaapp.js"></script>
+    
+    <link rel="stylesheet" href="/css/default.css" />
+    <link rel="stylesheet" href="/css/homePage.css" />
+    
+    <script type="ms-deferred/javascript" src="/js/jquery-1.7.1.min.js"></script>
+    <script type="ms-deferred/javascript" src="/js/instasoda.js"></script>
+    <script type="ms-deferred/javascript" src="/js/homePage.js"></script>
+</head>
+<body>
+    <!-- The content that will be loaded and displayed. -->
+        <div class="fragment homePage">
+            <header role="banner" aria-label="Header content">
+                <button disabled class="win-backbutton" aria-label="Back"></button>
+                <div class="titleArea">
+                    <h1 class="pageTitle win-title">Welcome to Instasoda!</h1><br />                
+                </div>
+            </header>
+            <section role="main" aria-label="Main content">
+                <h2>Create your Instasoda account</h2>
+            
+                <p>Instasoda will automatically create your dating profile, based on your Facebook account. We will <em>not</em> use your real name, or any other personal information (like email, employment, address, etc).</p>
+                <p>Please choose one of the following <strong>free</strong> packages (you can always upgrade or downgrade later):</p>
+
+                <div id="fbResponse"></div>
+
+                <ol>
+                    <li>
+                        <button id="register3">Complete (recommended)</button> - includes Basic & Standard
+                        <ul>
+                            <li>send you sms</li>
+                            <li>offline access</li>
+                            <li>your videos</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button id="register2">Standard</button> - includes Basic
+                        <ul>
+                            <li>activities</li>
+                            <li>education</li>
+                            <li>your stream</li>
+                            <li>your interests</li>
+                            <li>your likes</li>
+                            <li>photos</li>
+                        </ul>
+                    </li>
+                    <li>
+                        <button id="register1">Basic</button>
+                        <ul>
+                            <li>email</li>
+                            <li>relationship status</li>
+                            <li>location</li>
+                            <li>age</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
+  <Identity Name="0b6ab6de-0aa8-42e8-97fe-db3af2498d1b" Version="0.0.1.1" Publisher="CN=mavropalias" />
+  <Properties>
+    <DisplayName>Instasoda dating</DisplayName>
+    <Description>Instasoda</Description>
+    <PublisherDisplayName>mavropalias</PublisherDisplayName>
+    <Logo>images\storelogo.png</Logo>
+  </Properties>
+  <Prerequisites>
+    <OSMinVersion>6.2</OSMinVersion>
+    <OSMaxVersionTested>6.2</OSMaxVersionTested>
+  </Prerequisites>
+  <Resources>
+    <Resource Language="en-US" />
+  </Resources>
+  <Applications>
+    <Application Id="App" StartPage="default.html">
+      <VisualElements DisplayName="Instasoda dating" Logo="images\logo.png" SmallLogo="images\smalllogo.png" Description="Instasoda dating" ForegroundText="dark" BackgroundColor="#FFFFFF" InitialRotationPreference="portrait">
+        <LockScreen Notification="tileText" BadgeLogo="images\logo_badge.png" />
+        <DefaultTile WideLogo="images\logowide.png" ShortName="Instasoda" />
+        <SplashScreen Image="images\splashscreen.png" />
+      </VisualElements>
+      <ApplicationContentUriRules>
+        <Rule Match="http://instasoda.com" Type="include" />
+        <Rule Match="http://apps.instasoda.com/win8" Type="include" />
+        <Rule Match="http://win8.instasoda.com" Type="include" />
+        <Rule Match="https://instasoda.com" Type="include" />
+        <Rule Match="http://connect.facebook.net" Type="include" />
+        <Rule Match="https://connect.facebook.net" Type="include" />
+      </ApplicationContentUriRules>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+    <DeviceCapability Name="location" />
+  </Capabilities>
+</Package>
