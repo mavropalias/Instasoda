@@ -167,5 +167,23 @@ var IS = new function() {
 	    		return jActivity;
 	    	}
 	    }
+	    
+			/**
+			 * Returns an array of users.
+			 * @param (JSON)	options	Options to customise the user array
+			 * @param {Object}	[callback]
+			 * @return {Object}	
+			 */
+	    this.getUsers = function(iNumUsers, jOptions, sCallback) {
+	    	
+	    	//TODO
+	    	
+			
+	    	if (sCallback) {
+	    		sCallback(jUsers);
+	    	} else {
+	    		return jUsers;
+	    	}
+	    }
     
 }

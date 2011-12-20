@@ -1,37 +1,38 @@
-/**
- * Load Node modules
- */
-var journey = require('journey');
-var mongoose = require('mongoose');
 
 /**
- * Load Instasoda files
+ * Module dependencies.
  */
-var server = require("./server");
-var routes = require("./routes");
 
-/**
- * Create a Journey router
- */
-var router = new journey.Router({
-	strict : false,
-	strictUrls : false,
-	api : 'basic'
+var express = require('express');
+
+var app = module.exports = express.createServer();
+
+// Configuration
+
+app.configure(function(){
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'ejs');
+  app.use(express.bodyParser());
+  app.use(express.methodOverride());
+  app.use(app.router);
+  app.use(express.static(__dirname + '/public'));
 });
 
-/**
- * Create the routing table
- */
-router.map(function () {
-	this.get('/ping').bind(routes.ping);
+app.configure('development', function(){
+  app.use(express.errorHandler({ dumpExceptions: true, showStack: true })); 
 });
 
-/**
- * Load fixtures (default data) into the database
- */
-var fixtures = require("./fixtures");
+app.configure('production', function(){
+  app.use(express.errorHandler()); 
+});
 
-/**
- * start the server
- */
-server.start(router);
+// Routes
+
+app.get('/', function(req, res){
+  res.render('index', {
+    title: 'Express'
+	});
+});
+
+app.listen(1337);
+console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
