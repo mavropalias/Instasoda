@@ -5,115 +5,220 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=0" />
     <link rel="stylesheet" href="http://code.jquery.com/mobile/latest/jquery.mobile.min.css" />
     <link rel="stylesheet" href="css/instasoda.css" />
+    <link rel="stylesheet" href="css/photoswipe.css" />
+    <script src="js/klass.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
     <script src="http://code.jquery.com/mobile/latest/jquery.mobile.min.js"></script>
+    <script src="js/code.photoswipe.jquery-3.0.2.min.js"></script>
+    
+  	<script type="text/javascript">   		  		
+  		(function(window, Util, PhotoSwipe){  			
+  			Util.Events.domReady(function(e){  				
+  				var instance, indicators;  				
+  				instance = PhotoSwipe.attach(
+  					[
+  						{ url: 'img/profile/pic1.png', rel: 'external', caption: 'Image 001'},
+  						{ url: 'img/profile/pic2.jpg', caption: 'Image 002'},
+  						{ url: 'img/profile/pic3.jpg', caption: 'Image 003'},
+  						{ url: 'img/profile/pic4.jpg', caption: 'Image 004'},
+  						{ url: 'img/profile/pic5.jpg', caption: 'Image 005'}
+  					],
+  					{
+  						target: window.document.querySelectorAll('#profile-slider')[0],
+  						preventHide: true,
+  						captionAndToolbarHide: true,
+  						swipeThreshold: 10,
+  						getImageSource: function(obj){
+  							return obj.url;
+  						},
+  						getImageCaption: function(obj){
+  							return obj.caption;
+  						}
+  					}
+  				);  			  				
+  				indicators = window.document.querySelectorAll('#indicators span');  				
+  				// onDisplayImage - set the current indicator
+  				instance.addEventHandler(PhotoSwipe.EventTypes.onDisplayImage, function(e){  					
+  					var i, len;
+  					for (i=0, len=indicators.length; i<len; i++){
+  						indicators[i].setAttribute('class', '');
+  					}
+  					indicators[e.index].setAttribute('class', 'current');  					
+  				});  				
+  				instance.show(0);
+  			}); 			
+  		}(window, window.Code.Util, window.Code.PhotoSwipe));  	
+  	</script>    
+  	    
   </head>
   <body>
-    <div data-role="page" data-title="Instasoda" id="profile-body">
+    <div data-role="page" data-title="Instasoda" id="profile-body" class="page">
+    
       <!-- 'Header' ~> Logo area -->
       <div data-role="header" id="profile-header">
-        <div class="ui-grid-b">
-          <div class="ui-block-a"><a href="activity.html"><img src="img/menu/top-left.png" alt="" /></a></div>
+        <div class="ui-grid-b gradient-light-gray-to-dark-gray">
+          <div class="ui-block-a"><a href="dashboard.html"><img src="img/menu/top-left.png" alt="" /></a></div>
           <div class="ui-block-b"><a href="./">sarah84, 27</a></div>
-          <div class="ui-block-c"><img src="img/menu/top-right.png" alt="" /></div>
+          <div class="ui-block-c"><a href="activity.html"><img src="img/menu/top-right.png" alt="" /></a></div>
         </div><!-- /grid-b -->
       </div>   
-      <div id="profile-slider" class="box-shadow-lightgray">
-
-      </div>
+      
+      <div id="gallery-spacer"></div> 
+      <div id="profile-slider"> 
+        <div id="gallery"></div></div>
+      	<div id="indicators" class="box-shadow-lightgray">
+      		<span></span>
+      		<span></span>
+      		<span></span>
+      		<span></span>
+      		<span></span>
+      	</div>
+	      
       <div id="profile-info">  
         <div class="ui-grid-a">
           <div class="ui-block-a">
             <ul>
-              <li>27</li>
-              <li>Dublin</li>
-              <li>Single</li>
-              <li>Caucasian</li>
+              <li id="profile-age">27</li>
+              <li id="profile-location">Dublin</li>
+              <li id="profile-status">Single</li>
+              <li id="profile-generic">Caucasian</li>
             </ul>
           </div>
           <div class="ui-block-b">
             <ul>
-              <li>5'8" (173 cm)</li>
-              <li>Virgo</li>
-              <li>Occasionally</li>
-              <li>Non-religious</li>
+              <li id="profile-generic">5'8" (173 cm)</li>
+              <li id="profile-generic">Virgo</li>
+              <li id="profile-generic">Occasionally</li>
+              <li id="profile-generic">Non-religious</li>
             </ul>          
           </div><!-- /ui-block-b -->
         </div>
-        <div class="hr"></div>
-        <div id="profile-description">
-        I am secure & happy with myself,but…Life is meant for 2!! A little bit about myself: I enjoy travel, Comedy Clubs & Dinner, Theatre, music, my dogs, & celebrating special occasions. I am self-sufficient, independent, honest, I have a great sense of humor, & family & friends are very important to me. A man who ONLY has eyes for me & can make me laugh are important qualities! No pressure!
-        </div>
-        <div id="profile-things-common" class="box-shadow-lightgray textured-banner">
-          <strong>Things in common:</strong>
-        </div> 
-        <div id="profile-common" data-role="navbar" data-theme="a">
+      </div>
+      
+      <div class="hr"></div>
+      
+      <div id="profile-description">
+      I am secure & happy with myself,but... Life is meant for 2!! A little bit about myself: I enjoy travel, Comedy Clubs & Dinner, Theatre, music, my dogs, & celebrating special occasions. I am self-sufficient, independent, honest, I have a great sense of humor, & family & friends are very important to me. A man who ONLY has eyes for me & can make me laugh are important qualities! No pressure!
+      </div>
+      
+      <div id="profile-things-common" class="box-shadow-lightgray textured-banner">
+        <strong>Things in common:</strong>
+      </div>   
+          
+      <div id="profile-common">
+      
+        <div class="navbar-95" data-role="navbar">
         	<ul>
         		<li><a href="a.html" id="entertainment" class="ui-btn-active" data-theme="a">Entertainment</a></li>
         		<li><a href="b.html" id="activities" data-theme="a">Activities</a></li>
         	</ul>
-          <div class="ui-grid-c">
-            <div class="ui-block-a">
-              <div></div>
-              <span>Pink Floyd</span>
-            </div>
-            <div class="ui-block-b">
-              <div></div>
-              <span>Daft Punk</span>
-            </div>
-            <div class="ui-block-c">
-              <div></div>
-              <span>Depeche Mode</span>            
-            </div>
-            <div class="ui-block-d">
-              <div></div>
-              <span>Deep Purple</span>            
-            </div>
-          </div><!-- /grid-c -->      
-          <div class="ui-grid-c">
-            <div class="ui-block-a">
-              <div></div>
-              <span>The IT Crowd</span>
-            </div>
-            <div class="ui-block-b">
-              <div></div>
-              <span>Star Trek</span>
-            </div>
-            <div class="ui-block-c">
-              <div></div>
-              <span>How I Met Your Mother</span>            
-            </div>
-            <div class="ui-block-d">
-              <div></div>
-              <span>Hitchhicker's Guide</span>            
-            </div>
-          </div><!-- /grid-c -->             	
-        </div><!-- /navbar -->    
-                   
-        <div id="profile-approach" class="box-shadow-lightgray textured-banner">
-          <strong>How to approach her:</strong>
-        </div>
-        <div id="profile-approach-recommendations">
-          Blablabla.
-        </div>  
-        
-        <div id="profile-matches" class="box-shadow-lightgray textured-banner">
-          <strong>More matches to consider:</strong>
-        </div>       
-        <div id="profile-matches-pictures">
-          <div class="ui-grid-b">
-            <div class="ui-block-a"><a href="./1.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/1.png" alt /></a></div>
-            <div class="ui-block-b"><a href="./2.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/2.png" alt /></a></div>
-            <div class="ui-block-c"><a href="./3.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/3.png" alt /></a></div>
-          </div><!-- /grid-b -->
-          <div class="ui-grid-b">
-            <div class="ui-block-a"><a href="./4.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/4.png" alt /></a></div>
-            <div class="ui-block-b"><a href="./5.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/5.png" alt /></a></div>
-            <div class="ui-block-c"><a href="./6.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/6.png" alt /></a></div>
-          </div><!-- /grid-b -->        
-        </div>  
+        </div><!-- /navbar-95 --> 
                
-      </div>        
-    </div>
+        <div class="ui-grid-c">
+          <div class="ui-block-a">
+            <img src="img/profile/pinkfloyd.png" alt="Pink Floyd" />
+            <div>Pink Floyd</div>
+          </div>
+          <div class="ui-block-b">
+            <img src="img/profile/daftpunk.png" alt="Daft Punk" />
+            <div>Daft Punk</div>
+          </div>
+          <div class="ui-block-c">
+            <img src="img/profile/depechemode.png" alt="Depeche Mode" />
+            <div>Depeche Mode</div>            
+          </div>
+          <div class="ui-block-d">
+            <img src="img/profile/deeppurple.png" alt="Deep Purple" />
+            <div>Deep Purple</div>            
+          </div>
+        </div><!-- /grid-c -->  
+            
+        <div class="ui-grid-c">
+          <div class="ui-block-a">
+            <img src="img/profile/theitcrowd.png" alt="The IT Crowd" />
+            <div>The IT Crowd</div>
+          </div>
+          <div class="ui-block-b">
+            <img src="img/profile/startrek.png" alt="Star Trek" />
+            <div>Star Trek</div>
+          </div>
+          <div class="ui-block-c">
+            <img src="img/profile/howimetyourmother.png" alt="How I Met Your Mother" />
+            <div>How I Met Your Mother</div>            
+          </div>
+          <div class="ui-block-d">
+            <img src="img/profile/hitchhikersguide.png" alt="Hitchhicker's Guide" />
+            <div>Hitchhicker's Guide</div>            
+          </div>
+        </div><!-- /grid-c -->
+                     	
+      </div><!-- /profile-common -->    
+                 
+      <div id="profile-approach" class="box-shadow-lightgray textured-banner">
+        <strong>How to approach her:</strong>
+      </div>
+      <div id="profile-approach-recommendations">
+        <div class="ui-grid-a">
+        	<div class="ui-block-a"><img src="img/profile/tron.png" alt="Tron" /></div>
+        	<div class="recommendation-text-block">
+        	 <div><strong>Go watch Tron Legacy in the cinema.</strong></div>
+        	 <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+          </div>
+        </div><!-- /grid-a -->
+        <div class="ui-grid-a">
+        	<div class="ui-block-a"><img src="img/profile/mexican.png" alt="Tron" /></div>
+        	<div class="recommendation-text-block">
+        	 <div><strong>Take her to a mexican restaurant.</strong></div>
+        	 <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+          </div>
+        </div><!-- /grid-a -->
+        <div class="ui-grid-a">
+        	<div class="ui-block-a"><img src="img/profile/depechemodeconcert.png" alt="Tron" /></div>
+        	<div class="recommendation-text-block">
+        	 <div><strong>Go to Depeche Mode's concert in O2.</strong></div>
+        	 <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit</div>
+          </div>
+        </div><!-- /grid-a -->   
+        
+        <div class="hr"></div>                    
+      </div>  
+
+      <div class="ui-grid-a" id="profile-user-action-buttons">
+      	<div class="ui-block-a"><img src="img/profile/sendmessage.png" alt="Send a message" /></div>
+      	<div class="ui-block-b"><img src="img/profile/follow.png" alt="Follow this person" /></div>
+      </div><!-- /grid-a -->       
+      
+      <div id="profile-matches" class="box-shadow-lightgray textured-banner">
+        <strong>More matches to consider:</strong>
+      </div>       
+      <div id="profile-matches-pictures">
+        <div class="ui-grid-b">
+          <div class="ui-block-a"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/1.png" alt /></a></div>
+          <div class="ui-block-b"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/2.png" alt /></a></div>
+          <div class="ui-block-c"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/3.png" alt /></a></div>
+        </div><!-- /grid-b -->
+        <div class="ui-grid-b">
+          <div class="ui-block-a"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/4.png" alt /></a></div>
+          <div class="ui-block-b"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/5.png" alt /></a></div>
+          <div class="ui-block-c"><a href="profile.html"><img class="box-shadow-blue gradient-avatar" src="img/faces/6.png" alt /></a></div>
+        </div><!-- /grid-b -->        
+      </div>       
+      <a data-role="footer" data-position="fixed" href="#notifications" data-transition="slideup">
+			 <h4>Notifications</h4>
+		  </a>      
+    </div> 
+
+  	<!--  ******************************************* -->
+  	<!--  *** NOTIFICATIONS *** -->
+  	<!--  ******************************************* -->
+  	<div data-role="page" id="notifications" class="page" data-position="fixed">
+  		<a data-role="header" data-position="fixed" href="#profile-body" data-transition="slidedown">
+  			<h1>Notifications</h1>
+  		</a>  
+  		<div data-role="content">
+  			<p>Kostas send you a message.</p>
+  		</div>  		
+  	</div>             
+    
   </body>
 </html>
