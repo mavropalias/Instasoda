@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en">
+	<head>
+    <!-- Scripts for IE7/8 -->
+    <!--[if lt IE 9]>
+      <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" type="text/javascript"></script>
+      <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/ie7-squish.js" type="text/javascript"></script>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- TITLE -->
+    <title>Testing</title>
+    
+    <!-- OPEN GRAPH -->
+		<meta property="og:title" content="Instasoda" />
+		<meta property="og:type" content="blog" />
+		<meta property="og:url" content="http://instasoda.com" />
+		<meta property="og:image" content="" />
+		<meta property="og:site_name" content="Instasoda" />
+		<meta property="fb:admins" content="659710874" />
+    
+    <!-- MISC TAGS -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon" href="/favicon.ico">
+    
+    <!-- CUSTOM FONTS -->
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,700' rel='stylesheet' type='text/css'>
+
+		<!-- STYLESHEET -->
+		<link rel="stylesheet" type="text/css" href="js/style.css" />
+
+		<!-- SCRIPTS -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="js/libs/jquery.isotope.min.js"></script>
+    <script type="text/javascript" src="js/libs/json2.js"></script>
+    <script type="text/javascript" src="js/libs/underscore-min.js"></script>
+    <script type="text/javascript" src="js/libs/backbone-min.js"></script>
+    <script type="text/javascript" src="js/libs/mustache.js"></script>
+    
+    <style>
+			/*****************************************************/
+			/*****************************************************/
+			/* RESET STYLES */
+			/*****************************************************/
+			/*****************************************************/
+			
+			  html, body, div, span, applet, object, iframe,
+			  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+			  a, abbr, acronym, address, big, cite, code,
+			  del, dfn, em, img, ins, kbd, q, s, samp,
+			  small, strike, strong, sub, sup, tt, var,
+			  b, u, i, center,
+			  dl, dt, dd, ol, ul, li,
+			  fieldset, form, label, legend,
+			  table, caption, tbody, tfoot, thead, tr, th, td,
+			  article, aside, canvas, details, embed, 
+			  figure, figcaption, footer, header, hgroup, 
+			  menu, nav, output, ruby, section, summary,
+			  time, mark, audio, video {
+			    margin: 0;
+			    padding: 0;
+			    border: 0;
+			    vertical-align: baseline;
+			    outline:none;
+			  }
+			  /* HTML5 display-role reset for older browsers */
+			  article, aside, details, figcaption, figure, 
+			  footer, header, hgroup, menu, nav, section {
+			    display: block;
+			  }
+			  body {
+			    line-height: 1;
+			  }
+			  ol, ul {
+			    list-style: none;
+			  }
+			  blockquote, q {
+			    quotes: none;
+			  }
+			  blockquote:before, blockquote:after,
+			  q:before, q:after {
+			    content: '';
+			    content: none;
+			  }
+			  table {
+			    border-collapse: collapse;
+			    border-spacing: 0;
+			  }
+			  
+			  
+			  
+		  /* STYLES */
+			  
+    	body{
+    		background:#f9f9f9;
+		    font-family: 'Lato', sans-serif;
+		    font-weight:300;
+		    font-size:62.5%;
+    	}
+    	
+    	header{
+    		height:1.6em;
+    		margin:10px;
+		    font-weight:700;
+		    color:#3ED0F4;
+		    font-size:1.6em;
+    	}
+    	
+    	#container{
+    		width:100%;
+    	}
+    	
+    	.item{
+    		background:#fff;
+    		width:300px;
+    		height:300px;
+    		margin:10px;
+    		border:1px solid #C4CDE0;
+    		border-bottom:2px solid #C4CDE0;
+    		border-radius:4px;
+    	}
+    		.doubleXY{
+    			width:620px;
+    			height:623px;
+    		}
+    		.doubleY{
+    			height:623px;
+    		}
+    		.doubleX{
+    			width:620px;
+    		}
+    		
+  		/* ARTICLES */
+  		article > h1{
+  			margin:10px 10px 20px;
+  			padding:0 0 5px;
+  			font-weight:700;
+  			font-size:1.4em;
+  			border-bottom:1px solid #eee;
+  		}
+  		article > span{
+  			margin:0 5px;
+  			font-size:1.4em;
+  			display:block;
+  			padding:0px 5px;
+  		}
+  		article > footer{
+  			font-size:1.2em;
+  			padding:3px 5px;
+  			background:#f9f9f9;
+  			position:absolute;
+  			bottom:5px;
+  			left:5px;
+  			right:5px;
+  		}
+    </style>
+    
+    <script>
+    	
+		$(document).ready(function(){
+			$('#container').isotope({
+			  masonry : {
+			    columnWidth : 322
+			  }
+			});
+		});
+
+
+
+
+
+    </script>
+	</head>
+	<body>
+		
+	<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) {return;}
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=159444727449256";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
+
+	<header><h1>instasoda</h1></header>
+
+	<section id="container">
+	  
+	  <article class="item doubleXY">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+		</article>
+		
+	  <article class="item doubleX">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item doubleXY">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item doubleX">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	  
+	  <article class="item">
+	  	<h1><a>Story title</a></h1>	
+	  	<span>
+	  		<p>Text goes here...</p>
+  		</span>
+  		<footer><div class="fb-like" data-href="instasoda.com" data-send="false" data-layout="button_count" data-width="90" data-show-faces="false"></div></footer>
+	  </article>
+	</section>
+
+
+
+
+	</body>
+</html>
