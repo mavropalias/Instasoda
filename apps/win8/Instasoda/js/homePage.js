@@ -27,6 +27,13 @@ $(document).ready(function () {
         //TODO: goto dashboard
     }
 
+    //debug
+    //WinJS.Navigation.navigate("register2.html");
+    //window.localStorage.person = "kostas"; // Convert the object to a string.
+    //person = window.localStorage.person; // Convert the object string back to a JavaScript object.
+    //$('#fbResponse').html(">> " + person);
+    
+
     var iPackage = 0;
     var scope1 = "email,user_relationships,user_location,user_hometown,user_birthday";
     var scope2 = scope1 + ",user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos";
@@ -71,10 +78,25 @@ $(document).ready(function () {
             response += "Error returned: " + result.responseErrorDetail + "\r\n";
             $('#fbResponse').html("<strong>Oh snap! An error occured :( Try again please.</strong>");
         } else if (result.responseStatus == 0) {
-            //success
-            //IS.createAccount(iPackage, FacebookReturnedToken);
+
+            // success - the user has given permission and we now have a url with the token
+            // parse token value from FacebookReturnedToken
             sToken = getParameterByName("access_token", FacebookReturnedToken);
-            $('#fbResponse').html(FacebookReturnedToken + " <br><br> >>> " + sToken);
+            
+            // create the user account
+            try {
+                IS.createAccount(iPackage, sToken, function(success, jData) {
+                    if (success) {
+                        $('#fbResponse').html("success " + jData);
+                    } else {
+                        $('#fbResponse').html("error: " + jData.status);
+                    }
+                });  
+            } catch (e) {
+                $('#fbResponse').html("error:  " + e);
+            }
+
+            
         }
     }
 
