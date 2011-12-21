@@ -1,34 +1,94 @@
+// ===================================================
+// ===================================================
+// = Instasoda client library
+// = > requires jQuery 1.7+
+// ===================================================
+// ===================================================
+
 var IS = new function () {
 
-    // Private variables
-    var username = '';
-    var apiKey = 'af98y34ubliuyasv097hb34uig';
+    // ===================================================
+    // ===================================================
+    // = Settings
+    // ===================================================
+    // ===================================================
+
+    jQuery.support.cors = true;
+
+    // ===================================================
+    // ===================================================
+    // = Private variables
+    // ===================================================
+    // ===================================================
+
+    var sApi = "http://www.instasoda.com/api/";
+    var username = "";
     var isLoggedIn = false;
     var activityFeedPage = 0;
 
-    // Public variables
-    // this.publicVar = 'public';
 
-    // ***************************************************
-    // Private methods
-    // ***************************************************
+    // ===================================================
+    // ===================================================
+    // = Private methods
+    // ===================================================
+    // ===================================================
 
-    var testMethod = function () {
+    var testMethod = function () {}
 
-    }
 
-    // ***************************************************
-    // Public methods
-    // ***************************************************
+    // ===================================================
+    // ===================================================
+    // = Public methods
+    // ===================================================
+    // ===================================================
 
     /**
     * Create a new user account by connecting to Facebook.
     * @param {Integer} package 1=basic, 2=standard, 3=complete
     * @param {String} facebookToken
+    * @param {Function} callback
     * @return {Object} Returns an object {'s': 'success/fail'}
     */
-    this.createAccount = function (iPackage, sFacebookToken) {
+    this.createAccount = function (iPackage, sFacebookToken, callback) {
 
+        var user = {
+            'isPackage': iPackage,
+            'fbToken': sFacebookToken
+        };
+
+        // store the user details locally
+        if (!!window.localStorage) {
+            window.localStorage.user = JSON.stringify(user);
+        } else {
+            //TODO: alternative storage solution, when localStorage is not available
+            callback(false, "Local storage is not available");
+        }
+
+        // connect to the API server and create the account
+        $.ajax({
+            type: 'GET',
+            url: sApi + "register.php",
+            data: {
+                "package": user.isPackage,
+                "fbToken": user.fbToken
+            },
+            dataType: "json",
+            success: function (data) {
+                if (data.status == "success") {
+                    //SUCCESS
+                    callback(true, "success");
+                }
+                else {
+                    //FAIL
+                    callback(false, data.status);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                //TODO: properly handle ajax error
+                callback(false, "Ajax error: " + errorThrown);
+            }
+
+        });
     }
 
     /**
