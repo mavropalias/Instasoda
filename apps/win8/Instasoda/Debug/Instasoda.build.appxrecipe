@@ -8,7 +8,7 @@
   <ItemGroup>
     <AppXManifest Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
-      <Modified>2011-12-18T22:49:19.858</Modified>
+      <Modified>2011-12-20T23:47:09.646</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -22,7 +22,7 @@
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2011-12-19T00:22:56.641</Modified>
+      <Modified>2011-12-21T18:33:37.632</Modified>
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\default.html">
       <PackagePath>default.html</PackagePath>
@@ -30,7 +30,7 @@
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\html\homePage.html">
       <PackagePath>html\homePage.html</PackagePath>
-      <Modified>2011-12-18T22:28:55.335</Modified>
+      <Modified>2011-12-20T22:53:18.405</Modified>
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
@@ -62,11 +62,11 @@
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\homePage.js">
       <PackagePath>js\homePage.js</PackagePath>
-      <Modified>2011-12-19T00:22:39.341</Modified>
+      <Modified>2011-12-21T18:29:59.269</Modified>
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\instasoda.js">
       <PackagePath>js\instasoda.js</PackagePath>
-      <Modified>2011-12-18T23:59:25.090</Modified>
+      <Modified>2011-12-21T18:12:09.743</Modified>
     </AppXPackagedFile>
     <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\jquery-1.7.1.min.js">
       <PackagePath>js\jquery-1.7.1.min.js</PackagePath>
