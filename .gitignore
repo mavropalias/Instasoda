@@ -3,6 +3,9 @@
 *.project
 *.buildpath
 *.komodoproject
+*.build.appxrecipe
+*.suo
+*.wwaproj.user
 
 # Logs and temp files #
 #######################
