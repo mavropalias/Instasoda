@@ -21,17 +21,31 @@
 
 $(document).ready(function () {
 
-    if (IS.isLoggedIn()) {
-        $('.homePage').hide();
+    $('section[role="main"]').hide();
 
-        //TODO: goto dashboard
+    if (IS.login()) {
+        if (IS.accountIsComplete()) {
+            $('#dashboard').show();
+        } else {
+            $('#settings').show();
+        }
+    } else {
+        $('#registerAccount').show();
     }
 
     //debug
-    //WinJS.Navigation.navigate("register2.html");
-    //window.localStorage.person = "kostas"; // Convert the object to a string.
-    //person = window.localStorage.person; // Convert the object string back to a JavaScript object.
-    //$('#fbResponse').html(">> " + person);
+     /*   // create the user account
+        try {
+            IS.createAccount("3", "AAACRA55XRqgBAK36aOERkoK4ccnmWTwkrKPZCACNJA796rX89U5tHSiZAiJZCnJorhgBVYXGACKJgy4myByZCD2Xcc6NNUIZD", function (success, jData) {
+                if (success) {
+                    $('#fbResponse').html("success " + jData);
+                } else {
+                    $('#fbResponse').html("error: " + jData.status);
+                }
+            });
+        } catch (e) {
+            $('#fbResponse').html("error:  " + e);
+        }*/
     
 
     var iPackage = 0;
