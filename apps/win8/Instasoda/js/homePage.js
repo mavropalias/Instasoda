@@ -101,7 +101,12 @@ $(document).ready(function () {
             try {
                 IS.createAccount(iPackage, sToken, function(success, jData) {
                     if (success) {
-                        $('#fbResponse').html("success " + jData);
+                        $('#registerAccount').hide();
+                        if (IS.accountIsComplete()) {
+                            $('#dashboard').show();
+                        } else {
+                            $('#settings').show();
+                        }
                     } else {
                         $('#fbResponse').html("error: " + jData.status);
                     }
