@@ -1,9 +1,71 @@
 ﻿.homePage section[role=main] {
-    margin-left: 120px;
+    margin-left: 116px;
+}
+
+.homePage section[role=main] ol {
+    padding: 0;
+    list-style: none;
+}
+
+.homePage section[role=main] ol > li {
+    float: left;
+    width: 25%;
+    list-style: none;
+    background-color: white;
+    border: 1px solid #96D9EE;
+    padding: 1%;
+    margin: 2%; 
+    -ms-transition-duration: 0.3s;
+}
+
+.homePage section[role=main] ol > li:first-child {
+    margin-left: 0; 
+    border: 1px solid #96D9EE;
+}
+
+.homePage section[role=main] ol > li:hover {
+    border: 1px solid #3DBCDF;
+    -ms-transition-duration: 0.3s;
+}
+
+.homePage section[role=main] ol > li:hover button {
+    background-color: #5dcdec;
+    -ms-transition-duration: 0.3s;
+}
+
+.homePage section[role=main] ul {
+    padding: 0;
+    list-style: none;
+    text-align: center;
+}
+
+.homePage section[role=main] ul li {
+    padding: 5px 10px;
+}
+
+.homePage section[role=main] ul li h2 {
+    margin-top: 10px;
+}
+
+.homePage section[role=main] button {
+    width: 90%;
+    height: 50px;
+    padding: 5px 10px;
+    margin: 25px auto 15px auto;
+    background-color: #3DBCDF;
+    border-radius: 3px!important;
+    border: 2px solid white;
+    outline: 1px solid #96D9EE;
+    color: white;
+    -ms-transition-duration: 0.3s;
+}
+
+.homePage section[role=main] button:active {
+    box-shadow: 0px 0px 15px 0 #007DA6 inset;   
 }
 
 @media screen and (-ms-view-state: snapped) {
-.homePage section[role=main] {
-    margin-left: 20px;
-}
+    .homePage section[role=main] {
+        margin-left: 20px;
+    }
 }
