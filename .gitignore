@@ -3,7 +3,7 @@
 *.project
 *.buildpath
 *.komodoproject
-*.build.appxrecipe
+*.appxrecipe
 *.suo
 *.wwaproj.user
 
@@ -18,3 +18,4 @@ temp.*
 ehthumbs.db
 Icon?
 Thumbs.db
+apps/win8/Instasoda/Instasoda.v11.suo
