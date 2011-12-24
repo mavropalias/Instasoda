@@ -1,116 +1,116 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <Machine>KOSTAS</Machine>
-    <WindowsUser>mavropalias</WindowsUser>
+    <Machine>SLOWPOKE</Machine>
+    <WindowsUser>k.vassiliou</WindowsUser>
     <SolutionConfiguration>Debug|AnyCPU</SolutionConfiguration>
   </PropertyGroup>
   <ItemGroup>
-    <AppXManifest Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\Debug\AppxManifest.xml">
+    <AppXManifest Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\Debug\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
-      <Modified>2011-12-20T23:47:09.646</Modified>
+      <Modified>2011-12-23T16:01:03.409</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\css\default.css">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\css\default.css">
       <PackagePath>css\default.css</PackagePath>
-      <Modified>2011-12-18T16:20:34.099</Modified>
+      <Modified>2011-12-24T16:49:40.814</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\css\homePage.css">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\css\homePage.css">
       <PackagePath>css\homePage.css</PackagePath>
-      <Modified>2011-12-18T16:20:34.101</Modified>
+      <Modified>2011-12-24T16:52:23.427</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\Debug\resources.pri">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2011-12-21T18:33:37.632</Modified>
+      <Modified>2011-12-24T16:53:11.367</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\default.html">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\default.html">
       <PackagePath>default.html</PackagePath>
-      <Modified>2011-12-18T17:44:06.744</Modified>
+      <Modified>2011-12-23T16:00:42.760</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\html\homePage.html">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\html\homePage.html">
       <PackagePath>html\homePage.html</PackagePath>
-      <Modified>2011-12-20T22:53:18.405</Modified>
+      <Modified>2011-12-24T16:24:06.100</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\logo.png">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\images\logo.png">
       <PackagePath>images\logo.png</PackagePath>
-      <Modified>2011-12-18T16:26:34.240</Modified>
+      <Modified>2011-12-23T16:00:42.762</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\logowide.png">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\images\logowide.png">
       <PackagePath>images\logowide.png</PackagePath>
-      <Modified>2011-12-18T16:23:56.609</Modified>
+      <Modified>2011-12-23T16:00:42.762</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\logo_badge.png">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\images\logo_badge.png">
       <PackagePath>images\logo_badge.png</PackagePath>
-      <Modified>2011-12-18T16:25:48.775</Modified>
+      <Modified>2011-12-23T16:00:42.762</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\smalllogo.png">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\images\smalllogo.png">
       <PackagePath>images\smalllogo.png</PackagePath>
-      <Modified>2011-12-18T16:24:23.507</Modified>
+      <Modified>2011-12-23T16:00:42.763</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\splashscreen.png">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\images\splashscreen.png">
       <PackagePath>images\splashscreen.png</PackagePath>
-      <Modified>2011-12-18T16:45:23.147</Modified>
+      <Modified>2011-12-23T16:00:42.763</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\images\storelogo.png">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\images\storelogo.png">
       <PackagePath>images\storelogo.png</PackagePath>
-      <Modified>2011-12-18T16:40:22.121</Modified>
+      <Modified>2011-12-23T16:00:42.764</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\default.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\js\default.js">
       <PackagePath>js\default.js</PackagePath>
-      <Modified>2011-12-18T16:20:34.113</Modified>
+      <Modified>2011-12-23T16:00:42.764</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\homePage.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\js\homePage.js">
       <PackagePath>js\homePage.js</PackagePath>
-      <Modified>2011-12-21T18:29:59.269</Modified>
+      <Modified>2011-12-23T16:00:42.765</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\instasoda.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\js\instasoda.js">
       <PackagePath>js\instasoda.js</PackagePath>
-      <Modified>2011-12-21T18:12:09.743</Modified>
+      <Modified>2011-12-23T16:00:42.765</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\js\jquery-1.7.1.min.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\js\jquery-1.7.1.min.js">
       <PackagePath>js\jquery-1.7.1.min.js</PackagePath>
-      <Modified>2011-12-18T20:38:37.520</Modified>
+      <Modified>2011-12-23T16:00:42.783</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\Css\ui-dark.css">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\Css\ui-dark.css">
       <PackagePath>winjs\Css\ui-dark.css</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.784</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\Css\ui-light.css">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\Css\ui-light.css">
       <PackagePath>winjs\Css\ui-light.css</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.786</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\animations.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\animations.js">
       <PackagePath>winjs\js\animations.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.788</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\base.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\base.js">
       <PackagePath>winjs\js\base.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.791</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\binding.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\binding.js">
       <PackagePath>winjs\js\binding.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.794</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\controls.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\controls.js">
       <PackagePath>winjs\js\controls.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.806</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\res.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\res.js">
       <PackagePath>winjs\js\res.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.806</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\ui.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\ui.js">
       <PackagePath>winjs\js\ui.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.812</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\uicollections.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\uicollections.js">
       <PackagePath>winjs\js\uicollections.js</PackagePath>
-      <Modified>2011-08-22T17:28:50.000</Modified>
+      <Modified>2011-12-23T16:00:42.842</Modified>
     </AppXPackagedFile>
-    <AppXPackagedFile Include="D:\MyDocuments\Dropbox\Development\Instasoda\apps\win8\Instasoda\winjs\js\wwaapp.js">
+    <AppXPackagedFile Include="E:\Users\k.vassiliou\projects\Instasoda\apps\win8\Instasoda\winjs\js\wwaapp.js">
       <PackagePath>winjs\js\wwaapp.js</PackagePath>
-      <Modified>2011-08-22T17:28:52.000</Modified>
+      <Modified>2011-12-23T16:00:42.844</Modified>
     </AppXPackagedFile>
   </ItemGroup>
 </Project>

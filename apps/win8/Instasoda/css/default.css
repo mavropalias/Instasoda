@@ -5,6 +5,10 @@
     height: 100%;
 }
 
+body {
+    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 47%,#D5EEF2 100%);
+}
+
 #contentHost {
     width: 100%;
     height: 100%;
