@@ -7,24 +7,26 @@
 // ===================================================
 // ===================================================
 
-var IS = new function () {
+var IS;
+$(document).ready(function () {
+    IS = new function () {
 
-    // ===================================================
-    // ===================================================
-    // = Settings
-    // ===================================================
-    // ===================================================
+        // ===================================================
+        // ===================================================
+        // = Settings
+        // ===================================================
+        // ===================================================
 
         var sApi = "http://www.instasoda.com/api/";
         jQuery.support.cors = true;
         Backbone.emulateHTTP = true;
 
 
-    // ===================================================
-    // ===================================================
-    // = Models
-    // ===================================================
-    // ===================================================
+        // ===================================================
+        // ===================================================
+        // = Models
+        // ===================================================
+        // ===================================================
 
         var User = Backbone.Model.extend({
             defaults: {
@@ -34,16 +36,16 @@ var IS = new function () {
         });
 
 
-    // ===================================================
-    // ===================================================
-    // = Views
-    // ===================================================
-    // ===================================================
+        // ===================================================
+        // ===================================================
+        // = Views
+        // ===================================================
+        // ===================================================
 
         var UserSettingsView = Backbone.View.extend({
             tagName: 'div',
             id: 'userSettingsView2',
-            initialize: function(options) {
+            initialize: function (options) {
                 _.bindAll(this, 'render');
                 this.model.bind('change', this.render);
                 this.render();
@@ -53,28 +55,31 @@ var IS = new function () {
                 //$(this.el).html(this.template(this.model.toJSON()));
                 //$('#userSettingsView').html(this.model.toJSON());
                 //$(this.el).html(this.model.get('username'));
-                this.el.innerHTML = this.model.get('username') + "<br>" + this.model.get('gender') + "<br>" + this.model.get('age') + "<br>" + this.model.get('fbLocation');
+                //this.el.innerHTML = this.model.get('username') + "<br>" + this.model.get('gender') + "<br>" + this.model.get('age') + "<br>" + this.model.get('fbLocation');
+                //$('#settings').html(this.el);
+
+                var template = $('#tplSettings').html();
+                $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
                 $('#settings').html(this.el);
-                
             }
         });
 
 
-    // ===================================================
-    // ===================================================
-    // = Private methods
-    // ===================================================
-    // ===================================================
+        // ===================================================
+        // ===================================================
+        // = Private methods
+        // ===================================================
+        // ===================================================
 
         /**
-        * Store data locally, using one of the following methods:
-        * 1. localStorage
-        * 2. local DB
-        * 3. Cookies
-        * @param {String} varName
-        * @param {Object} data 
-        * @return {Bool} success
-        */
+            * Store data locally, using one of the following methods:
+            * 1. localStorage
+            * 2. local DB
+            * 3. Cookies
+            * @param {String} varName
+            * @param {Object} data
+            * @return {Bool} success
+            */
         var saveLocally = function (sVarName, jData) {
             if (!!window.localStorage) {
                 window.localStorage.sVarName = JSON.stringify(jData);
@@ -86,25 +91,27 @@ var IS = new function () {
         }
 
         /**
-        * Update data that have been saved locally.
-        * @param {String} varName
-        * @return {Object} object
-        */
+            * Update data that have been saved locally.
+            * @param {String} varName
+            * @return {Object} object
+            */
         var readLocally = function (sVarName) {
             if (!!window.localStorage) {
-                return JSON.parse(window.localStorage.sVarName);
+                if (typeof window.localStorage.sVarName !== 'undefined') {
+                    return JSON.parse(window.localStorage.sVarName);
+                }
             } else {
                 //TODO: alternative storage solution, when localStorage is not available
                 throw("Local storage is not available");
             }
         }
-        
 
-    // ===================================================
-    // ===================================================
-    // = Private variables
-    // ===================================================
-    // ===================================================
+
+        // ===================================================
+        // ===================================================
+        // = Private variables
+        // ===================================================
+        // ===================================================
 
         var isLoggedIn = false;
         var activityFeedPage = 0;
@@ -118,58 +125,58 @@ var IS = new function () {
         });
 
 
-    // ===================================================
-    // ===================================================
-    // = Public methods
-    // ===================================================
-    // ===================================================
+        // ===================================================
+        // ===================================================
+        // = Public methods
+        // ===================================================
+        // ===================================================
 
         /**
-        * Create a new user account by connecting to Facebook.
-        * @param {Integer} package 1=basic, 2=standard, 3=complete
-        * @param {String} facebookToken
-        * @param {Function} callback
-        * @return {Object} Returns an object {'s': 'success/fail'}
-        */
+            * Create a new user account by connecting to Facebook.
+            * @param {Integer} package 1=basic, 2=standard, 3=complete
+            * @param {String} facebookToken
+            * @param {Function} callback
+            * @return {Object} Returns an object {'s': 'success/fail'}
+            */
         this.createAccount = function (iPackage, sFacebookToken, callback) {
 
             user.set({
                 'package': iPackage,
                 'fbToken': sFacebookToken
             });
-        
+
             user.save(
-                {
-                    error: function (model, response) {
-                        //TODO: properly handle errors
-                        callback(false, "Ajax error: " + response.status);
+            {
+                error: function (model, response) {
+                    //TODO: properly handle errors
+                    callback(false, "Ajax error: " + response.status);
+                }
+            },
+            {
+                success: function (model, response) {
+                    // SUCCESS
+                    if (response.status == "success") {
+                        user.set({ loggedIn: '1' });
+                        // store the user details locally
+                        saveLocally("user", user);
+                        // callback success
+                        callback(true, "success");
                     }
-                },
-                {
-                    success: function (model, response) {
-                        // SUCCESS
-                        if (response.status == "success") {
-                            user.set({ loggedIn: '1' });
-                            // store the user details locally
-                            saveLocally("user", user);
-                            // callback success
-                            callback(true, "success");
-                        }
-                        // FAIL
-                        else {
-                            callback(false, response.status);
-                        }                    
+                    // FAIL
+                    else {
+                        callback(false, response.status);
                     }
                 }
-            );
+            }
+                );
         }
 
         /**
-        * Attempts to log the user into the system.
-        * If it fails, it means that the user need to register a new account.
-        * @return {Bool} true/false
-        */
-        this.login = function () {            
+            * Attempts to log the user into the system.
+            * If it fails, it means that the user need to register a new account.
+            * @return {Bool} true/false
+            */
+        this.login = function () {
             // first check if the user is already logged in
             if (user.get('loggedIn') == '1') {
                 return true;
@@ -182,36 +189,36 @@ var IS = new function () {
                 } else {
                     // connect to the API server and login the user
                     user.fetch(
-                        {
-                            error: function (model, response) {
-                                //TODO: properly handle errors
-                                //a false might only mean that the API server is N/A
+                    {
+                        error: function (model, response) {
+                            //TODO: properly handle errors
+                            //a false might only mean that the API server is N/A
+                            return false;
+                        }
+                    },
+                    {
+                        success: function (model, response) {
+                            // SUCCESS
+                            if (response.status == "success") {
+                                user.set({ loggedIn: '1' });
+                                saveLocally("user", user);
+                                return true;
+                            }
+                            // FAIL
+                            else {
                                 return false;
                             }
-                        },
-                        {
-                            success: function (model, response) {
-                                // SUCCESS
-                                if (response.status == "success") {
-                                    user.set({ loggedIn: '1' });
-                                    saveLocally("user", user);
-                                    return true;
-                                }
-                                // FAIL
-                                else {
-                                    return false;
-                                }
-                            }
                         }
-                    );
+                    }
+                        );
                 }
             }
         }
 
         /**
-        * Logs the user out of the system.
-        * @return {Bool} true/false
-        */
+            * Logs the user out of the system.
+            * @return {Bool} true/false
+            */
         this.logout = function () {
             if (user.get('loggedIn') == '1') {
                 user.set({ loggedIn: '0' });
@@ -220,13 +227,14 @@ var IS = new function () {
         }
 
         /**
-        * Verifies that the user has completed the registration
-        * process successfully, and has a complete account.
-        * @return {Bool} true/false
-        */
+            * Verifies that the user has completed the registration
+            * process successfully, and has a complete account.
+            * @return {Bool} true/false
+            */
         this.accountIsComplete = function () {
             return false;
         }
-   
 
-}
+
+    }
+});
