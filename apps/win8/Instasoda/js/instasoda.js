@@ -53,28 +53,10 @@ var IS = new function () {
                 //$(this.el).html(this.template(this.model.toJSON()));
                 //$('#userSettingsView').html(this.model.toJSON());
                 //$(this.el).html(this.model.get('username'));
-                this.el.innerHTML = this.model.get('username');
-                $('#userSettingsView').html(this.el);
+                this.el.innerHTML = this.model.get('username') + "<br>" + this.model.get('gender') + "<br>" + this.model.get('age') + "<br>" + this.model.get('fbLocation');
+                $('#settings').html(this.el);
                 
             }
-        });
-
-    // ===================================================
-    // ===================================================
-    // = Private variables
-    // ===================================================
-    // ===================================================
-        
-        var username = "";
-        var isLoggedIn = false;
-        var activityFeedPage = 0;
-
-        // models
-        var user = new User();
-
-        // views
-        var userSettingsView = new UserSettingsView({
-            model: user,
         });
 
 
@@ -106,18 +88,34 @@ var IS = new function () {
         /**
         * Update data that have been saved locally.
         * @param {String} varName
-        * @param {Object} data
-        * @return {Bool} success
+        * @return {Object} object
         */
-        var updateLocally = function (sVarName, jData) {
+        var readLocally = function (sVarName) {
             if (!!window.localStorage) {
-                window.localStorage.sVarName = JSON.stringify(jData);
-                return true;
+                return JSON.parse(window.localStorage.sVarName);
             } else {
                 //TODO: alternative storage solution, when localStorage is not available
                 throw("Local storage is not available");
             }
         }
+        
+
+    // ===================================================
+    // ===================================================
+    // = Private variables
+    // ===================================================
+    // ===================================================
+
+        var isLoggedIn = false;
+        var activityFeedPage = 0;
+
+        // models
+        var user = new User();
+
+        // views
+        var userSettingsView = new UserSettingsView({
+            model: user,
+        });
 
 
     // ===================================================
@@ -151,6 +149,7 @@ var IS = new function () {
                     success: function (model, response) {
                         // SUCCESS
                         if (response.status == "success") {
+                            user.set({ loggedIn: '1' });
                             // store the user details locally
                             saveLocally("user", user);
                             // callback success
@@ -166,54 +165,68 @@ var IS = new function () {
         }
 
         /**
-        * Logs the user in the system.
-        * @param {String} username
-        * @param {String} password
-        * @param {Function} [callback]
-        * @return {Object} Returns an object {'s': 'success/fail'}
+        * Attempts to log the user into the system.
+        * If it fails, it means that the user need to register a new account.
+        * @return {Bool} true/false
         */
-        this.login = function (sUsername, sPassword, sCallback) {
-            username = sUsername;
-            isLoggedIn = true;
-            if (sCallback) {
-                sCallback({ 's': 'success' });
+        this.login = function () {            
+            // first check if the user is already logged in
+            if (user.get('loggedIn') == '1') {
+                return true;
             } else {
-                return { 's': 'success' };
+                //try to read locally saved data to read the login status
+                user.set(readLocally("user"));
+
+                if (user.get('loggedIn') == "1") {
+                    return true;
+                } else {
+                    // connect to the API server and login the user
+                    user.fetch(
+                        {
+                            error: function (model, response) {
+                                //TODO: properly handle errors
+                                //a false might only mean that the API server is N/A
+                                return false;
+                            }
+                        },
+                        {
+                            success: function (model, response) {
+                                // SUCCESS
+                                if (response.status == "success") {
+                                    user.set({ loggedIn: '1' });
+                                    saveLocally("user", user);
+                                    return true;
+                                }
+                                // FAIL
+                                else {
+                                    return false;
+                                }
+                            }
+                        }
+                    );
+                }
             }
         }
 
         /**
         * Logs the user out of the system.
-        * @param {Function} [callback]
-        * @return {Object}	Returns an object {'s': 'success/fail'}
+        * @return {Bool} true/false
         */
-        this.logout = function (sCallback) {
-            isLoggedIn = false;
-
-            if (sCallback) {
-                sCallback({ 's': 'success' });
-            } else {
-                return { 's': 'success' };
+        this.logout = function () {
+            if (user.get('loggedIn') == '1') {
+                user.set({ loggedIn: '0' });
             }
+            return true;
         }
 
         /**
-	    * Returns the login status of the user.
-	    * @return {Bool}	If the user is logged-in it returns true, otherwise false.
-	    */
-        this.isLoggedIn = function () {
-            return isLoggedIn;
-
+        * Verifies that the user has completed the registration
+        * process successfully, and has a complete account.
+        * @return {Bool} true/false
+        */
+        this.accountIsComplete = function () {
+            return false;
         }
-
-        /**
-	    * Returns the username of the currently logged-in user.
-	    * @return {String}	The username.
-	    */
-        this.username = function () {
-            return username;
-        }
-
    
 
 }
