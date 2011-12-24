@@ -35,8 +35,12 @@
     <Content Include="images\splashscreen.png" />
     <Content Include="images\storelogo.png" />
     <None Include="Instasoda_TemporaryKey.pfx" />
+    <Content Include="js\backbone.js" />
     <Content Include="js\instasoda.js" />
     <Content Include="js\jquery-1.7.1.min.js" />
+    <Content Include="js\json2.js" />
+    <Content Include="js\mustache.js" />
+    <Content Include="js\underscore.js" />
     <Content Include="winjs\Css\ui-dark.css" />
     <Content Include="winjs\Css\ui-light.css" />
     <Content Include="winjs\js\animations.js" />
