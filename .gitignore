@@ -5,7 +5,6 @@
 *.komodoproject
 *.appxrecipe
 *.v11.suo
-*.suo
 *.wwaproj.user
 
 # Logs and temp files #
