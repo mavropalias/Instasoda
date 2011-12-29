@@ -9,7 +9,7 @@
     // CREATE
     // ========================================
     // ========================================
-    if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] == null || true) {
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && $_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'] == null) {
         // read parameteres
         $rawJSONString = file_get_contents('php://input');
         $item = json_decode($rawJSONString);
@@ -17,8 +17,9 @@
         $fbToken = $item->fbToken; //alphanumeric
         $package = $item->package;
         
-        $fbToken = $_GET['fbToken'];
-        $package = 3;
+        //debug
+        //$fbToken = $_GET['fbToken'];
+        //$package = 3;
            
         // FB SDK   
         $facebook = new Facebook(array(
