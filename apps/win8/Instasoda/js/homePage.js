@@ -9,13 +9,73 @@
     function fragmentLoad(elements, options) {
         WinJS.UI.processAll(elements)
             .then(function () {
-                // TODO: Initialize the fragment here.
+            // TODO: Initialize the fragment here.
+
+            // Listeners for flyout.
+            document.getElementById("CompleteInfoLink").addEventListener("click", CompleteShowMoreInfoFlyout, false);
+            document.getElementById("StandardInfoLink").addEventListener("click", StandardShowMoreInfoFlyout, false);
+            document.getElementById("BasicInfoLink").addEventListener("click", BasicShowMoreInfoFlyout, false);
+            
+            // Listeners for content transitions
+            output2.style.opacity = "0";
+            document.getElementById("doContentTransition").addEventListener("click", runTransitionContentAnimation, false);
             });
     }
 
     WinJS.Namespace.define('homePage', {
         fragmentLoad: fragmentLoad,
     });
+
+    function showFlyout(flyout, anchor, placement) {
+        WinJS.UI.getControl(flyout).show(anchor, placement);
+    }
+
+    function hideFlyout(flyout) {
+        WinJS.UI.getControl(flyout).hide();
+    }
+
+    function CompleteShowMoreInfoFlyout() {
+        showFlyout(CompleteInfoFlyout, CompleteInfoLink, "top");
+    }
+
+    function StandardShowMoreInfoFlyout() {
+        showFlyout(StandardInfoFlyout, StandardInfoLink, "top");
+    }
+
+    function BasicShowMoreInfoFlyout() {
+        showFlyout(BasicInfoFlyout, BasicInfoLink, "top");
+    }
+
+    function runTransitionContentAnimation() {
+        var incoming;
+        var outgoing;
+
+        // Assign incoming and outgoing
+        if (output2.style.opacity === "1") {
+            incoming = output1;
+            outgoing = output2;
+        } else {
+            incoming = output2;
+            outgoing = output1;
+        }
+
+        // Set the desired final state for incoming content (make it visible)
+        incoming.style.opacity = "1";
+
+        // Force layout pass by querying computed style width in case the incoming content is a different size from the outgoing content
+        var usedStyle = window.getComputedStyle(outputDiv, null);
+        var forceLayout = usedStyle.width;
+
+        // Get user selections from controls
+        var xOffset = 100;
+        var yOffset = 0;
+        var offset = { top: yOffset, left: xOffset };
+
+        // Run the transitionContent animation
+        WinJS.UI.Animation.transitionContent(incoming, offset, outgoing);
+    }
+     
+
 })();
 
 
