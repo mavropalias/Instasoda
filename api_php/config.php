@@ -10,7 +10,8 @@
         $dsn = "mysql:host=$host;port=$port;dbname=$database";
         $DB = new PDO($dsn, $username, $password);
         
-        $DB->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );  
+        // PDO Settings
+        $DB->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION ); // throw exceptions
     } catch(PDOException $e) {
         header( 'HTTP/1.1 400: BAD REQUEST' );
         echo json_encode(array("status"=>"Error 100")); 
