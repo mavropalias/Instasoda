@@ -60,7 +60,11 @@ $(document).ready(function () {
 
                 var template = $('#tplSettings').html();
                 $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
-                $('#settings').html(this.el);
+                var html = $(this.el).html();
+
+                msWWA.execUnsafeLocalFunction(function () {
+                    $('#settings').html(html);
+                });
             }
         });
 
@@ -82,7 +86,7 @@ $(document).ready(function () {
             */
         var saveLocally = function (sVarName, jData) {
             if (!!window.localStorage) {
-                window.localStorage.sVarName = JSON.stringify(jData);
+                window.localStorage.setItem(sVarName, JSON.stringify(jData));
                 return true;
             } else {
                 //TODO: alternative storage solution, when localStorage is not available
@@ -97,9 +101,9 @@ $(document).ready(function () {
             */
         var readLocally = function (sVarName) {
             if (!!window.localStorage) {
-                if (typeof window.localStorage.sVarName !== 'undefined') {
-                    return JSON.parse(window.localStorage.sVarName);
-                }
+                //if (typeof window.localStorage.sVarName !== 'undefined') {
+                    return JSON.parse(window.localStorage.getItem(sVarName));
+                //}
             } else {
                 //TODO: alternative storage solution, when localStorage is not available
                 throw("Local storage is not available");
@@ -146,29 +150,29 @@ $(document).ready(function () {
             });
 
             user.save(
-            {
-                error: function (model, response) {
-                    //TODO: properly handle errors
-                    callback(false, "Ajax error: " + response.status);
-                }
-            },
-            {
-                success: function (model, response) {
-                    // SUCCESS
-                    if (response.status == "success") {
-                        user.set({ loggedIn: '1' });
-                        // store the user details locally
-                        saveLocally("user", user);
-                        // callback success
-                        callback(true, "success");
+                {
+                    error: function (model, response) {
+                        //TODO: properly handle errors
+                        callback(false, "Ajax error: " + response.status);
                     }
-                    // FAIL
-                    else {
-                        callback(false, response.status);
+                },
+                {
+                    success: function (model, response) {
+                        // SUCCESS
+                        if (response.status == "success") {
+                            user.set({ loggedIn: '1' });
+                            // store the user details locally
+                            saveLocally("user", user);
+                            // callback success
+                            callback(true, "success");
+                        }
+                        // FAIL
+                        else {
+                            callback(false, response.status);
+                        }
                     }
                 }
-            }
-                );
+            );
         }
 
         /**
