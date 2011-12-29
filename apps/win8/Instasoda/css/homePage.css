@@ -1,104 +1,103 @@
-﻿.homePage section[role=main] {
-    margin-left: 116px;
-}
+﻿.isGrid                 { display: -ms-grid; }
+.hasAutoRows            { -ms-grid-rows: auto; }
+.isRightAligned         { -ms-grid-column-align: right; }
+.hasNoSpan              { -ms-grid-column-span: 1; -ms-grid-row-span: 1; }
+.has2ColumnSpan         { -ms-grid-column-span: 2; }
+.has3ColumnsOf3fr       { -ms-grid-columns: 3fr 3fr 3fr; }
+.has1RowOf1fr           { -ms-grid-rows: 1fr; }
+.isColumn1              { -ms-grid-column: 1; }
+.isColumn2              { -ms-grid-column: 2; }
+.isColumn3              { -ms-grid-column: 3; }
+.isRow1                 { -ms-grid-row: 1 }
+.isRow2                 { -ms-grid-row: 2 }
+.hasNoLeftPadding       { padding-left: 0!important; }
+.hasLeftPadding         { padding-left: 116px; }
+.addExtraLeftPadding    { padding-left: 250px; }
+.isAnimated             { -ms-transition-property: all; -ms-transition-duration: 0.5s;}
+.hasEasing              { -ms-transition-timing-function: ease-in-out; }
+.isNotVisible           { opacity: 0; }
+ul, li                  { list-style: none; }
+ul, li, h2              { margin: 0; padding: 0; }
 
-.homePage section[role=main] a {
-    color: #3DBCDF;
-    border-bottom: 1px dotted black;
-}
-
-.homePage section[role=main] a:focus, .homePage section[role=main] a:visited, .homePage section[role=main] a:active {
-    outline: none;
-}
-
-.homePage section[role=main] a:active
+#dashboard
 {
-    color: #3DBCDF;
-    background: none;
+    -ms-grid-columns: 8fr 2fr 116px;
 }
 
-.homePage section[role=main] ol {
-    padding: 0;
-    list-style: none;
+.profileBox {     
+    padding-top: 1em; 
 }
 
-.homePage section[role=main] ol > li {
+.profileBox img
+{
+    padding-top: 0.55em;
+    width: 80px;
+}
+
+.profileBox h2
+{
+    text-align: right;
+}
+
+.profileBox img, .profileBox h2
+{
+    padding-left: 2em;
     float: left;
-    width: 25%;
-    list-style: none;
-    background-color: white;
-    border: 1px solid #96D9EE;
-    padding: 1%;
-    margin: 2%; 
-    -ms-transition-duration: 0.3s;
 }
 
-.homePage section[role=main] ol > li:first-child {
-    margin-left: 0; 
+.plans
+{  
+    margin: 3em 0 0 -3.5em;
+}
+
+.plans > li { 
+    margin: 1em;
     border: 1px solid #96D9EE;
 }
 
-.homePage section[role=main] ol > li:hover {
+.plans > li:hover {
     border: 1px solid #3DBCDF;
-    -ms-transition-duration: 0.3s;
 }
 
-.homePage section[role=main] ol > li:hover button {
+.plans > li:hover button {
     background-color: #5dcdec;
-    -ms-transition-duration: 0.3s;
 }
 
-.homePage section[role=main] ul {
-    padding: 0;
-    list-style: none;
+.plans ul {
     text-align: center;
 }
 
-.homePage section[role=main] ul li {
-    padding: 5px 10px;
+.plans ul li {   
+    padding: 0.5em 3em;
+    text-align: center;
 }
 
-.homePage section[role=main] ul li h2 {
-    margin-top: 10px;
+.plans ul li h2 {
+    margin-top: 1em;
 }
 
-.homePage section[role=main] button {
-    width: 90%;
-    height: 50px;
-    padding: 5px 10px;
-    margin: 25px auto 15px auto;
+.plans button {
+    padding: 1em 2em;
+    margin: 1.5em auto 2.5em auto;
     background-color: #3DBCDF;
     border: 2px solid white;
     outline: 1px solid #96D9EE;
     color: white;
-    -ms-transition-duration: 0.3s;
 }
 
-.homePage section[role=main] button:active {
+.facebookLikesItem {
+    float: left;
+}
+.facebookLikesItemName {
+    font-size:11px;
+    width:80px;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.plans button:active {
     box-shadow: 0px 0px 15px 0 #007DA6 inset;   
-}
-
-.homePage section[role=main] .planDetailsFlyout {
-    color: white;
-    border: 2px solid white;
-    background: -ms-linear-gradient(top, #3DBCDF 0%,#007da6 100%);
-    box-shadow: 0 0 25px 0 #3DBCDF;
-}
-
-.planDetailsFlyout h1 {
-    text-align: center;
-    margin: 0 0 0.5em 0;
-}
-
-.planDetailsFlyout li {
-    text-align: left;
-    margin: 0 0 0.5em 0;
-}
-
-#output1, #output2
-{
-    position: fixed;
-    width: 50%;
 }
 
 @media screen and (-ms-view-state: snapped) {

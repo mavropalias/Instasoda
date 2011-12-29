@@ -11,70 +11,12 @@
             .then(function () {
             // TODO: Initialize the fragment here.
 
-            // Listeners for flyout.
-            document.getElementById("CompleteInfoLink").addEventListener("click", CompleteShowMoreInfoFlyout, false);
-            document.getElementById("StandardInfoLink").addEventListener("click", StandardShowMoreInfoFlyout, false);
-            document.getElementById("BasicInfoLink").addEventListener("click", BasicShowMoreInfoFlyout, false);
-            
-            // Listeners for content transitions
-            output2.style.opacity = "0";
-            document.getElementById("doContentTransition").addEventListener("click", runTransitionContentAnimation, false);
-            });
+        });
     }
 
     WinJS.Namespace.define('homePage', {
         fragmentLoad: fragmentLoad,
     });
-
-    function showFlyout(flyout, anchor, placement) {
-        WinJS.UI.getControl(flyout).show(anchor, placement);
-    }
-
-    function hideFlyout(flyout) {
-        WinJS.UI.getControl(flyout).hide();
-    }
-
-    function CompleteShowMoreInfoFlyout() {
-        showFlyout(CompleteInfoFlyout, CompleteInfoLink, "top");
-    }
-
-    function StandardShowMoreInfoFlyout() {
-        showFlyout(StandardInfoFlyout, StandardInfoLink, "top");
-    }
-
-    function BasicShowMoreInfoFlyout() {
-        showFlyout(BasicInfoFlyout, BasicInfoLink, "top");
-    }
-
-    function runTransitionContentAnimation() {
-        var incoming;
-        var outgoing;
-
-        // Assign incoming and outgoing
-        if (output2.style.opacity === "1") {
-            incoming = output1;
-            outgoing = output2;
-        } else {
-            incoming = output2;
-            outgoing = output1;
-        }
-
-        // Set the desired final state for incoming content (make it visible)
-        incoming.style.opacity = "1";
-
-        // Force layout pass by querying computed style width in case the incoming content is a different size from the outgoing content
-        var usedStyle = window.getComputedStyle(outputDiv, null);
-        var forceLayout = usedStyle.width;
-
-        // Get user selections from controls
-        var xOffset = 100;
-        var yOffset = 0;
-        var offset = { top: yOffset, left: xOffset };
-
-        // Run the transitionContent animation
-        WinJS.UI.Animation.transitionContent(incoming, offset, outgoing);
-    }
-     
 
 })();
 
@@ -94,7 +36,7 @@ $(document).ready(function () {
     }
 
     //debug
-     /*   // create the user account
+    /*   // create the user account
         try {
             IS.createAccount("3", "AAACRA55XRqgBAK36aOERkoK4ccnmWTwkrKPZCACNJA796rX89U5tHSiZAiJZCnJorhgBVYXGACKJgy4myByZCD2Xcc6NNUIZD", function (success, jData) {
                 if (success) {
@@ -106,7 +48,7 @@ $(document).ready(function () {
         } catch (e) {
             $('#fbResponse').html("error:  " + e);
         }*/
-    
+
 
     var iPackage = 0;
     var scope1 = "email,user_relationships,user_location,user_hometown,user_birthday";
@@ -114,8 +56,9 @@ $(document).ready(function () {
     var scope3 = scope2 + ",sms,offline_access,user_videos";
 
     $('#register1').click(function () {
-        iPackage = 1;
-        launchFacebookWebAuth(scope1);
+        //iPackage = 1;
+        //launchFacebookWebAuth(scope1);
+        animateContent($('#registerAccount'), $('#dashboard'), $('.pokomastah'))
     });
     $('#register2').click(function () {
         iPackage = 2;
@@ -126,12 +69,37 @@ $(document).ready(function () {
         launchFacebookWebAuth(scope3);
     });
 
+    function animateContent(animateOut, animateIn, animateAfter) {
+        animateOut.addClass('isAnimated hasEasing isNotVisible hasNoLeftPadding')
+        setTimeout(function () {
+            animateOut.hide()
+                      .removeClass('isAnimated hasEasing isNotVisible hasNoLeftPadding')
+            animateIn.addClass('addExtraLeftPadding isNotVisible')
+                     .addClass('isAnimated hasEasing')
+                     .show()
+                     .removeClass('addExtraLeftPadding isNotVisible')
+                     .removeClass('isAnimated hasEasing')
+        }, 500)
+
+        if (animateAfter != "") {
+            animateAfter.hide()
+
+            setTimeout(function () {
+                animateAfter.addClass('addExtraLeftPadding isNotVisible')
+                            .addClass('isAnimated hasEasing')
+                            .show()
+                            .removeClass('addExtraLeftPadding isNotVisible')
+                            .removeClass('isAnimated hasEasing')
+            }, 1000)
+        }
+    }
+
     function launchFacebookWebAuth(scope) {
         var facebookURL = "https://www.facebook.com/dialog/oauth?client_id=";
         var clientID = "159444727449256";
         var callbackURL = "https://www.facebook.com/connect/login_success.html";
         facebookURL += clientID + "&redirect_uri=" + encodeURIComponent(callbackURL) +
- "&scope=" + scope +"&display=popup&response_type=token";
+ "&scope=" + scope + "&display=popup&response_type=token";
 
         try {
             var startURI = new Windows.Foundation.Uri(facebookURL);
@@ -156,10 +124,10 @@ $(document).ready(function () {
             // success - the user has given permission and we now have a url with the token
             // parse token value from FacebookReturnedToken
             sToken = getParameterByName("access_token", FacebookReturnedToken);
-            
+
             // create the user account
             try {
-                IS.createAccount(iPackage, sToken, function(success, jData) {
+                IS.createAccount(iPackage, sToken, function (success, jData) {
                     if (success) {
                         $('#registerAccount').hide();
                         if (IS.accountIsComplete()) {
@@ -170,12 +138,12 @@ $(document).ready(function () {
                     } else {
                         $('#fbResponse').html("error: " + jData.status);
                     }
-                });  
+                });
             } catch (e) {
                 $('#fbResponse').html("error:  " + e);
             }
 
-            
+
         }
     }
 

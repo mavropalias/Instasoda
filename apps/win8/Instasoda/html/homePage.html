@@ -35,101 +35,79 @@
                     <h1 class="pageTitle win-title">Welcome to Instasoda!</h1><br />                
                 </div>
             </header>
-            <section id="registerAccount" role="main" aria-label="Main content">
-                <h2>Create your Instasoda account</h2>
+
+            <!-- Registration Grid (3 columns, 2 rows) -->
+            <section id="registerAccount" role="main" aria-label="Main content" class="isGrid has3ColumnsOf3fr hasLeftPadding hasAutoRows">
+                <!-- Row 1 (column span = 1) -->
+                <header class="isColumn1 isRow1 has2ColumnSpan">
+                    <h2>Create your Instasoda account</h2>
             
-                <p>Instasoda will automatically create your dating profile, based on your Facebook account. We will <em>not</em> use your real name, or any other personal information (like email, employment, address, etc).</p>
-                <p>Please choose one of the following <strong>free</strong> packages (you can always upgrade or downgrade later):</p>
+                    <p>Instasoda will automatically create your dating profile, based on your Facebook account. We will <em>not</em> use your real name, or any other personal information (like email, employment, address, etc).</p>
+                    <p>Please choose one of the following <strong>free</strong> packages (you can always upgrade or downgrade later):</p>
 
-                <div id="fbResponse"></div>
-                <div id="userSettingsView">view</div>
+                    <div id="fbResponse"></div>
+                </header>
 
-                <ol>
-                    <li>
-                        <ul id="poko">
+                <!-- Row 2 (no column span) - a grid of its own (3 columns, 1 row) -->
+                <ol class="plans isGrid has3ColumnsOf3fr has1RowOf1fr isColumn1 isRow2 has2ColumnSpan">
+                    <li class="isColumn1 hasNoSpan isAnimated">
+                        <ul>
                             <li><h2>Complete</h2></li>
                             <li>Cupcake ipsum dolor sit amet icing. Topping soufflé candy canes biscuit chocolate cake chocolate cake. Donut jelly sweet roll.</li>
-                            <li><a href="#" id="CompleteInfoLink">Learn More!</a></li>
-                            <li><button id="register3">Complete (recommended)</button></li>
+                            <li>Send you SMS</li>
+                            <li>Offline access</li>
+                            <li>Your videos</li>
+                            <li><button id="register3" class="isAnimated">Complete (recommended)</button></li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="isColumn2 hasNoSpan isAnimated">
                         <ul>
                             <li><h2>Standard</h2></li>
                             <li>Cupcake ipsum dolor sit amet icing. Topping soufflé candy canes biscuit chocolate cake chocolate cake. Donut jelly sweet roll.</li>
-                            <li><a href="#" id="StandardInfoLink">Learn More!</a></li>
-                            <li><button id="register2">Standard</button></li>
+                            <li>Activities</li>
+                            <li>Education</li>
+                            <li>Your stream</li>
+                            <li>Your interests</li>
+                            <li>Your likes</li>
+                            <li>Photos</li>
+                            <li><button id="register2" class="isAnimated">Standard</button></li>
                         </ul>
                     </li>
-                    <li>
+                    <li class="isColumn3 hasNoSpan isAnimated">
                         <ul>
                             <li><h2>Basic</h2></li>
                             <li>Cupcake ipsum dolor sit amet icing. Topping soufflé candy canes biscuit chocolate cake chocolate cake. Donut jelly sweet roll.</li>
-                            <li><a href="#" id="BasicInfoLink">Learn More!</a></li>
-                            <li><button id="Button1">Basic</button></li>
+                            <li>Email</li>
+                            <li>Relationship status</li>
+                            <li>Location</li>
+                            <li>Age</li>
+                            <li><button id="register1" class="isAnimated">Basic</button></li>
                         </ul>
                     </li>
                 </ol>
-                <div id="CompleteInfoFlyout" class="planDetailsFlyout" data-win-control="WinJS.UI.Flyout" aria-label="{More info flyout}">
-                    <h1>Complete</h1>
-                    <ul>
-                        <li>Send you SMS</li>
-                        <li>Offline access</li>
-                        <li>Your videos</li>
-                    </ul>
-                </div>
-                <div id="StandardInfoFlyout" class="planDetailsFlyout" data-win-control="WinJS.UI.Flyout" aria-label="{More info flyout}">
-                    <h1>Standard</h1>
-                    <ul>
-                        <li>Activities</li>
-                        <li>Education</li>
-                        <li>Your stream</li>
-                        <li>Your interests</li>
-                        <li>Your likes</li>
-                        <li>Photos</li>
-                    </ul>
-                </div>
-                <div id="BasicInfoFlyout" class="planDetailsFlyout" data-win-control="WinJS.UI.Flyout" aria-label="{More info flyout}">
-                    <h1>Basic</h1>
-                    <ul>
-                        <li>Email</li>
-                        <li>Relationship status</li>
-                        <li>Location</li>
-                        <li>Age</li>
-                    </ul>
-                </div>
+            </section>
 
-                <!-- Testing content transition  -->
-                <div class="item" id="scenario3Input">
-                    <button id="doContentTransition" class="action">Run animation</button>
+            <section id="Section1" role="main" aria-label="Main content" class="isGrid hasLeftPadding hasAutoRows">
+                <form class="isColumn1 isRow1">
+                    <h2>Choose your username:</h2>
+                    <label><input name="username" autofocus required maxlength=50> (this is how other Instasoda users will see you)</label>
+                    <h4>Data synced from your Facebook profile:</h4>
+                    <img src="http://www.instasoda.com/api/photos/fb_{{fbUid}}.jpg">
+                    <p>Age: 35</p>
+                    <p>Gender: Male</p>
+                    <p>Relationship status: LAWL</p>
+                    <p>Education level: None</p>
+                    <p>Location: Ireland</p>
+                    <p>Email: poko@poko.com (only you can see this)</p>
+                    <button>Save profile</button>
+                </form>
+                <aside class="profileBox isColumn2 isRow1 isRightAligned">
+                    <h2>HARRO,<br />POKOMASTAH!</h2>
+                    <img src="https://lh6.googleusercontent.com/-wEd_rLg_rzI/AAAAAAAAAAI/AAAAAAAABA0/xmwestrAGGk/s200-c-k/photo.jpg" alt="User Pic" />
+                </aside>
+                <div class="pokomastah isColumn1 isRow2 hasLeftPadding isNotVisible has2ColumnSpan">
+                    <h2>DIZ IZ TEH CONTENT!!!1oneelevenexclamationpoint</h2>
                 </div>
-
-                <div class="item" id="outputDiv">
-                    <div id="output1">
-                        <h3>Output 1</h3>
-                        <p>The content in this area will transition.</p>
-                        <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-                        euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad
-                        minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip
-                        ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate
-                        velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero
-                        eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit
-                        augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend
-                        option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
-                        Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.
-                        Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius.
-                        Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
-                    </div>
-                    <div id="output2">
-                        <h3>Output 2</h3>
-                        <p>The content in this area will transition.</p>
-                        <p>The quick brown fox jumped over the lazy dog. The quick brown fox jumped over the
-                        lazy dog. The quick brown fox jumped over the lazy dog. The quick brown fox jumped
-                        over the lazy dog. The quick brown fox jumped over the lazy dog. The quick brown
-                        fox jumped over the lazy dog.</p>
-                    </div>
-                </div>
-
             </section>
 
             <section id="dashboard" role="main" aria-label="Main content">
