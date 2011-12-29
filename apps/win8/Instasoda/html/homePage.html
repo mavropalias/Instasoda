@@ -28,7 +28,7 @@
 </head>
 <body>
     <!-- The content that will be loaded and displayed. -->
-        <div class="fragment homePage">
+        <div class="fragment homePage"  style="overflow-y: auto; overflow-x: auto;">
             <header role="banner" aria-label="Header content">
                 <button disabled class="win-backbutton" aria-label="Back"></button>
                 <div class="titleArea">
@@ -91,13 +91,13 @@
                 Welcome back.
             </section>
 
-            <section id="settings" role="main" aria-label="Main content">
+            <section id="settings" role="main" aria-label="Main content" class="isGrid hasLeftPadding hasAutoRows">
                 Please fill-in the missing information:
             </section>
 
         <!-- Mustache.js templates -->
             <script id="tplSettings" type="text/template">
-                <form>
+                <form class="isColumn1 isRow1">
                     <h2>Choose your username:</h2>
                     <label><input name="username" autofocus required maxlength=50> (this is how other Instasoda users will see you)</label>
                     <h4>Data synced from your Facebook profile:</h4>

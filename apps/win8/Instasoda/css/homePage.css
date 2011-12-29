@@ -19,9 +19,9 @@
 ul, li                  { list-style: none; }
 ul, li, h2              { margin: 0; padding: 0; }
 
-#dashboard
+#settings
 {
-    -ms-grid-columns: 8fr 2fr 116px;
+    -ms-grid-columns: auto;
 }
 
 .profileBox {     

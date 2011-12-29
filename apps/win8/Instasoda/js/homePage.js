@@ -58,7 +58,7 @@ $(document).ready(function () {
     $('#register1').click(function () {
         //iPackage = 1;
         //launchFacebookWebAuth(scope1);
-        animateContent($('#registerAccount'), $('#dashboard'), $('.pokomastah'))
+        animateContent($('#registerAccount'), $('#dashboard'))
     });
     $('#register2').click(function () {
         iPackage = 2;
@@ -69,7 +69,7 @@ $(document).ready(function () {
         launchFacebookWebAuth(scope3);
     });
 
-    function animateContent(animateOut, animateIn, animateAfter) {
+    function animateContent(animateOut, animateIn) {
         animateOut.addClass('isAnimated hasEasing isNotVisible hasNoLeftPadding')
         setTimeout(function () {
             animateOut.hide()
@@ -81,7 +81,7 @@ $(document).ready(function () {
                      .removeClass('isAnimated hasEasing')
         }, 500)
 
-        if (animateAfter != "") {
+       /* if (animateAfter != false) {
             animateAfter.hide()
 
             setTimeout(function () {
@@ -91,7 +91,7 @@ $(document).ready(function () {
                             .removeClass('addExtraLeftPadding isNotVisible')
                             .removeClass('isAnimated hasEasing')
             }, 1000)
-        }
+        }*/
     }
 
     function launchFacebookWebAuth(scope) {
@@ -129,11 +129,12 @@ $(document).ready(function () {
             try {
                 IS.createAccount(iPackage, sToken, function (success, jData) {
                     if (success) {
-                        $('#registerAccount').hide();
+                        //$('#registerAccount').hide();
                         if (IS.accountIsComplete()) {
                             $('#dashboard').show();
                         } else {
-                            $('#settings').show();
+                            //$('#settings').show();
+                            animateContent($('#registerAccount'), $('#settings'))
                         }
                     } else {
                         $('#fbResponse').html("error: " + jData.status);
