@@ -4,7 +4,7 @@
 *.buildpath
 *.komodoproject
 *.appxrecipe
-*.suo
+*.v11.suo
 *.wwaproj.user
 
 # Logs and temp files #
