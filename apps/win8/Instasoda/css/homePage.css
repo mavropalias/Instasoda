@@ -85,9 +85,19 @@ ul, li, h2              { margin: 0; padding: 0; }
     color: white;
 }
 
+#basicSettings {
+    float: left;
+    margin-right:5em;
+}
+
+#facebookLikesContainer {
+    display: none;
+}
+
 .facebookLikesItem {
     float: left;
 }
+
 .facebookLikesItemName {
     font-size:11px;
     width:80px;
