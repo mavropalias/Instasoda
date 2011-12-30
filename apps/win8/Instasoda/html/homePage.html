@@ -87,41 +87,75 @@
                 </ol>
             </section>
 
-            <section id="dashboard" role="main" aria-label="Main content">
-                Welcome back.
-            </section>
+            <section id="dashboard" role="main" aria-label="Main content"></section>
 
-            <section id="settings" role="main" aria-label="Main content" class="isGrid hasLeftPadding hasAutoRows">
-                Please fill-in the missing information:
-            </section>
+            <section id="settings" role="main" aria-label="Main content" class="isGrid hasLeftPadding hasAutoRows"></section>
 
         <!-- Mustache.js templates -->
             <script id="tplSettings" type="text/template">
                 <form class="isColumn1 isRow1">
-                    <h2>Choose your username:</h2>
-                    <label><input name="username" autofocus required maxlength=50> (this is how other Instasoda users will see you)</label>
-                    <h4>Data synced from your Facebook profile:</h4>
-                    <img src="http://www.instasoda.com/api/photos/fb_{{fbUid}}.jpg">
-                    <p>Age: {{age}}</p>
-                    <p>Gender: {{gender}}</p>
-                    <p>Relationship status: {{fbRelationshipStatus}}</p>
-                    <p>Education level: {{fbEducation}}</p>
-                    <p>Location: {{fbLocation}}</p>
-                    <p>Email: {{email}} (only you can see this)</p>
-                    <button>Save profile</button>
-                    <ul id="facebookLikesContainer">
-                        {{#likes}}
-                            <li class="facebookLikesItem">
-                                <ul>
-                                    <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture"></li>
-                                    <li class="facebookLikesItemName">{{name}}</li>
-                                </ul>
-                            </li>
-                        {{/likes}}
-                        {{^likes}}
-                            No likes.
-                        {{/likes}}
-                    </ul>
+                    <div id="basicSettings">
+                        <p>
+                            <h2>Choose your username:</h2>
+                            <label><input name="username" autofocus required maxlength=50> (this is how other Instasoda users will see you)</label>
+                        </p>
+
+                        <p>
+                            <h2>Interested in:</h2>
+                            <label><input type="checkbox" name="interestedInMales" value="1">women</label>
+                            <label><input type="checkbox" name="interestedInFemales"  value="1">men</label>
+                        </p>
+
+                        <p>
+                            <h2>Looking for:</h2>
+                            <label><input type="checkbox" name="lookingForShortTerm" value="1">short-term relationship</label>
+                            <label><input type="checkbox" name="lookingForLongTerm" value="1">long-term relationship</label>
+                            <label><input type="checkbox" name="lookingForMarriage" value="1">marriage</label>
+                            <label><input type="checkbox" name="lookingForComeWhatMay" value="1">come what may!</label>
+                        </p>
+
+                        <p>
+                            <h2>Write a bit about yourself:</h2>
+                            <div contentEditable="true" placeholder="type here" style="height:15em;width:40em;"></div>
+                        </p>
+
+                        <button type="submit">Save profile</button>
+                    </div>
+
+                    <div id="facebookLoading">Fetching data from Facebook <progress class="win-ring" style="width: 20px; height: 20px" /></div>
+                    
+                    <div id="facebookData" style="display:none;">
+                        <p>
+                            <h2>Data synced from your Facebook profile:</h2>
+                        </p>
+                
+                        <div id="userPictures">
+                            <img src="http://www.instasoda.com/api/photos/fb_{{fbUid}}.jpg">
+                        </div>
+
+                        <button id="addPictures">Add picture</button>
+
+                        <p>Age: {{age}}</p>
+                        <p>Gender: {{gender}}</p>
+                        <p>Relationship status: {{fbRelationshipStatus}}</p>
+                        <p>Education level: {{fbEducation}}</p>
+                        <p>Location: {{fbLocation}}</p>
+                        <p>Email: {{email}} (only you can see this)</p>
+
+                        <ul id="facebookLikesContainer">
+                            {{#likes}}
+                                <li class="facebookLikesItem">
+                                    <ul>
+                                        <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture" width=50 height=50></li>
+                                        <li class="facebookLikesItemName">{{name}}</li>
+                                    </ul>
+                                </li>
+                            {{/likes}}
+                            {{^likes}}
+                                No likes.
+                            {{/likes}}
+                        </ul>
+                    </div>
                 </form>
             </script>
         </div>
