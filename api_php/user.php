@@ -66,6 +66,9 @@
                     'age' => $row->age, 
                     'gender' => $row->gender,
                     'email' => $row->email,
+                    'aboutMe' => $row->aboutMe,
+                    'interestedInMen' => ($row->interestedInMen == 1 ? true : false),
+                    'interestedInWomen' => ($row->interestedInWomen == 1 ? true : false),
                     'ip' => $row->ip,
                     'fbToken' => $row->fbToken,
                     'fbUid' => $row->fbUid,
@@ -101,6 +104,9 @@
                         'age' => getAge($user_profile['birthday']), 
                         'gender' => $user_profile['gender'],
                         'email' => $user_profile['email'],
+                        'aboutMe' => $item->aboutMe,
+                        'interestedInMen' => $item->interestedInMen,
+                        'interestedInWomen' => $item->interestedInWomen,
                         'ip' => $_SERVER['REMOTE_ADDR'],
                         'fbToken' => $fbToken,
                         'fbUid' => $fbUid,
@@ -131,6 +137,9 @@
                             age,
                             gender,
                             email,
+                            aboutMe,
+                            interestedInMen,
+                            interestedInWomen,
                             ip,
                             fbToken,
                             fbUid,
@@ -152,6 +161,9 @@
                             :age,
                             :gender,
                             :email,
+                            :aboutMe,
+                            :interestedInMen,
+                            :interestedInWomen,
                             :ip,
                             :fbToken,
                             :fbUid,
@@ -174,6 +186,8 @@
                         echo json_encode(array("status"=>"Could not update the database (101)."));
                         file_put_contents('InstasodaPDOErrors.txt', $e->getMessage(), FILE_APPEND);
                     }
+                    
+                    $data['id'] = $DB->lastInsertId();
                     
                     // fetch user's Facebook profile image
                         try {
@@ -241,7 +255,6 @@
                     
                 // 3. SUCCESS! Everything is ok, return a json object back to the app
                     header('HTTP/1.1 200 OK');
-                    $data['id'] = $DB->lastInsertId();
                     $data['status'] = 'success';
                     $data['likes'] = $fbLikesResult;
                     echo json_encode($data);
@@ -305,6 +318,9 @@
                     'age' => getAge($user_profile['birthday']), 
                     'gender' => $user_profile['gender'],
                     'email' => $user_profile['email'],
+                    'aboutMe' => $item->aboutMe,
+                    'interestedInMen' => $item->interestedInMen,
+                    'interestedInWomen' => $item->interestedInWomen,
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'fbToken' => $fbToken,
                     'fbUid' => $user_profile['id'],
@@ -331,6 +347,9 @@
                         age = :age,
                         gender = :gender,
                         email = :email,
+                        aboutMe = :aboutMe,
+                        interestedInMen = :interestedInMen,
+                        interestedInWomen = :interestedInWomen,
                         ip = :ip,
                         fbToken = :fbToken,
                         fbUid = :fbUid,
@@ -345,7 +364,7 @@
                         fbInspirationalPeople = :fbInspirationalPeople,
                         fbLanguages = :fbLanguages,
                         fbLikesCount = :fbLikesCount,
-                        fbFriendCount = :fbFriendCount,                  
+                        fbFriendCount = :fbFriendCount                  
                         
                         WHERE id = :id
                     ");  
