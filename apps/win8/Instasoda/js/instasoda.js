@@ -176,6 +176,41 @@ $(document).ready(function () {
         }
 
         /**
+            * Update user's data.
+            * @param {Object} jUserData the data to update
+            * @param {Function} callback
+            * @return {Object} Returns an object {'s': 'success/fail'}
+            */
+        this.updateUserData = function (jUserData, callback) {
+
+            user.set(jUserData);
+
+            user.save(
+            {
+                error: function (model, response) {
+                    //TODO: properly handle errors
+                    callback(false, "Ajax error: " + response.status);
+                }
+            },
+            {
+                success: function (model, response) {
+                    // SUCCESS
+                    if (response.status == "success") {
+                        // store the user details locally
+                        saveLocally("user", user);
+                        // callback success
+                        callback(true, "success");
+                    }
+                    // FAIL
+                    else {
+                        callback(false, response.status);
+                    }
+                }
+            }
+            );
+        }
+
+        /**
             * Attempts to log the user into the system.
             * If it fails, it means that the user need to register a new account.
             * @return {Bool} true/false
