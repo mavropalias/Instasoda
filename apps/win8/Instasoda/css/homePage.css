@@ -3,6 +3,7 @@
 .isRightAligned         { -ms-grid-column-align: right; }
 .hasNoSpan              { -ms-grid-column-span: 1; -ms-grid-row-span: 1; }
 .has2ColumnSpan         { -ms-grid-column-span: 2; }
+.has2ColumnsOf2fr       { -ms-grid-columns: 2fr 2fr; }
 .has3ColumnsOf3fr       { -ms-grid-columns: 3fr 3fr 3fr; }
 .has1RowOf1fr           { -ms-grid-rows: 1fr; }
 .isColumn1              { -ms-grid-column: 1; }
@@ -85,14 +86,10 @@ ul, li, h2              { margin: 0; padding: 0; }
     color: white;
 }
 
-#basicSettings {
-    float: left;
-    margin-right:5em;
+#facebookData
+{
+    padding-left: 116px;
 }
-
-    #basicSettings h2 {
-        margin-top:1em;
-    }
 
 #userPictures {
     display:block;
