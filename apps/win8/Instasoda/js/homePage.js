@@ -33,8 +33,6 @@ $(document).ready(function () {
             if (IS.accountIsComplete()) {
                 $('#dashboard').show();
             } else {
-                $('#facebookLoading').hide();
-                $('#facebookData').show();
                 showSettingsPage();
             }
         } else {
@@ -52,6 +50,8 @@ $(document).ready(function () {
 
             // show settings
             animateContentIn($('#settings'));
+            $('#saveProfileButton').show();
+            $('#working').hide();
 
             // create a FileOpenPicker object for the image file picker button
             var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
@@ -59,7 +59,7 @@ $(document).ready(function () {
             openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
             openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
             
-            // add the event listener for the image file picker button
+            // add click handler for the image file picker button
             $('#addPictures').click(function () {
                 openPicker.pickSingleFileAsync().then(function (file) {
                     // Ensure picked file is valid and usable
@@ -68,10 +68,32 @@ $(document).ready(function () {
                         
                         //$('#userPictures').append('<img scr="' + file.folderRelativeId + '\\' + file.fileName + '">' + file.folderRelativeId + '\\' + file.fileName);
                         //$('#userPictures').append('<img scr="' + URL.createObjectURL(file) + '">');
-                        $('#userPictures').append('<img height=200 src="' + URL.createObjectURL(file) + '">');
+                        $('#userPictures').append('<li class="userPicture"><img height=100 src="' + URL.createObjectURL(file) + '"></li>');
                     } else {
                         // File not valid
                         $('#userPictures').append("error");
+                    }
+                });
+            });
+
+            // add click handler for the 'Save profile' button
+            $('#saveProfileButton').click(function () {
+                // fetch form data
+                var userData = {
+                    'username': $('#settings input[name=username]').val(),
+                    'aboutMe': $('#settings #aboutMe').html(),
+                    'interestedInMen': (($('#settings input[name=interestedInMen]:checked').length > 0) ? true : false),
+                    'interestedInWomen': (($('#settings input[name=interestedInWomen]:checked').length > 0) ? true : false)
+                }
+
+                IS.updateUserData(userData, function (success, message) {
+                    if (success) {
+                        $('#saveProfileButton').fadeIn();
+                        $('#working').fadeOut();
+                    }
+                    else {
+                        $('#saveProfileButton').fadeIn();
+                        $('#working').html(message);
                     }
                 });
             });
@@ -168,8 +190,8 @@ $(document).ready(function () {
                 try {
                     IS.createAccount(iPackage, sToken, function (success, jData) {
                         if (success) {
-                            $('#facebookLoading').fadeOut();
-                            $('#facebookData').fadeIn();
+                            $('#saveProfileButton').fadeIn();
+                            $('#working').fadeOut();
                         } else {
                             $('#fbResponse').html("error: " + jData.status);
                         }
