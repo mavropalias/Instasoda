@@ -90,6 +90,25 @@ ul, li, h2              { margin: 0; padding: 0; }
     margin-right:5em;
 }
 
+    #basicSettings h2 {
+        margin-top:1em;
+    }
+
+#userPictures {
+    display:block;
+    position:relative;
+    clear:right;
+    overflow:hidden;
+}
+
+    #userPictures .userPicture {
+        float:left;
+        width:100px;
+        height:100px;
+        overflow:hidden;
+        margin:0 1em 1em 0;
+    }
+
 #facebookLikesContainer {
     display: none;
 }
