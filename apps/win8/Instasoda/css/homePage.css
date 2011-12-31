@@ -86,11 +86,6 @@ ul, li, h2              { margin: 0; padding: 0; }
     color: white;
 }
 
-#facebookData
-{
-    padding-left: 116px;
-}
-
 #userPictures {
     display:block;
     position:relative;
