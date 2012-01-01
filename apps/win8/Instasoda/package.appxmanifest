@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest">
-  <Identity Name="0b6ab6de-0aa8-42e8-97fe-db3af2498d1b" Version="0.0.1.1" Publisher="CN=mavropalias" />
+  <Identity Name="BUILD.5cf89ba6-b0d7-437d-9682-4e8667a69129" Version="0.0.1.1" Publisher="CN=mavropalias" />
   <Properties>
-    <DisplayName>Instasoda dating</DisplayName>
+    <DisplayName>Isod1</DisplayName>
     <Description>Instasoda</Description>
     <PublisherDisplayName>mavropalias</PublisherDisplayName>
     <Logo>images\storelogo.png</Logo>
