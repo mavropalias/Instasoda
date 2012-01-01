@@ -52,51 +52,6 @@ $(document).ready(function () {
             animateContentIn($('#settings'));
             $('#saveProfileButton').show();
             $('#working').hide();
-
-            // create a FileOpenPicker object for the image file picker button
-            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-            openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail; //show images in thumbnail mode
-            openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
-            openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
-            
-            // add click handler for the image file picker button
-            $('#addPictures').click(function () {
-                openPicker.pickSingleFileAsync().then(function (file) {
-                    // Ensure picked file is valid and usable
-                    if (file) {
-                        // append picture in the page
-                        
-                        //$('#userPictures').append('<img scr="' + file.folderRelativeId + '\\' + file.fileName + '">' + file.folderRelativeId + '\\' + file.fileName);
-                        //$('#userPictures').append('<img scr="' + URL.createObjectURL(file) + '">');
-                        $('#userPictures').append('<li class="userPicture"><img height=100 src="' + URL.createObjectURL(file) + '"></li>');
-                    } else {
-                        // File not valid
-                        $('#userPictures').append("error");
-                    }
-                });
-            });
-
-            // add click handler for the 'Save profile' button
-            $('#saveProfileButton').click(function () {
-                // fetch form data
-                var userData = {
-                    'username': $('#settings input[name=username]').val(),
-                    'aboutMe': $('#settings #aboutMe').html(),
-                    'interestedInMen': (($('#settings input[name=interestedInMen]:checked').length > 0) ? true : false),
-                    'interestedInWomen': (($('#settings input[name=interestedInWomen]:checked').length > 0) ? true : false)
-                }
-
-                IS.updateUserData(userData, function (success, message) {
-                    if (success) {
-                        $('#saveProfileButton').fadeIn();
-                        $('#working').fadeOut();
-                    }
-                    else {
-                        $('#saveProfileButton').fadeIn();
-                        $('#working').html(message);
-                    }
-                });
-            });
         }
 
 

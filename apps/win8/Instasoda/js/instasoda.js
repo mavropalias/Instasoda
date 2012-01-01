@@ -43,27 +43,74 @@ $(document).ready(function () {
         // ===================================================
 
         var UserSettingsView = Backbone.View.extend({
-            tagName: 'div',
-            id: 'userSettingsView2',
+            
+            events: {
+                'click #saveProfileButton': 'save',
+                'click #addPhoto': 'addPhoto'
+            },
+
             initialize: function (options) {
                 _.bindAll(this, 'render');
                 this.model.bind('change', this.render);
                 this.render();
             },
+
             render: function () {
-                //TODO: render view template
-                //$(this.el).html(this.template(this.model.toJSON()));
-                //$('#userSettingsView').html(this.model.toJSON());
-                //$(this.el).html(this.model.get('username'));
-                //this.el.innerHTML = this.model.get('username') + "<br>" + this.model.get('gender') + "<br>" + this.model.get('age') + "<br>" + this.model.get('fbLocation');
-                //$('#settings').html(this.el);
-
                 var template = $('#tplSettings').html();
-                $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
-                var html = $(this.el).html();
+                WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
+                return this;
+            },
 
-                msWWA.execUnsafeLocalFunction(function () {
-                    $('#settings').html(html);
+            save: function () {
+                // fetch form data
+                var userData = {
+                    'username': $('#settings input[name=username]').val(),
+                    'aboutMe': $('#settings #aboutMe').html(),
+                    'interestedInMen': (($('#settings input[name=interestedInMen]:checked').length > 0) ? true : false),
+                    'interestedInWomen': (($('#settings input[name=interestedInWomen]:checked').length > 0) ? true : false)
+                }
+
+                this.model.set(userData);
+                this.model.save(
+                    {
+                        error: function (model, response) {
+                            //TODO: properly handle errors
+                            //callback(false, "Ajax error: " + response.status);
+                        }
+                    },
+                    {
+                        success: function (model, response) {
+                            // SUCCESS
+                            if (response.status == "success") {
+                                saveLocally("user", user);
+                                $('#saveProfileButton').fadeIn();
+                                $('#working').fadeOut();
+                            }
+                            // FAIL
+                            else {
+                                //callback(false, response.status);
+                            }
+                        }
+                    }
+                );
+            },
+
+            addPhoto: function () {
+                // create a FileOpenPicker object for the image file picker button
+                var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+                openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail; //show images in thumbnail mode
+                openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
+                openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
+
+                openPicker.pickSingleFileAsync().then(function (file) {
+                    // Ensure picked file is valid and usable
+                    if (file) {
+                        // append picture in the page
+                        $('#userPictures').append('<li class="userPicture"><img height=100 src="' + URL.createObjectURL(file) + '"></li>');
+                    } else {
+                        // File not valid
+                        $('#userPictures').append("error");
+                    }
                 });
             }
         });
@@ -126,6 +173,7 @@ $(document).ready(function () {
         // views
         var userSettingsView = new UserSettingsView({
             model: user,
+            el: $('#settings')[0]
         });
 
 
