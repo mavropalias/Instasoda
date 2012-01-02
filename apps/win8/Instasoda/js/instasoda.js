@@ -47,7 +47,8 @@ $(document).ready(function () {
             
             events: {
                 'click #saveProfileButton': 'save',
-                'click #addPhoto': 'addPhoto'
+                'click #addPhoto': 'addPhoto',
+                'click .userPicture': 'viewPhoto'
             },
 
             initialize: function (options) {
@@ -60,16 +61,25 @@ $(document).ready(function () {
                 var template = $('#tplSettings').html();
                 WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
 
-                // temp hardcoded photo section:
+                // temp hardcoded UI manipulation:
                 if (this.model.get('photos') != null && this.model.get('photos') != "") {
                     var images = this.model.get('photos').split(',');
                     for (var i = 0; i < (images.length - 1); i++) {
-                        //images[i] = images[i].replace("\"", "");
-                        $('#userPictures').append("<li class='userPicture'><img src='" + sApiPhotos + images[i] + "' height=100></li>");
+                        $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=100></li>");
                     }
+                }
+                if (this.model.get('interestedInMen') == '1') {
+                    $('input[name=interestedInMen]').prop("checked", true);
+                }
+                if (this.model.get('interestedInWomen') == '1') {
+                    $('input[name=interestedInWomen]').prop("checked", true);
                 }
 
                 return this;
+            },
+
+            viewPhoto: function() {
+                var filename = $(e.currentTarget).data("filename");
             },
 
             save: function () {
@@ -130,27 +140,27 @@ $(document).ready(function () {
                                 var imageData = JSON.parse(e.currentTarget.response);
                                 that.model.set(imageData);
                                 that.model.save(
-                                {
-                                    error: function (model, response) {
-                                        //TODO: properly handle errors
-                                        //callback(false, "Ajax error: " + response.status);
-                                    }
-                                },
-                                {
-                                    success: function (model, response) {
-                                        // SUCCESS
-                                        if (response.status == "success") {
-                                            saveLocally("user", user);
-                                            $('#saveProfileButton').fadeIn();
-                                            $('#working').fadeOut();
+                                    {
+                                        error: function (model, response) {
+                                            //TODO: properly handle errors
+                                            //callback(false, "Ajax error: " + response.status);
                                         }
-                                        // FAIL
-                                        else {
-                                            //callback(false, response.status);
+                                    },
+                                    {
+                                        success: function (model, response) {
+                                            // SUCCESS
+                                            if (response.status == "success") {
+                                                saveLocally("user", user);
+                                                $('#saveProfileButton').fadeIn();
+                                                $('#working').fadeOut();
+                                            }
+                                            // FAIL
+                                            else {
+                                                //callback(false, response.status);
+                                            }
                                         }
                                     }
-                                }
-                );
+                                );
                             };
                             xhr.send(blob);
                         });                        
