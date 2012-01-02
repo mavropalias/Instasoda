@@ -4,6 +4,18 @@
     require 'libs/facebook.php';
     require 'libs/instasodaHelperFunctions.php';
     
+    
+    // ========================================
+    // ========================================
+    // DEBUG
+    // ========================================
+    // ========================================
+    
+        /*$rawJSONString = file_get_contents('php://input');
+        $item = json_decode($rawJSONString);
+        file_put_contents('debug.txt', serialize(($item->photos)), FILE_APPEND);
+        file_put_contents('debug2.txt', unserialize(serialize($item->photos)), FILE_APPEND);*/
+    
     // ========================================
     // ========================================
     // CREATE (POST)
@@ -69,6 +81,7 @@
                     'aboutMe' => $row->aboutMe,
                     'interestedInMen' => ($row->interestedInMen == 1 ? true : false),
                     'interestedInWomen' => ($row->interestedInWomen == 1 ? true : false),
+                    'photos' => $row->photos,
                     'ip' => $row->ip,
                     'fbToken' => $row->fbToken,
                     'fbUid' => $row->fbUid,
@@ -107,6 +120,7 @@
                         'aboutMe' => $item->aboutMe,
                         'interestedInMen' => $item->interestedInMen,
                         'interestedInWomen' => $item->interestedInWomen,
+                        'photos' => $item->photos,
                         'ip' => $_SERVER['REMOTE_ADDR'],
                         'fbToken' => $fbToken,
                         'fbUid' => $fbUid,
@@ -140,6 +154,7 @@
                             aboutMe,
                             interestedInMen,
                             interestedInWomen,
+                            photos,
                             ip,
                             fbToken,
                             fbUid,
@@ -164,6 +179,7 @@
                             :aboutMe,
                             :interestedInMen,
                             :interestedInWomen,
+                            :photos,
                             :ip,
                             :fbToken,
                             :fbUid,
@@ -321,6 +337,7 @@
                     'aboutMe' => $item->aboutMe,
                     'interestedInMen' => $item->interestedInMen,
                     'interestedInWomen' => $item->interestedInWomen,
+                    'photos' => $item->photos,
                     'ip' => $_SERVER['REMOTE_ADDR'],
                     'fbToken' => $fbToken,
                     'fbUid' => $user_profile['id'],
@@ -350,6 +367,7 @@
                         aboutMe = :aboutMe,
                         interestedInMen = :interestedInMen,
                         interestedInWomen = :interestedInWomen,
+                        photos = :photos,
                         ip = :ip,
                         fbToken = :fbToken,
                         fbUid = :fbUid,
@@ -441,6 +459,14 @@
             file_put_contents('InstasodaAPIstatus.txt', "error2", FILE_APPEND);
         }
     }
+    // ======================================== 
+    // ========================================
+    // READ (GET)
+    // ========================================
+    // ========================================
+    else if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        
+    }   
     
     function getAge( $p_strDate ) {
         list($d,$m,$Y)    = explode("/",$p_strDate);
