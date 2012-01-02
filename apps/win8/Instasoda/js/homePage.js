@@ -120,7 +120,7 @@ $(document).ready(function () {
         $('#register1').click(function () {
             //iPackage = 1;
             //launchFacebookWebAuth(scope1);
-            animateContentInOut($('#registerAccount'), $('#dashboard'))
+            animateContentInOut($('#registerAccount'), $('#dashboard'));
         });
         $('#register2').click(function () {
             iPackage = 2;
