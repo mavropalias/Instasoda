@@ -99,10 +99,11 @@ ul, li, h2              { margin: 0; padding: 0; }
         height:100px;
         overflow:hidden;
         margin:0 1em 1em 0;
+        cursor:pointer;
     }
 
 #facebookLikesContainer {
-    display: none;
+    display:none;
 }
 
 .facebookLikesItem {
