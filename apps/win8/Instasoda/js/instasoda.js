@@ -78,8 +78,15 @@ $(document).ready(function () {
                 return this;
             },
 
-            viewPhoto: function() {
+            viewPhoto: function(e) {
                 var filename = $(e.currentTarget).data("filename");
+
+                //TODO: convert the following code into a template
+                $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
+                animateContentOutIn($('#settings'), $('#photoView'));
+                $('#photoView').click(function () {
+                    animateContentOutIn($('#photoView'), $('#settings'));
+                });
             },
 
             save: function () {
@@ -212,6 +219,20 @@ $(document).ready(function () {
                 //TODO: alternative storage solution, when localStorage is not available
                 throw("Local storage is not available");
             }
+        }
+
+        //TODO: add documentation
+        var animateContentOutIn = function (animateOut, animateIn) {
+            animateOut.addClass('isAnimated hasEasing isNotVisible hasNoLeftPadding');
+            setTimeout(function () {
+                animateOut.hide()
+                          .removeClass('isAnimated hasEasing isNotVisible hasNoLeftPadding');
+                animateIn.addClass('addExtraLeftPadding isNotVisible')
+                         .addClass('isAnimated hasEasing')
+                         .show()
+                         .removeClass('addExtraLeftPadding isNotVisible')
+                         .removeClass('isAnimated hasEasing');
+            }, 500);
         }
 
 
