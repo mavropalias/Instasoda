@@ -18,6 +18,7 @@ $(document).ready(function () {
         // ===================================================
 
         var sApi = "http://www.instasoda.com/api/";
+        var sApiPhotos = "http://www.instasoda.com/api/photos/";
         jQuery.support.cors = true;
         Backbone.emulateHTTP = true;
 
@@ -58,6 +59,16 @@ $(document).ready(function () {
             render: function () {
                 var template = $('#tplSettings').html();
                 WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
+
+                // temp hardcoded photo section:
+                if (this.model.get('photos') != null && this.model.get('photos') != "") {
+                    var images = this.model.get('photos').split(',');
+                    for (var i = 0; i < (images.length - 1); i++) {
+                        //images[i] = images[i].replace("\"", "");
+                        $('#userPictures').append("<li class='userPicture'><img src='" + sApiPhotos + images[i] + "' height=100></li>");
+                    }
+                }
+
                 return this;
             },
 
@@ -96,17 +107,53 @@ $(document).ready(function () {
             },
 
             addPhoto: function () {
+                var fbThirdPartyId = this.model.get('fbThirdPartyId');
+                var that = this;
+
                 // create a FileOpenPicker object for the image file picker button
                 var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
                 openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail; //show images in thumbnail mode
                 openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
                 openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
-
                 openPicker.pickSingleFileAsync().then(function (file) {
                     // Ensure picked file is valid and usable
                     if (file) {
                         // append picture in the page
-                        $('#userPictures').append('<li class="userPicture"><img height=100 src="' + URL.createObjectURL(file) + '"></li>');
+                        //$('#userPictures').append('<li class="userPicture"><img height=100 src="' + URL.createObjectURL(file) + '"></li>');
+                        
+                        // upload the image
+                        file.openAsync(Windows.Storage.FileAccessMode.read).then(function (stream) {
+                            var blob = msWWA.createBlobFromRandomAccessStream(file.contentType, stream);
+                            var xhr = new XMLHttpRequest();
+                            xhr.open('POST', sApi + 'photo.php?a=1&token=' + fbThirdPartyId + '&t=' + file.fileType, true);
+                            xhr.onload = function (e) {
+                                var imageData = JSON.parse(e.currentTarget.response);
+                                that.model.set(imageData);
+                                that.model.save(
+                                {
+                                    error: function (model, response) {
+                                        //TODO: properly handle errors
+                                        //callback(false, "Ajax error: " + response.status);
+                                    }
+                                },
+                                {
+                                    success: function (model, response) {
+                                        // SUCCESS
+                                        if (response.status == "success") {
+                                            saveLocally("user", user);
+                                            $('#saveProfileButton').fadeIn();
+                                            $('#working').fadeOut();
+                                        }
+                                        // FAIL
+                                        else {
+                                            //callback(false, response.status);
+                                        }
+                                    }
+                                }
+                );
+                            };
+                            xhr.send(blob);
+                        });                        
                     } else {
                         // File not valid
                         $('#userPictures').append("error");
