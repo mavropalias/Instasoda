@@ -40,6 +40,59 @@ $(document).ready(function () {
         }
 
     // =======================================
+    // PUSH NOTIFICATIONS
+    // =======================================
+
+        // Initialize Push Notifications
+        var pushNotifications = Windows.Networking.PushNotifications;
+        var promise = pushNotifications.PushNotificationChannelManager.createPushNotificationChannelForApplicationAsync();
+
+        // Callback to register the channel url
+        promise.then(function (ch) {
+            var uri = ch.uri;
+            var expiry = ch.expirationTime;
+            updateChannelUri(uri, expiry);
+        });
+
+        function updateChannelUri(channel, channelExpiration) {
+            if (channel) {
+                var serverUrl = "http://www.instasoda.com/api/notifications.php";
+                var payload = {
+                    Expiry: channelExpiration.toString(),
+                    URI: channel
+                };
+                var xhr = new WinJS.xhr({
+                    type: "POST",
+                    url: serverUrl,
+                    headers: { "Content-Type": "application/json; charset=urf-8" },
+                    data: JSON.stringify(payload)
+                }).then(function (req) {
+                    storeServerUrl(serverUrl)
+                    // Appending the response we got from the XHRequest to
+                    // the .titleArea element to see what it is we got back!
+                    // This is for testing purposes.
+                    $(".titleArea").text(req.response);
+                });
+            }
+        }
+
+        // Store the channel url
+        function storeServerUrl(serverUrl) {
+            var valueToStore = serverUrl;
+            if (valueToStore !== "") {
+                localStorage.setItem("serverUrl", valueToStore);
+            }
+        }
+
+        // Retrieve channel url
+        function retrieveServerUrl() {
+            var storedValue = localStorage.getItem("serverUrl");
+            if (storedValue && storedValue !== "") {
+                id("serverUrlField").value = storedValue;
+            }
+        }
+
+    // =======================================
     // SETTINGS PAGE
     // =======================================
 
