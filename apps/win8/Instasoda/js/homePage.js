@@ -71,7 +71,7 @@ $(document).ready(function () {
                     // Appending the response we got from the XHRequest to
                     // the .titleArea element to see what it is we got back!
                     // This is for testing purposes.
-                    $(".titleArea").text(req.response);
+                    //$(".titleArea").text(req.response);
                 });
             }
         }
