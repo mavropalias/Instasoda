@@ -91,6 +91,8 @@
 
             <section id="settings" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
 
+            <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
+
         <!-- Mustache.js templates -->
             <script id="tplSettings" type="text/template">
                     <div id="basicSettings" class="isColumn1 isRow1">
@@ -154,17 +156,17 @@
                         </p>
 
                         <ul id="facebookLikesContainer">
-                            {{#likes}}
+                            {{#likessss}}
                                 <li class="facebookLikesItem">
                                     <ul>
                                         <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture" width=50 height=50></li>
                                         <li class="facebookLikesItemName">{{name}}</li>
                                     </ul>
                                 </li>
-                            {{/likes}}
-                            {{^likes}}
+                            {{/likessss}}
+                            {{^likessss}}
                                 No likes.
-                            {{/likes}}
+                            {{/likessss}}
                         </ul>
                     </div>
             </script>
