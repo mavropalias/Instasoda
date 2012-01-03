@@ -91,21 +91,32 @@
 
             <section id="settings" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
 
+            <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
+
             <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
 
         <!-- Mustache.js templates -->
+            <script id="tplSearch" type="text/template">
+                <div id="searchFilters" class="isColumn1 isRow1">Filters</div>
+                <div id="searchResults" class="isColumn2 isRow1"></div>
+            </script>
+
+            <script id="tplUsersView" type="text/template">
+                <div class="userView">{{username}}</div>
+            </script>
+
             <script id="tplSettings" type="text/template">
                     <div id="basicSettings" class="isColumn1 isRow1">
                         <p>
-                            <h2>Your username</h2>
-                            <span class="tip">This is how other Instasoda users will see you.</span>
+                            <h2>Nickname</h2>
+                            <span class="tip">This is how other instasoda users will see you as.</span>
                         
                             <p><input name="username" value="{{username}}" autofocus required maxlength=50></p>
                         </p>
 
                         <p>
-                            <h2>Interested in</h2>
-                            <span class="tip">Choose either or both, to indicate your sexual preferences.</span>
+                            <h2>I would like to meet</h2>
+                            <span class="tip">Choose either or both.</span>
                         
                             <p>
                                 <label><input type="checkbox" name="interestedInWomen" value="true">women</label>
@@ -114,8 +125,8 @@
                         </p>
                         
                         <p>
-                            <h2>Write a bit about yourself:</h2>
-                            <span class="tip">This will allow other people to understand you better and get to know some details about yourself before contacting you.</span>
+                            <h2>A little bit about myself</h2>
+                            <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
                         
                             <p>            
                                 <div id="aboutMe" contentEditable="true" placeholder="type here" style="height:15em;width:40em;">{{aboutMe}}</div>
@@ -128,8 +139,8 @@
 
                     <div id="facebookData" class="isColumn2 isRow1 hasLeftPadding">
                         <p>
-                            <h2>Your photos:</h2>
-                            <span class="tip">The more the merrier! Make sure to upload high quality photos.</span>
+                            <h2>Me at my best! (photos)</h2>
+                            <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
                         
                             <p>
                                 <ul id="userPictures">
