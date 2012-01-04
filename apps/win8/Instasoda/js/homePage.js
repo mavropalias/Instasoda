@@ -119,14 +119,14 @@ $(document).ready(function () {
         $('#register1').click(function () {
             //iPackage = 1;
             //launchFacebookWebAuth(scope1);
-            animateContentInOut($('#registerAccount'), $('#dashboard'));
+            animateContentOutIn($('#registerAccount'), $('#dashboard'));
         });
         $('#register2').click(function () {
             iPackage = 2;
             launchFacebookWebAuth(scope2);
         });
 
-        function animateContentInOut(animateOut, animateIn) {
+        function animateContentOutIn(animateOut, animateIn) {
             animateOut.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
             setTimeout(function () {
                 animateOut.hide()
@@ -199,7 +199,7 @@ $(document).ready(function () {
                             $('#fbResponse').html("error: " + jData.status);
                         }
                     });
-                    animateContentInOut($('#registerAccount'), $('#settings'));
+                    animateContentOutIn($('#registerAccount'), $('#settings'));
                 } catch (e) {
                     $('#fbResponse').html("error:  " + e);
                 }
