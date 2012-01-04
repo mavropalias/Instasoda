@@ -17,8 +17,8 @@ $(document).ready(function () {
         // ===================================================
         // ===================================================
 
-            var sApi = "http://www.instasoda.com/api/";
-            var sApiPhotos = "http://www.instasoda.com/api/photos/";
+            var sApi = "http://instasoda.com/api/";
+            var sApiPhotos = "http://instasoda.com/api/photos/";
             jQuery.support.cors = true;
             Backbone.emulateHTTP = true;
 
@@ -287,14 +287,14 @@ $(document).ready(function () {
 
             //TODO: add documentation
             var animateContentOutIn = function (animateOut, animateIn) {
-                animateOut.addClass('isAnimated hasEasing isNotVisible hasNoLeftPadding');
+                animateOut.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
                 setTimeout(function () {
                     animateOut.hide()
-                              .removeClass('isAnimated hasEasing isNotVisible hasNoLeftPadding');
-                    animateIn.addClass('addExtraLeftPadding isNotVisible')
+                              .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+                    animateIn.addClass('addLeftMargin isNotVisible')
                              .addClass('isAnimated hasEasing')
                              .show()
-                             .removeClass('addExtraLeftPadding isNotVisible')
+                             .removeClass('addLeftMargin isNotVisible')
                              .removeClass('isAnimated hasEasing');
                 }, 500);
             }

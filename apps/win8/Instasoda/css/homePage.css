@@ -3,6 +3,8 @@
 .isRightAligned         { -ms-grid-column-align: right; }
 .hasNoSpan              { -ms-grid-column-span: 1; -ms-grid-row-span: 1; }
 .has2ColumnSpan         { -ms-grid-column-span: 2; }
+.has3ColumnSpan         { -ms-grid-column-span: 3; }
+.has1ColumnsOf1fr       { -ms-grid-columns: 116px 1fr 116px; }
 .has2ColumnsOf2fr       { -ms-grid-columns: 2fr 2fr; }
 .has3ColumnsOf3fr       { -ms-grid-columns: 3fr 3fr 3fr; }
 .has1RowOf1fr           { -ms-grid-rows: 1fr; }
@@ -11,9 +13,11 @@
 .isColumn3              { -ms-grid-column: 3; }
 .isRow1                 { -ms-grid-row: 1 }
 .isRow2                 { -ms-grid-row: 2 }
-.hasNoLeftPadding       { padding-left: 0!important; }
+.subtractLeftMargin     { margin-left: -116px!important; }
+.addLeftMargin          { margin-left: 116px!important; }
+.hasNoLeftMargin        { margin-left: 0px; }
 .hasLeftPadding         { padding-left: 116px; }
-.addExtraLeftPadding    { padding-left: 250px; }
+.hasRightPadding        { padding-right: 116px; }
 .isAnimated             { -ms-transition-property: all; -ms-transition-duration: 0.5s;}
 .hasEasing              { -ms-transition-timing-function: ease-in-out; }
 .isNotVisible           { opacity: 0; }
@@ -48,7 +52,7 @@ ul, li, h2              { margin: 0; padding: 0; }
 
 .plans
 {  
-    margin: 3em 0 0 -3.5em;
+    margin: 1em 0 0 -3.6em;
 }
 
 .plans > li { 
@@ -69,7 +73,7 @@ ul, li, h2              { margin: 0; padding: 0; }
 }
 
 .plans ul li {   
-    padding: 0.5em 3em;
+    padding: 0.5em 2em;
     text-align: center;
 }
 

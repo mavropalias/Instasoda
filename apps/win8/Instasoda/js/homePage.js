@@ -114,8 +114,7 @@ $(document).ready(function () {
 
         var iPackage = 0;
         var scope1 = "email,user_relationships,user_location,user_hometown,user_birthday";
-        var scope2 = scope1 + ",user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos";
-        var scope3 = scope2 + ",sms,offline_access,user_videos";
+        var scope2 = scope1 + ",user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos,offline_access";
 
         $('#register1').click(function () {
             //iPackage = 1;
@@ -126,20 +125,16 @@ $(document).ready(function () {
             iPackage = 2;
             launchFacebookWebAuth(scope2);
         });
-        $('#register3').click(function () {
-            iPackage = 3;
-            launchFacebookWebAuth(scope3);
-        });
 
         function animateContentInOut(animateOut, animateIn) {
-            animateOut.addClass('isAnimated hasEasing isNotVisible hasNoLeftPadding');
+            animateOut.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
             setTimeout(function () {
                 animateOut.hide()
-                          .removeClass('isAnimated hasEasing isNotVisible hasNoLeftPadding');
-                animateIn.addClass('addExtraLeftPadding isNotVisible')
+                          .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+                animateIn.addClass('addLeftMargin isNotVisible')
                          .addClass('isAnimated hasEasing')
                          .show()
-                         .removeClass('addExtraLeftPadding isNotVisible')
+                         .removeClass('addLeftMargin isNotVisible')
                          .removeClass('isAnimated hasEasing');
             }, 500);
 
