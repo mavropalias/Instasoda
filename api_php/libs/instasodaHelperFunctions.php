@@ -20,4 +20,9 @@ function fetchUrl($url)
     return $result;
 }
 
+function getAge( $p_strDate ) {
+    list($d,$m,$Y)    = explode("/",$p_strDate);
+    return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
+}
+
 ?>
