@@ -207,9 +207,25 @@
                     
                     // fetch user's Facebook profile image
                         try {
+                            
                             $img = file_get_contents('https://graph.facebook.com/'.$fbUid.'/picture?type=large&access_token='.$fbToken);
-                            $file = dirname(__file__).'/photos/'.$userHashId.'_fb.jpg';
+                            $path = $fqlResult[0]->third_party_id.'_'.md5($fqlResult[0]->third_party_id).'_'.rand(1, 10000).$_GET['t'];
+                            $file = dirname(__file__).'/photos/'.$path;
                             file_put_contents($file, $img);
+                            
+                                // update database
+                                $data = array(
+                                    'photos' => $path.',',
+                                    'fbThirdPartyId' => $fqlResult[0]->third_party_id
+                                );
+                                try {
+                                    $STH = $DB->prepare("UPDATE users SET photos = :photos WHERE fbThirdPartyId=:fbThirdPartyId");
+                                    $STH->execute($data);                
+                                } catch (PDOException $e) {
+                                    header( 'HTTP/1.1 400: BAD REQUEST' );
+                                    echo json_encode(array("status"=>"Could not update the database (101b)."));
+                                    file_put_contents('InstasodaPhotoErrors.txt', $e->getMessage(), FILE_APPEND);
+                                }
                         } catch (Exception $e) {
                             header( 'HTTP/1.1 400: BAD REQUEST' );
                             echo json_encode(array("status"=>"Could not fetch FB image."));
@@ -467,9 +483,4 @@
     else if($_SERVER['REQUEST_METHOD'] == 'GET') {
         
     }   
-    
-    function getAge( $p_strDate ) {
-        list($d,$m,$Y)    = explode("/",$p_strDate);
-        return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
-    }
 ?>
