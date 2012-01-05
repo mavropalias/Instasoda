@@ -22,22 +22,20 @@
     <div id="contentHost"></div>
     <div id="appbar" data-win-control="WinJS.UI.AppBar" aria-label="Command Bar" data-win-options="{position:'bottom', transient:true, autoHide:0, lightDismiss:false}">
         <div class="win-left">
-            <button id="home" class="win-command">
-                <span class="win-commandicon win-large">&#xE10F;</span><span class="win-label">Home</span>
+            <button id="search" class="win-command" onclick="IS.navigateTo('#search', 'Search');">
+                <span class="win-commandicon win-large">&#xE000;</span><span class="win-label">Search</span>
+            </button>
+            <button id="matches" class="win-command" onclick="IS.navigateTo('#matches', 'Matches');">
+                <span class="win-commandicon win-large">&#x2764;</span><span class="win-label">Matches</span>
             </button>
         </div>
         <div class="win-right">
-            <button id="search" class="win-command">
-                <span class="win-commandicon win-large">&#xE000;</span><span class="win-label">Search</span>
-            </button>
-            <button id="profile" class="win-command">
+
+            <button id="profile" class="win-command" onclick="IS.navigateTo('#settings', 'My profile');">
                 <span class="win-commandicon win-large">&#xF04A;</span><span class="win-label">Profile</span>
             </button>
-            <button id="inbox" class="win-command">
+            <button id="inbox" class="win-command" onclick="IS.navigateTo('#inbox', 'Inbox');">
                 <span class="win-commandicon win-large">&#xF02A;</span><span class="win-label">Inbox</span>
-            </button>
-            <button id="matches" class="win-command">
-                <span class="win-commandicon win-large">&#x2764;</span><span class="win-label">Matches</span>
             </button>
         </div>
     </div>
