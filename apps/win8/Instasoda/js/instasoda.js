@@ -107,9 +107,9 @@ $(document).ready(function () {
 
                     //TODO: convert the following code into a template
                     $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
-                    animateContentOutIn($('#settings'), $('#photoView'));
+                    IS.navigateTo('#photoView');
                     $('#photoView').click(function () {
-                        animateContentOutIn($('#photoView'), $('#settings'));
+                        IS.navigateTo('#settings');
                     });
                 },
 
@@ -283,20 +283,6 @@ $(document).ready(function () {
                     //TODO: alternative storage solution, when localStorage is not available
                     throw("Local storage is not available");
                 }
-            }
-
-            //TODO: add documentation
-            var animateContentOutIn = function (animateOut, animateIn) {
-                animateOut.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
-                setTimeout(function () {
-                    animateOut.hide()
-                              .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
-                    animateIn.addClass('addLeftMargin isNotVisible')
-                             .addClass('isAnimated hasEasing')
-                             .show()
-                             .removeClass('addLeftMargin isNotVisible')
-                             .removeClass('isAnimated hasEasing');
-                }, 500);
             }
 
 
@@ -474,6 +460,29 @@ $(document).ready(function () {
             */
             this.accountIsComplete = function () {
                 return false;
+            }
+
+            /**
+            * Navigates to a new page
+            * @param {String} newPage the new page to display (.class or #id)
+            */
+            this.navigateTo = function (newPage) {
+
+                // find visible section(s)
+                oldPage = $('section[role=main]').filter(':visible');
+                newPage = $(newPage);
+
+                // hide the visible section(s) and animate in the new one
+                oldPage.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+                setTimeout(function () {
+                    oldPage.hide()
+                              .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+                    newPage.addClass('addLeftMargin isNotVisible')
+                             .addClass('isAnimated hasEasing')
+                             .show()
+                             .removeClass('addLeftMargin isNotVisible')
+                             .removeClass('isAnimated hasEasing');
+                }, 500);
             }
     }
 });
