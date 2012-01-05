@@ -6,7 +6,7 @@
 }
 
 body {
-    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 47%,#D5EEF2 100%);
+    background: -ms-linear-gradient(top, #EFF8FA 0%,#EFF8FA 70%,#DBF1F9 100%);
 }
 
 #contentHost {
@@ -55,6 +55,7 @@ body {
 
 .tip {
     color:#666;
+    display: block;
 }
 
 @media screen and (-ms-view-state: snapped) {

@@ -38,7 +38,7 @@
 
             <!-- Registration Grid (3 columns, 2 rows) -->
             <section id="registerAccount" role="main" aria-label="Main content" class="isColumn2 isRow1 isGrid has3ColumnsOf3fr hasNoLeftMargin hasAutoRows">
-                <!-- Row 1 (column span = 1) -->
+                <!-- Row 1 (column span = 3) -->
                 <header class="isColumn1 isRow1 hasRightPadding has3ColumnSpan">
                     <h2>Create your Instasoda account</h2>
             
@@ -89,7 +89,7 @@
 
             <section id="dashboard" role="main" aria-label="Main content"></section>
 
-            <section id="settings" role="main" aria-label="Main content" class="isColumn2 isGrid has3Columnsof3fr hasNoLeftMargin hasAutoRows"></section>
+            <section id="settings" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
 
             <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
 
@@ -106,7 +106,7 @@
             </script>
 
             <script id="tplSettings" type="text/template">
-                    <div id="basicSettings" class="isColumn2 isRow1">
+                    <div id="basicSettings" class="isColumn1 isRow1">
                         <p>
                             <h2>Nickname</h2>
                             <span class="tip">This is how other instasoda users will see you as.</span>
@@ -123,32 +123,6 @@
                                 <label><input type="checkbox" name="interestedInMen" value="true">men</label>
                             </p>
                         </p>
-                        
-                        <p>
-                            <h2>A little bit about myself</h2>
-                            <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
-                        
-                            <p>            
-                                <div id="aboutMe" contentEditable="true" placeholder="type here" style="height:15em;width:40em;">{{aboutMe}}</div>
-                            </p>
-                        </p>
-
-                        <button type="submit" id="saveProfileButton" style="display:none;float:left;">Save profile</button>
-                        <div id="working" style="float:left;"><progress class="win-ring" style="width: 20px; height: 20px" /></div>
-                    </div>
-
-                    <div id="facebookData" class="isColumn3 isRow1 hasLeftPadding hasRightPadding">
-                        <p>
-                            <h2>Me at my best! (photos)</h2>
-                            <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
-                        
-                            <p>
-                                <ul id="userPictures">
-                                </ul>
-
-                                <button id="addPhoto">Add photo</button>
-                            </p>
-                        </p>
 
                         <p>
                             <h2>Data synced from your Facebook profile:</h2>
@@ -162,6 +136,36 @@
                                     <li>Location: {{fbLocation}}</li>
                                     <li>Email: {{email}} (only you can see this)</li>
                                 </ul>
+                            </p>
+                        </p>
+                        
+
+
+                        <button type="submit" id="saveProfileButton" style="display:none;float:left;">Save profile</button>
+                        <div id="working" style="float:left;"><progress class="win-ring" style="width: 20px; height: 20px" /></div>
+                    </div>
+
+                    <div class="isColumn2 isRow1">
+                        <p>
+                            <h2>A little bit about myself</h2>
+                            <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
+                        
+                            <p>            
+                                <div id="aboutMe" contentEditable="true" placeholder="type here" style="height:15em;width: 100%;overflow-y:auto;word-wrap:break-word;">{{aboutMe}}</div>
+                            </p>
+                        </p>
+                    </div>
+
+                    <div id="facebookData" class="isColumn3 isRow1 hasLeftPadding hasRightPadding">
+                        <p>
+                            <h2>Me at my best! (photos)</h2>
+                            <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
+                        
+                            <p>
+                                <ul id="userPictures">
+                                </ul>
+
+                                <button id="addPhoto">Add photo</button>
                             </p>
                         </p>
 

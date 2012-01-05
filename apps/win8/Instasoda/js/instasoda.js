@@ -87,7 +87,7 @@ $(document).ready(function () {
                         if (this.model.get('photos') != null && this.model.get('photos') != "") {
                             var images = this.model.get('photos').split(',');
                             for (var i = 0; i < (images.length - 1); i++) {
-                                $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=100></li>");
+                                $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
                             }
                         }
 
@@ -160,7 +160,7 @@ $(document).ready(function () {
                         // Ensure picked file is valid and usable
                         if (file) {
                             // append picture in the page
-                            //$('#userPictures').append('<li class="userPicture"><img height=100 src="' + URL.createObjectURL(file) + '"></li>');
+                            //$('#userPictures').append('<li class="userPicture"><img height=150 src="' + URL.createObjectURL(file) + '"></li>');
                         
                             // upload the image
                             file.openAsync(Windows.Storage.FileAccessMode.read).then(function (stream) {
