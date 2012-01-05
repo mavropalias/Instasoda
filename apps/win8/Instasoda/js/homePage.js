@@ -31,12 +31,12 @@ $(document).ready(function () {
 
         if (IS.login()) {
             if (IS.accountIsComplete()) {
-                $('#dashboard').show();
+                IS.navigateTo('#search', 'Search');
             } else {
                 showSettingsPage();
             }
         } else {
-            $('#registerAccount').show();
+            IS.navigateTo('#registerAccount', 'Welcome to Instasoda!')
         }
 
     // =======================================
@@ -97,12 +97,9 @@ $(document).ready(function () {
     // =======================================
 
         function showSettingsPage() {
-
-            // hide other pages
-            $('section[role="main"]').hide();
-
             // show settings
-            animateContentIn($('#settings'));
+            IS.navigateTo('#settings', 'My profile')
+
             $('#saveProfileButton').show();
             $('#working').hide();
         }
@@ -117,47 +114,13 @@ $(document).ready(function () {
         var scope2 = scope1 + ",user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos,offline_access";
 
         $('#register1').click(function () {
-            //iPackage = 1;
-            //launchFacebookWebAuth(scope1);
-            animateContentOutIn($('#registerAccount'), $('#dashboard'));
+            iPackage = 1;
+            launchFacebookWebAuth(scope1);
         });
         $('#register2').click(function () {
             iPackage = 2;
             launchFacebookWebAuth(scope2);
         });
-
-        function animateContentOutIn(animateOut, animateIn) {
-            animateOut.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
-            setTimeout(function () {
-                animateOut.hide()
-                          .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
-                animateIn.addClass('addLeftMargin isNotVisible')
-                         .addClass('isAnimated hasEasing')
-                         .show()
-                         .removeClass('addLeftMargin isNotVisible')
-                         .removeClass('isAnimated hasEasing');
-            }, 500);
-
-           /* if (animateAfter != false) {
-                animateAfter.hide()
-
-                setTimeout(function () {
-                    animateAfter.addClass('addExtraLeftPadding isNotVisible')
-                                .addClass('isAnimated hasEasing')
-                                .show()
-                                .removeClass('addExtraLeftPadding isNotVisible')
-                                .removeClass('isAnimated hasEasing')
-                }, 1000)
-            }*/
-        }
-
-        function animateContentIn(animateIn) {
-            animateIn.addClass('addExtraLeftPadding isNotVisible')
-                        .addClass('isAnimated hasEasing')
-                        .show()
-                        .removeClass('addExtraLeftPadding isNotVisible')
-                        .removeClass('isAnimated hasEasing');
-        }
 
         function launchFacebookWebAuth(scope) {
             var facebookURL = "https://www.facebook.com/dialog/oauth?client_id=";
@@ -199,7 +162,7 @@ $(document).ready(function () {
                             $('#fbResponse').html("error: " + jData.status);
                         }
                     });
-                    animateContentOutIn($('#registerAccount'), $('#settings'));
+                    IS.navigateTo('#settings', 'My profile');
                 } catch (e) {
                     $('#fbResponse').html("error:  " + e);
                 }
