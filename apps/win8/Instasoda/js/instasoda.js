@@ -107,9 +107,9 @@ $(document).ready(function () {
 
                     //TODO: convert the following code into a template
                     $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
-                    IS.navigateTo('#photoView');
-                    $('#photoView').click(function () {
-                        IS.navigateTo('#settings');
+                    IS.navigateTo('#photoView', 'Photo');
+                    $('#photoView').one('click', function () {
+                        IS.navigateTo('#settings', 'My profile');
                     });
                 },
 
@@ -464,25 +464,34 @@ $(document).ready(function () {
 
             /**
             * Navigates to a new page
-            * @param {String} newPage the new page to display (.class or #id)
+            * @param {String} page the new page to display (.class or #id)
+            * @param {String} title title of the new page
             */
-            this.navigateTo = function (newPage) {
+            this.navigateTo = function (page, title) {
 
                 // find visible section(s)
                 oldPage = $('section[role=main]').filter(':visible');
-                newPage = $(newPage);
+                newPage = $(page);
 
                 // hide the visible section(s) and animate in the new one
                 oldPage.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
                 setTimeout(function () {
+                    // hide old page
                     oldPage.hide()
                               .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+
+                    // show new page
                     newPage.addClass('addLeftMargin isNotVisible')
                              .addClass('isAnimated hasEasing')
                              .show()
                              .removeClass('addLeftMargin isNotVisible')
                              .removeClass('isAnimated hasEasing');
                 }, 500);
+
+                // set new page title
+                $('header[role=banner] .titleArea > h1').fadeOut(200, function () {
+                    $(this).text(title).fadeIn(200);
+                });
             }
     }
 });
