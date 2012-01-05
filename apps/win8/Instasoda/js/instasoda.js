@@ -107,9 +107,9 @@ $(document).ready(function () {
 
                     //TODO: convert the following code into a template
                     $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
-                    animateContentOutIn($('#settings'), $('#photoView'));
-                    $('#photoView').click(function () {
-                        animateContentOutIn($('#photoView'), $('#settings'));
+                    IS.navigateTo('#photoView', 'Photo');
+                    $('#photoView').one('click', function () {
+                        IS.navigateTo('#settings', 'My profile');
                     });
                 },
 
@@ -283,20 +283,6 @@ $(document).ready(function () {
                     //TODO: alternative storage solution, when localStorage is not available
                     throw("Local storage is not available");
                 }
-            }
-
-            //TODO: add documentation
-            var animateContentOutIn = function (animateOut, animateIn) {
-                animateOut.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
-                setTimeout(function () {
-                    animateOut.hide()
-                              .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
-                    animateIn.addClass('addLeftMargin isNotVisible')
-                             .addClass('isAnimated hasEasing')
-                             .show()
-                             .removeClass('addLeftMargin isNotVisible')
-                             .removeClass('isAnimated hasEasing');
-                }, 500);
             }
 
 
@@ -474,6 +460,38 @@ $(document).ready(function () {
             */
             this.accountIsComplete = function () {
                 return false;
+            }
+
+            /**
+            * Navigates to a new page
+            * @param {String} page the new page to display (.class or #id)
+            * @param {String} title title of the new page
+            */
+            this.navigateTo = function (page, title) {
+
+                // find visible section(s)
+                oldPage = $('section[role=main]').filter(':visible');
+                newPage = $(page);
+
+                // hide the visible section(s) and animate in the new one
+                oldPage.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+                setTimeout(function () {
+                    // hide old page
+                    oldPage.hide()
+                              .removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+
+                    // show new page
+                    newPage.addClass('addLeftMargin isNotVisible')
+                             .addClass('isAnimated hasEasing')
+                             .show()
+                             .removeClass('addLeftMargin isNotVisible')
+                             .removeClass('isAnimated hasEasing');
+                }, 500);
+
+                // set new page title
+                $('header[role=banner] .titleArea > h1').fadeOut(200, function () {
+                    $(this).text(title).fadeIn(200);
+                });
             }
     }
 });
