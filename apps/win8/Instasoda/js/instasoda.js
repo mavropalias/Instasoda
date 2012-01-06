@@ -33,8 +33,7 @@ $(document).ready(function () {
             var User = Backbone.Model.extend({
                 defaults: {
                     username: 'new user',
-                    likesCount: 337,
-                    picsCount: 17
+                    picsCount: 0
                 },
                 url: sApi + 'user.php'
             });
@@ -84,11 +83,12 @@ $(document).ready(function () {
                     WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
 
                     // temp hardcoded UI manipulation:
+                    var i = 0;
 
                         // enable clicking on photos to view them
                         if (this.model.get('photos') != null && this.model.get('photos') != "") {
                             var images = this.model.get('photos').split(',');
-                            for (var i = 0; i < (images.length - 1); i++) {
+                            for (i; i < (images.length - 1); i++) {
                                 $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
                             }
                         }
@@ -100,6 +100,9 @@ $(document).ready(function () {
                         if (this.model.get('interestedInWomen') == '1') {
                             $('input[name=interestedInWomen]').prop("checked", true);
                         }
+
+                    // update picsCount
+                    this.model.set({ picsCount: i });
 
                     return this;
                 },
@@ -496,12 +499,14 @@ $(document).ready(function () {
                 });
             }
 
-            this.likesCount = function () {
-                return user.get('likesCount');
-            }
 
-            this.picsCount = function () {
-                return user.get('picsCount');
+            /**
+            * Returns the value of a user attribute
+            * @param {String} attr the attribute to return
+            * @return {String} the value of the attribute
+            */
+            this.getUserAttr = function (attr) {
+                return user.get(attr);
             }
     }
 });
