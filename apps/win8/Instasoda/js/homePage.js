@@ -46,8 +46,8 @@ $(document).ready(function () {
     // Likes pic + Likes title height: 100px + 20px = 120px
     // =======================================
         function calculateLikesAndPicsDimensions() {
-            var likesCount = IS.likesCount(),
-                picsCount = IS.picsCount(),
+            var likesCount = IS.getUserAttr('fbLikesCount'),
+                picsCount = IS.getUserAttr('picsCount'),
                 userWindowHeight = $(window).height(),
                 topHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
 
