@@ -32,7 +32,9 @@ $(document).ready(function () {
             // User - the person using the app
             var User = Backbone.Model.extend({
                 defaults: {
-                    username: 'new user'
+                    username: 'new user',
+                    likesCount: 337,
+                    picsCount: 17
                 },
                 url: sApi + 'user.php'
             });
@@ -492,6 +494,14 @@ $(document).ready(function () {
                 $('header[role=banner] .titleArea > h1').fadeOut(200, function () {
                     $(this).text(title).fadeIn(200);
                 });
+            }
+
+            this.likesCount = function () {
+                return user.get('likesCount');
+            }
+
+            this.picsCount = function () {
+                return user.get('picsCount');
             }
     }
 });

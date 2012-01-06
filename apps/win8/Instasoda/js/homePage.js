@@ -33,11 +33,42 @@ $(document).ready(function () {
             if (IS.accountIsComplete()) {
                 IS.navigateTo('#search', 'Search');
             } else {
-                showSettingsPage();
+                //showSettingsPage();
+                calculateLikesAndPicsDimensions();
             }
         } else {
             IS.navigateTo('#registerAccount', 'Welcome to Instasoda!')
         }
+
+    // =======================================
+    // CALCULATE HEIGHT, BIATCH!
+    // Profile pic height: 120px
+    // Likes pic + Likes title height: 100px + 20px = 120px
+    // =======================================
+        function calculateLikesAndPicsDimensions() {
+            var likesCount = IS.likesCount(),
+                picsCount = IS.picsCount(),
+                userWindowHeight = $(window).height(),
+                topHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
+
+            calculateMaxLikesRows = (userWindowHeight - topHeaderHeight) / 100;
+            calculateLikesWrapperWidth = (likesCount / calculateMaxLikesRows) * 120;
+            calculateMaxPicsRows = (userWindowHeight - topHeaderHeight) / 120;
+            calculatePicsWrapperWidth = (picsCount / calculateMaxPicsRows) * 120;
+            
+            // The 720 below is the minimum width that each block (likes/profile pics) occupies
+            // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
+            if (calculatePicsWrapperWidth > 720) {
+                $("#facebookProfilePicsData").css({ 'width': calculatePicsWrapperWidth });
+            }
+            if (calculateLikesWrapperWidth > 720) {
+                $("#facebookLikesData").css({ 'width': calculateLikesWrapperWidth });
+            }
+
+            showSettingsPage();
+
+        }
+
 
     // =======================================
     // PUSH NOTIFICATIONS

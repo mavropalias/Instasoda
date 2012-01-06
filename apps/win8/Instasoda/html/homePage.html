@@ -28,7 +28,7 @@
 </head>
 <body>
     <!-- The content that will be loaded and displayed. -->
-        <div class="fragment homePage isGrid has1ColumnsOf1fr hasAutoRows" style="overflow-y: auto; overflow-x: auto;">
+        <div class="fragment homePage isGrid has1ColumnsOf1fr hasAutoRows" style="overflow-y: auto; overflow-x: scroll;">
             <header role="banner" aria-label="Header content">
                 <button disabled class="win-backbutton" aria-label="Back"></button>
                 <div class="titleArea">
@@ -49,7 +49,7 @@
                 </header>
 
                 <!-- Row 2 (no column span) - a grid of its own (3 columns, 1 row) -->
-                <ol class="plans isGrid has3ColumnsOf3fr has1RowOf1fr isColumn1 isRow2 has3ColumnSpan">
+                <ol class="plans isGrid has2ColumnsOf2fr has1RowOf1fr isColumn1 isRow2 has3ColumnSpan">
                     <li class="isColumn1 hasNoSpan isAnimated">
                         <ul>
                             <li><h2>Complete</h2></li>
@@ -91,11 +91,7 @@
 
             <section id="settings" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
 
-            <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">search (soon)</div></section>
-
-            <section id="matches" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">matches (soon)</div></section>
-
-            <section id="inbox" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">inbox (soon)</div></section>
+            <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
 
             <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr isColumn2 hasNoLeftMargin hasAutoRows"></section>
 
@@ -110,7 +106,7 @@
             </script>
 
             <script id="tplSettings" type="text/template">
-                    <div id="basicSettings" class="isColumn1 isRow1">
+                    <div id="basicSettings" class="isColumn1 isRow1 hasRightPadding">
                         <p>
                             <h2>Nickname</h2>
                             <span class="tip">This is how other instasoda users will see you as.</span>
@@ -130,7 +126,7 @@
 
                         <p>
                             <h2>Data synced from your Facebook profile:</h2>
-                            <span class="tip">When you update your Facebook profile details, you can sync them with <br>your Instasoda profile by using the <em>Save profile</em> button in this page.</span>
+                            <span class="tip">When you update your Facebook profile details, you can sync them with your Instasoda profile by using the <em>Save profile</em> button in this page.</span>
                         
                             <p>
                                 <ul>
@@ -149,7 +145,7 @@
                         <div id="working" style="float:left;"><progress class="win-ring" style="width: 20px; height: 20px" /></div>
                     </div>
 
-                    <div class="isColumn2 isRow1">
+                    <div id="personalInfoText" class="isColumn2 isRow1 hasRightPadding">
                         <p>
                             <h2>A little bit about myself</h2>
                             <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
@@ -160,7 +156,7 @@
                         </p>
                     </div>
 
-                    <div id="facebookData" class="isColumn3 isRow1 hasLeftPadding hasRightPadding">
+                    <div id="facebookProfilePicsData" class="isColumn3 isRow1 hasRightPadding">
                         <p>
                             <h2>Me at my best! (photos)</h2>
                             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
@@ -172,21 +168,28 @@
                                 <button id="addPhoto">Add photo</button>
                             </p>
                         </p>
-
+                    </div>
+                    
+                    <div id="facebookLikesData" class="isColumn4 isRow1 hasRightPadding">
+                        <p>
+                            <h2>Likes</h2>
+                            <span class="tip">This is how other instasoda users will see you as.</span>
+                        </p>
                         <ul id="facebookLikesContainer">
-                            {{#likessss}}
-                                <li class="facebookLikesItem">
+                            {{#likes}}
+                                <li class="facebookLikesItem ">
                                     <ul>
                                         <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture" width=50 height=50></li>
                                         <li class="facebookLikesItemName">{{name}}</li>
                                     </ul>
                                 </li>
-                            {{/likessss}}
-                            {{^likessss}}
+                            {{/likes}}
+                            {{^likes}}
                                 No likes.
-                            {{/likessss}}
+                            {{/likes}}
                         </ul>
                     </div>
+
             </script>
         </div>
 

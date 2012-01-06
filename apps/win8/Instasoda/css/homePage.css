@@ -11,6 +11,7 @@
 .isColumn1              { -ms-grid-column: 1; }
 .isColumn2              { -ms-grid-column: 2; }
 .isColumn3              { -ms-grid-column: 3; }
+.isColumn4              { -ms-grid-column: 4; }
 .isRow1                 { -ms-grid-row: 1 }
 .isRow2                 { -ms-grid-row: 2 }
 .subtractLeftMargin     { margin-left: -116px!important; }
@@ -26,7 +27,11 @@ ul, li, h2              { margin: 0; padding: 0; }
 
 #settings
 {
-    -ms-grid-columns: auto;
+    -ms-grid-columns: 500px 700px auto auto;
+}
+
+#facebookProfilePicsData, #facebookLikesData {
+    width: 720px;
 }
 
 .profileBox {     
@@ -92,8 +97,6 @@ ul, li, h2              { margin: 0; padding: 0; }
 
 #userPictures {
     display:block;
-    position:relative;
-    clear:right;
     overflow:hidden;
 }
 
@@ -102,12 +105,13 @@ ul, li, h2              { margin: 0; padding: 0; }
         width:100px;
         height:100px;
         overflow:hidden;
-        margin:0 1em 1em 0;
+        margin:0 20px 20px 0;
         cursor:pointer;
     }
 
 #facebookLikesContainer {
-    display:none;
+    /*display:none;*/
+    max-height: 400px;
 }
 
 .facebookLikesItem {
@@ -117,6 +121,8 @@ ul, li, h2              { margin: 0; padding: 0; }
 .facebookLikesItemName {
     font-size:11px;
     width:80px;
+    height: 20px;
+    margin:0 20px 20px 0;
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
