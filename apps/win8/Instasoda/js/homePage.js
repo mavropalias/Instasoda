@@ -10,7 +10,7 @@
         WinJS.UI.processAll(elements)
             .then(function () {
             // TODO: Initialize the fragment here.
-
+            $('section[role="main"]').hide();
         });
     }
 
@@ -27,7 +27,7 @@ $(document).ready(function () {
     // INIT APP
     // =======================================
 
-        $('section[role="main"]').hide();
+        
 
         if (IS.login()) {
             if (IS.accountIsComplete()) {
