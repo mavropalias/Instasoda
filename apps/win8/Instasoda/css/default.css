@@ -6,7 +6,7 @@
 }
 
 body {
-    background: -ms-linear-gradient(top, #EFF8FA 0%,#EFF8FA 70%,#DBF1F9 100%);
+    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 70%,#dff2f9 100%);
 }
 
 #contentHost {
@@ -17,9 +17,10 @@ body {
 .fragment {
     width: 100%;
     height: 100%;
-    display: -ms-grid;
-    -ms-grid-rows: 132px 1fr 0px;
-    -ms-grid-columns: 1fr;
+    background-image:url(../images/logowithbubbles.png);
+    background-repeat:no-repeat;
+    background-position: top left;
+    background-attachment: scroll;
 }
 
 .fragment header[role=banner] {
@@ -39,7 +40,7 @@ body {
 
 .fragment header[role=banner] .pageTitle {
     margin-top: 44px;
-    height: 60pt;
+    height: 50pt;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;

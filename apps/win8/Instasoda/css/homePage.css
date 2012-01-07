@@ -4,6 +4,7 @@
 .hasNoSpan              { -ms-grid-column-span: 1; -ms-grid-row-span: 1; }
 .has2ColumnSpan         { -ms-grid-column-span: 2; }
 .has3ColumnSpan         { -ms-grid-column-span: 3; }
+.has4ColumnSpan         { -ms-grid-column-span: 4; }
 .has1ColumnsOf1fr       { -ms-grid-columns: 116px 1fr 116px; }
 .has2ColumnsOf2fr       { -ms-grid-columns: 2fr 2fr; }
 .has3ColumnsOf3fr       { -ms-grid-columns: 3fr 3fr 3fr; }
@@ -24,6 +25,10 @@
 .isNotVisible           { opacity: 0; }
 ul, li                  { list-style: none; }
 ul, li, h2              { margin: 0; padding: 0; }
+
+#registerAccount > header span {
+    color: #BE1E2D;
+}
 
 #settings
 {
@@ -57,42 +62,71 @@ ul, li, h2              { margin: 0; padding: 0; }
 
 .plans
 {  
-    margin: 1em 0 0 -3.6em;
+    -ms-grid-columns: 400px 400px 433px 50px;
+    margin: -0.5em 0 0 -3.6em;
+}
+
+.plans ul { 
+    height: 406px; 
+    background-color: #D5EEF2;
 }
 
 .plans > li { 
     margin: 1em;
-    border: 1px solid #96D9EE;
-}
-
-.plans > li:hover {
-    border: 1px solid #3DBCDF;
+    color: #00364D;
 }
 
 .plans > li:hover button {
     background-color: #5dcdec;
 }
 
-.plans ul {
-    text-align: center;
+.planSpacer {
+    height: 5px;
+    background: white!important;
 }
 
-.plans ul li {   
-    padding: 0.5em 2em;
-    text-align: center;
+.plans #planRecommended ul li:first-child {
+    background-color: #007DA6;
+}
+
+.plans #planJustCurious ul li:first-child {
+    background-color: #3DBCDF;
+}
+
+.plans #planRefreshingly ul li:first-child, #planRefreshingly h2 {
+    background-color: #96D9EE;
+    color: #00364D;
+}
+
+.plans ul li {
+    padding: 0.1em 1em;
+    background-color: #D5EEF2;
 }
 
 .plans ul li h2 {
-    margin-top: 1em;
+    font-size: 18px;
+    color: White;
+    padding: 0.2em 0em;
+}
+
+.plansButtonWrapper {
+    width: 100%;
+    background-color: #D5EEF2;
 }
 
 .plans button {
     padding: 1em 2em;
-    margin: 1.5em auto 2.5em auto;
-    background-color: #3DBCDF;
-    border: 2px solid white;
-    outline: 1px solid #96D9EE;
+    height: 100%;
+    border: none;
     color: white;
+}
+
+#planRecommended button {
+    background-color: #ED1C24;
+}
+
+#planJustCurious button {
+    background-color: #3DBCDF;
 }
 
 #userPictures {
@@ -126,10 +160,6 @@ ul, li, h2              { margin: 0; padding: 0; }
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-.plans button:active {
-    box-shadow: 0px 0px 15px 0 #007DA6 inset;   
 }
 
 /* Search results */
