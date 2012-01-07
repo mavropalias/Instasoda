@@ -91,7 +91,10 @@
 
             <section id="settings" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
 
-            <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"></section>
+            <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows">
+                <div id="searchFilters" class="isColumn1 isRow1">Filters</div>
+                <div id="searchResults" class="isColumn2 isRow1"></div>
+            </section>
 
             <section id="matches" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">matches (soon)</div></section>
 
@@ -100,13 +103,14 @@
             <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr isColumn2 hasNoLeftMargin hasAutoRows"></section>
 
         <!-- Mustache.js templates -->
-            <script id="tplSearch" type="text/template">
-                <div id="searchFilters" class="isColumn1 isRow1">Filters</div>
-                <div id="searchResults" class="isColumn2 isRow1"></div>
-            </script>
-
             <script id="tplUsersView" type="text/template">
-                <div class="userView">{{username}}</div>
+                {{#profilePhoto}}
+                    <div class="userPreviewPhoto"><img src="{{profilePhoto}}" height=200></div>
+                    <div class="userPreviewNickname">{{username}}, {{age}}</div>
+                {{/profilePhoto}}
+                {{^profilePhoto}}
+                    No photo.
+                {{/profilePhoto}}
             </script>
 
             <script id="tplSettings" type="text/template">
