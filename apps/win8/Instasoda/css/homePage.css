@@ -26,6 +26,10 @@
 ul, li                  { list-style: none; }
 ul, li, h2              { margin: 0; padding: 0; }
 
+section {
+    margin-top: 200px;
+}
+
 .homePage {
     overflow: auto;
 }
@@ -171,11 +175,20 @@ ul, li, h2              { margin: 0; padding: 0; }
 }
 
 /* Search results */
+#search {
+    -ms-grid-columns: auto;
+    -ms-grid-rows: auto;
+}
+
+#searchResults {
+    min-width: 720px;
+}
+
 .userPreview {
-    float:left;
+    float: left;
+    width: 200px;
     background-color:#007DA6;
     text-align:center;
-    width:220px;
     margin:0 10px 10px 0;
 }
 .userPreviewPhoto {

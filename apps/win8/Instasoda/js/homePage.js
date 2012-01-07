@@ -48,13 +48,17 @@ $(document).ready(function () {
         function calculateLikesAndPicsDimensions() {
             var likesCount = IS.getUserAttr('fbLikesCount'),
                 picsCount = IS.getUserAttr('picsCount'),
+                profileCount = 24,
                 userWindowHeight = $(window).height(),
+                userWindowWidth = $(window).width(),
                 topHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
 
             calculateMaxLikesRows = (userWindowHeight - topHeaderHeight) / 100;
             calculateLikesWrapperWidth = (likesCount / calculateMaxLikesRows) * 120;
             calculateMaxPicsRows = (userWindowHeight - topHeaderHeight) / 120;
             calculatePicsWrapperWidth = (picsCount / calculateMaxPicsRows) * 120;
+            calculateMaxProfileRows = (userWindowHeight - topHeaderHeight) / 210;
+            calculateProfilesWrapperWidth = (profileCount / calculateMaxProfileRows) * 350;
             
             // The 720 below is the minimum width that each block (likes/profile pics) occupies
             // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
@@ -63,6 +67,14 @@ $(document).ready(function () {
             }
             if (calculateLikesWrapperWidth > 720) {
                 $("#facebookLikesData").css({ 'width': calculateLikesWrapperWidth });
+            }
+
+            if (calculateProfilesWrapperWidth > 720) {
+                if (calculateProfilesWrapperWidth < userWindowWidth) {
+                    $("#searchResults").css({ 'width': userWindowWidth - 200 });
+                } else {
+                    $("#searchResults").css({ 'width': calculateProfilesWrapperWidth });
+                }
             }
 
             showSettingsPage();

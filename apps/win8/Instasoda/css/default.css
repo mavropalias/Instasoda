@@ -45,9 +45,6 @@ body {
     margin-left: -4px;
     color: #007DA6;    
     font-weight: bold;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
 }
 
 .fragment header[role=banner] .pageTitle {
@@ -69,6 +66,16 @@ body {
 .tip {
     color:#666;
     display: block;
+}
+
+.protected {
+    color:#BE1E2D;
+    font-style:italic;
+}
+
+.facebookData {
+    background:url(../images/fb_icon.png) center left no-repeat;
+    padding-left:14px;
 }
 
 @media screen and (-ms-view-state: snapped) {
