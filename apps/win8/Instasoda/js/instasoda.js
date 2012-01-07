@@ -208,19 +208,78 @@ $(document).ready(function () {
             // UsersView - a basic view of a user appearing in the search results / matches
             var UsersView = Backbone.View.extend({
                 className: 'userPreview',
+                tagName: 'li',
                 events: {
-                    "click a": "clicked"
+                    "click .userPreviewPhoto": "viewProfile"
                 },
 
-                clicked: function (e) {
-                    e.preventDefault();
-                    var name = this.model.get("name");
-                    //alert(name);
+                viewProfile: function (e) {
+                    //$('#usersProfile').html(Mustache.to_html(template, this.model.toJSON()));
+
+                    var usersFullView = new UsersFullView({
+                        model: this.model,
+                        el: $('#usersProfile')[0]
+                    });
+                    usersFullView.render();
+                    IS.navigateTo('#usersProfile', this.model.get('username') + "'s profile");
                 },
 
                 render: function () {
-                    var template = $('#tplUsersView').html();
+                    var template = $('#tplUsersPreview').html();
                     WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
+                }
+            });
+
+            // UsersFullView - a complete view of a user's profile
+            var UsersFullView = Backbone.View.extend({
+                events: {
+                    'click .userPicture': 'viewPhoto'
+                },
+
+                initialize: function () {
+                    _.bindAll(this);
+                    this.model.bind('change', this.render);
+                    //this.render();
+                },
+
+                viewPhoto: function (e) {
+                    var filename = $(e.currentTarget).data("filename");
+
+                    //TODO: convert the following code into a template
+                    var that = this;
+                    $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
+                    IS.navigateTo('#photoView', this.model.get('username') + "'s photo");
+                    $('#photoView').one('click', function () {
+                        IS.navigateTo('#usersProfile', that.model.get('username') + "'s profile");
+                    });
+                },
+
+                render: function () {
+                    var template = $('#tplUsersProfile').html();
+                    WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
+
+
+                    // temp hardcoded UI manipulation:
+                    var i = 0;
+
+                    // enable clicking on photos to view them
+                    if (this.model.get('photos') != null && this.model.get('photos') != "") {
+                        var images = this.model.get('photos').split(',');
+                        for (i; i < (images.length - 1); i++) {
+                            $('#userPhotos').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
+                        }
+                    }
+
+                    // check the men/women checkboxes if needed
+                    /*if (this.model.get('interestedInMen') == '1') {
+                            $('input[name=interestedInMen]').prop("checked", true);
+                        }
+                        if (this.model.get('interestedInWomen') == '1') {
+                            $('input[name=interestedInWomen]').prop("checked", true);
+                        }*/
+
+                    // update picsCount
+                    this.model.set({ picsCount: i });
                 }
             });
 
@@ -229,7 +288,7 @@ $(document).ready(function () {
                 initialize: function () {
                     _.bindAll(this);
                     this.collection.bind('reset', this.render);
-                    //this.render();
+                    this.render();
                 },
 
                 renderItem: function (model) {
@@ -333,7 +392,7 @@ $(document).ready(function () {
                     el: $('#searchResults')[0]
                 });
 
-        // test
+            // Fetch all IS users
                 usersCollection.fetch({
                     success: function (e) {
                         var asd = e;
