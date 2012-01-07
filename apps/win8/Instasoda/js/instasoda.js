@@ -39,9 +39,7 @@ $(document).ready(function () {
             });
 
             // Users - all other Instasoda users
-            var Users = Backbone.Model.extend({
-                url: sApi + 'users.php'
-            });
+            var Users = Backbone.Model.extend({ });
 
 
         // ===================================================
@@ -52,7 +50,6 @@ $(document).ready(function () {
 
             // UsersCollection - a collection of Users
             var UsersCollection = Backbone.Collection.extend({
-                model: Users,
                 url: sApi + 'users.php'
             });
 
@@ -209,8 +206,8 @@ $(document).ready(function () {
             });
 
             // UsersView - a basic view of a user appearing in the search results / matches
-            UsersView = Backbone.View.extend({
-                tagName: "li",
+            var UsersView = Backbone.View.extend({
+                className: 'userPreview',
                 events: {
                     "click a": "clicked"
                 },
@@ -228,22 +225,37 @@ $(document).ready(function () {
             });
 
             // UsersListView - contains a list of UsersView items, used for search results / matches
-            UsersListView = Backbone.View.extend({
+            var UsersListView = Backbone.View.extend({
                 initialize: function () {
-                    _.bindAll(this, 'renderItem');
-                    this.collection.bind('change', this.render);
-                    this.render();
+                    _.bindAll(this);
+                    this.collection.bind('reset', this.render);
+                    //this.render();
                 },
 
                 renderItem: function (model) {
                     var usersView = new UsersView({ model: model });
                     usersView.render();
-                    //$(this.el).append(usersView.el);
                     //WinJS.Utilities.setInnerHTMLUnsafe(this.el, $(usersView.el).html());
                     $(this.el).append(usersView.el);
                 },
 
                 render: function () {
+                    //this.collection.each(this.renderItem);
+                    this.collection.each(function (a, b, c) {
+                        //parse photos string and convert it to json
+                        var imagesArray = new Array();
+                        if (a.get('photos') != "" && a.get('photos') != null) {
+                            var images = a.get('photos').split(',');
+                            for (var i = 0; i < (images.length - 1); i++) {
+                                imagesArray[i] = sApiPhotos + images[i];
+
+                                // set 'main' photo
+                                if (i === 0) a.set({ 'profilePhoto': sApiPhotos + images[i] });
+                            }
+                        }
+                        a.set({ 'photosArray': imagesArray });
+                        //a.renderItem;
+                    });
                     this.collection.each(this.renderItem);
                 }
             });
@@ -302,24 +314,36 @@ $(document).ready(function () {
 
             // Backbone models
             var user = new User();
+            var users = new Users();
 
             // Backbone collections
-            var usersCollection = new UsersCollection([
-                { id: 1, username: "item 1" },
-                { id: 2, username: "item 2" },
-                { id: 3, username: "item 3" }
-            ]);
+            var usersCollection = new UsersCollection({
+                model: users
+            });
 
             // Backbone views
-            var userSettingsView = new UserSettingsView({
-                model: user,
-                el: $('#settings')[0]
-            });
+                // profile page
+                var userSettingsView = new UserSettingsView({
+                    model: user,
+                    el: $('#settings')[0]
+                });
+                // search results
+                var usersListView = new UsersListView({
+                    collection: usersCollection,
+                    el: $('#searchResults')[0]
+                });
 
-            var usersListView = new UsersListView({
-                collection: usersCollection,
-                el: $('#search')[0]
-            });
+        // test
+                usersCollection.fetch({
+                    success: function (e) {
+                        var asd = e;
+                    },
+                    error: function (e, a, b) {
+                        var asd = e;
+                    }
+
+                });
+
 
 
         // ===================================================
