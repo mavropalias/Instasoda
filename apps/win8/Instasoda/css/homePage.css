@@ -26,6 +26,10 @@
 ul, li                  { list-style: none; }
 ul, li, h2              { margin: 0; padding: 0; }
 
+.homePage {
+    overflow: auto;
+}
+
 #registerAccount > header span {
     color: #BE1E2D;
 }
@@ -96,6 +100,10 @@ ul, li, h2              { margin: 0; padding: 0; }
 .plans #planRefreshingly ul li:first-child, #planRefreshingly h2 {
     background-color: #96D9EE;
     color: #00364D;
+}
+
+#planRefreshingly ul > li:first-child img {
+    display: inline-block; float: right; margin-top: -60px; margin-right: 50px;
 }
 
 .plans ul li {

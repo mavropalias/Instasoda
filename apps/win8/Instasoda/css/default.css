@@ -38,6 +38,18 @@ body {
     -ms-grid-column: 2;
 }
 
+.fragment header[role=banner] .titleArea h2 {
+    display: inline-block;
+    height: 50px;    
+    margin-top: -40px;
+    margin-left: -4px;
+    color: #007DA6;    
+    font-weight: bold;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
 .fragment header[role=banner] .pageTitle {
     margin-top: 44px;
     height: 50pt;
