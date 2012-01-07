@@ -11,7 +11,7 @@
     // ========================================
     if($_SERVER['REQUEST_METHOD'] == 'GET' || true) {
         try {
-            $STH = $DB->prepare('SELECT username, age, gender, interestedInMen, interestedInWomen, photos, fbThirdPartyId, aboutMe, fbUid, fbToken FROM users');
+            $STH = $DB->prepare('SELECT username, age, gender, interestedInMen, interestedInWomen, photos, fbThirdPartyId, aboutMe, fbUid, fbToken, fbLikesCount  FROM users');
             $STH->setFetchMode(PDO::FETCH_OBJ);
             $STH->execute($detectId);
         } catch (PDOException $e) {
