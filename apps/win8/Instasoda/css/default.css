@@ -39,12 +39,12 @@ body {
 }
 
 .fragment header[role=banner] .titleArea h2 {
-    display: inline-block;
-    height: 50px;    
+    height: 50px; 
     margin-top: -40px;
     margin-left: -4px;
     color: #007DA6;    
     font-weight: bold;
+    width: 500px;
 }
 
 .fragment header[role=banner] .pageTitle {
