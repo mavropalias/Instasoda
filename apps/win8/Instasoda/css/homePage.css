@@ -132,6 +132,25 @@ ul, li, h2              { margin: 0; padding: 0; }
     box-shadow: 0px 0px 15px 0 #007DA6 inset;   
 }
 
+/* Search results */
+.userPreview {
+    float:left;
+    background-color:#007DA6;
+    text-align:center;
+    width:220px;
+    margin:0 10px 10px 0;
+}
+.userPreviewPhoto {
+    overflow: hidden;
+    width: 200px;
+    margin:0 auto;
+}
+.userPreviewNickname {
+    font-size:12px;
+    margin-top:5px;
+    color:#96D9EE;
+}
+
 @media screen and (-ms-view-state: snapped) {
     .homePage section[role=main] {
         margin-left: 20px;
