@@ -28,8 +28,13 @@
     <Content Include="css\homePage.css" />
     <Content Include="default.html" />
     <Content Include="html\homePage.html" />
+    <Content Include="images\bubbles.png" />
+    <Content Include="images\fb_icon.png" />
+    <Content Include="images\heart.png" />
+    <Content Include="images\is-stages.png" />
     <Content Include="images\logo.png" />
     <Content Include="images\logowide.png" />
+    <Content Include="images\logowithbubbles.png" />
     <Content Include="images\logo_badge.png" />
     <Content Include="images\smalllogo.png" />
     <Content Include="images\splashscreen.png" />
