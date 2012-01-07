@@ -33,7 +33,7 @@
                 <button disabled class="win-backbutton" aria-label="Back"></button>
                 <div class="titleArea">
                     <h1 class="pageTitle win-title">Welcome to Instasoda!</h1><br />
-                    <h2 style="font-weight: bold; width: 540px; margin-top: -40px; height: 50px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; margin-left: -4px; display: inline-block; text-align: right; color: #007DA6;">Social dating, in an instant.</h2>                
+                    <h2>Social dating, in an instant.</h2>                
                 </div>
             </header>
            
@@ -107,9 +107,8 @@
 
             <section id="settings" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
 
-            <section id="search" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows">
-                <div id="searchFilters" class="isColumn1 isRow1">Filters</div>
-                <div id="searchResults" class="isColumn2 isRow1"></div>
+            <section id="search" role="main" aria-label="Main content" class="isGrid hasNoLeftMargin hasLeftPadding hasAutoRows">
+                <ul id="searchResults" class="isColumn1 isRow1"></ul>
             </section>
 
             <section id="matches" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">matches (soon)</div></section>
@@ -118,22 +117,86 @@
 
             <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr isColumn2 hasNoLeftMargin hasAutoRows"></section>
 
+            <section id="usersProfile" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
+
         <!-- Mustache.js templates -->
-            <script id="tplUsersView" type="text/template">
+            <script id="tplUsersPreview" type="text/template">
                 {{#profilePhoto}}
-                    <div class="userPreviewPhoto"><img src="{{profilePhoto}}" height=200></div>
-                    <div class="userPreviewNickname">{{username}}, {{age}}</div>
+                    <ul>
+                        <li class="userPreviewPhoto"><img src="{{profilePhoto}}" height=200></li>
+                        <li class="userPreviewNickname">{{username}}, {{age}}</li>
+                    </ul>
                 {{/profilePhoto}}
                 {{^profilePhoto}}
                     No photo.
                 {{/profilePhoto}}
             </script>
 
+            <script id="tplUsersProfile" type="text/template">
+                <div id="basicInfo" class="isColumn1 isRow1 hasRightPadding">
+                    <p>
+                        Instasoda is in beta and in order to protect our user's privacy we do not show parts of their profile (tagged <span class="protected">protected</span>).
+                    </p>
+                    <p>
+                        <h2>{{username}}'s basic info</h2>
+                        <p>
+                            <ul>
+                                <li>Age: <span class="facebookData">{{age}}</span></li>
+                                <li>Gender: <span class="facebookData">{{gender}}</span></li>
+                                <li>Relationship status: <span class="protected facebookData">protected</span></li>
+                                <li>Location: <span class="protected facebookData">protected</span></li>
+                            </ul>
+                        </p>
+                    </p>
+                    <p>
+                        <h2>A little bit about {{username}}</h2>
+                        <p>       
+                            {{#aboutMe}}
+                                {{aboutMe}}
+                            {{/aboutMe}}     
+                            {{^aboutMe}}
+                               {{username}} has not entered anything yet.
+                            {{/aboutMe}}
+                        </p>
+                    </p>
+                </div>
+
+                <div id="facebookProfilePicsData" class="isColumn2 isRow1 hasRightPadding">
+                    <p>
+                        <h2>{{username}}'s best moments!</h2>                        
+                        <p>
+                            <ul id="userPhotos">
+                            </ul>
+                        </p>
+                    </p>
+                </div>
+
+                <div id="facebookLikesData" class="isColumn3 isRow1 hasRightPadding">
+                    <p>
+                        <h2>{{username}}'s likes</h2>
+                    </p>
+                    <ul id="facebookLikesContainer">
+                        {{#likes}}
+                            <li class="facebookLikesItem ">
+                                <ul>
+                                    <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture" width=50 height=50></li>
+                                    <li class="facebookLikesItemName">{{name}}</li>
+                                </ul>
+                            </li>
+                        {{/likes}}
+                        {{^likes}}
+                            No likes.
+                        {{/likes}}
+                    </ul>
+                </div>
+
+            </script>
+
             <script id="tplSettings" type="text/template">
                     <div id="basicSettings" class="isColumn1 isRow1 hasRightPadding">
                         <p>
                             <h2>Nickname</h2>
-                            <span class="tip">This is how other instasoda users will see you as.</span>
+                            <span class="tip">This is how other instasoda users will see you.</span>
                         
                             <p><input name="username" value="{{username}}" autofocus required maxlength=50></p>
                         </p>
@@ -154,11 +217,11 @@
                         
                             <p>
                                 <ul>
-                                    <li>Age: {{age}}</li>
-                                    <li>Gender: {{gender}}</li>
-                                    <li>Relationship status: {{fbRelationshipStatus}}</li>
-                                    <li>Location: {{fbLocation}}</li>
-                                    <li>Email: {{email}} (only you can see this)</li>
+                                    <li>Age: <span class="facebookData">{{age}}</span></li>
+                                    <li>Gender: <span class="facebookData">{{gender}}</span></li>
+                                    <li>Relationship status: <span class="facebookData">{{fbRelationshipStatus}}</span></li>
+                                    <li>Location: <span class="facebookData">{{fbLocation}}</span></li>
+                                    <li>Email: <span class="facebookData">{{email}}</span> (only you can see this)</li>
                                 </ul>
                             </p>
                         </p>
@@ -197,7 +260,7 @@
                     <div id="facebookLikesData" class="isColumn4 isRow1 hasRightPadding">
                         <p>
                             <h2>Likes</h2>
-                            <span class="tip">This is how other instasoda users will see you as.</span>
+                            <span class="tip">Likes and interests imported from your Facebook profile.</span>
                         </p>
                         <ul id="facebookLikesContainer">
                             {{#likes}}
