@@ -24,6 +24,7 @@ body {
 }
 
 .fragment header[role=banner] {
+    position: fixed;
     display: -ms-grid;
     -ms-grid-columns: 120px 1fr;
     -ms-grid-rows: 1fr;
