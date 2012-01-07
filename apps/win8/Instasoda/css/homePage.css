@@ -27,14 +27,11 @@ ul, li                  { list-style: none; }
 ul, li, h2              { margin: 0; padding: 0; }
 
 section {
+    margin-top: 200px;
 }
 
 .homePage {
     overflow: auto;
-}
-
-#registerAccount {
-    margin-top: 0;
 }
 
 #registerAccount > header span {
