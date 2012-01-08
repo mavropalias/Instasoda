@@ -654,10 +654,10 @@ $(document).ready(function () {
                 $('#saveProfileButton').show();
                 $('#working').hide();
                 $('#settings .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').hide().addClass('isAnimated');
-                setTimeout(function () { $('#settings .facebookLikesData').show().removeClass('isNotVisible') }, 1000);
+                setTimeout(function () { $('#settings, .facebookLikesData').show().removeClass('isNotVisible') }, 1000);
             } else if (page == '#usersProfile') {
                 $('#usersProfile .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').hide().addClass('isAnimated');
-                setTimeout(function () { $('#usersProfile .facebookLikesData').show().removeClass('isNotVisible') }, 1000);
+                setTimeout(function () { $('#usersProfile, .facebookLikesData').show().removeClass('isNotVisible') }, 1000);
             }
             if (oldPage.attr('id') == 'settings') {
                 $('#settings .facebookLikesData').addClass('isNotVisible');
