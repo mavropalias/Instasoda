@@ -15,10 +15,12 @@
     <script type="ms-deferred/javascript" src="/winjs/js/wwaapp.js"></script>
     <script type="ms-deferred/javascript" src="/winjs/js/res.js"></script>
     
+    <link rel="stylesheet" href="/css/ui-lightness/jquery-ui-1.8.16.custom.css" />
     <link rel="stylesheet" href="/css/default.css" />
     <link rel="stylesheet" href="/css/homePage.css" />
     
     <script type="ms-deferred/javascript" src="/js/jquery-1.7.1.min.js"></script>
+    <script type="ms-deferred/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
     <script type="ms-deferred/javascript" src="/js/underscore.js"></script>
     <script type="ms-deferred/javascript" src="/js/json2.js"></script>
     <script type="ms-deferred/javascript" src="/js/backbone.js"></script>
@@ -33,7 +35,7 @@
                 <button disabled class="win-backbutton" aria-label="Back"></button>
                 <div class="titleArea">
                     <h1 class="pageTitle win-title">Welcome to Instasoda!</h1><br />
-                    <h2>Social dating, in an instant.</h2>                
+                    <h2>Fizzy, not fussy!</h2>                
                 </div>
             </header>
            
@@ -111,6 +113,52 @@
                 <ul id="searchResults" class="isColumn1 isRow1"></ul>
             </section>
 
+            <section id="searchFilters" role="main" aria-label="Main content" class="isGrid hasNoLeftMargin hasLeftPadding hasAutoRows">
+                <ul class="isColumn1">
+                    <li>
+                        <h2>I’m interested in meeting...</h2>
+                        Choose either or both to indicate your sexual preferences.
+                        <p>
+                            <label><input type="checkbox" name="interestedInWomen" value="true">Women</label>
+                            <label><input type="checkbox" name="interestedInMen" value="true">Men</label>
+                        </p>
+                    </li>
+                    <li>
+                        <h2>I’m interested in people who are aged...</h2>
+                        Select an approximate age range on the slider below.
+                        <p>
+                         <input type="text" id="ageNum" />
+                            
+                        </p>
+                        <div id="ageRange"></div>
+                    </li>
+                    <li>
+                        <h2>I’d like to meet people who live in...</h2>
+                        Select your country and city below.
+                        <p>
+                            <label><input type="radio" name="searchLocation" value="near" />Near me</label>
+                            <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
+                        </p>
+                    </li>
+                    <li>
+                        <h2>I’d like to meet people who are...</h2>
+                        Select their relationship status below.
+                        <p>
+                            <label><input type="checkbox" name="single" value="true">Single</label>
+                            <label><input type="checkbox" name="partnered" value="true">Partnered</label>
+                        </p>
+                    </li>
+                </ul>
+                <ul class="isColumn3">
+                    <li>
+                        <h2>My favourite things are...</h2>
+                        Which of your Facebook likes are the most important to you.
+                    </li>
+                    <li><button id="buttonAddLikes">+ Add likes</button></li>
+                    <li><button id="doSearch">Search for matches!</button></li>
+                </ul>
+            </section>
+
             <section id="matches" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">matches (soon)</div></section>
 
             <section id="inbox" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">inbox (soon)</div></section>
@@ -121,15 +169,10 @@
 
         <!-- Mustache.js templates -->
             <script id="tplUsersPreview" type="text/template">
-                {{#profilePhoto}}
-                    <ul>
-                        <li class="userPreviewPhoto"><img src="{{profilePhoto}}" height=200></li>
-                        <li class="userPreviewNickname">{{username}}, {{age}}</li>
-                    </ul>
-                {{/profilePhoto}}
-                {{^profilePhoto}}
-                    No photo.
-                {{/profilePhoto}}
+                <ul>
+                    <li class="userPreviewPhoto"><img src="{{profilePhoto}}" height=200></li>
+                    <li class="userPreviewNickname">{{username}}, {{age}}</li>
+                </ul>
             </script>
 
             <script id="tplUsersProfile" type="text/template">
@@ -143,6 +186,7 @@
                             <ul>
                                 <li>Age: <span class="facebookData">{{age}}</span></li>
                                 <li>Gender: <span class="facebookData">{{gender}}</span></li>
+                                <li>Interested in: {{interestedIn}}</li>
                                 <li>Relationship status: <span class="protected facebookData">protected</span></li>
                                 <li>Location: <span class="protected facebookData">protected</span></li>
                             </ul>
@@ -161,7 +205,7 @@
                     </p>
                 </div>
 
-                <div id="facebookProfilePicsData" class="isColumn2 isRow1 hasRightPadding">
+                <div class="profilePicsData profilePicsDataSmall isColumn2 isRow1 hasRightPadding isAnimated hasEasing">
                     <p>
                         <h2>{{username}}'s best moments!</h2>                        
                         <p>
@@ -171,7 +215,7 @@
                     </p>
                 </div>
 
-                <div id="facebookLikesData" class="isColumn3 isRow1 hasRightPadding">
+                <div class="facebookLikesData isColumn3 isRow1 hasRightPadding isAnimated hasEasing">
                     <p>
                         <h2>{{username}}'s likes</h2>
                     </p>
@@ -243,7 +287,7 @@
                         </p>
                     </div>
 
-                    <div id="facebookProfilePicsData" class="isColumn3 isRow1 hasRightPadding">
+                    <div class="profilePicsData isColumn3 isRow1 hasRightPadding isAnimated hasEasing">
                         <p>
                             <h2>Me at my best! (photos)</h2>
                             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
@@ -257,7 +301,7 @@
                         </p>
                     </div>
                     
-                    <div id="facebookLikesData" class="isColumn4 isRow1 hasRightPadding">
+                    <div class="facebookLikesData isColumn4 isRow1 hasRightPadding isAnimated hasEasing">
                         <p>
                             <h2>Likes</h2>
                             <span class="tip">Likes and interests imported from your Facebook profile.</span>

@@ -27,58 +27,14 @@ $(document).ready(function () {
     // INIT APP
     // =======================================
 
-        
-
         if (IS.login()) {
             if (IS.accountIsComplete()) {
                 IS.navigateTo('#search', 'Search');
             } else {
-                //showSettingsPage();
-                calculateLikesAndPicsDimensions();
+                IS.navigateTo('#settings', 'My profile');
             }
         } else {
             IS.navigateTo('#registerAccount', 'Welcome to Instasoda!')
-        }
-
-    // =======================================
-    // CALCULATE HEIGHT, BIATCH!
-    // Profile pic height: 120px
-    // Likes pic + Likes title height: 100px + 20px = 120px
-    // =======================================
-        function calculateLikesAndPicsDimensions() {
-            var likesCount = IS.getUserAttr('fbLikesCount'),
-                picsCount = IS.getUserAttr('picsCount'),
-                profileCount = 24,
-                userWindowHeight = $(window).height(),
-                userWindowWidth = $(window).width(),
-                topHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
-
-            calculateMaxLikesRows = (userWindowHeight - topHeaderHeight) / 100;
-            calculateLikesWrapperWidth = (likesCount / calculateMaxLikesRows) * 120;
-            calculateMaxPicsRows = (userWindowHeight - topHeaderHeight) / 120;
-            calculatePicsWrapperWidth = (picsCount / calculateMaxPicsRows) * 120;
-            calculateMaxProfileRows = (userWindowHeight - topHeaderHeight) / 210;
-            calculateProfilesWrapperWidth = (profileCount / calculateMaxProfileRows) * 350;
-            
-            // The 720 below is the minimum width that each block (likes/profile pics) occupies
-            // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
-            if (calculatePicsWrapperWidth > 720) {
-                $("#facebookProfilePicsData").css({ 'width': calculatePicsWrapperWidth });
-            }
-            if (calculateLikesWrapperWidth > 720) {
-                $("#facebookLikesData").css({ 'width': calculateLikesWrapperWidth });
-            }
-
-            if (calculateProfilesWrapperWidth > 720) {
-                if (calculateProfilesWrapperWidth < userWindowWidth) {
-                    $("#searchResults").css({ 'width': userWindowWidth - 200 });
-                } else {
-                    $("#searchResults").css({ 'width': calculateProfilesWrapperWidth });
-                }
-            }
-
-            showSettingsPage();
-
         }
 
 
@@ -133,18 +89,6 @@ $(document).ready(function () {
             if (storedValue && storedValue !== "") {
                 id("serverUrlField").value = storedValue;
             }
-        }
-
-    // =======================================
-    // SETTINGS PAGE
-    // =======================================
-
-        function showSettingsPage() {
-            // show settings
-            IS.navigateTo('#settings', 'My profile')
-
-            $('#saveProfileButton').show();
-            $('#working').hide();
         }
 
 
@@ -221,4 +165,22 @@ $(document).ready(function () {
                         .exec(FacebookReturnedToken);
             return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
         }
+
+    // =======================================
+    // SEARCH FILTER
+    // =======================================
+        $("#ageRange").slider({
+            range: true,
+            min: 18,
+            max: 99,
+            values: [26, 91],
+            slide: function (event, ui) {
+                $("#ageNum").val(ui.values[0] + " - " + ui.values[1] + " years old");
+            }
+        });
+        $("#ageNum").val($("#ageRange").slider("values", 0) + " - " + $("#ageRange").slider("values", 1) + " years old");
+
+        $('#doSearch').click(function () {
+            IS.navigateTo('#search', 'Search results');
+        });
 });

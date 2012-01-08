@@ -23,6 +23,16 @@ body {
     background-attachment: scroll;
 }
 
+#appbar {
+    background:#00364D;
+}
+    #appbar .win-commandicon {
+        border-color:#D5EEF2;
+    }
+    #appbar .win-commandicon, #appbar .win-label {
+        color:#EFF8FA;
+    }
+
 .fragment header[role=banner] {
     position: fixed;
     display: -ms-grid;

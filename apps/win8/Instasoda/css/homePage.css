@@ -43,8 +43,17 @@ section {
     -ms-grid-columns: 500px 700px auto auto;
 }
 
-#facebookProfilePicsData, #facebookLikesData {
+#usersProfile
+{
+    -ms-grid-columns: 500px auto auto;
+}
+
+.profilePicsData, .facebookLikesData {
     width: 720px;
+}
+
+.profilePicsDataSmall {
+    width: 300px;
 }
 
 .profileBox {     
@@ -141,12 +150,12 @@ section {
     background-color: #3DBCDF;
 }
 
-#userPictures {
+#userPictures, #userPhotos {
     display:block;
     overflow:hidden;
 }
 
-    #userPictures .userPicture {
+    #userPictures .userPicture, #userPhotos .userPicture {
         float:left;
         width:100px;
         height:100px;
@@ -174,6 +183,48 @@ section {
     text-overflow: ellipsis;
 }
 
+/* Search options */
+#searchFilters {
+    -ms-grid-columns: 500px 50px 400px;
+    color: #007DA6;
+}
+
+#searchFilters h2 {
+    font-size: 24px;
+    color: #00364D;
+}
+
+#searchFilters ul {
+    height: 450px;
+}
+
+#searchFilters ul li {
+    margin-bottom: 20px
+}
+
+#buttonAddLikes {
+    background-color: #3DBCDF;
+    color: white;
+    border: none;
+}
+
+#doSearch {
+    background-color: #ED1C24;
+    color: white;
+    border: none;
+}
+
+#ageNum {
+    border: 0;
+    color: #666666;
+    padding: 0;
+}
+
+#ageRange {
+    width: 380px;
+    margin-top: -10px;
+}
+
 /* Search results */
 #search {
     -ms-grid-columns: auto;
@@ -186,10 +237,11 @@ section {
 
 .userPreview {
     float: left;
-    width: 200px;
-    background-color:#007DA6;
+    width: 198px;
+    background-color:#EFF8FA;
     text-align:center;
-    margin:0 10px 10px 0;
+    margin:0 10px 8px 0;
+    border:1px solid #D5EEF2;
 }
 .userPreviewPhoto {
     overflow: hidden;
@@ -197,9 +249,9 @@ section {
     margin:0 auto;
 }
 .userPreviewNickname {
-    font-size:12px;
-    margin-top:5px;
-    color:#96D9EE;
+    font-size:13px;
+    margin-bottom:5px;
+    color:#00364D;
 }
 
 @media screen and (-ms-view-state: snapped) {

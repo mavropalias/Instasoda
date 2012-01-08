@@ -28,6 +28,7 @@
         <Rule Match="https://instasoda.com" Type="include" />
         <Rule Match="http://connect.facebook.net" Type="include" />
         <Rule Match="https://connect.facebook.net" Type="include" />
+        <Rule Match="https://graph.facebook.com" Type="include" />
       </ApplicationContentUriRules>
     </Application>
   </Applications>
