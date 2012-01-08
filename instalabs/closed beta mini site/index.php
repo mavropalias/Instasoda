@@ -224,10 +224,11 @@
                         
                     // fetch user's Facebook profile image
                         try {
-                            $img = file_get_contents('https://graph.facebook.com/'.$fbUid.'/picture?type=large&access_token='.$fbToken);
+                            $img = imagecreatefromjpeg('https://graph.facebook.com/'.$fbUid.'/picture?type=large&access_token='.$fbToken);
                             $path = $fqlResult[0]->third_party_id.'_'.rand(1, 10000).'_'.rand(1, 10000).'.jpg';
                             $file = dirname(__file__).'/api/photos/'.$path;
-                            file_put_contents($file, $img);
+                            imagefilter($img, IMG_FILTER_PIXELATE, 15);
+                            imagejpeg($img, $file);
                             
                                 // update database
                                 $data = array(
