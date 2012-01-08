@@ -233,9 +233,6 @@ section {
     color: white;
     border: none;
     font-size:12pt;
-    position:absolute;
-    bottom:0;
-    left:0;
 }
 
 #ageNum {
