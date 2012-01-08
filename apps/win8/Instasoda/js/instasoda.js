@@ -288,7 +288,7 @@ $(document).ready(function () {
                 this.model.set({ picsCount: i });
 
                 // resize containers
-                calculateLikesAndPicsDimensions(this.model.get('fbLikesCount'), this.model.get('picsCount'));
+                calculateLikesAndPicsDimensions(this.model.get('fbLikesCount'), this.model.get('picsCount'), true);
             }
         });
 
@@ -374,7 +374,7 @@ $(document).ready(function () {
         * @param {Integer} iLikesCount
         * @return {Integer} iPicsCount
         */
-        var calculateLikesAndPicsDimensions = function (iLikesCount, iPicsCount) {
+        var calculateLikesAndPicsDimensions = function (iLikesCount, iPicsCount, bOtherUserProfile) {
             var iWindowHeight = $(window).height();
             var iHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
 
@@ -385,16 +385,18 @@ $(document).ready(function () {
 
             iMaxLikesRows = (iWindowHeight - iHeaderHeight) / 100;
             iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 120;
-            iMaxPicsRows = (iWindowHeight - iHeaderHeight) / 120;
-            iPicsWrapperWidth = (iPicsCount / iMaxPicsRows) * 120;
+            iMaxPicsRows = (iWindowHeight - iHeaderHeight) / 170;
+            iPicsWrapperWidth = ((iPicsCount / iMaxPicsRows) * 170) + 116 + 62; //116 is the padding-right of the container - I have no idea why 62 is also needed!
 
             // The 720 below is the minimum width that each block (likes/profile pics) occupies
             // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
-            if (iPicsWrapperWidth > 720) {
-                $(".profilePicsData").css({ 'width': iPicsWrapperWidth });
+            if (bOtherUserProfile === true && iPicsWrapperWidth > 300) {
+                $(".profilePicsDataSmall").css({ 'width': iPicsWrapperWidth + 'px' });
+            } else if (iPicsWrapperWidth > 720) {
+                $(".profilePicsData").css({ 'width': iPicsWrapperWidth + 'px' });
             }
             if (iLikesWrapperWidth > 720) {
-                $(".facebookLikesData").css({ 'width': iLikesWrapperWidth });
+                $(".facebookLikesData").css({ 'width': iLikesWrapperWidth + 'px' });
             }
         }
 
