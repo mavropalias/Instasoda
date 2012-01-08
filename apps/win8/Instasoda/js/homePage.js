@@ -183,4 +183,8 @@ $(document).ready(function () {
         $('#doSearch').click(function () {
             IS.navigateTo('#search', 'Search results');
         });
+
+        $('#buttonAddLikes').click(function () {
+            IS.navigateTo('#beta', 'Almost there!');
+        });
 });
