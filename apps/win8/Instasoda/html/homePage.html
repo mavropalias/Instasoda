@@ -226,7 +226,7 @@
                         {{#likes}}
                             <li class="facebookLikesItem " title="{{name}}">
                                 <ul>
-                                    <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture" width=50 height=50></li>
+                                    <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture?access_token={{fbToken}}" width=50 height=50></li>
                                     <li class="facebookLikesItemName">{{name}}</li>
                                 </ul>
                             </li>
