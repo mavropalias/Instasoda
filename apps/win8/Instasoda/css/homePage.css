@@ -206,12 +206,17 @@ section {
     background-color: #3DBCDF;
     color: white;
     border: none;
+    font-size:10pt;
 }
 
 #doSearch {
     background-color: #ED1C24;
     color: white;
     border: none;
+    font-size:12pt;
+    position:absolute;
+    bottom:0;
+    left:0;
 }
 
 #ageNum {
