@@ -43,6 +43,7 @@
     <Content Include="css\ui-lightness\jquery-ui-1.8.16.custom.css" />
     <Content Include="default.html" />
     <Content Include="html\homePage.html" />
+    <Content Include="images\betaMessage.png" />
     <Content Include="images\bubbles.png" />
     <Content Include="images\fb_icon.png" />
     <Content Include="images\heart.png" />
