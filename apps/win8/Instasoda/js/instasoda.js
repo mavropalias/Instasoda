@@ -202,7 +202,7 @@ $(document).ready(function () {
                         });                        
                     } else {
                         // File not valid
-                        $('#userPictures').append("error");
+                        //$('#userPictures').append("error");
                     }
                 });
             }
@@ -619,7 +619,7 @@ $(document).ready(function () {
         */
         this.navigateBack = function () {
             if (navHistoryPage.length > 0) {
-                IS.navigateTo(navHistoryPage.pop(), navHistoryTitle.pop());
+                IS.navigateTo(navHistoryPage.pop(), navHistoryTitle.pop(), false);
             }
         }
 
@@ -628,14 +628,14 @@ $(document).ready(function () {
         * @param {String} page the new page to display (.class or #id)
         * @param {String} title title of the new page
         */
-        this.navigateTo = function (page, title) {
+        this.navigateTo = function (page, title, track) {
             var preDelay = 0;
 
             var oldPage = $('section[role=main]').filter(':visible');
             var newPage = $(page);
 
             // track nav history
-            if (oldPage.attr('id') != 'photoView' && oldPage.attr('id') != 'registerAccount' && oldPage.attr('id') != null) {
+            if (oldPage.attr('id') != 'photoView' && oldPage.attr('id') != 'registerAccount' && oldPage.attr('id') != null && track !== false) {
                 navHistoryPage.push('#' + oldPage.attr('id'));
                 navHistoryTitle.push($('header[role=banner] .titleArea > h1').text());
 
