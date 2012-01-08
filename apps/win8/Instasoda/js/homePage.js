@@ -35,6 +35,7 @@ $(document).ready(function () {
             }
             $('#appbar button').show();
             $('#appbar #navRegister').hide();
+            $('header[role=banner] h2').remove();
         } else {
             IS.navigateTo('#registerAccount', 'Welcome to Instasoda!')
         }
@@ -149,6 +150,7 @@ $(document).ready(function () {
                             $('#working').fadeOut();
                             $('#appbar button').show();
                             $('#appbar #navRegister').hide();
+                            $('header[role=banner] h2').fadeOut();
                         } else {
                             $('#fbResponse').html("error: " + jData.status);
                         }
