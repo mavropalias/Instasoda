@@ -639,7 +639,7 @@ $(document).ready(function () {
             var newPage = $(page);
 
             // track nav history
-            if (oldPage.attr('id') != 'photoView' && oldPage.attr('id') != 'registerAccount' && oldPage.attr('id') != null && track !== false) {
+            if (oldPage.attr('id') != 'photoView' && oldPage.attr('id') != 'registerAccount' && oldPage.attr('id') != null && track !== false && navHistoryPage[navHistoryPage.length - 1] != ('#' + oldPage.attr('id'))) {
                 navHistoryPage.push('#' + oldPage.attr('id'));
                 navHistoryTitle.push($('header[role=banner] .titleArea > h1').text());
 
