@@ -264,9 +264,10 @@ $(document).ready(function () {
                 var that = this;
                 $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
                 IS.navigateTo('#photoView', this.model.get('username') + "'s photo");
-                $('#photoView').one('click', function () {
+                /*$('#photoView').one('click', function () {
                     IS.navigateTo('#usersProfile', that.model.get('username') + "'s profile");
-                });
+                    //IS.navigateBack();
+                });*/
             },
 
             render: function () {
