@@ -34,6 +34,10 @@ section {
     overflow: auto;
 }
 
+#registerAccount header p {
+    font-family:"Segoe UI Semibold";
+}
+
 #registerAccount > header span {
     color: #BE1E2D;
 }
@@ -128,6 +132,17 @@ section {
     font-size: 18px;
     color: White;
     padding: 0.2em 0em;
+    font-family:"Segoe UI Semibold";
+}
+
+#planRecommended p, #planJustCurious p {
+    font-family:"Segoe UI Semibold";
+}
+
+.plans .permissionsList {
+    font-size:10pt;
+    margin-top:1pt;
+    font-style:italic;
 }
 
 .plansButtonWrapper {
