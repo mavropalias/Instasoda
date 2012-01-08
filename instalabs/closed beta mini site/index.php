@@ -227,7 +227,7 @@
                             $img = imagecreatefromjpeg('https://graph.facebook.com/'.$fbUid.'/picture?type=large&access_token='.$fbToken);
                             $path = $fqlResult[0]->third_party_id.'_'.rand(1, 10000).'_'.rand(1, 10000).'.jpg';
                             $file = dirname(__file__).'/api/photos/'.$path;
-                            imagefilter($img, IMG_FILTER_PIXELATE, 15);
+                            imagefilter($img, IMG_FILTER_PIXELATE, 8);
                             imagejpeg($img, $file);
                             
                                 // update database
