@@ -139,9 +139,13 @@ section {
     font-family:"Segoe UI Semibold";
 }
 
+.plans .permissionsTip {
+    font-size:10pt;
+}
+
 .plans .permissionsList {
     font-size:10pt;
-    margin-top:1pt;
+    margin-top:2pt;
     font-style:italic;
 }
 
