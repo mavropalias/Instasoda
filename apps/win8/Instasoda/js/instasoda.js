@@ -19,6 +19,8 @@ $(document).ready(function () {
 
         var sApi = "http://instasoda.com/api/";
         var sApiPhotos = "http://instasoda.com/api/photos/";
+        var sApiSecretKey = "aG35svDHJURCG35253dCFDC69fvsf3fhg0f";
+        var sApiSecretKeyGet = "?skey=" + sApiSecretKey;
         jQuery.support.cors = true;
         Backbone.emulateHTTP = true;
 
@@ -35,7 +37,7 @@ $(document).ready(function () {
                 username: 'new user',
                 picsCount: 0
             },
-            url: sApi + 'user.php'
+            url: sApi + 'user.php' + sApiSecretKeyGet
         });
 
         // Users - all other Instasoda users
@@ -50,7 +52,7 @@ $(document).ready(function () {
 
         // UsersCollection - a collection of Users
         var UsersCollection = Backbone.Collection.extend({
-            url: sApi + 'users.php'
+            url: sApi + 'users.php' + sApiSecretKeyGet
         });
 
 
@@ -171,7 +173,7 @@ $(document).ready(function () {
                         file.openAsync(Windows.Storage.FileAccessMode.read).then(function (stream) {
                             var blob = msWWA.createBlobFromRandomAccessStream(file.contentType, stream);
                             var xhr = new XMLHttpRequest();
-                            xhr.open('POST', sApi + 'photo.php?a=1&token=' + fbThirdPartyId + '&t=' + file.fileType, true);
+                            xhr.open('POST', sApi + 'photo.php?a=1&token=' + fbThirdPartyId + '&t=' + file.fileType + '&skey=' + sApiSecretKey, true);
                             xhr.onload = function (e) {
                                 var imageData = JSON.parse(e.currentTarget.response);
                                 that.model.set(imageData);

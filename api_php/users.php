@@ -4,6 +4,16 @@
     require 'libs/facebook.php';
     require 'libs/instasodaHelperFunctions.php';
     
+    
+    // ========================================
+    // ========================================
+    // AUTHORIZATION
+    // ========================================
+    // ========================================
+
+        $sApiSecretKey = "aG35svDHJURCG35253dCFDC69fvsf3fhg0f";
+        if($_GET['skey'] != $sApiSecretKey) die("Authorization failed - ip/datetime logged.");
+    
     // ======================================== 
     // ========================================
     // READ (GET)

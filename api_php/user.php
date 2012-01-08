@@ -15,6 +15,16 @@
         $item = json_decode($rawJSONString);
         file_put_contents('debug.txt', serialize(($item->photos)), FILE_APPEND);
         file_put_contents('debug2.txt', unserialize(serialize($item->photos)), FILE_APPEND);*/
+       
+       
+    // ========================================
+    // ========================================
+    // AUTHORIZATION
+    // ========================================
+    // ========================================
+
+        $sApiSecretKey = "aG35svDHJURCG35253dCFDC69fvsf3fhg0f";
+        if($_GET['skey'] != $sApiSecretKey) die("Authorization failed - ip/datetime logged.");
     
     // ========================================
     // ========================================
