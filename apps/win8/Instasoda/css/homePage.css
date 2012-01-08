@@ -34,7 +34,7 @@ section {
     overflow: auto;
 }
 
-#registerAccount header p {
+#registerAccount header p, h2 {
     font-family:"Segoe UI Semibold";
 }
 
