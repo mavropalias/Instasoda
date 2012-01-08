@@ -117,7 +117,7 @@
                 <ul class="isColumn1">
                     <li>
                         <h2>I’m interested in meeting...</h2>
-                        Choose either or both to indicate your sexual preferences.
+                        Choose either or both.
                         <p>
                             <label><input type="checkbox" name="interestedInWomen" value="true">Women</label>
                             <label><input type="checkbox" name="interestedInMen" value="true">Men</label>
@@ -133,8 +133,8 @@
                         <div id="ageRange"></div>
                     </li>
                     <li>
-                        <h2>I’d like to meet people who live in...</h2>
-                        Select your country and city below.
+                        <h2>I’d like to meet people who live...</h2>
+                        'Near me' will bring up people that live around your area.
                         <p>
                             <label><input type="radio" name="searchLocation" value="near" />Near me</label>
                             <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
@@ -163,6 +163,8 @@
 
             <section id="inbox" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">inbox (soon)</div></section>
 
+            <section id="beta" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">Feature coming soon!</div></section>
+
             <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr isColumn2 hasNoLeftMargin hasAutoRows"></section>
 
             <section id="usersProfile" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
@@ -179,6 +181,11 @@
                 <div id="basicInfo" class="isColumn1 isRow1 hasRightPadding">
                     <p>
                         Instasoda is in beta and in order to protect our user's privacy we do not show parts of their profile (tagged <span class="protected">protected</span>).
+                    </p>
+                    <p>
+                        <button onclick="IS.navigateTo('#beta', 'Almost there!');">Send message</button>
+                        <button onclick="IS.navigateTo('#beta', 'Almost there!');">+ Favourite</button>
+                        <button onclick="IS.navigateTo('#beta', 'Almost there!');">Similar users</button>
                     </p>
                     <p>
                         <h2>{{username}}'s basic info</h2>
