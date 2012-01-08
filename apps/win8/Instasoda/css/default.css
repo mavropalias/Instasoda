@@ -72,6 +72,8 @@ body {
     -ms-grid-row: 2;
     width: 100%;
     height: 100%;
+    z-index:2;
+    position:relative;
 }
 
 .tip {
@@ -99,6 +101,8 @@ body {
     display: -ms-grid;
     -ms-grid-columns: 44px 1fr;
     -ms-grid-rows: 1fr;
+    z-index:1;
+    position:relative;
 }
 
 .fragment header[role=banner] #backButton {
