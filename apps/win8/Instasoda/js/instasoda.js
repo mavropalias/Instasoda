@@ -387,8 +387,8 @@ $(document).ready(function () {
 
             iMaxLikesRows = (iWindowHeight - iHeaderHeight) / 100;
             iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 120;
-            iMaxPicsRows = (iWindowHeight - iHeaderHeight) / 170;
-            iPicsWrapperWidth = ((iPicsCount / iMaxPicsRows) * 170) + 116 + 62; //116 is the padding-right of the container - I have no idea why 62 is also needed!
+            iMaxPicsRows = (iWindowHeight - iHeaderHeight) / 240;
+            iPicsWrapperWidth = ((iPicsCount / iMaxPicsRows) * 240) + 116 + 62; //116 is the padding-right of the container - I have no idea why 62 is also needed!
 
             // The 720 below is the minimum width that each block (likes/profile pics) occupies
             // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
@@ -652,16 +652,20 @@ $(document).ready(function () {
                 calculateLikesAndPicsDimensions();
                 $('#saveProfileButton').show();
                 $('#working').hide();
-                $('#settings .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').addClass('isAnimated');
+                $('#settings .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').hide().addClass('isAnimated');
+                setTimeout(function () { $('#settings .facebookLikesData').show().removeClass('isNotVisible') }, 1000);
             } else if (page == '#usersProfile') {
-                $('#usersProfile .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').addClass('isAnimated');
+                $('#usersProfile .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').hide().addClass('isAnimated');
+                setTimeout(function () { $('#usersProfile .facebookLikesData').show().removeClass('isNotVisible') }, 1000);
             }
             if (oldPage.attr('id') == 'settings') {
                 $('#settings .facebookLikesData').addClass('isNotVisible');
-                preDelay += 500;
+                setTimeout(function () { $('#settings .facebookLikesData').hide() }, 500);
+                preDelay += 600;
             } else if (oldPage.attr('id') == 'usersProfile') {
                 $('#usersProfile .facebookLikesData').addClass('isNotVisible');
-                preDelay += 500;
+                setTimeout(function () { $('#usersProfile .facebookLikesData').hide() }, 500);
+                preDelay += 600;
             }
 
             // wait for preDelay and do the transition

@@ -15,12 +15,12 @@
 .isColumn4              { -ms-grid-column: 4; }
 .isRow1                 { -ms-grid-row: 1 }
 .isRow2                 { -ms-grid-row: 2 }
-.subtractLeftMargin     { margin-left: -116px!important; }
-.addLeftMargin          { margin-left: 116px!important; }
+.subtractLeftMargin     { margin-left: -56px!important; }
+.addLeftMargin          { margin-left: 56px!important; }
 .hasNoLeftMargin        { margin-left: 0px; }
 .hasLeftPadding         { padding-left: 116px; }
 .hasRightPadding        { padding-right: 116px; }
-.isAnimated             { -ms-transition-property: all; -ms-transition-duration: 0.5s;}
+.isAnimated             { -ms-transition-property: all; -ms-transition-duration: 0.4s;}
 .hasEasing              { -ms-transition-timing-function: ease-in-out; }
 .isNotVisible           { opacity: 0; }
 ul, li                  { list-style: none; }
