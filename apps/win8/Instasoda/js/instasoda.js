@@ -430,7 +430,8 @@ $(document).ready(function () {
         // ===================================================
 
         var isLoggedIn = false;
-        var activityFeedPage = 0;
+        var navHistoryPage = new Array();
+        var navHistoryTitle = new Array();
 
         // Backbone models
         var user = new User();
@@ -616,11 +617,31 @@ $(document).ready(function () {
         * @param {String} page the new page to display (.class or #id)
         * @param {String} title title of the new page
         */
+        this.navigateBack = function () {
+            if (navHistoryPage.length > 0) {
+                IS.navigateTo(navHistoryPage.pop(), navHistoryTitle.pop());
+            }
+        }
+
+        /**
+        * Navigates to a new page
+        * @param {String} page the new page to display (.class or #id)
+        * @param {String} title title of the new page
+        */
         this.navigateTo = function (page, title) {
             var preDelay = 0;
 
             var oldPage = $('section[role=main]').filter(':visible');
             var newPage = $(page);
+
+            // track nav history
+            if (oldPage.attr('id') != 'photoView' && oldPage.attr('id') != 'registerAccount' && oldPage.attr('id') != null) {
+                navHistoryPage.push('#' + oldPage.attr('id'));
+                navHistoryTitle.push($('header[role=banner] .titleArea > h1').text());
+
+                // show back button for the first time
+                if (navHistoryPage.length === 1) $('#backButton').fadeIn();
+            }
 
             // do UI pre-processing
             if (page == '#settings') {

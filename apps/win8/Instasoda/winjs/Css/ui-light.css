@@ -167,7 +167,7 @@ h6
 /*-----------------------------------------------------------------------------  
     Back button
 -----------------------------------------------------------------------------*/
-.win-backbutton
+#backButton
 {
     display: inline-block;
     min-width: 0px;
@@ -188,21 +188,21 @@ h6
     vertical-align: baseline;
 }
 
-.win-backbutton:hover, .win-backbutton:active, .win-backbutton:hover:active
+#backButton:hover, #backButton:active, #backButton:hover:active
 {
     border-width: 2px;
     border-style: solid;
     border-radius: 50%;
 }
 
-.win-backbutton::before
+#backButton::before
 {
     font-family: "Segoe UI Symbol";
     content: "\E0D5";
     vertical-align: 50%;
 }
 
-.win-backbutton:disabled, .win-backbutton:hover:active:disabled
+#backButton:disabled, #backButton:hover:active:disabled
 {
     background-clip: padding-box;
 }
@@ -229,7 +229,7 @@ h6
         font: 11pt/15pt "Segoe UI Light";    
     }
 
-    .win-backbutton
+    #backButton
     {
         width: 30px;
         height: 30px;
@@ -724,14 +724,14 @@ body[dir=rtl] .win-appbar .win-title
 }
 
 /* Make Appbar Back Button correct size */
-.win-navigation .win-backbutton.win-large
+.win-navigation #backButton.win-large
 {
     width: 40px;
     height: 40px;
 }
 
 /* Make Appbar Back Button correct size */
-.win-navigation .win-backbutton.win-large::before
+.win-navigation #backButton.win-large::before
 {
     font-size: 14pt;
     line-height: 36px; /* line-height must match the content box height */
@@ -1879,27 +1879,27 @@ progress
 /*-----------------------------------------------------------------------------  
     Back button
 -----------------------------------------------------------------------------*/
-.win-backbutton
+#backButton
 {
     background-color: transparent;
     border-color: rgb(33, 33, 33);
     color: rgb(33, 33, 33);
 }
 
-.win-backbutton:hover, .win-backbutton:active
+#backButton:hover, #backButton:active
 {
     background-color: rgba(33, 33, 33, 0.13);
     border-color: rgb(33, 33, 33);
 }
 
-.win-backbutton:hover:active
+#backButton:hover:active
 {
     background-color: rgb(33, 33, 33);
     border-color: rgb(33, 33, 33);
     color: rgb(255, 255, 255);
 }
 
-.win-backbutton:disabled, .win-backbutton:hover:active:disabled
+#backButton:disabled, #backButton:hover:active:disabled
 {
     background-color: transparent;
     border-color: rgba(33, 33, 33, 0.49);

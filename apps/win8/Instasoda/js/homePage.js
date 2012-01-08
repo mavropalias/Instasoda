@@ -196,4 +196,13 @@ $(document).ready(function () {
         $('#buttonAddLikes').click(function () {
             IS.navigateTo('#beta', 'Almost there!');
         });
+
+
+    // =======================================
+    // BACK BUTTON
+    // =======================================
+
+        $('#backButton').on('click', function (e) {
+            IS.navigateBack();
+        });
 });

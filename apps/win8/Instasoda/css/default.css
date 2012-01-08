@@ -40,7 +40,7 @@ body {
     -ms-grid-rows: 1fr;
 }
 
-.fragment header[role=banner] .win-backbutton {
+.fragment header[role=banner] #backButton {
     margin-left: 40px;
     margin-top: 60px;
 }
@@ -101,7 +101,7 @@ body {
     -ms-grid-rows: 1fr;
 }
 
-.fragment header[role=banner] .win-backbutton {
+.fragment header[role=banner] #backButton {
     margin-left: 12px;
     margin-top: 74px;
 }
