@@ -88,7 +88,7 @@ $(document).ready(function () {
                 if (this.model.get('photos') != null && this.model.get('photos') != "") {
                     var images = this.model.get('photos').split(',');
                     for (i; i < (images.length - 1); i++) {
-                        $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
+                        $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "' data-filenameshort='" + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
                     }
                 }
 
@@ -110,12 +110,12 @@ $(document).ready(function () {
             },
 
             viewPhoto: function(e) {
-                var filename = $(e.currentTarget).data("filename");
+                var filename = $(e.currentTarget).data('filename');
 
                 //TODO: convert the following code into a template
-                $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
+                $('#photoView').html('<div class="isColumn1 isRow1"><button onclick="IS.deletePhoto(\'' + $(e.currentTarget).data('filenameshort') + '\');">Delete photo</button><br /><img src="' + filename + '"></div>');
                 IS.navigateTo('#photoView', 'Photo');
-                $('#photoView').one('click', function () {
+                $('#photoView img').one('click', function () {
                     IS.navigateTo('#settings', 'My profile');
                 });
             },
@@ -492,29 +492,29 @@ $(document).ready(function () {
             });
 
             user.save(
-            {
-                error: function (model, response) {
-                    //TODO: properly handle errors
-                    callback(false, "Ajax error: " + response.status);
-                }
-            },
-            {
-                success: function (model, response) {
-                    // SUCCESS
-                    if (response.status == "success") {
-                        user.set({ loggedIn: '1' });
-                        // store the user details locally
-                        saveLocally("user", user);
-                        // callback success
-                        callback(true, "success");
+                {
+                    error: function (model, response) {
+                        //TODO: properly handle errors
+                        callback(false, "Ajax error: " + response.status);
                     }
-                    // FAIL
-                    else {
-                        callback(false, response.status);
+                },
+                {
+                    success: function (model, response) {
+                        // SUCCESS
+                        if (response.status == "success") {
+                            user.set({ loggedIn: '1' });
+                            // store the user details locally
+                            saveLocally("user", user);
+                            // callback success
+                            callback(true, "success");
+                        }
+                        // FAIL
+                        else {
+                            callback(false, response.status);
+                        }
                     }
                 }
-            }
-                );
+            );
         }
 
         /**
@@ -699,7 +699,6 @@ $(document).ready(function () {
             }, preDelay);
         }
 
-
         /**
         * Returns the value of a user attribute
         * @param {String} attr the attribute to return
@@ -707,6 +706,50 @@ $(document).ready(function () {
         */
         this.getUserAttr = function (attr) {
             return user.get(attr);
+        }
+
+        /**
+        * Deletes a user photo
+        * @param {String} photo
+        */
+        this.deletePhoto = function (imgFile) {
+            var fbThirdPartyId = user.get('fbThirdPartyId');
+
+            // split photos string to array and remove image
+            var images = user.get('photos').split(',');
+            var arrayPos = $.inArray(imgFile, images);
+            if (arrayPos != -1) {
+                images.splice(arrayPos, 1);
+            }
+
+            // rebuild string and save user
+            var imgStr = "";
+            for (var i = 0; i < (images.length - 1); i++) {
+                imgStr += images[i] + ',';
+            }
+            user.set({ 'photos': imgStr });
+            user.save(
+                {
+                    error: function (model, response) {
+                        //TODO: properly handle errors
+                        IS.navigateBack();
+                    }
+                },
+                {
+                    success: function (model, response) {
+                        // SUCCESS
+                        if (response.status == "success") {
+                            saveLocally("user", user);
+                            IS.navigateBack();
+                        }
+                        // FAIL
+                        else {
+                            //TODO: properly handle errors
+                            IS.navigateBack();
+                        }
+                    }
+                }
+            );
         }
     }
 });
