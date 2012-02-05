@@ -1,5 +1,5 @@
-Instasoda/apps/android
-======================
+Android app
+===========
 
 Code repository for the Android app.
 
