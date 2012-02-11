@@ -6,7 +6,7 @@
     // ===================================================
     // ===================================================
     // READ (GET)
-    // e.g. http://instasoda.com/api/mosaic/story.php?id=1
+    // e.g. http://instasoda.com/api/mosaic/story.php?id=2
     // ===================================================
     // ===================================================
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -15,6 +15,7 @@
             'id' => $_GET['id']
 				);
 
+				// fetch post
         try {
             $STH = $DB->prepare('SELECT *  FROM posts WHERE id = :id LIMIT 1');
             $STH->setFetchMode(PDO::FETCH_OBJ);
@@ -25,9 +26,22 @@
             file_put_contents('InstasodaPDOErrors.txt', $e->getMessage(), FILE_APPEND);
             die();
         }
+				$row = $STH->fetch();
+				
+				// fetch comments
+        try {
+            $STH = $DB->prepare('SELECT id, author, content, date  FROM comments WHERE postId = :id ORDER BY id DESC');
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->execute($data);
+        } catch (PDOException $e) {
+            header( 'HTTP/1.1 400: BAD REQUEST' );
+            echo json_encode(array("status"=>"Could not read database."));
+            file_put_contents('InstasodaPDOErrors.txt', $e->getMessage(), FILE_APPEND);
+            die();
+        }
+				$row->comments = $STH->fetchAll();
 
-        header('HTTP/1.1 200 OK');
-        $row = $STH->fetch();
+        header('HTTP/1.1 200 OK');        
 				echo json_encode($row); 
     }
 
