@@ -4,7 +4,7 @@
         $host = "external-db.s56768.gridserver.com";
         $port = 3306;
         $username = "db56768_is";
-        $password = "XXXXX"; // please insert proper DB password
+        $password = "XXX"; // please insert proper DB password
         $database = "db56768_is";
         
         $dsn = "mysql:host=$host;port=$port;dbname=$database";
@@ -22,6 +22,7 @@
     
     header('Cache-Control: no-cache, must-revalidate');
     header('Content-type: application/json');
+		header('Access-Control-Allow-Origin: *');
 
 
     // debug
