@@ -4,7 +4,7 @@
         $host = "external-db.s56768.gridserver.com";
         $port = 3306;
         $username = "db56768_is";
-        $password = "XXX"; // please insert proper DB password
+        $password = "xxx"; // please insert proper DB password
         $database = "db56768_is";
         
         $dsn = "mysql:host=$host;port=$port;dbname=$database";
@@ -22,7 +22,12 @@
     
     header('Cache-Control: no-cache, must-revalidate');
     header('Content-type: application/json');
-		header('Access-Control-Allow-Origin: *');
+    
+    // cors shit
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Credentials: true ");
+    header("Access-Control-Allow-Methods: OPTIONS, GET, POST");
+    header("Access-Control-Allow-Headers: Content-Type, Depth, User-Agent, X-File-Size, X-Requested-With, If-Modified-Since, X-File-Name, Cache-Control");
 
 
     // debug
