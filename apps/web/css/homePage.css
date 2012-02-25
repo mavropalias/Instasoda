@@ -1,0 +1,291 @@
+﻿.isGrid                 { display: -ms-grid; }
+.hasAutoRows            { -ms-grid-rows: auto; }
+.isRightAligned         { -ms-grid-column-align: right; }
+.hasNoSpan              { -ms-grid-column-span: 1; -ms-grid-row-span: 1; }
+.has2ColumnSpan         { -ms-grid-column-span: 2; }
+.has3ColumnSpan         { -ms-grid-column-span: 3; }
+.has4ColumnSpan         { -ms-grid-column-span: 4; }
+.has1ColumnsOf1fr       { -ms-grid-columns: 116px 1fr 116px; }
+.has2ColumnsOf2fr       { -ms-grid-columns: 2fr 2fr; }
+.has3ColumnsOf3fr       { -ms-grid-columns: 3fr 3fr 3fr; }
+.has1RowOf1fr           { -ms-grid-rows: 1fr; }
+.isColumn1              { -ms-grid-column: 1; }
+.isColumn2              { -ms-grid-column: 2; }
+.isColumn3              { -ms-grid-column: 3; }
+.isColumn4              { -ms-grid-column: 4; }
+.isRow1                 { -ms-grid-row: 1 }
+.isRow2                 { -ms-grid-row: 2 }
+.subtractLeftMargin     { margin-left: -56px!important; }
+.addLeftMargin          { margin-left: 56px!important; }
+.hasNoLeftMargin        { margin-left: 0px; }
+.hasLeftPadding         { padding-left: 116px; }
+.hasRightPadding        { padding-right: 116px; }
+.isAnimated             { 
+	-ms-transition-property: all; 
+	-webkit-transition-property: all;
+	-moz-transition-property: all;
+	transition-property: all;
+	
+	-ms-transition-duration: 0.4s;
+	-webkit-transition-duration: 0.4s;
+	-moz-transition-duration: 0.4s;
+	transition-duration: 0.4s;
+}
+.hasEasing              { 
+	-ms-transition-timing-function: ease-in-out;
+	-webkit-transition-timing-function: ease-in-out;
+	-moz-transition-timing-function: ease-in-out;
+	transition-timing-function: ease-in-out;	 
+}
+.isNotVisible           { opacity: 0; }
+ul, li                  { list-style: none; }
+ul, li, h2              { margin: 0; padding: 0; }
+
+section {
+    margin-top: 200px;
+}
+
+.homePage {
+    overflow: auto;
+}
+
+#registerAccount header p, h2 {
+    font-family:"Segoe UI Semibold";
+}
+
+#registerAccount > header span {
+    color: #BE1E2D;
+}
+
+#settings
+{
+    -ms-grid-columns: 500px 700px auto auto;
+}
+
+#usersProfile
+{
+    -ms-grid-columns: 500px auto auto;
+}
+
+.profilePicsData, .facebookLikesData {
+    width: 720px;
+}
+
+.profilePicsDataSmall {
+    width: 300px;
+}
+
+.profileBox {     
+    padding-top: 1em; 
+}
+
+.profileBox img
+{
+    padding-top: 0.55em;
+    width: 80px;
+}
+
+.profileBox h2
+{
+    text-align: right;
+}
+
+.profileBox img, .profileBox h2
+{
+    padding-left: 2em;
+    float: left;
+}
+
+.plans
+{  
+    -ms-grid-columns: 400px 400px 433px 50px;
+    margin: -0.5em 0 0 -3.6em;
+}
+
+.plans ul { 
+    height: 406px; 
+    background-color: #D5EEF2;
+}
+
+.plans > li { 
+    margin: 1em;
+    color: #00364D;
+}
+
+.plans > li:hover button {
+    background-color: #5dcdec;
+}
+
+.planSpacer {
+    height: 5px;
+    background: white!important;
+}
+
+.plans #planRecommended ul li:first-child {
+    background-color: #007DA6;
+}
+
+.plans #planJustCurious ul li:first-child {
+    background-color: #3DBCDF;
+}
+
+.plans #planRefreshingly ul li:first-child, #planRefreshingly h2 {
+    background-color: #96D9EE;
+    color: #00364D;
+}
+
+#planRefreshingly ul > li:first-child img {
+    display: inline-block; float: right; margin-top: -60px; margin-right: 50px;
+}
+
+.plans ul li {
+    padding: 0.1em 1em;
+    background-color: #D5EEF2;
+}
+
+.plans ul li h2 {
+    font-size: 18px;
+    color: White;
+    padding: 0.2em 0em;
+    font-family:"Segoe UI Semibold";
+}
+
+#planRecommended p, #planJustCurious p {
+    font-family:"Segoe UI Semibold";
+}
+
+.plans .permissionsTip {
+    font-size:10pt;
+}
+
+.plans .permissionsList {
+    font-size:10pt;
+    margin-top:2pt;
+    font-style:italic;
+}
+
+.plansButtonWrapper {
+    width: 100%;
+    background-color: #D5EEF2;
+}
+
+.plans button {
+    padding: 1em 2em;
+    height: 100%;
+    border: none;
+    color: white;
+}
+
+#planRecommended button {
+    background-color: #BE1E2D;
+}
+
+#planJustCurious button {
+    background-color: #3DBCDF;
+}
+
+#userPictures, #userPhotos {
+    display:block;
+    overflow:hidden;
+}
+
+    #userPictures .userPicture, #userPhotos .userPicture {
+        float:left;
+        width:150px;
+        height:150px;
+        overflow:hidden;
+        margin:0 20px 20px 0;
+        cursor:pointer;
+    }
+
+#facebookLikesContainer {
+    /*display:none;*/
+    max-height: 400px;
+}
+
+.facebookLikesItem {
+    float: left;
+}
+
+.facebookLikesItemName {
+    font-size:11px;
+    width:80px;
+    height: 20px;
+    margin:0 20px 20px 0;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* Search options */
+#searchFilters {
+    -ms-grid-columns: 500px 50px 400px;
+    color: #007DA6;
+}
+
+#searchFilters h2 {
+    font-size: 24px;
+    color: #00364D;
+}
+
+#searchFilters ul {
+    height: 450px;
+}
+
+#searchFilters ul li {
+    margin-bottom: 20px
+}
+
+#buttonAddLikes {
+    background-color: #3DBCDF;
+    color: white;
+    border: none;
+    font-size:10pt;
+}
+
+#doSearch {
+    background-color: #ED1C24;
+    color: white;
+    border: none;
+    font-size:12pt;
+}
+
+#ageNum {
+    border: 0;
+    color: #666666;
+    padding: 0;
+}
+
+#ageRange {
+    width: 380px;
+    margin-top: -10px;
+}
+
+/* Search results */
+#search {
+    -ms-grid-columns: auto;
+    -ms-grid-rows: auto;
+}
+
+#searchResults {
+    min-width: 720px;
+}
+
+.userPreview {
+    float: left;
+    width: 198px;
+    background-color:#EFF8FA;
+    text-align:center;
+    margin:0 10px 8px 0;
+    border:1px solid #D5EEF2;
+}
+.userPreviewPhoto {
+    overflow: hidden;
+    width: 200px;
+    margin:0 auto;
+}
+.userPreviewNickname {
+    font-size:13px;
+    margin-bottom:5px;
+    color:#00364D;
+}

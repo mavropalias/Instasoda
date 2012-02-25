@@ -1,0 +1,105 @@
+﻿html {
+    cursor: default;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background: -ms-linear-gradient(top, #ffffff 0%,#ffffff 70%,#dff2f9 100%);
+    background: -webkit-linear-gradient(top, #ffffff 0%,#ffffff 70%,#dff2f9 100%);
+    background: -moz-linear-gradient(top, #ffffff 0%,#ffffff 70%,#dff2f9 100%);
+    background: linear-gradient(top, #ffffff 0%,#ffffff 70%,#dff2f9 100%);
+}
+
+#contentHost {
+    width: 100%;
+    height: 100%;
+}
+
+.fragment {
+    width: 100%;
+    height: 100%;
+    background-image:url(../images/logowithbubbles.png);
+    background-repeat:no-repeat;
+    background-position: top left;
+    background-attachment: scroll;
+}
+
+#appbar {
+    background:#00364D;
+    position:absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    z-index:999;
+}
+    #appbar .win-commandicon {
+        border-color:#D5EEF2;
+    }
+    #appbar .win-commandicon, #appbar .win-label {
+        color:#EFF8FA;
+    }
+
+.fragment header[role=banner] {
+    position: fixed;
+    
+    display: -ms-grid;
+    -ms-grid-columns: 120px 1fr;
+    -ms-grid-rows: 1fr;
+    
+    display: grid;
+    grid-columns: 120px 1fr;
+    grid-rows: 1fr;
+}
+
+.fragment header[role=banner] #backButton {
+    margin-left: 40px;
+    margin-top: 60px;
+}
+
+.fragment header[role=banner] .titleArea {
+    -ms-grid-column: 2;
+}
+
+.fragment header[role=banner] .titleArea h2 {
+    height: 50px; 
+    margin-top: -40px;
+    margin-left: -4px;
+    color: #007DA6;    
+    font-weight: bold;
+    width: 500px;
+}
+
+.fragment header[role=banner] .pageTitle {
+    margin-top: 44px;
+    height: 50pt;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: -4px;
+    display: inline-block;
+}
+
+.fragment section[role=main] {
+    -ms-grid-row: 2;
+    width: 100%;
+    height: 100%;
+    z-index:2;
+    position:relative;
+}
+
+.tip {
+    color:#666;
+    display: block;
+}
+
+.protected {
+    color:#BE1E2D;
+    font-style:italic;
+}
+
+.facebookData {
+    background:url(../images/fb_icon.png) center left no-repeat;
+    padding-left:14px;
+}
