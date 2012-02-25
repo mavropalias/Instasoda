@@ -8,9 +8,9 @@
  */
 
 
-/********************************
+/*===============================
  * RESET STYLES
- ********************************/
+ ===============================*/
 
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -56,361 +56,436 @@
   }
   
   
-/********************************
- * STYLES
- ********************************/
+/*===============================
+ * GENERAL STYLES
+ ===============================*/
   
-	body{
-		background:#f9f9f9;
-	  font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
-	  font-weight:300;
-	  font-size:62.5%;
-	}
-	
-	#container{
-		width:100%;
-		margin:0 auto;
-	}
-	
-	.item{
-		background:#fff;
-		width:300px;
-		height:300px;
-		margin:10px;
-		border:1px solid #C4CDE0;
-		border-bottom:2px solid #C4CDE0;
-		border-radius:4px;
-		box-shadow:0px 4px #C4CDE0;
-		
-		-moz-transition:box-shadow 0.5s ease, border 0.5s ease;
-		-webkit-transition:box-shadow 0.5s ease, border 0.5s ease;
-		-o-transition:box-shadow 0.5s ease, border 0.5s ease;
-		transition:box-shadow 0.5s ease, border 0.5s ease;
-	}
-		.item:hover{
-			cursor:pointer;
-			
-			box-shadow:0px 4px #7288B6;
-			border:1px solid #7288B6;
-			
-			-moz-transition:box-shadow 0.5s ease, border 0.5s ease;
-			-webkit-transition:box-shadow 0.5s ease, border 0.5s ease;
-			-o-transition:box-shadow 0.5s ease, border 0.5s ease;
-			transition:box-shadow 0.5s ease, border 0.5s ease;
-		}
-		.doubleXY{
-			width:620px;
-			height:623px;
-		}
-		.doubleY{
-			height:623px;
-		}
-		.doubleX{
-			width:620px;
-		}
-		
-	.storyBox{
-		background:#ECEFF4;
-		cursor:default !important;
-	}
-	
-/********************************
- * BUTTONS
- ********************************/
-
-	.button, input[type=button], input[type=submit], button {
-		text-decoration: none;
-		border-color:#888;
-		border-color:rgba(0, 0, 0, 0.56);
-		cursor: pointer;
-		outline: none;
-		color:#111;
-		font-family:"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
-		display:inline-block;
-		vertical-align:top;
-		position:relative;
-		font-size:12px;
-		font-weight:bold;
-		text-align:center;
-		background-color:#aaa;
-		background-image:url(gradient.png);
-		background-image: -moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image: -o-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
-		background-image: linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-repeat:repeat-x;
-		text-shadow:1px 1px 0 rgba(255,255,255,.67);
-		line-height:2;
-		margin:0 0 2em 1em;
-		padding:0 1em;
-		height:2em;
-		-moz-box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		-webkit-box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		-webkit-transition: background .185s linear;
-		-moz-transition: all .185s linear;
-		-o-transition: all .185s linear;
-		transition: all .185s linear;
-		/** Make the text unselectable **/
-		-moz-user-select: none;
-		-webkit-user-select: none;
-	}
-	.button, .button:after, button, button:after, input[type=submit], input[type=button] {
-		-moz-border-radius:4px;
-		-webkit-border-radius:4px;
-		border-radius:4px;
-		border-width:1px;
-		border-style:solid;
-	
-	}
-	.button:after, button:after{
-		display:block;
-		position:absolute;
-		content:' ';
-		width:100%;
-		height:100%;
-		border-color: transparent transparent #ccc;
-		border-color: transparent transparent rgba(255, 255, 255, 0.67);
-		bottom:-2px;
-		left:-1px;
-	}
-	.button:hover, .button:focus, button:hover, button:focus, input[type=button]:hover, input[type=button]:focus, input[type=submit]:hover, input[type=submit]:focus {
-		background-color:#a8c0cb;
-	}
-	.button:active, button:active, input[type=submit]:active, input[type=button]:active {
-		line-height:2.2;
-		-moz-box-shadow
-			:0 .33em 1em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset, 
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-		-webkit-box-shadow:
-			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset, 
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-		box-shadow:
-			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset, 
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-			-webkit-transition: line-height .1s linear;
-			-moz-transition: all .1s linear;
-			-o-transition: all .1s linear;
-			transition: all .1s linear;
-	}
-	.button.bg, .button.bg:hover, .button.bg:focus {
-		background-image: -moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
-	}
-	
-
-/********************************
- * HEADER
- ********************************/
-
-	header{
-		padding:2em 0 1em;
-	  color:#00334C;
-	  border-bottom:1px solid #ddd;
-	  background:#fff;
-	  margin-bottom:2em;
-	}
-	
-	header > nav{
-		margin:2em 2em 0 0;
-		text-align:right;
-		position:relative;
-		overflow:hidden;
-	}
-		header > nav > ul > li{
-			display:block;
-			float:right;
-			margin-left:2em;
-			color:#999999;
-		}
+  html{
+    height:100%;
+  }
+  body{
+    font-family: arial,sans-serif;
+    font-weight:300;
+    font-size:62.5%;
+    overflow:hidden;
+    height:100%;
+    
+    background: #007CA5;
+    background: -moz-linear-gradient(#55BEE5 400px, #007CA5 700px);
+    background: -webkit-linear-gradient(#55BEE5 400px, #007CA5 700px);
+    background: -o-linear-gradient(#55BEE5 400px, #007CA5 700px);
+    background: linear-gradient(#55BEE5 400px, #007CA5 700px);
+  }
 	
 	
-	header > article{
-		max-width:520px;
-		min-height:130px;
-		margin:0 auto;
-		background:url(img/instasoda_dating.png) 20px 20px no-repeat transparent;
-		padding:18px 0 0 200px;
-	}
-		header > article > h1{
-			color:#229FC7;
-			font-size:3em;
-			font-weight:normal;
-			line-height:1.7em;
-		}
-		header > article > p{
-			font-size:1.4em;
-			line-height:1.7em;
-		}
-		header > article > aside{
-			position:relative;
-			margin-top:1em;
-		}
-			header > article > aside > .shareFB,
-			header > article > aside > .shareTW,
-			header > article > aside > .shareGP{
-				position:absolute;
-			}
-			header > article > aside > .shareFB{
-				left:0;
-			}
-			header > article > aside > .shareTW{
-				width:96px;
-				left:90px;
-			}
-			header > article > aside > .shareGP{
-				width:60px;
-				left:200px;
-			}
+/*===============================
+ * NAVIGATION
+ ===============================*/
+ 
+  nav{
+    width:100%;
+    height:50px;
+    border-bottom:1px solid #007CA5;
+    background:#fff;
+    font-size:1.5em;
+    font-weight:700;
+    position:relative;
+    line-height:50px;
+    z-index:3;
+  }
+    nav > ul{
+      display:block;
+      max-width:990px;
+      margin:0 auto;
+      height:100%;
+      position:relative;
+    }
+    nav > ul > li{
+      float:left;
+    }
+    nav > ul > ul{
+      float:left;
+      height:50px;
+      margin-left:20px;
+      overflow:hidden;
+    }
+      nav > ul > ul > li{
+        display:inline-block;
+      }
+        nav > ul > ul > li > a{
+          display:block;
+          padding:0 10px;
+          color:#007CA5;
+          cursor:pointer;
+        }
+          nav > ul > ul > li > a.current,
+          nav > ul > ul > li > a:hover{
+            text-decoration:underline;
+          }
+    nav aside{
+      position:absolute;
+      top:5px;
+      right:0;
+    }
+      nav .shareFB,
+      nav .shareTW,
+      nav .shareGP {
+        position: absolute;
+        top: 0px;
+      }
+      nav .shareFB {
+        right: 155px;
+      }
+      nav .shareTW {
+        right: 60px;
+        width: 90px;
+      }
+      nav .shareGP {
+        right: 0px;
+        width: 60px;
+      }
+    nav #instasodaLogo{
+      background:url(images/instasoda_logo.png) top left no-repeat;
+      width:166px;
+      height:29px;
+      margin:10px 0;
+      display:block;
+    }
+    
+    
+/*===============================
+ * MAIN CONTENT
+ ===============================*/
 	
-/********************************
- * ARTICLES
- ********************************/
-
-	article#articleFullView > h1,
-	#container article > h1{
-		margin:10px 10px 5px;
-		padding:0 0 5px;
-		font-weight:700;
-		font-size:1.1em;
-		border-bottom:1px solid #eee;
-		color:#3B5998;
+  #mainContent{
+	 width:990px;
+	 margin:50px auto 0;
+	 position:relative;  
 	}
-	article#articleFullView > cite,
-	#container article > cite{
-		color:#999;
-		font-size:1.1em;
-		font-style:normal;
-		margin-left:10px;
-	}
-	article#articleFullView > span,
-	#container article > span{
-		bottom:35px;
-		display:block;
-		font-size:1.2em;
-		left:10px;
-		overflow:hidden;
-		position:absolute;
-		right:10px;
-		top:50px;
-		line-height:1.5em;
-		color:#333;
-	}
-		article#articleFullView > span > p,
-		#container article > span > p{
-			margin-bottom:1em;
-		}
-	article#articleFullView > footer,
-	#container article > footer{
-		font-size:1.2em;
-		padding:3px 5px;
-		background:#ECEFF4;
-		position:absolute;
-		bottom:5px;
-		left:5px;
-		right:5px;
-	}
-
-/********************************
- * TEXT EDITOR
- ********************************/		
-
-	.rte-zone{
-	  width:600px;
-	  margin:10px;
-	  padding:0;
-	  border-top:1px solid #ccc;
-	  border-left:1px solid #ddd;
-	  border-right:1px solid #ddd;
-	  border-bottom:1px solid #eee;
-	  clear:both;
-	  height:210px;
-	  display:block;
-	  box-shadow:0px 2px 4px #ddd inset;
-	  background:#fff;
-	}
-	.storyNickname{
-		margin:0 0 0 10px;
-		padding:0 0.5em;
-		width:13em;
-		height:2em;
-	  border-top:1px solid #ccc;
-	  border-left:1px solid #ddd;
-	  border-right:1px solid #ddd;
-	  border-bottom:1px solid #eee;
-		box-shadow:0px 2px 4px #ddd inset;
-	}
-
-/********************************
- * ARTICLE - FULL VIEW
- ********************************/
-
-	#articleFullView{
-		display:none;
-		background:#fff;
-		bottom:5em;
-		height:auto;
-		left:50%;
-		position:fixed;
-		top:5em;
-		width:780px;
-		z-index:999;
-		margin-left:-380px;
-		box-shadow:0 20px 20px -20px #000000;
-	}
-	#curtain{
-    display:none;
-    position:fixed;
+	 #mainContent > .instasodaLogo{
+	   position:relative;
+	   margin-left:-200px;  
+	   z-index:2;
+	 }
+	 #mainContent .instasodaBubbles{
+	   position:absolute;
+	   top:-130px;
+	   left:-110px;
+	 }
+	 #mainContent .instasodaSocialDating{
+	   position:absolute;
+	   bottom:20px;
+	   right:0;
+	 }
+	 
+	 
+/*===============================
+ * ANIMATED BUBBLES
+ ===============================*/
+	
+  #bubbles {
+    width: 100%;
+    height: 450px;
+    position: absolute;
     top:0;
     left:0;
     right:0;
-    bottom:0;
-    z-index:998;
+    margin-top:-50px;
+  }
+  .bubble {
+    display: block;
+    position: absolute;
+    background:url(images/bubble1.png) top left no-repeat transparent;
+    left: 0;
+    top:350px;
+    width: 39px;
+    height: 40px;
+    opacity:0;
     
-    background:#fff;
-    background:rgba(255,255,255,0.8);
-	}
-
-/********************************
- * ISOTOPE
- ********************************/
-
-	.isotope-item {
-	  z-index: 2;
-	}
+    -webkit-animation: slide 10s ease-in infinite;
+    -moz-animation: slide 10s ease-in-out infinite;
+    -ms-animation: slide 10s ease-in infinite;
+    -o-animation: slide 10s ease-in infinite;
+    animation: slide 10s ease-in infinite;
+  }
+    .bubble:nth-child(odd) {
+      background:url(images/bubble2.png) top left no-repeat transparent;
+      width: 38px;
+      height: 38px;
+    }
+      
+      
+  /*===============================
+   * KEYFRAMES
+   ===============================*/
+        
+    @-webkit-keyframes slide {
+        0% {
+            opacity:0;
+            left:20px;
+        }
+        20%{
+          opacity:1;
+        }
+        100% {
+            top:0px;
+            left:650px;
+            opacity:0;
+        }
+    }
+    @-moz-keyframes slide {
+        0% {
+            opacity:0;
+            left:20px;
+        }
+        20%{
+          opacity:1;
+        }
+        100% {
+            top:0px;
+            left:650px;
+            opacity:0;
+        }
+    }
+    @-ms-keyframes slide {
+        0% {
+            opacity:0;
+            left:100px;
+        }
+        100% {
+            top:-50px;
+            left:700px;
+            opacity:1;
+        }
+    }
+    @keyframes slide {
+        0% {
+            opacity:0;
+            left:100px;
+        }
+        100% {
+            top:-50px;
+            left:700px;
+            opacity:1;
+        }
+    }
+  
+  
+  /*===============================
+   * INDIVIDUAL BUBBLE STYLE
+   ===============================*/
+  
+    .bubble:nth-child(1){ margin-left:0px; }
+    .bubble:nth-child(2){ margin-left:250px; }
+    .bubble:nth-child(3){ margin-left:120px; }
+    .bubble:nth-child(4){ margin-left:-130px; }
+    .bubble:nth-child(5){ margin-left:40px; }
+    .bubble:nth-child(6){ margin-left:150px; }
+    .bubble:nth-child(7){ margin-left:-60px; }
+    .bubble:nth-child(8){ margin-left:170px; }
+    .bubble:nth-child(9){ margin-left:-80px; }
+    .bubble:nth-child(10){ margin-left:90px; }
+    .bubble:nth-child(11){ margin-left:20px; }
+    .bubble:nth-child(12){ margin-left:0px; }
+    .bubble:nth-child(13){ margin-left:-50px; }
+    .bubble:nth-child(14){ margin-left:20px; }
+    .bubble:nth-child(15){ margin-left:130px; }
+    .bubble:nth-child(16){ margin-left:40px; }
+    .bubble:nth-child(17){ margin-left:-50px; }
+    .bubble:nth-child(18){ margin-left:60px; }
+    .bubble:nth-child(19){ margin-left:170px; }
+    .bubble:nth-child(20){ margin-left:80px; }
+    
+    
+    .bubble:nth-child(1) {
+      -webkit-animation-delay: 0s;
+      -moz-animation-delay: 0s;
+      -ms-animation-delay: 0s;
+      -o-animation-delay: 0s;
+      animation-delay: 0s;
+      
+      -moz-transform: scale(0.7);
+      -webkit-transform: scale(0.7);
+    }
+    .bubble:nth-child(2) {
+      -webkit-animation-delay: 0.5s;
+      -moz-animation-delay: 0.5s;
+      -ms-animation-delay: 0.5s;
+      -o-animation-delay: 0.5s;
+      animation-delay: 0.5s;
+      
+      -moz-transform: scale(0.5);
+      -webkit-transform: scale(0.5);
+    }
+    .bubble:nth-child(3) {
+      -webkit-animation-delay: 1s;
+      -moz-animation-delay: 1s;
+      -ms-animation-delay: 1s;
+      -o-animation-delay: 1s;
+      animation-delay: 1s;
+    }
+    .bubble:nth-child(4) {
+      -webkit-animation-delay: 1.5s;
+      -moz-animation-delay: 1.5s;
+      -ms-animation-delay: 1.5s;
+      -o-animation-delay: 1.5s;
+      animation-delay: 1.5s;
+      
+      -moz-transform: scale(0.5);
+      -webkit-transform: scale(0.5);
+    }
+    .bubble:nth-child(5) {
+      -webkit-animation-delay: 2s;
+      -moz-animation-delay: 2s;
+      -ms-animation-delay: 2s;
+      -o-animation-delay: 2s;
+      animation-delay: 2s;
+    }
+    .bubble:nth-child(6) {
+      -webkit-animation-delay: 2.5s;
+      -moz-animation-delay: 2.5s;
+      -ms-animation-delay: 2.5s;
+      -o-animation-delay: 2.5s;
+      animation-delay: 2.5s;
+    }
+    .bubble:nth-child(7) {
+      -webkit-animation-delay: 3s;
+      -moz-animation-delay: 3s;
+      -ms-animation-delay: 3s;
+      -o-animation-delay: 3s;
+      animation-delay: 3s;
+      
+      -moz-transform: scale(0.8);
+      -webkit-transform: scale(0.8);
+    }
+    .bubble:nth-child(8) {
+      -webkit-animation-delay: 3.5s;
+      -moz-animation-delay: 3.5s;
+      -ms-animation-delay: 3.5s;
+      -o-animation-delay: 3.5s;
+      animation-delay: 3.5s;
+    }
+    .bubble:nth-child(9) {
+      -webkit-animation-delay: 4s;
+      -moz-animation-delay: 4s;
+      -ms-animation-delay: 4s;
+      -o-animation-delay: 4s;
+      animation-delay: 4s;
+      
+      -moz-transform: scale(0.7);
+      -webkit-transform: scale(0.7);
+    }
+    .bubble:nth-child(10) {
+      -webkit-animation-delay: 4.5s;
+      -moz-animation-delay: 4.5s;
+      -ms-animation-delay: 4.5s;
+      -o-animation-delay: 4.5s;
+      animation-delay: 4.5s;
+    }
+    .bubble:nth-child(11) {
+      -webkit-animation-delay: 5s;
+      -moz-animation-delay: 5s;
+      -ms-animation-delay: 5s;
+      -o-animation-delay: 5s;
+      animation-delay: 5s;
+      
+      -moz-transform: scale(0.5);
+      -webkit-transform: scale(0.5);
+    }
+    .bubble:nth-child(12) {
+      -webkit-animation-delay: 5.5s;
+      -moz-animation-delay: 5.5s;
+      -ms-animation-delay: 5.5s;
+      -o-animation-delay: 5.5s;
+      animation-delay: 5.5s;
+    }
+    .bubble:nth-child(13) {
+      -webkit-animation-delay: 6s;
+      -moz-animation-delay: 6s;
+      -ms-animation-delay: 6s;
+      -o-animation-delay: 6s;
+      animation-delay: 6s;
+      
+      -moz-transform: scale(0.7);
+      -webkit-transform: scale(0.7);
+    }
+    .bubble:nth-child(14) {
+      -webkit-animation-delay: 6.5s;
+      -moz-animation-delay: 6.5s;
+      -ms-animation-delay: 6.5s;
+      -o-animation-delay: 6.5s;
+      animation-delay: 6.5s;
+    }
+    .bubble:nth-child(15) {
+      -webkit-animation-delay: 7s;
+      -moz-animation-delay: 7s;
+      -ms-animation-delay: 7s;
+      -o-animation-delay: 7s;
+      animation-delay: 7s;
+      
+      -moz-transform: scale(0.7);
+      -webkit-transform: scale(0.7);
+    }
+    .bubble:nth-child(16) {
+      -webkit-animation-delay: 7.5s;
+      -moz-animation-delay: 7.5s;
+      -ms-animation-delay: 7.5s;
+      -o-animation-delay: 7.5s;
+      animation-delay: 7.5s;
+    }
+    .bubble:nth-child(17) {
+      -webkit-animation-delay: 8s;
+      -moz-animation-delay: 8s;
+      -ms-animation-delay: 8s;
+      -o-animation-delay: 8s;
+      animation-delay: 8s;
+    }
+    .bubble:nth-child(18) {
+      -webkit-animation-delay: 8.5s;
+      -moz-animation-delay: 8.5s;
+      -ms-animation-delay: 8.5s;
+      -o-animation-delay: 8.5s;
+      animation-delay: 8.5s;
+      
+      -moz-transform: scale(0.5);
+      -webkit-transform: scale(0.5);
+    }
+    .bubble:nth-child(19) {
+      -webkit-animation-delay: 9s;
+      -moz-animation-delay: 9s;
+      -ms-animation-delay: 9s;
+      -o-animation-delay: 9s;
+      animation-delay: 9s;
+    }
+    .bubble:nth-child(20) {
+      -webkit-animation-delay: 9.5s;
+      -moz-animation-delay: 9.5s;
+      -ms-animation-delay: 9.5s;
+      -o-animation-delay: 9.5s;
+      animation-delay: 9.5s;
+    }
+  
+   
 	
-	.isotope-hidden.isotope-item {
-	  pointer-events: none;
-	  z-index: 1;
-	}
 	
-	.isotope,
-	.isotope .isotope-item {
-	  -webkit-transition-duration: 0.8s;
-	     -moz-transition-duration: 0.8s;
-	          transition-duration: 0.8s;
-	}
 	
-	.isotope {
-	  -webkit-transition-property: height, width;
-	     -moz-transition-property: height, width;
-	          transition-property: height, width;
-	}
 	
-	.isotope .isotope-item {
-	  -webkit-transition-property: -webkit-transform, opacity;
-	     -moz-transition-property:    -moz-transform, opacity;
-	          transition-property:         transform, opacity;
-	}
 	
-	.isotope.no-transition,
-	.isotope.no-transition .isotope-item,
-	.isotope .isotope-item.no-transition {
-	  -webkit-transition-duration: 0s;
-	     -moz-transition-duration: 0s;
-	          transition-duration: 0s;
-	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
