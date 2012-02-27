@@ -18,7 +18,35 @@
     // ========================================
     if($_SERVER['REQUEST_METHOD'] == 'GET' || true) {
         try {
-            $STH = $DB->prepare('SELECT username AS u, package AS pkg, age, gender AS gndr, email, aboutMe AS about, interestedInMen AS men, interestedInWomen AS women, photos, ip, loggedIn, fbToken, fbUid, fbLocationId, fbLocation, fbRelationshipStatus, fbEducation, fbTimezone, fbWallCount, fbVerified, fbThirdPartyId, fbIsMinor, fbInspirationalPeople, fbLanguages, fbLikesCount, fbFriendCount FROM users');
+            $STH = $DB->prepare('SELECT 
+              username AS u, 
+              package AS p, 
+              age AS a, 
+              gender AS g, 
+              email AS e, 
+              aboutMe AS ab, 
+              interestedInMen AS m, 
+              interestedInWomen AS w, 
+              photos, 
+              ip, 
+              loggedIn AS lin, 
+              fbToken AS fbTk, 
+              fbUid, 
+              fbLocationId AS fbLid, 
+              fbLocation AS fbL, 
+              fbRelationshipStatus AS fbR, 
+              fbEducation AS fbE, 
+              fbTimezone AS fbTz, 
+              fbWallCount AS fbW, 
+              fbVerified AS fbV, 
+              fbThirdPartyId AS fbTid, 
+              fbIsMinor AS fbM, 
+              fbInspirationalPeople AS fbI, 
+              fbLanguages AS fbLng, 
+              fbLikesCount AS fbLks, 
+              fbFriendCount AS fbF 
+              
+              FROM users');
             $STH->setFetchMode(PDO::FETCH_OBJ);
             $STH->execute();
         } catch (PDOException $e) {
@@ -35,7 +63,7 @@
             
             // fetch all user's likes
               try {
-                  $STHLikes = $DB->prepare("SELECT likes.id FROM likes, users_likes WHERE likes.id = users_likes.likeId AND users_likes.userId = '".$row->fbThirdPartyId."'");
+                  $STHLikes = $DB->prepare("SELECT likes.id FROM likes, users_likes WHERE likes.id = users_likes.likeId AND users_likes.userId = '".$row->fbTid."'");
                   $STHLikes->setFetchMode(PDO::FETCH_ASSOC);
                   $STHLikes->execute();
               } catch (PDOException $e) {
@@ -49,11 +77,10 @@
               foreach($rowLikes as $key => $element){
                 array_push($arrayLikes, $element['id']);
               }
-              $row->likes = $arrayLikes;
+              $row->l = $arrayLikes;
             
-            // convert photos string to array
+            // convert 'photos' string to array
               $photosArray = explode(",", $row->photos);
-              /*$photosObject = array('photos' => $photosArray);*/
               // remove empty strings
                 foreach($photosArray as $key => $element){
                   if($element === "") unset($photosArray[$key]);               
