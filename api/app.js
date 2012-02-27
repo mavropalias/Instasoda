@@ -1,5 +1,5 @@
 // ==========================
-// Load Node modules
+// LOAD NODE MODULES
 // ==========================
 
 	var express = require("express"),
@@ -8,7 +8,7 @@
     
 
 // ==========================
-// Database
+// DATABASE
 // ==========================
 
 	var mongodb = require("mongodb"),
@@ -20,6 +20,10 @@
 		if(!err){
 			db = dbObject;
 			console.log(">> Database open!");
+			
+			// load fixtures
+			loadFixtures();
+			
 		} else {
 			console.log(">> Database error :(");
 		}
@@ -27,7 +31,7 @@
 
 
 // ==========================
-// Config
+// CONFIG
 // ==========================
 	
 	var app = express.createServer();
@@ -40,10 +44,52 @@
 	  app.use(express.static(path.join(application_root, "public")));
 	  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
 	});
+	
+	
+// ==========================
+// LOAD FIXTURES
+// ==========================
 
+  function loadFixtures(){
+   
+    // users
+    var fixturesUsers = require(__dirname + '/fixtures/users.js');
+    db.collection('users', function(err, collection){
+      if(!err){
+        collection.remove();
+        collection.insert(fixturesUsers.users, function(err, records){
+          if(!err){
+            console.log(">> Fixture 'users' inserted");
+          } else {
+            console.log(err);
+          } 
+        });
+      } else {
+        console.log(err);
+      }
+    });
+    
+    // likes
+    var fixturesLikes = require(__dirname + '/fixtures/likes.js');
+    db.collection('likes', function(err, collection){
+      if(!err){
+        collection.remove();
+        collection.insert(fixturesLikes.likes, function(err, records){
+          if(!err){
+            console.log(">> Fixture 'likes' inserted");
+          } else {
+            console.log(err);
+          } 
+        });
+      } else {
+        console.log(err);
+      }
+    });
+  }
+  
 
 // ==========================
-// Routes
+// ROUTES
 // ==========================
 
 	// ==========================
@@ -160,7 +206,7 @@
 
 
 // ==========================
-// Launch server
+// LAUNCH SERVER
 // ==========================
 	
 	app.listen(8080, function(){
