@@ -20,31 +20,27 @@
         try {
             $STH = $DB->prepare('SELECT 
               username AS u, 
-              package AS p, 
-              age AS a, 
-              gender AS g, 
-              email AS e, 
-              aboutMe AS ab, 
+              age AS age, 
+              gender AS fS, 
+              email AS fE, 
+              aboutMe AS a, 
               interestedInMen AS m, 
               interestedInWomen AS w, 
               photos, 
               ip, 
-              loggedIn AS lin, 
-              fbToken AS fbTk, 
-              fbUid, 
-              fbLocationId AS fbLid, 
-              fbLocation AS fbL, 
-              fbRelationshipStatus AS fbR, 
-              fbEducation AS fbE, 
-              fbTimezone AS fbTz, 
-              fbWallCount AS fbW, 
-              fbVerified AS fbV, 
-              fbThirdPartyId AS fbTid, 
-              fbIsMinor AS fbM, 
-              fbInspirationalPeople AS fbI, 
-              fbLanguages AS fbLng, 
-              fbLikesCount AS fbLks, 
-              fbFriendCount AS fbF 
+              fbToken AS fTkn, 
+              fbUid as fId, 
+              fbLocation AS fCl, 
+              fbRelationshipStatus AS fRs, 
+              fbEducation AS fEd, 
+              fbTimezone AS fTz, 
+              fbWallCount AS fWc, 
+              fbVerified AS fV, 
+              fbThirdPartyId AS _id, 
+              fbInspirationalPeople AS fIp, 
+              fbLanguages AS fLn, 
+              fbLikesCount AS fLc, 
+              fbFriendCount AS fFc 
               
               FROM users');
             $STH->setFetchMode(PDO::FETCH_OBJ);
@@ -63,7 +59,7 @@
             
             // fetch all user's likes
               try {
-                  $STHLikes = $DB->prepare("SELECT likes.id FROM likes, users_likes WHERE likes.id = users_likes.likeId AND users_likes.userId = '".$row->fbTid."'");
+                  $STHLikes = $DB->prepare("SELECT likes.id AS _id, likes.name AS n, likes.category AS c FROM likes, users_likes WHERE likes.id = users_likes.likeId AND users_likes.userId = '".$row->fbTid."'");
                   $STHLikes->setFetchMode(PDO::FETCH_ASSOC);
                   $STHLikes->execute();
               } catch (PDOException $e) {
@@ -77,16 +73,17 @@
               foreach($rowLikes as $key => $element){
                 array_push($arrayLikes, $element['id']);
               }
-              $row->l = $arrayLikes;
+              $row->fL = $arrayLikes;
             
             // convert 'photos' string to array
               $photosArray = explode(",", $row->photos);
-              // remove empty strings
+              // remove empty strings and rename keys
                 foreach($photosArray as $key => $element){
-                  if($element === "") unset($photosArray[$key]);               
+                  if($element === "") unset($photosArray[$key]);   
+				          
                 }
                 
-              $row->photos = $photosArray;
+              $row->p = $photosArray;
             
             // output user's data  
             if($n > 0) echo(',');

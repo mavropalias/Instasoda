@@ -18,7 +18,7 @@
     // ========================================
     if($_SERVER['REQUEST_METHOD'] == 'GET' || true) {
         try {
-            $STH = $DB->prepare('SELECT id AS i, name AS n, category AS c FROM likes');
+            $STH = $DB->prepare('SELECT id AS _id, name AS n, category AS c FROM likes');
             $STH->setFetchMode(PDO::FETCH_OBJ);
             $STH->execute();
         } catch (PDOException $e) {
