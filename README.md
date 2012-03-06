@@ -1,9 +1,6 @@
 Instasoda
 =========
 
-### /api
-The API code repo of instasoda.
-
 ### /apps
 Code repo for our phone & tablets apps.
 
@@ -51,12 +48,12 @@ Git tips
 Install required software
 =========================
 
-1. **NodeJS (v4.12)**
+1. **NodeJS (v6.11)**
 
 		sudo apt-get install g++ curl libssl-dev apache2-utils
 		git clone git://github.com/joyent/node.git
 		cd node
-		git checkout v.04.12
+		git checkout v.06.11
 		./configure
 		make
 		sudo make install
@@ -77,12 +74,8 @@ Install required software
 	Install your distro's package following the guidelines provided here:
 	
 		http://www.mongodb.org/downloads#packages
-
-5. **Mongoose (MongoDB ODM for NodeJS)**
-
-		npm install mongoose
 		
-6. **Forever (NodeJS server process management)**
+5. **Forever (NodeJS server process management)**
 
 		sudo npm install forever -g
 	
