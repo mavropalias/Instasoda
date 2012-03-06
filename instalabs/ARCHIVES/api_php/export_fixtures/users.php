@@ -59,7 +59,7 @@
             
             // fetch all user's likes
               try {
-                  $STHLikes = $DB->prepare("SELECT likes.id AS _id, likes.name AS n, likes.category AS c FROM likes, users_likes WHERE likes.id = users_likes.likeId AND users_likes.userId = '".$row->fbTid."'");
+                  $STHLikes = $DB->prepare("SELECT likes.id AS _id, likes.name AS n, likes.category AS c FROM likes, users_likes WHERE likes.id = users_likes.likeId AND users_likes.userId = '".$row->_id."'");
                   $STHLikes->setFetchMode(PDO::FETCH_ASSOC);
                   $STHLikes->execute();
               } catch (PDOException $e) {
@@ -69,21 +69,28 @@
                   die();
               }
               $rowLikes = $STHLikes->fetchAll();
-              $arrayLikes = array();
+              /*$arrayLikes = array();
               foreach($rowLikes as $key => $element){
-                array_push($arrayLikes, $element['id']);
-              }
-              $row->fL = $arrayLikes;
+                array_push($arrayLikes, $element['_id']);
+              }*/
+              $row->fL = $rowLikes;
             
-            // convert 'photos' string to array
+            // convert 'photos' string to array and update user object
               $photosArray = explode(",", $row->photos);
+              $row->p = array();
               // remove empty strings and rename keys
                 foreach($photosArray as $key => $element){
-                  if($element === "") unset($photosArray[$key]);   
-				          
+                  if($element === "") unset($photosArray[$key]);
+                  else{   
+  				          $photo = new stdClass();
+                    $photo->f = $element;
+                    $photo->p = 1;
+                    $photo->d = 0;
+                    
+                    array_push($row->p, $photo);
+                  }
                 }
-                
-              $row->p = $photosArray;
+               
             
             // output user's data  
             if($n > 0) echo(',');
