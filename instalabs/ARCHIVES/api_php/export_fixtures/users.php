@@ -79,17 +79,18 @@
               $photosArray = explode(",", $row->photos);
               $row->p = array();
               // remove empty strings and rename keys
-                foreach($photosArray as $key => $element){
-                  if($element === "") unset($photosArray[$key]);
-                  else{   
-  				          $photo = new stdClass();
-                    $photo->f = $element;
-                    $photo->p = 1;
-                    $photo->d = 0;
-                    
-                    array_push($row->p, $photo);
-                  }
+              foreach($photosArray as $key => $element){
+                if($element === "") unset($photosArray[$key]);
+                else{   
+				          $photo = new stdClass();
+                  $photo->f = $element;
+                  $photo->p = 1;
+                  $photo->d = 0;
+                  
+                  array_push($row->p, $photo);
                 }
+              }
+              unset($row->photos);
                
             
             // output user's data  
