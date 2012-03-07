@@ -25,19 +25,19 @@
     // =======================================
 
         var iPackage = 0;
-        var scope1 = "email,user_relationships,user_location,user_hometown,user_birthday";
-        var scope2 = scope1 + ",user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos,offline_access";
+        var scope = "email,user_relationships,user_location,user_hometown,user_birthday,user_activities,user_education_history,user_interests,user_likes,user_photos";
 
         $('#register1').click(function () {
             iPackage = 1;
-            launchFacebookWebAuth(scope1);
+            launchFacebookWebAuth(scope);
         });
         $('#register2').click(function () {
             iPackage = 2;
-            launchFacebookWebAuth(scope2);
+            launchFacebookWebAuth(scope);
         });
 
         function launchFacebookWebAuth(scope) {
+          alert('asd');
            /* var facebookURL = "https://www.facebook.com/dialog/oauth?client_id=";
             var clientID = "159444727449256";
             var callbackURL = "https://www.facebook.com/connect/login_success.html";

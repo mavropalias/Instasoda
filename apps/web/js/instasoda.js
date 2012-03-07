@@ -22,7 +22,7 @@ $(document).ready(function () {
         var sApiSecretKey = "aG35svDHJURCG35253dCFDC69fvsf3fhg0f";
         var sApiSecretKeyGet = "?skey=" + sApiSecretKey;
         jQuery.support.cors = true;
-        Backbone.emulateHTTP = true;
+        //Backbone.emulateHTTP = true;
 
 
         // ===================================================
@@ -37,7 +37,7 @@ $(document).ready(function () {
                 username: 'new user',
                 picsCount: 0
             },
-            url: sApi + 'user' + sApiSecretKeyGet
+            url: sApi + 'users/' + this.id + sApiSecretKeyGet
         });
 
         // Users - all other Instasoda users
@@ -52,7 +52,7 @@ $(document).ready(function () {
 
         // UsersCollection - a collection of Users
         var UsersCollection = Backbone.Collection.extend({
-            url: sApi + 'users.php' + sApiSecretKeyGet
+            url: sApi + 'users/all' + sApiSecretKeyGet
         });
 
 
