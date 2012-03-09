@@ -10,8 +10,8 @@
             } else {
                 IS.navigateTo('#settings', 'My profile');
             }
-            $('#appbar button').show();
-            $('#appbar #navRegister').hide();
+            $('nav a').show();
+            $('nav #navRegister').hide();
             $('header[role=banner] h2').remove();
         } else {
             IS.navigateTo('#registerAccount', 'Welcome to Instasoda!')

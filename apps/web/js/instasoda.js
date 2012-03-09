@@ -37,7 +37,7 @@ $(document).ready(function () {
                 username: 'new user',
                 picsCount: 0
             },
-            url: sApi + 'users/' + this.id + sApiSecretKeyGet
+            url: sApi + 'users/'
         });
 
         // Users - all other Instasoda users
@@ -93,10 +93,10 @@ $(document).ready(function () {
                 }
 
                 // check the men/women checkboxes if needed
-                if (this.model.get('interestedInMen') == '1') {
+                if (this.model.get('m') == '1') {
                     $('input[name=interestedInMen]').prop("checked", true);
                 }
-                if (this.model.get('interestedInWomen') == '1') {
+                if (this.model.get('w') == '1') {
                     $('input[name=interestedInWomen]').prop("checked", true);
                 }
 
@@ -104,7 +104,7 @@ $(document).ready(function () {
                 this.model.set({ picsCount: i });
 
                 // resize containers
-                calculateLikesAndPicsDimensions(this.model.get('fbLikesCount'), this.model.get('picsCount'));
+                calculateLikesAndPicsDimensions(this.model.get('fLc'), this.model.get('picsCount'));
 
                 return this;
             },
@@ -488,8 +488,7 @@ $(document).ready(function () {
         this.createAccount = function (iPackage, sFacebookToken, callback) {
 
             user.set({
-                'package': iPackage,
-                'fbToken': sFacebookToken
+                'fTkn': sFacebookToken
             });
 
             user.save(
@@ -501,18 +500,21 @@ $(document).ready(function () {
                 },
                 {
                     success: function (model, response) {
-                        // SUCCESS
-                        if (response.status == "success") {
-                            user.set({ loggedIn: '1' });
-                            // store the user details locally
-                            saveLocally("user", user);
-                            // callback success
-                            callback(true, "success");
-                        }
-                        // FAIL
-                        else {
-                            callback(false, response.status);
-                        }
+                      // Ajax call was successful
+                      // Now check if the account was created
+                      if (response._id) {
+                        
+                          // store the user details locally
+                          saveLocally("user", user);
+                          
+                          // callback success
+                          callback(null, "success");
+                      }
+                      // FAIL
+                      else {
+                          callback(true, response);
+                          console.log(response);
+                      }
                     }
                 }
             );
