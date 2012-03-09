@@ -291,7 +291,7 @@ $(document).ready(function () {
                 this.model.set({ picsCount: i });
 
                 // resize containers
-                calculateLikesAndPicsDimensions(this.model.get('fbLikesCount'), this.model.get('picsCount'), true);
+                calculateLikesAndPicsDimensions(this.model.get('fLc'), this.model.get('picsCount'), true);
             }
         });
 
@@ -378,16 +378,17 @@ $(document).ready(function () {
         * @return {Integer} iPicsCount
         */
         var calculateLikesAndPicsDimensions = function (iLikesCount, iPicsCount, bOtherUserProfile) {
-            var iWindowHeight = $(window).height();
-            var iHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
+            /*var iWindowHeight = $(window).height();
+            var iHeaderHeight = $("nav").outerHeight(true) + 80; // 80 section's padding
 
             if (!(iLikesCount > 0 && iPicsCount > 0)) {
-                iLikesCount = user.get('fbLikesCount');
+                iLikesCount = user.get('fLc');
                 iPicsCount = user.get('picsCount');
             }
 
             iMaxLikesRows = (iWindowHeight - iHeaderHeight) / 100;
             iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 120;
+            
             iMaxPicsRows = (iWindowHeight - iHeaderHeight) / 240;
             iPicsWrapperWidth = ((iPicsCount / iMaxPicsRows) * 240) + 116 + 62; //116 is the padding-right of the container - I have no idea why 62 is also needed!
 
@@ -400,7 +401,7 @@ $(document).ready(function () {
             }
             if (iLikesWrapperWidth > 720) {
                 $(".facebookLikesData").css({ 'width': iLikesWrapperWidth + 'px' });
-            }
+            }*/
         }
 
 

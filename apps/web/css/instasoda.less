@@ -50,108 +50,227 @@
 // =============================================================================
   .linear-gradient (@from: #fff, @to: #eee) {
     background: @to;
+    background: -ms-linear-gradient(@from 0%, @to 100%);
     background: -moz-linear-gradient(@from 0%, @to 100%);
     background: -webkit-linear-gradient(@from 0%, @to 100%);
     background: -o-linear-gradient(@from 0%, @to 100%);
     background: linear-gradient(@from 0%, @to 100%);
   }
-  .box-shadow (@x: 0px, @y: 0px, @spread: 40px, @opacity: 0.75) {
-    box-shadow:@x @y @spread rgba(0, 0, 0, @opacity);
+  .box-shadow (@x: 0px, @y: 0px, @spread: 40px, @color: rgba(0, 0, 0, 0.4)) {
+    box-shadow:@x @y @spread @color;
+  }
+  .scale (@arg) {
+    -moz-transform: scale(@arg);
+    -webkit-transform: scale(@arg);
+    transform: scale(@arg);
+  }
+  .transition(@duration) {
+    -webkit-transition: all @duration ease-in-out;
+    -moz-transition: all @duration ease-in-out;
+    -o-transition: all @duration ease-in-out;
+    -ms-transition: all @duration ease-in-out;
+    transition: all @duration ease-in-out;
   }
 
+
 // =============================================================================
-// GENERAL STYLES
+// OO STYLES
+// =============================================================================
+
+  .padding1x { padding: 10px; }
+  .padding2x { padding: 20px; }
+  .padding3x { padding: 40px; }
+  
+  .text-shadow { text-shadow: 1px 1px #fff; }
+  
+
+// =============================================================================
+// MAIN STYLES
 // =============================================================================
   
-  html{
-    height:100%;
+  html {
+    height: 100%;
   }
-  body{
-    font-family: tahoma,sans-serif;
-    font-weight:300;
-    font-size:62.5%;
-    height:100%;  
-    background: #fff;
+  body {
+    font-family: helvetica, arial,sans-serif;
+    font-weight: 300;
+    font-size: 62.5%;
+    overflow: auto;
+    background:#fcfcfc;
   
-    section{
-      position:absolute;
-      left:0;
-      right:0;
-      top:140px;
-      bottom:0px;
-      overflow:auto;    
+    section[role=main] {
+      .padding3x;
+      position: relative;
+      margin-top: 70px;
+      overflow: hidden;
+      display: none;
     }
   }
-  header{
+  body > header {
     .linear-gradient;
+    .padding1x;
     position: fixed;
-    top:70px;
-    left:0;
-    right:0;
-    z-index:998;
-    height:70px;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    height: 30px;
+    display: none;
+  }
+  p {
+    margin:0em 0 1em;
+  }
+  h1 {
+    .text-shadow;
+    font-size:2.0em;
+    border-bottom:1px solid #999;
+    margin:0 0 1em;
+    padding-bottom:0.5em;
+    color:#666;
+  }
+  h2 {
+    font-size:2.4em;
+    color: #00364D;
+  }
+  h3 {
+    font-size:1.3em;
+  }
+  button {
+    background: #BE1E2D;
+    padding: 0.5em 1em;
+    border: 0 none;
+    color: white;
+    font-size:1.3em;
+    cursor: pointer;    
+  }
+  .column {
+    display: table-cell;
+    width: 33%;
   }
 
 
 // =============================================================================
 // NAVIGATION + HEADER
 // =============================================================================  
-  nav{
-    width:100%;
-    height:70px;
-    line-height:70px;
-    font-size:1.5em;
-    font-weight:700;
-    position: fixed;
-    top:0;
-    left:0;
-    right:0;
-    z-index:999;
-    
+  nav {
     .linear-gradient;
-    .box-shadow(0px, 0px, 40px, 0.4);
+    .box-shadow(0px, 0px, 10px);
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    font-size: 1.5em;
+    font-weight: 700;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
     
-    #instasodaLogo{
-      background:url(../img/instasoda_logo.png) top left no-repeat;
-      width:166px;
-      height:29px;
-      margin:21px 0 0 15px;
-      display:block;
+    #instasodaLogo {
+      background: url(../img/instasoda_logo.png) top left no-repeat;
+      width: 166px;
+      height: 29px;
+      margin: 21px 0 0 15px;
+      display: block;
     }
   }
-    nav > ul{
-      display:block;
-      margin-left:10px;
-      height:100%;
-      position:relative;
+    nav > ul {
+      display: block;
+      margin-left: 10px;
+      height: 100%;
+      position: relative;
     }
-    nav > ul > li{
-      float:left;
+    nav > ul > li {
+      float: left;
     }
-    nav > ul > ul{
-      float:left;
-      height:50px;
-      margin-left:20px;
-      overflow:hidden;
+    nav > ul > ul {
+      float: left;
+      height: 50px;
+      margin-left: 20px;
+      overflow: hidden;
     }
       nav > ul > ul > li{
-        display:inline-block;
+        display: inline-block;
       }
-        nav > ul > ul > li > a{
-          display:block;
-          padding:0 10px;
-          color:#007CA5;
-          cursor:pointer;
-          text-shadow:1px 1px #fff;
+        nav > ul > ul > li > a {
+          display: block;
+          padding: 0 10px;
+          color: #007CA5;
+          cursor: pointer;
+          text-shadow: 1px 1px #fff;
         }
           nav > ul > ul > li > a.current,
           nav > ul > ul > li > a:hover{
-            text-decoration:underline;
+            text-decoration: underline;
           }
+
+
+// =============================================================================
+// REUSABLE UI ELEMENTS
+// =============================================================================
+
+  .tip {
+    color: #444;
+    display: block;
+    font-size: 1.4em;
+    line-height: 1.2em;
+  }
+  
+  .protected {
+    color: #BE1E2D;
+    font-style: italic;
+  }
+  
+  .facebookData {
+    background: url(../images/fb_icon.png) center left no-repeat;
+    padding-left: 14px;
+  }
+  
+  .textArea {
+    .box-shadow(2px, 2px, 2px, rgba(0, 0, 0, 0.4) inset);
+    width: 100%;
+    overflow-y: auto;
+    word-wrap: break-word;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1em;
+    font-size: 1.3em;
+    line-height: 1.2em;
+  }
   
   
+// =============================================================================
+// LIKES
+// =============================================================================
   
-  
+  .fbLike {
+    float: left;
+    text-align: center;
+    margin: 0 20px 20px 0;
+    border: 1px solid transparent;
+    
+    &:hover {
+      .scale(2);
+      .box-shadow();
+      background: #fff;
+      
+      .fbLikePic{
+        .scale(0.5);
+      }
+      .fbLikeName{
+        .scale(0.5);
+      }
+    }
+    
+    .fbLikeName {
+      font-size: 11px;
+      width: 80px;
+      height: 20px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
   
   
   

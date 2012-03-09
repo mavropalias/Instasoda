@@ -18,8 +18,8 @@
 .subtractLeftMargin     { margin-left: -56px!important; }
 .addLeftMargin          { margin-left: 56px!important; }
 .hasNoLeftMargin        { margin-left: 0px; }
-.hasLeftPadding         { padding-left: 116px; }
-.hasRightPadding        { padding-right: 116px; }
+.hasLeftPadding         { padding-left: 40px; }
+.hasRightPadding        { padding-right: 40px; }
 .isAnimated             { 
 	-ms-transition-property: all; 
 	-webkit-transition-property: all;
@@ -41,35 +41,9 @@
 ul, li                  { list-style: none; }
 ul, li, h2              { margin: 0; padding: 0; }
 
-section {
-    margin-top: 200px;
-}
 
-.homePage {
-    overflow: auto;
-}
 
-#registerAccount header p, h2 {
-    font-family:"Segoe UI Semibold";
-}
 
-#registerAccount > header span {
-    color: #BE1E2D;
-}
-
-#settings
-{
-    -ms-grid-columns: 500px 700px auto auto;
-}
-
-#usersProfile
-{
-    -ms-grid-columns: 500px auto auto;
-}
-
-.profilePicsData, .facebookLikesData {
-    width: 720px;
-}
 
 .profilePicsDataSmall {
     width: 300px;
@@ -96,11 +70,7 @@ section {
     float: left;
 }
 
-.plans
-{  
-    -ms-grid-columns: 400px 400px 433px 50px;
-    margin: -0.5em 0 0 -3.6em;
-}
+
 
 .plans ul { 
     height: 406px; 
@@ -197,25 +167,6 @@ section {
         margin:0 20px 20px 0;
         cursor:pointer;
     }
-
-#facebookLikesContainer {
-    /*display:none;*/
-    max-height: 400px;
-}
-
-.facebookLikesItem {
-    float: left;
-}
-
-.facebookLikesItemName {
-    font-size:11px;
-    width:80px;
-    height: 20px;
-    margin:0 20px 20px 0;
-    overflow:hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 
 /* Search options */
 #searchFilters {
