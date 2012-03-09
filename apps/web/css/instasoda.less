@@ -1,0 +1,187 @@
+// =============================================================================
+// RESET STYLES          
+// =============================================================================
+
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    outline:none;
+  }
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  body {
+    line-height: 1;
+  }
+  ol, ul {
+    list-style: none;
+  }
+  blockquote, q {
+    quotes: none;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+// =============================================================================
+// MIXINS
+// =============================================================================
+  .linear-gradient (@from: #fff, @to: #eee) {
+    background: @to;
+    background: -moz-linear-gradient(@from 0%, @to 100%);
+    background: -webkit-linear-gradient(@from 0%, @to 100%);
+    background: -o-linear-gradient(@from 0%, @to 100%);
+    background: linear-gradient(@from 0%, @to 100%);
+  }
+  .box-shadow (@x: 0px, @y: 0px, @spread: 40px, @opacity: 0.75) {
+    box-shadow:@x @y @spread rgba(0, 0, 0, @opacity);
+  }
+
+// =============================================================================
+// GENERAL STYLES
+// =============================================================================
+  
+  html{
+    height:100%;
+  }
+  body{
+    font-family: tahoma,sans-serif;
+    font-weight:300;
+    font-size:62.5%;
+    height:100%;  
+    background: #fff;
+  
+    section{
+      position:absolute;
+      left:0;
+      right:0;
+      top:140px;
+      bottom:0px;
+      overflow:auto;    
+    }
+  }
+  header{
+    .linear-gradient;
+    position: fixed;
+    top:70px;
+    left:0;
+    right:0;
+    z-index:998;
+    height:70px;
+  }
+
+
+// =============================================================================
+// NAVIGATION + HEADER
+// =============================================================================  
+  nav{
+    width:100%;
+    height:70px;
+    line-height:70px;
+    font-size:1.5em;
+    font-weight:700;
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index:999;
+    
+    .linear-gradient;
+    .box-shadow(0px, 0px, 40px, 0.4);
+    
+    #instasodaLogo{
+      background:url(../img/instasoda_logo.png) top left no-repeat;
+      width:166px;
+      height:29px;
+      margin:21px 0 0 15px;
+      display:block;
+    }
+  }
+    nav > ul{
+      display:block;
+      margin-left:10px;
+      height:100%;
+      position:relative;
+    }
+    nav > ul > li{
+      float:left;
+    }
+    nav > ul > ul{
+      float:left;
+      height:50px;
+      margin-left:20px;
+      overflow:hidden;
+    }
+      nav > ul > ul > li{
+        display:inline-block;
+      }
+        nav > ul > ul > li > a{
+          display:block;
+          padding:0 10px;
+          color:#007CA5;
+          cursor:pointer;
+          text-shadow:1px 1px #fff;
+        }
+          nav > ul > ul > li > a.current,
+          nav > ul > ul > li > a:hover{
+            text-decoration:underline;
+          }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
