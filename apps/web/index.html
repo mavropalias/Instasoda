@@ -21,12 +21,11 @@
   
   <!-- STYLES -->
   <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" />
-  <link rel="stylesheet" type="text/css" href="css/default.css" />
   <link rel="stylesheet" type="text/css" href="css/homePage.css" />
   <link rel="stylesheet" type="text/css" href="css/instasoda.css">
   
   <!-- SCRIPTS -->
-  <script defer type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+  <script defer type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
   <script defer type="text/javascript" src="js/jquery-ui-1.8.16.custom.min.js"></script>
   <script defer type="text/javascript" src="js/underscore.js"></script>
   <script defer type="text/javascript" src="js/json2.js"></script>
@@ -34,7 +33,7 @@
   <script defer type="text/javascript" src="js/mustache.js"></script>
   <script defer type="text/javascript" src="js/instasoda.js"></script>
   <script defer type="text/javascript" src="js/homePage.js"></script>
-  <script defer type="text/javascript" src="js/cssrefresh.js"></script>
+  <!-- <script defer type="text/javascript" src="js/cssrefresh.js"></script> -->
   
   
   <!-- OPEN GRAPH -->
@@ -55,7 +54,7 @@
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-        	appId      : '372501186096211',
+          appId      : '372501186096211',
           channelUrl : 'http://localhost/is/channel.html',	 
           status     : true, 
           cookie     : true,
@@ -64,12 +63,24 @@
         });          
     
         FB.Event.subscribe('auth.login', function(response) {
-          alert("4");
+		  console.log('user authed, token: ' + response.authResponse.accessToken);
+		  var fbToken = response.authResponse.accessToken;
+		  FB.api(
+			{
+			  method: 'fql.query',
+			  query: 'SELECT third_party_id FROM user WHERE uid=me()'
+			},
+			function(response) {
+			  IS.createAccount(fbToken, response[0].third_party_id, function (err, res) { 		
+				IS.navigateTo('me');
+			  }
+			);
+		  });
         });
         
         FB.getLoginStatus(function(response) {
           if (response.status === 'connected') {
-            // the user is logged in and connected to your
+            // the user is logged in and connected to the
             // app, and response.authResponse supplies
             // the user's ID, a valid access token, a signed
             // request, and the time the access token 
@@ -83,29 +94,43 @@
               });*/
              
             // create the user account
-            try {
-              IS.createAccount(3, response.authResponse.accessToken, function (err, res) {
-                if (!err) {                      		
-                  $('#saveProfileButton').fadeIn();
-                  $('#working').fadeOut();
-                  $('nav a').show();
-                  $('nav #navRegister').hide();
-                  $('header[role=banner] h2').fadeOut();
-                } else {
-                  alert(res);
-                }
-                
-                IS.navigateTo('#settings', 'My profile');
-              });
-            } catch (e) {
-              alert("3");
-            }
+			console.log('> User is authed');
+			var fbToken = response.authResponse.accessToken;
+			FB.api(
+			  {
+				method: 'fql.query',
+				query: 'SELECT third_party_id FROM user WHERE uid=me()'
+			  },
+			  function(response) {
+				console.log('> Attempting to login the user');
+				IS.login(fbToken, response[0].third_party_id, function(err) {
+				  if(!err) {
+					console.log('> SUCCESS! User is logged in');
+					IS.navigateTo('me');
+				  } else {
+					console.log('> FAIL: Need to create new account');
+					IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
+					  if(!err) {
+						console.log('> account created');
+						IS.navigateTo('me');
+					  } else {
+						console.log('> ERROR: ' + res);
+					  }
+					});
+				  }
+				});
+			  }
+			);
       	  } else if (response.status === 'not_authorized') {
             // the user is logged in to Facebook, 
             // but not connected to the app
+			console.log('> user is logged in to Facebook, but not connected to the app');
+			//IS.navigateTo('');
           } else {
             // the user isn't even logged in to Facebook.
-    		  }
+			console.log('> user is not logged in to Facebook');
+			//IS.navigateTo('');
+    	  }
         });
       };
       (function(d){
@@ -125,10 +150,10 @@
     	<ul>
     	  <li><a id="instasodaLogo" href="#"></a></li>
     	  <ul>
-    	    <li><a id="navSearch" onclick="IS.navigateTo('#searchFilters', 'Search options');" style="display:none;">Search</a></li>
-    	    <li><a id="navMatches" onclick="IS.navigateTo('#beta', 'Almost there!');" style="display:none;">Matches</a></li>
-    	    <li><a id="navProfile" onclick="IS.navigateTo('#settings', 'My profile');" style="display:none;">Profile</a></li>
-    	    <li><a id="navInbox" onclick="IS.navigateTo('#beta', 'Almost there!');" style="display:none;">Inbox</a></li>
+    	    <li><a id="navSearch" href="#search">Search</a></li>
+    	    <li><a id="navMatches" href="#search">Matches</a></li>
+    	    <li><a id="navProfile" href="#me">Profile</a></li>
+    	    <li><a id="navInbox" href="#beta">Inbox</a></li>
     	  </ul>
     	</ul>
     </nav>
@@ -144,6 +169,13 @@
   	    <h2>Fizzy, not fussy</h2>                
     	</div>
     </header>
+	
+	
+  <!-------------------------------------------------------------------------->
+  <!-- CONTENT -->
+  <!-------------------------------------------------------------------------->
+
+    <section id="content" role="main"></section>
    
    
   <!-------------------------------------------------------------------------->
@@ -253,7 +285,9 @@
   <!-- BETA MESSAGE -->
   <!-------------------------------------------------------------------------->
     
-    <section id="beta" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1"><img src="images/betaMessage.png" width="1021" height="469" /></div></section>
+    <section id="beta" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows">
+	  <div class="isColumn2 isRow1"><img src="images/betaMessage.png" width="1021" height="469" /></div>
+	</section>
 
 
   <!-------------------------------------------------------------------------->
@@ -274,14 +308,92 @@
   <!-- MUSTACHE TEMPLATES -->
   <!-------------------------------------------------------------------------->
 
+  	<!------------------------------------------------------------------------>
+	<!-- BETA MESSAGE -->
+	<!------------------------------------------------------------------------>
+
+	  <script id="tplBeta" type="text/template">
+		<div class="isColumn2 isRow1">
+		  <img src="images/betaMessage.png" width="1021" height="469" />
+		</div>
+	  </script>
+	  
+	  
+  	<!------------------------------------------------------------------------>
+	<!-- WELCOME -->
+	<!------------------------------------------------------------------------>
+
+	  <script id="tplWelcome" type="text/template">
+		<h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! To get started, all you have to do is choose one of the two free packages. Join and enjoy!</h2>
+		
+		<br><br>
+		
+		<div class="fb-login-button" data-scope="email,user_relationships,user_location,user_hometown,user_birthday,user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos,offline_access">Login with Facebook</div>
+		<div id="fbResponse"></div>
+	  </script>
+  
+  
+	<!------------------------------------------------------------------------>
+	<!-- SEARCH FILTERS -->
+	<!------------------------------------------------------------------------>
+
+	  <script id="tplSearchFilters" type="text/template">
+		<ul class="isColumn1">
+		  <li>
+			<h2>I’m interested in meeting...</h2>
+			Choose either or both.
+			<p>
+			  <label><input type="checkbox" name="interestedInWomen" value="true">Women</label>
+			  <label><input type="checkbox" name="interestedInMen" value="true">Men</label>
+			</p>
+		  </li>
+		  <li>
+			<h2>I’m interested in people who are aged...</h2>
+			Select an approximate age range on the slider below.
+			<p>
+			  <input type="text" id="ageNum" />          
+			</p>
+			<div id="ageRange"></div>
+		  </li>
+		  <li>
+			<h2>I’d like to meet people who live...</h2>
+			'Near me' will bring up people that live around your area.
+			<p>
+			  <label><input type="radio" name="searchLocation" value="near" />Near me</label>
+			  <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
+			</p>
+		  </li>
+		  <li>
+			<p>
+			  <button id="doSearch">Search for matches!</button>
+			</p>
+		  </li>
+		</ul>
+		<ul class="isColumn3" style="position:relative;">
+		  <li>
+			<h2>My favourite things are...</h2>
+			Which of your Facebook likes are the most important to you.
+		  </li>
+		  <li>
+			<p>
+			  Due to the beta nature of the app and the low number of users, we'll show you all members in the search results.
+			</p>
+		  </li>
+		  <li>
+			<button id="buttonAddLikes">+ Add likes</button>
+		  </li>
+		</ul>
+	  </script>
+  
+  
     <!------------------------------------------------------------------------>
     <!-- VIEW USER PREVIEW -->
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersPreview" type="text/template">
         <ul>
-          <li class="userPreviewPhoto"><img src="{{profilePhoto}}" height=200></li>
-          <li class="userPreviewNickname">{{username}}, {{age}}</li>
+          <li class="userPreviewPhoto"><img src="{{p.f}}" height="200" /></li>
+          <li class="userPreviewNickname">{{u}}, {{fBd}}</li>
         </ul>
       </script>
 
@@ -393,8 +505,8 @@
             </p>
           </p>    
           
-          <button type="submit" id="saveProfileButton" style="display:none;float:left;">Save profile</button>
-          <div id="working" style="float:left;"><progress class="win-ring" style="width: 20px; height: 20px" /></div>
+          <button type="submit" id="saveProfileButton" >Save profile</button>
+          <div id="working" ><progress class="win-ring" style="width: 20px; height: 20px" /></div>
         </div>
         
         <div id="facebookData" class="column hasRightPadding">
@@ -418,7 +530,7 @@
             <h2>A little bit about myself</h2>
             <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
             <p>            
-              <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 10em; width: 35em;">{{aboutMe}}</div>
+              <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 10em; width: 35em;">{{a}}</div>
             </p>
           </p>
         </div>
@@ -434,6 +546,7 @@
                 <ul>
                   <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square"></li>
                   <li class="fbLikeName">{{n}}</li>
+		  <li class="fbLikeNameFull">{{n}}</li>
                 </ul>
               </li>
             {{/fL}}

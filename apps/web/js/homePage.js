@@ -3,21 +3,21 @@
     // =======================================
     // INIT APP
     // =======================================
-
+/*
         if (IS.login()) {
             if (IS.accountIsComplete()) {
-                IS.navigateTo('#search', 'Search');
+                IS.navigateTo('search');
             } else {
-                IS.navigateTo('#settings', 'My profile');
+                IS.navigateTo('me');
             }
             $('nav a').show();
             $('nav #navRegister').hide();
             $('header[role=banner] h2').remove();
         } else {
-            IS.navigateTo('#registerAccount', 'Welcome to Instasoda!')
+            IS.navigateTo('/')
         }
 
-
+*/
  
 
     // =======================================

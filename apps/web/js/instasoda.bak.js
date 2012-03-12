@@ -26,6 +26,27 @@ $(document).ready(function() {
    
     // =====================================================================
     // =====================================================================
+    // = Routes
+    // =====================================================================
+    // =====================================================================
+    
+    var Router = Backbone.Router.extend({
+    
+      routes: {
+        "user/:id":             "viewUser"    // #help
+      },
+    
+      viewUser: function(query, page) {
+        alert(query);
+      }
+    
+    });
+    var router = new Router();
+    Backbone.history.start({pushState: false});
+    
+
+    // =====================================================================
+    // =====================================================================
     // = Models
     // =====================================================================
     // =====================================================================
@@ -34,12 +55,10 @@ $(document).ready(function() {
     //----------------------------------------------------------------------
     var User = Backbone.Model.extend({
         defaults: {
-            u: 'new user',
-            picsCount: 0,
-            _id: 0
+            username: 'new user',
+            picsCount: 0
         },
-        idAttribute: "_id",
-        urlRoot: sApi + 'user'
+        url: sApi + 'users/'
     });
 
     // Users - all other Instasoda users
@@ -56,7 +75,7 @@ $(document).ready(function() {
     // UsersCollection - a collection of Users
     //----------------------------------------------------------------------
     var UsersCollection = Backbone.Collection.extend({
-        url: sApi + 'users/' + sApiSecretKeyGet
+        url: sApi + 'users/all' + sApiSecretKeyGet
     });
 
 
@@ -66,36 +85,6 @@ $(document).ready(function() {
     // =====================================================================
     // =====================================================================
 
-    // Beta message
-    //----------------------------------------------------------------------
-    var BetaView = Backbone.View.extend({
-
-      initialize: function() {
-        _.bindAll(this);
-      },
-
-      render: function() {
-        var template = $('#tplBeta').html();
-        $(this.el).html(template);
-      }
-      
-    });
-    
-    // WelcomeView
-    //----------------------------------------------------------------------
-    var WelcomeView = Backbone.View.extend({
-
-      initialize: function() {
-        _.bindAll(this);
-      },
-
-      render: function() {
-        var template = $('#tplWelcome').html();
-        $(this.el).html(template);
-      }
-      
-    });
-    
     // UserSettingsView - the settings page of the person using the app
     //----------------------------------------------------------------------
     var UserSettingsView = Backbone.View.extend({
@@ -108,9 +97,10 @@ $(document).ready(function() {
 
         initialize: function(options) {
             _.bindAll(this, 'render');
-            _.bindAll(this, 'save');
             this.model.bind('change', this.render);
+            this.render();
         },
+
         render: function() {
             var template = $('#tplSettings').html();
             $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
@@ -127,13 +117,22 @@ $(document).ready(function() {
             }
 
             // check the men/women checkboxes if needed
-            if (this.model.get('m') === 1) {
+            if (this.model.get('m') == '1') {
                 $('input[name=interestedInMen]').prop("checked", true);
             }
-            if (this.model.get('w') === 1) {
+            if (this.model.get('w') == '1') {
                 $('input[name=interestedInWomen]').prop("checked", true);
             }
 
+            // update picsCount
+            this.model.set({
+                picsCount: i
+            });
+
+            // resize containers
+            calculateLikesAndPicsDimensions(this.model.get('fLc'), this.model.get('picsCount'));
+
+            return this;
         },
 
         viewPhoto: function(e) {
@@ -148,40 +147,34 @@ $(document).ready(function() {
         },
 
         save: function() {
-          this.$('#saveProfileButton').hide();
-          this.$('#working').show();
-          
-          // fetch form data
-          var userData = {
-              'u': this.$('input[name=username]').val(),
-              'a': this.$('#aboutMe').html(),
-              'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
-              'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0)
-          }
-          console.log(this.$('#saveProfileButton'));
-          this.model.set(userData);
-          console.log(this.model);
-          this.model.save({
-            error: function(model, response) {
-              //TODO: properly handle errors
-              alert('User save failed!');
-              this.$('#saveProfileButton').show();
-              this.$('#working').hide();
+            // fetch form data
+            var userData = {
+                'username': $('#settings input[name=username]').val(),
+                'aboutMe': $('#settings #aboutMe').html(),
+                'interestedInMen': (($('#settings input[name=interestedInMen]:checked').length > 0) ? true : false),
+                'interestedInWomen': (($('#settings input[name=interestedInWomen]:checked').length > 0) ? true : false)
             }
-          }, {
-            success: function(model, response) {
-              // SUCCESS
-              if (response._id) {
-                saveLocally("user", user);
-                this.$('#saveProfileButton').show();
-                this.$('#working').hide();
-              }
-              // FAIL
-              else {
-                alert('User save failed!');
-              }
-            }
-          });
+
+            this.model.set(userData);
+            this.model.save({
+                error: function(model, response) {
+                    //TODO: properly handle errors
+                    //callback(false, "Ajax error: " + response.status);
+                }
+            }, {
+                success: function(model, response) {
+                    // SUCCESS
+                    if (response.status == "success") {
+                        saveLocally("user", user);
+                        $('#saveProfileButton').fadeIn();
+                        $('#working').fadeOut();
+                    }
+                    // FAIL
+                    else {
+                        //callback(false, response.status);
+                    }
+                }
+            });
         },
 
         addPhoto: function() {
@@ -236,29 +229,7 @@ $(document).ready(function() {
             });
         }
     });
-    
-    // SearchFilters
-    //----------------------------------------------------------------------
-    var SearchFiltersView = Backbone.View.extend({
-      events: {
-        'click #doSearch': 'doSearch'
-      },
 
-      initialize: function() {
-        _.bindAll(this);
-      },
-
-      render: function() {
-        var template = $('#tplSearchFilters').html();
-        $(this.el).html(template);
-      },
-      
-      doSearch: function() {
-        IS.navigateTo('search/all');
-      }
-    });
-
-    
     // UsersView - a basic view of a user appearing in the search results
     //----------------------------------------------------------------------
     var UsersView = Backbone.View.extend({
@@ -285,50 +256,6 @@ $(document).ready(function() {
         }
     });
 
-    // UsersListView - contains a list of UsersView items,
-    // used for search results / matches
-    //----------------------------------------------------------------------
-    var UsersListView = Backbone.View.extend({
-        initialize: function() {
-            _.bindAll(this);
-            this.collection.bind('reset', this.render);
-        },
-
-        renderItem: function(model) {
-            var usersView = new UsersView({
-                model: model
-            });
-            usersView.render();
-            //WinJS.Utilities.setInnerHTMLUnsafe(this.el, $(usersView.el).html());
-            $('#searchResults').append(usersView.el);
-        },
-
-        render: function() {
-            //this.collection.each(this.renderItem);
-            this.collection.each(function(a, b, c) {
-                //parse photos string and convert it to json
-                var imagesArray = new Array();
-                if (a.get('photos') != "" && a.get('photos') != null) {
-                    var images = a.get('photos').split(',');
-                    for (var i = 0; i < (images.length - 1); i++) {
-                        imagesArray[i] = sApiPhotos + images[i];
-
-                        // set 'main' photo
-                        if (i === 0) a.set({
-                            'profilePhoto': sApiPhotos + images[i]
-                        });
-                    }
-                }
-                a.set({
-                    'photosArray': imagesArray
-                });
-                //a.renderItem;
-            });
-            $(this.el).html('<ul id="searchResults" class="isColumn1 isRow1"></ul>');
-            this.collection.each(this.renderItem);
-        }
-    });
-    
     // UsersFullView - a complete view of a user's profile
     //----------------------------------------------------------------------
     var UsersFullView = Backbone.View.extend({
@@ -394,9 +321,54 @@ $(document).ready(function() {
             this.model.set({
                 picsCount: i
             });
+
+            // resize containers
+            calculateLikesAndPicsDimensions(this.model.get('fLc'), this.model.get('picsCount'), true);
         }
     });
 
+    // UsersListView - contains a list of UsersView items,
+    // used for search results / matches
+    //----------------------------------------------------------------------
+    var UsersListView = Backbone.View.extend({
+        initialize: function() {
+            _.bindAll(this);
+            this.collection.bind('reset', this.render);
+        },
+
+        renderItem: function(model) {
+            var usersView = new UsersView({
+                model: model
+            });
+            usersView.render();
+            //WinJS.Utilities.setInnerHTMLUnsafe(this.el, $(usersView.el).html());
+            $(this.el).append(usersView.el);
+        },
+
+        render: function() {
+            //this.collection.each(this.renderItem);
+            this.collection.each(function(a, b, c) {
+                //parse photos string and convert it to json
+                var imagesArray = new Array();
+                if (a.get('photos') != "" && a.get('photos') != null) {
+                    var images = a.get('photos').split(',');
+                    for (var i = 0; i < (images.length - 1); i++) {
+                        imagesArray[i] = sApiPhotos + images[i];
+
+                        // set 'main' photo
+                        if (i === 0) a.set({
+                            'profilePhoto': sApiPhotos + images[i]
+                        });
+                    }
+                }
+                a.set({
+                    'photosArray': imagesArray
+                });
+                //a.renderItem;
+            });
+            this.collection.each(this.renderItem);
+        }
+    });
 
 
     // =====================================================================
@@ -415,14 +387,13 @@ $(document).ready(function() {
      * @return {Bool} success
      */
     var saveLocally = function(sVarName, jData) {
-      if ( !! window.localStorage) {
-        console.log("# Local storage saving");
-        window.localStorage.setItem(sVarName, JSON.stringify(jData));
-        return true;
-      } else {
-        //TODO: alternative storage solution, when localStorage is not available
-        throw ("Local storage is not available");
-      }
+        if ( !! window.localStorage) {
+            window.localStorage.setItem(sVarName, JSON.stringify(jData));
+            return true;
+        } else {
+            //TODO: alternative storage solution, when localStorage is not available
+            throw ("Local storage is not available");
+        }
     }
 
     /**
@@ -431,15 +402,48 @@ $(document).ready(function() {
      * @return {Object} object
      */
     var readLocally = function(sVarName) {
-      if ( !! window.localStorage) {
-        console.log("# Local storage ok");
-        return JSON.parse(window.localStorage.getItem(sVarName));
-      } else {
-        //TODO: alternative storage solution, when localStorage is not available
-        console.log("# Local storage is not available");
-        return false;
-      }
+        if ( !! window.localStorage) {
+            //if (typeof window.localStorage.sVarName !== 'undefined') {
+            return JSON.parse(window.localStorage.getItem(sVarName));
+            //}
+        } else {
+            //TODO: alternative storage solution, when localStorage is not available
+            throw ("Local storage is not available");
+        }
     }
+
+    /**
+     * Calculate width of Likes' and Pics' containers
+     * @param {Integer} iLikesCount
+     * @return {Integer} iPicsCount
+     */
+    var calculateLikesAndPicsDimensions = function(iLikesCount, iPicsCount, bOtherUserProfile) {
+/*var iWindowHeight = $(window).height();
+        var iHeaderHeight = $("nav").outerHeight(true) + 80; // 80 section's padding
+
+        if (!(iLikesCount > 0 && iPicsCount > 0)) {
+            iLikesCount = user.get('fLc');
+            iPicsCount = user.get('picsCount');
+        }
+
+        iMaxLikesRows = (iWindowHeight - iHeaderHeight) / 100;
+        iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 120;
+        
+        iMaxPicsRows = (iWindowHeight - iHeaderHeight) / 240;
+        iPicsWrapperWidth = ((iPicsCount / iMaxPicsRows) * 240) + 116 + 62; //116 is the padding-right of the container - I have no idea why 62 is also needed!
+
+        // The 720 below is the minimum width that each block (likes/profile pics) occupies
+        // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
+        if (bOtherUserProfile === true && iPicsWrapperWidth > 300) {
+            $(".profilePicsDataSmall").css({ 'width': iPicsWrapperWidth + 'px' });
+        } else if (iPicsWrapperWidth > 720) {
+            $(".profilePicsData").css({ 'width': iPicsWrapperWidth + 'px' });
+        }
+        if (iLikesWrapperWidth > 720) {
+            $(".facebookLikesData").css({ 'width': iLikesWrapperWidth + 'px' });
+        }*/
+    }
+
 
     /**
      * Calculate width of search results
@@ -489,91 +493,36 @@ $(document).ready(function() {
     });
 
     // Backbone views
-    var welcomeView = new WelcomeView();
-    var betaView = new BetaView();
-    var searchFiltersView = new SearchFiltersView();
+    // profile page
     var userSettingsView = new UserSettingsView({
-        model: user
+        model: user,
+        el: $('#settings')[0]
     });
+    // search results
     var usersListView = new UsersListView({
         collection: usersCollection,
+        el: $('#searchResults')[0]
+    });
+
+    // Fetch all IS users
+    usersCollection.fetch({
+        success: function(e) {
+            calculateSearchResultsDimensions(e.length);
+        },
+        error: function(e, a, b) {
+            var asd = e;
+        }
+
     });
 
 
-    // =====================================================================
-    // =====================================================================
-    // = Routes
-    // =====================================================================
-    // =====================================================================
-    
-    var Router = Backbone.Router.extend({
-    
-      routes: {
-        // Welcome
-        "": "welcome",
-        
-        // My profile
-        "me": "myProfile"
-        ,
-        // Search filters
-        "search": "searchFilters",
-        
-        // Search results
-        "search/:id": "searchResults",
-        
-        // Beta message
-        "beta": "beta"
-      },
-    
-      welcome: function() {
-        welcomeView.render();
-        $('#content').html(welcomeView.el);
-      },
-      
-      myProfile: function(query, page) {
-        userSettingsView.render();
-        $('#content').html(userSettingsView.el);
-      },
-      
-      searchFilters: function(query, page) {
-        searchFiltersView.render();
-        $('#content').html(searchFiltersView.el);
-      },
-      
-      searchResults: function(query, page) {
-      // Fetch all IS users
-        usersCollection.fetch({
-            success: function(e) {
-                //usersListView.render();
-            },
-            error: function(e, a, b) {
-                alert(e);
-            }
-        });
-      },
-      
-      beta: function() {
-        betaView.render();
-        $('#content').html(betaView.el);
-      },
-      
-    }); 
-    var router = new Router;
-    Backbone.history.start({
-      root: "/is/"
-    });
-    
-    
+
     // =====================================================================
     // =====================================================================
     // = Public methods
     // =====================================================================
     // =====================================================================
 
-    this.navigateTo = function(path) {
-      router.navigate(path, {trigger: true});
-    }
-    
     /**
      * Create a new user account by connecting to Facebook.
      * @param {Integer} package 1=basic, 2=standard, 3=complete
@@ -581,24 +530,23 @@ $(document).ready(function() {
      * @param {Function} callback
      * @return {Object} Returns an object {'s': 'success/fail'}
      */
-    this.createAccount = function(fbToken, fTid, callback) {
-        console.log('- creating account');
+    this.createAccount = function(iPackage, sFacebookToken, callback) {
+
         user.set({
-          'fTid': fTid,
-          'fTkn': fbToken
+            'fTkn': sFacebookToken
         });
 
         user.save({
             error: function(model, response) {
                 //TODO: properly handle errors
-                console.log('- create account error 1');
                 callback(false, "Ajax error: " + response.status);
             }
         }, {
             success: function(model, response) {
                 // Ajax call was successful
                 // Now check if the account was created
-                if (response._id) {                    
+                if (response._id) {
+
                     // store the user details locally
                     saveLocally("user", user);
 
@@ -607,8 +555,8 @@ $(document).ready(function() {
                 }
                 // FAIL
                 else {
-                    console.log('- create account error: ' + response.error);
-                    callback(true, response.error);
+                    callback(true, response);
+                    console.log(response);
                 }
             }
         });
@@ -648,57 +596,45 @@ $(document).ready(function() {
 
     /**
      * Attempts to log the user into the system.
-     * If it fails, it means that the user needs to register a new account.
+     * If it fails, it means that the user need to register a new account.
      * @return {Bool} true/false
      */
-    this.login = function(fTkn, fTid, cb) {
-      // first check if the user is already logged in
-      if (user.get('_id')) {
-        console.log('- user is logged in');
-        cb(null);
-      } else {
-        //try to read locally saved data to read the login status
-        console.log('- reading local storage');
-        user.set(readLocally("user"));
-
-        if (user.get('_id')) {
-          console.log('- found user in local storage');
-          cb(null);
+    this.login = function() {
+        // first check if the user is already logged in
+        if (user.get('loggedIn') == '1') {
+            return true;
         } else {
-          console.log('- trying the API');
-          user.set({
-            '_id': fTid,
-            'fTkn': fTkn
-          });
-          // connect to the API server and login the user
-          user.fetch({
-            error: function(model, response) {
-              //TODO: properly handle errors
-              //a false might only mean that the API server is N/A
-              console.log('- login error: ' + response.error);
-              cb(true, response.error);
-            }
-          ,
-            success: function(model, response) {
-              // Ajax call was successful
-              console.log('- got an API response');
-              // Now check if the account was created
-              if (response._id) {                    
-                // store the user details locally
-                saveLocally("user", user);
+            //try to read locally saved data to read the login status
+            user.set(readLocally("user"));
 
-                // callback success
-                cb(null, "success");
-              }
-              // FAIL
-              else {
-                console.log('- login error: ' + response.error);
-                cb(true, response.error);
-              }
+            if (user.get('loggedIn') == "1") {
+                return true;
+            } else {
+                // connect to the API server and login the user
+                user.fetch({
+                    error: function(model, response) {
+                        //TODO: properly handle errors
+                        //a false might only mean that the API server is N/A
+                        return false;
+                    }
+                }, {
+                    success: function(model, response) {
+                        // SUCCESS
+                        if (response.status == "success") {
+                            user.set({
+                                loggedIn: '1'
+                            });
+                            saveLocally("user", user);
+                            return true;
+                        }
+                        // FAIL
+                        else {
+                            return false;
+                        }
+                    }
+                });
             }
-          });
         }
-      }
     }
 
     /**
@@ -721,6 +657,97 @@ $(document).ready(function() {
      */
     this.accountIsComplete = function() {
         return false;
+    }
+
+    /**
+     * Navigates to a new page
+     * @param {String} page the new page to display (.class or #id)
+     * @param {String} title title of the new page
+     */
+    this.navigateBack = function() {
+        if (navHistoryPage.length > 0) {
+            IS.navigateTo(navHistoryPage.pop(), navHistoryTitle.pop(), false);
+        }
+    }
+
+    /**
+     * Navigates to a new page
+     * @param {String} page the new page to display (.class or #id)
+     * @param {String} title title of the new page
+     */
+    this.navigateTo = function(page, title, track) {
+        var preDelay = 0;
+
+        var oldPage = $('section[role=main]').filter(':visible');
+        var newPage = $(page);
+
+        // track nav history
+        if (oldPage.attr('id') != 'photoView' && oldPage.attr('id') != 'registerAccount' && oldPage.attr('id') != null && track !== false && navHistoryPage[navHistoryPage.length - 1] != ('#' + oldPage.attr('id'))) {
+            navHistoryPage.push('#' + oldPage.attr('id'));
+            navHistoryTitle.push($('header[role=banner] .titleArea > h1').text());
+
+            // show back button for the first time
+            if (navHistoryPage.length === 1) $('#backButton').fadeIn();
+        }
+
+        // do UI pre-processing
+        if (page == '#settings') {
+            calculateLikesAndPicsDimensions();
+            $('#saveProfileButton').show();
+            $('#working').hide();
+            $('#settings .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').hide().addClass('isAnimated');
+            setTimeout(function() {
+                $('#settings, .facebookLikesData').show().removeClass('isNotVisible')
+            }, 1000);
+        } else if (page == '#usersProfile') {
+            $('#usersProfile .facebookLikesData').removeClass('isAnimated').addClass('isNotVisible').hide().addClass('isAnimated');
+            setTimeout(function() {
+                $('#usersProfile, .facebookLikesData').show().removeClass('isNotVisible')
+            }, 1000);
+        }
+        if (oldPage.attr('id') == 'settings') {
+            $('#settings .facebookLikesData').addClass('isNotVisible');
+            setTimeout(function() {
+                $('#settings .facebookLikesData').hide()
+            }, 500);
+            preDelay += 600;
+        } else if (oldPage.attr('id') == 'usersProfile') {
+            $('#usersProfile .facebookLikesData').addClass('isNotVisible');
+            setTimeout(function() {
+                $('#usersProfile .facebookLikesData').hide()
+            }, 500);
+            preDelay += 600;
+        }
+
+        // wait for preDelay and do the transition
+        setTimeout(function() {
+            // hide the visible section(s) and animate in the new one
+            oldPage.addClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+            setTimeout(function() {
+                // hide old page
+                oldPage.hide().removeClass('isAnimated hasEasing isNotVisible subtractLeftMargin');
+
+                // show new page
+                newPage.addClass('addLeftMargin isNotVisible').addClass('isAnimated hasEasing').show().removeClass('addLeftMargin isNotVisible').removeClass('isAnimated hasEasing');
+            }, 500);
+
+            // set new page title
+            $('header[role=banner] .titleArea > h1').fadeOut(200, function() {
+                $(this).text(title).fadeIn(200);
+            });
+
+            // update preDelay
+            preDelay += 1100;
+
+            // do UI post-processing after preDelay
+            setTimeout(function() {
+                if (page == '#settings') {
+                    $('#settings .facebookLikesData').removeClass('isNotVisible');
+                } else if (page == '#usersProfile') {
+                    $('#usersProfile .facebookLikesData').removeClass('isNotVisible');
+                }
+            }, preDelay);
+        }, preDelay);
     }
 
     /**
