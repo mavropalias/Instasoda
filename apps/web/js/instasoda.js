@@ -34,9 +34,6 @@ $(document).ready(function() {
     //----------------------------------------------------------------------
     var User = Backbone.Model.extend({
         defaults: {
-            u: 'new user',
-            picsCount: 0,
-            _id: 0
         },
         idAttribute: "_id",
         urlRoot: sApi + 'user'
@@ -112,11 +109,12 @@ $(document).ready(function() {
             this.model.bind('change', this.render);
         },
         render: function() {
+            console.log('~ rendering user');
             var template = $('#tplSettings').html();
             $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
 
             // temp hardcoded UI manipulation:
-            var i = 0;
+            /*var i = 0;
 
             // add photos
             if (this.model.get('photos') != null && this.model.get('photos') != "") {
@@ -124,16 +122,7 @@ $(document).ready(function() {
                 for (i; i < (images.length - 1); i++) {
                     $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "' data-filenameshort='" + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
                 }
-            }
-
-            // check the men/women checkboxes if needed
-            if (this.model.get('m') === 1) {
-                $('input[name=interestedInMen]').prop("checked", true);
-            }
-            if (this.model.get('w') === 1) {
-                $('input[name=interestedInWomen]').prop("checked", true);
-            }
-
+            }*/
         },
 
         viewPhoto: function(e) {
@@ -148,40 +137,43 @@ $(document).ready(function() {
         },
 
         save: function() {
-          this.$('#saveProfileButton').hide();
-          this.$('#working').show();
+          console.log('- saving user');
+          _this = this.model;
           
-          // fetch form data
-          var userData = {
+          $('#saveProfileButton').fadeOut();
+          this.$('#working').fadeIn();
+          
+          this.model.save(
+            {
               'u': this.$('input[name=username]').val(),
               'a': this.$('#aboutMe').html(),
               'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
               'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0)
-          }
-          console.log(this.$('#saveProfileButton'));
-          this.model.set(userData);
-          console.log(this.model);
-          this.model.save({
-            error: function(model, response) {
-              //TODO: properly handle errors
-              alert('User save failed!');
-              this.$('#saveProfileButton').show();
-              this.$('#working').hide();
-            }
-          }, {
-            success: function(model, response) {
-              // SUCCESS
-              if (response._id) {
-                saveLocally("user", user);
-                this.$('#saveProfileButton').show();
-                this.$('#working').hide();
-              }
-              // FAIL
-              else {
+            },
+            {
+              error: function(model, response) {
+                //TODO: properly handle errors
                 alert('User save failed!');
+                $('#saveProfileButton').fadeIn();
+                $('#working').fadeOut();
+              }, 
+              success: function(model, response) {
+                console.log('- got an API response');
+                // SUCCESS
+                if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
+                  console.log('- API call was successful');
+                  saveLocally("user", _this);
+                  $('#saveProfileButton').fadeIn();
+                  $('#working').fadeOut();
+                }
+                // FAIL
+                else {
+                  console.log('- API call failed: ' + response.error);
+                  alert('User save failed: ' + response.error);
+                }
               }
             }
-          });
+          );
         },
 
         addPhoto: function() {
@@ -468,6 +460,24 @@ $(document).ready(function() {
         }
     }
 
+    /**
+     * Calculate user's age, given a birth date
+     * @param {String} sBirthDate
+     * @return {String} age
+     */
+    var getAge = function(sBirthDate) {
+      //aDate = sBirthDate.split('/');
+      
+      var today = new Date();
+      var birthDate = new Date(sBirthDate);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+          age--;
+      }
+      return age;
+    }
+
 
     // =====================================================================
     // =====================================================================
@@ -527,17 +537,20 @@ $(document).ready(function() {
     
       welcome: function() {
         welcomeView.render();
-        $('#content').html(welcomeView.el);
+        $('#content > div').detach();
+        $('#content').append(welcomeView.el);
       },
       
       myProfile: function(query, page) {
         userSettingsView.render();
-        $('#content').html(userSettingsView.el);
+        $('#content > div').detach();
+        $('#content').append(userSettingsView.el);
       },
       
       searchFilters: function(query, page) {
         searchFiltersView.render();
-        $('#content').html(searchFiltersView.el);
+        $('#content > div').detach();
+        $('#content').append(searchFiltersView.el);
       },
       
       searchResults: function(query, page) {
@@ -554,7 +567,8 @@ $(document).ready(function() {
       
       beta: function() {
         betaView.render();
-        $('#content').html(betaView.el);
+        $('#content > div').detach();
+        $('#content').append(betaView.el);
       },
       
     }); 
@@ -598,7 +612,7 @@ $(document).ready(function() {
             success: function(model, response) {
                 // Ajax call was successful
                 // Now check if the account was created
-                if (response._id) {                    
+                if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
                     // store the user details locally
                     saveLocally("user", user);
 
@@ -665,38 +679,44 @@ $(document).ready(function() {
           console.log('- found user in local storage');
           cb(null);
         } else {
-          console.log('- trying the API');
+          console.log('- trying the API: ' + fTid);
           user.set({
             '_id': fTid,
             'fTkn': fTkn
           });
           // connect to the API server and login the user
-          user.fetch({
-            error: function(model, response) {
-              //TODO: properly handle errors
-              //a false might only mean that the API server is N/A
-              console.log('- login error: ' + response.error);
-              cb(true, response.error);
-            }
-          ,
-            success: function(model, response) {
-              // Ajax call was successful
-              console.log('- got an API response');
-              // Now check if the account was created
-              if (response._id) {                    
-                // store the user details locally
-                saveLocally("user", user);
-
-                // callback success
-                cb(null, "success");
+          user.fetch(
+            { 
+              data: {
+                'fTkn': fTkn
               }
-              // FAIL
-              else {
+            , 
+              error: function(model, response) {
+                //TODO: properly handle errors
+                //a false might only mean that the API server is N/A
                 console.log('- login error: ' + response.error);
                 cb(true, response.error);
               }
+            ,
+              success: function(model, response) {
+                // Ajax call was successful
+                console.log('- got an API response');
+                // Now check if the account was created
+                if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+                  // store the user details locally
+                  saveLocally("user", user);
+  
+                  // callback success
+                  cb(null, "success");
+                }
+                // FAIL
+                else {
+                  console.log('- ' + response.error);
+                  cb(true, response.error);
+                }
+              }
             }
-          });
+          );
         }
       }
     }

@@ -480,6 +480,9 @@
             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
             <p>
               <ul id="userPictures">
+                {{#p}}
+                  <li class='userPicture'><img src='{{f}}' height=150 width=150></li>
+                {{/p}}
               </ul>
               <button id="addPhoto">Add photo</button>
             </p>
@@ -500,13 +503,13 @@
             <h3>I would like to meet</h3>
             <span class="tip">Choose either or both.</span>
             <p>
-              <label><input type="checkbox" name="interestedInWomen" value="true">women</label>
-              <label><input type="checkbox" name="interestedInMen" value="true">men</label>
+              <label><input type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>women</label>
+              <label><input type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>men</label>
             </p>
           </p>    
           
           <button type="submit" id="saveProfileButton" >Save profile</button>
-          <div id="working" ><progress class="win-ring" style="width: 20px; height: 20px" /></div>
+          <button type="submit" id="working" style="display:none;" disabled>Saving...</button>
         </div>
         
         <div id="facebookData" class="column hasRightPadding">
@@ -518,7 +521,7 @@
                 <li>Age: <span class="facebookData">{{fBd}}</span></li>
                 <li>Gender: <span class="facebookData">{{fS}}</span></li>
                 <li>Relationship status: <span class="facebookData">{{fRs}}</span></li>
-                <li>Location: <span class="facebookData">{{fCl}}</span></li>
+                <li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}</span></li>
                 <li>Email: <span class="facebookData">{{fE}}</span> (only you can see this)</li>
               </ul>
             </p>
