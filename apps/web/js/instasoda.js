@@ -408,11 +408,12 @@ $(document).ready(function() {
      */
     var saveLocally = function(sVarName, jData) {
       if ( !! window.localStorage) {
-        console.log("# Local storage saving");
+        console.log("    (local storage save in process)");
         window.localStorage.setItem(sVarName, JSON.stringify(jData));
         return true;
       } else {
         //TODO: alternative storage solution, when localStorage is not available
+        console.log("    (local storage is not available)");
         throw ("Local storage is not available");
       }
     }
@@ -424,11 +425,11 @@ $(document).ready(function() {
      */
     var readLocally = function(sVarName) {
       if ( !! window.localStorage) {
-        console.log("# Local storage ok");
+        console.log("    (local storage read in process)");
         return JSON.parse(window.localStorage.getItem(sVarName));
       } else {
         //TODO: alternative storage solution, when localStorage is not available
-        console.log("# Local storage is not available");
+        console.log("    (local storage is not available)");
         return false;
       }
     }
@@ -536,36 +537,32 @@ $(document).ready(function() {
       },
     
       welcome: function() {
+        console.log('> routing welcome page');
         welcomeView.render();
         $('#content > div').detach();
         $('#content').append(welcomeView.el);
       },
       
-      myProfile: function(query, page) {
+      myProfile: function() {
+        console.log('> routing my profile page');
         userSettingsView.render();
         $('#content > div').detach();
         $('#content').append(userSettingsView.el);
       },
       
-      searchFilters: function(query, page) {
+      searchFilters: function() {
+        console.log('> routing search filters page');
         searchFiltersView.render();
         $('#content > div').detach();
         $('#content').append(searchFiltersView.el);
       },
       
-      searchResults: function(query, page) {
-      // Fetch all IS users
-        usersCollection.fetch({
-            success: function(e) {
-                //usersListView.render();
-            },
-            error: function(e, a, b) {
-                alert(e);
-            }
-        });
+      searchResults: function(query) {
+        // TODO
       },
       
       beta: function() {
+        console.log('> routing beta page');
         betaView.render();
         $('#content > div').detach();
         $('#content').append(betaView.el);
@@ -583,108 +580,54 @@ $(document).ready(function() {
     // = Public methods
     // =====================================================================
     // =====================================================================
-
-    this.navigateTo = function(path) {
-      router.navigate(path, {trigger: true});
-    }
     
     /**
-     * Create a new user account by connecting to Facebook.
-     * @param {Integer} package 1=basic, 2=standard, 3=complete
-     * @param {String} facebookToken
-     * @param {Function} callback
-     * @return {Object} Returns an object {'s': 'success/fail'}
+     * Navigates to a page.
+     * @param {String} path
      */
-    this.createAccount = function(fbToken, fTid, callback) {
-        console.log('- creating account');
-        user.set({
-          'fTid': fTid,
-          'fTkn': fbToken
-        });
-
-        user.save({
-            error: function(model, response) {
-                //TODO: properly handle errors
-                console.log('- create account error 1');
-                callback(false, "Ajax error: " + response.status);
-            }
-        }, {
-            success: function(model, response) {
-                // Ajax call was successful
-                // Now check if the account was created
-                if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
-                    // store the user details locally
-                    saveLocally("user", user);
-
-                    // callback success
-                    callback(null, "success");
-                }
-                // FAIL
-                else {
-                    console.log('- create account error: ' + response.error);
-                    callback(true, response.error);
-                }
-            }
-        });
-    }
-
-    /**
-     * Update user's data.
-     * @param {Object} jUserData the data to update
-     * @param {Function} callback
-     * @return {Object} Returns an object {'s': 'success/fail'}
-     */
-    this.updateUserData = function(jUserData, callback) {
-
-        user.set(jUserData);
-
-        user.save({
-            error: function(model, response) {
-                //TODO: properly handle errors
-                callback(false, "Ajax error: " + response.status);
-            }
-        }, {
-            success: function(model, response) {
-                // SUCCESS
-                if (response.status == "success") {
-                    // store the user details locally
-                    saveLocally("user", user);
-                    // callback success
-                    callback(true, "success");
-                }
-                // FAIL
-                else {
-                    callback(false, response.status);
-                }
-            }
-        });
+    this.navigateTo = function(path) {
+      router.navigate(path, {trigger: true});
     }
 
     /**
      * Attempts to log the user into the system.
      * If it fails, it means that the user needs to register a new account.
+     * @param {String} Facebook token
+     * @param {String} Facebook third_party_id
+     * @param {Function} Callback
      * @return {Bool} true/false
      */
     this.login = function(fTkn, fTid, cb) {
       // first check if the user is already logged in
+      // --------------------------------------------
       if (user.get('_id')) {
         console.log('- user is logged in');
-        cb(null);
+        cb(null, "success");
       } else {
-        //try to read locally saved data to read the login status
+        // try to read locally saved data to read the login status
+        // -------------------------------------------------------
         console.log('- reading local storage');
         user.set(readLocally("user"));
 
         if (user.get('_id')) {
           console.log('- found user in local storage');
+          
+          // TODO sync data from API
+          
+          user.set({ 'fTkn': fTkn });
+          saveLocally("user", user);
+          
           cb(null);
         } else {
           console.log('- trying the API: ' + fTid);
+          
           user.set({
             '_id': fTid,
             'fTkn': fTkn
           });
-          // connect to the API server and login the user
+          
+          // connect to the API server and fetch the user
+          // --------------------------------------------
           user.fetch(
             { 
               data: {
@@ -700,16 +643,21 @@ $(document).ready(function() {
             ,
               success: function(model, response) {
                 // Ajax call was successful
+                // ------------------------
                 console.log('- got an API response');
                 // Now check if the account was created
+                // ------------------------------------
                 if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
                   // store the user details locally
+                  // ------------------------------
                   saveLocally("user", user);
   
                   // callback success
+                  // ----------------
                   cb(null, "success");
                 }
                 // FAIL
+                // ----
                 else {
                   console.log('- ' + response.error);
                   cb(true, response.error);
@@ -719,6 +667,54 @@ $(document).ready(function() {
           );
         }
       }
+    }
+
+    /**
+     * Create a new user account by connecting to Facebook.
+     * @param {Integer} package 1=basic, 2=standard, 3=complete
+     * @param {String} facebookToken
+     * @param {Function} callback
+     * @return {Object} Returns an object {'s': 'success/fail'}
+     */
+    this.createAccount = function(fbToken, fTid, cb) {
+      console.log('- creating account');
+      user.set({
+        '_id': null,
+        'fTid': fTid,
+        'fTkn': fbToken
+      });
+
+      user.save({
+        error: function(model, response) {
+          //TODO: properly handle errors
+          //a false might only mean that the API server is N/A
+          console.log('- login error: ' + response.error);
+          cb(true, response.error);
+        }
+      }, {
+        success: function(model, response) {
+          // Ajax call was successful
+          // ------------------------
+          console.log('- got an API response');
+          // Now check if the account was created
+          // ------------------------------------
+          if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+            // store the user details locally
+            // ------------------------------
+            saveLocally("user", user);
+    
+            // callback success
+            // ----------------
+            cb(null, "success");
+          }
+          // FAIL
+          // ----
+          else {
+            console.log('- ' + response.error);
+            cb(true, response.error);
+          }
+        }
+      });
     }
 
     /**
@@ -732,24 +728,6 @@ $(document).ready(function() {
             });
         }
         return true;
-    }
-
-    /**
-     * Verifies that the user has completed the registration
-     * process successfully, and has a complete account.
-     * @return {Bool} true/false
-     */
-    this.accountIsComplete = function() {
-        return false;
-    }
-
-    /**
-     * Returns the value of a user attribute
-     * @param {String} attr the attribute to return
-     * @return {String} the value of the attribute
-     */
-    this.getUserAttr = function(attr) {
-        return user.get(attr);
     }
 
     /**
