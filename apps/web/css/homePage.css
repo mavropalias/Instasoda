@@ -161,10 +161,6 @@ ul, li, h2              { margin: 0; padding: 0; }
 
     #userPictures .userPicture, #userPhotos .userPicture {
         float:left;
-        width:150px;
-        height:150px;
-        overflow:hidden;
-        margin:0 20px 20px 0;
         cursor:pointer;
     }
 
