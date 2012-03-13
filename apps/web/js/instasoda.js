@@ -114,6 +114,11 @@ $(document).ready(function() {
         console.log('  ~ rendering user view');
         var template = $('#tplSettings').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // animate user's photos
+        this.$('.userPicture img').load(function(){
+          $(this).fadeIn();
+        });
       },
 
       viewPhoto: function(e) {
@@ -235,6 +240,22 @@ $(document).ready(function() {
         console.log('  ~ rendering search view');
         var template = $('#tplSearchFilters').html();
         $(this.el).html(template);
+        
+        // enable jquery slider
+        this.$("#ageRange").slider({
+          range: true,
+          min: 18,
+          max: 99,
+          values: [26, 91],
+          slide: function (event, ui) {
+            $("#ageNum").val(ui.values[0] + " - " + ui.values[1] + " years old");
+            // small easter egg :)
+            if (ui.values[1] == 99) {
+              $("#ageNum").val(ui.values[0] + " - " + ui.values[1] + " years old (wow!)");
+            }
+          }
+        });
+        this.$("#ageNum").val(this.$("#ageRange").slider("values", 0) + " - " + this.$("#ageRange").slider("values", 1) + " years old");
       },
       
       doSearch: function() {
