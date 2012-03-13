@@ -58,79 +58,77 @@
           channelUrl : 'http://localhost/is/channel.html',	 
           status     : true, 
           cookie     : true,
-          xfbml      : true,
           oauth      : true,
-        });          
-    
-        FB.Event.subscribe('auth.login', function(response) {
-		  console.log('user authed, token: ' + response.authResponse.accessToken);
-		  var fbToken = response.authResponse.accessToken;
-		  FB.api(
-			{
-			  method: 'fql.query',
-			  query: 'SELECT third_party_id FROM user WHERE uid=me()'
-			},
-			function(response) {
-			  IS.createAccount(fbToken, response[0].third_party_id, function (err, res) { 		
-				IS.navigateTo('me');
-			  }
-			);
-		  });
-        });
+        });    
         
-        FB.getLoginStatus(function(response) {
+        FB.getLoginStatus(function(res) {
+          var button = document.getElementById('fb-auth');
+          if (!res.authResponse) {
+            //user is not connected to the app or logged out
+            button.innerHTML = 'Login with Facebook';
+            button.onclick = function() {
+              FB.login(function(response) { 
+                // FB.Event.subscribe('auth.statusChange') will take care of the rest
+                },
+                {
+                  scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+                  + 'user_activities,user_education_history,read_stream,user_interests,'
+                  + 'user_likes,user_photos,offline_access'
+                }
+              );    
+            }
+          }
+        });  
+            
+        FB.Event.subscribe('auth.statusChange', function(response) {
           if (response.status === 'connected') {
-            // the user is logged in and connected to the
-            // app, and response.authResponse supplies
-            // the user's ID, a valid access token, a signed
-            // request, and the time the access token 
-            // and signed request each expire
-            /*var uid = response.authResponse.userID;
-              var accessToken = response.authResponse.accessToken;
-              FB.api('/me', function(response) {
-                if (response.name != undefined ) {
-            console.log("Welcome, " + response.name);
-                }         
-              });*/
-             
-            // create the user account
-			console.log('> User is authed');
-			var fbToken = response.authResponse.accessToken;
-			FB.api(
-			  {
-				method: 'fql.query',
-				query: 'SELECT third_party_id FROM user WHERE uid=me()'
-			  },
-			  function(response) {
-				console.log('> Attempting to login the user');
-				IS.login(fbToken, response[0].third_party_id, function(err) {
-				  if(!err) {
-					console.log('> SUCCESS! User is logged in');
-					IS.navigateTo('me');
-				  } else {
-					console.log('> FAIL: Need to create new account');
-					IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
-					  if(!err) {
-						console.log('> account created');
-						IS.navigateTo('me');
-					  } else {
-						console.log('> ERROR: ' + res);
-					  }
-					});
-				  }
-				});
-			  }
-			);
+            console.log('> User is logged into Facebook and has authenticated the application');            
+            
+            // get facebook token data
+      			var fbToken = response.authResponse.accessToken;
+      			var fbTokenExpires = response.authResponse.expiresIn;
+      			      			
+      			// Check if token is still valid
+      			if(fbTokenExpires > 0) {
+      			  console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
+      			  console.log('>   -> ' + fbToken);
+        			// get third_party_id from Facebook and login the user
+        			FB.api(
+        			  {
+        				method: 'fql.query',
+        				query: 'SELECT third_party_id FROM user WHERE uid=me()'
+        			  },
+        			  function(response) {
+          				console.log('> Attempting to login the user');
+          				IS.login(fbToken, response[0].third_party_id, function(err) {
+          				  if(!err) {
+            					console.log('> SUCCESS! User is logged in');
+            					IS.navigateTo('me');
+          				  } else {
+            					console.log('> FAIL: Need to create new account');
+            					IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
+            					  if(!err) {
+              						console.log('> SUCCESS! Account created');
+              						IS.navigateTo('me');
+            					  } else {
+            						  console.log('> ERROR: ' + res);
+            					  }
+            					});
+          				  }
+        				  });
+        			  }
+        			);
+      			} else {
+      			  console.log('- Facebook token has expired');
+      			  FB.logout();
+      			}
       	  } else if (response.status === 'not_authorized') {
-            // the user is logged in to Facebook, 
-            // but not connected to the app
-			console.log('> user is logged in to Facebook, but not connected to the app');
-			//IS.navigateTo('');
+      			console.log('> User is logged into Facebook but has not authenticated the application');
+      			//IS.navigateTo('');
           } else {
-            // the user isn't even logged in to Facebook.
-			console.log('> user is not logged in to Facebook');
-			//IS.navigateTo('');
-    	  }
+      			console.log('> User is not logged into Facebook at this time');
+      			//IS.navigateTo('');
+          }
         });
       };
       (function(d){
@@ -176,214 +174,88 @@
   <!-------------------------------------------------------------------------->
 
     <section id="content" role="main"></section>
-   
-   
-  <!-------------------------------------------------------------------------->
-  <!-- REGISTER -->
-  <!-------------------------------------------------------------------------->
-    <section id="registerAccount" role="main">
-      <h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! To get started, all you have to do is choose one of the two free packages. Join and enjoy!</h2>
-      
-      <br><br>
-      
-      <div class="fb-login-button" data-scope="email,user_relationships,user_location,user_hometown,user_birthday,user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos,offline_access">Login with Facebook</div>
-      <div id="fbResponse"></div>
-    </section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- DASHBOARD -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="dashboard" role="main" aria-label="Main content"></section>
-    
-    
-  <!-------------------------------------------------------------------------->
-  <!-- MY PROFILE -->
-  <!-------------------------------------------------------------------------->
-
-    <section id="settings" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- SEARCH -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="search" role="main" aria-label="Main content" class="isGrid hasNoLeftMargin hasLeftPadding hasAutoRows">
-      <ul id="searchResults" class="isColumn1 isRow1"></ul>
-    </section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- SEARCH FILTERS -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="searchFilters" role="main" aria-label="Main content" class="isGrid hasNoLeftMargin hasLeftPadding hasAutoRows">
-      <ul class="isColumn1">
-        <li>
-          <h2>I’m interested in meeting...</h2>
-          Choose either or both.
-          <p>
-            <label><input type="checkbox" name="interestedInWomen" value="true">Women</label>
-            <label><input type="checkbox" name="interestedInMen" value="true">Men</label>
-          </p>
-        </li>
-        <li>
-          <h2>I’m interested in people who are aged...</h2>
-          Select an approximate age range on the slider below.
-          <p>
-            <input type="text" id="ageNum" />          
-          </p>
-          <div id="ageRange"></div>
-        </li>
-        <li>
-          <h2>I’d like to meet people who live...</h2>
-          'Near me' will bring up people that live around your area.
-          <p>
-            <label><input type="radio" name="searchLocation" value="near" />Near me</label>
-            <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
-          </p>
-        </li>
-        <li>
-          <p>
-            <button id="doSearch">Search for matches!</button>
-          </p>
-        </li>
-      </ul>
-      <ul class="isColumn3" style="position:relative;">
-        <li>
-          <h2>My favourite things are...</h2>
-          Which of your Facebook likes are the most important to you.
-        </li>
-        <li>
-          <p>
-            Due to the beta nature of the app and the low number of users, we'll show you all members in the search results.
-          </p>
-        </li>
-        <li>
-          <button id="buttonAddLikes">+ Add likes</button>
-        </li>
-      </ul>
-    </section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- MATCHES -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="matches" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">matches (soon)</div></section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- INBOX -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="inbox" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows"><div class="isColumn2 isRow1">inbox (soon)</div></section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- BETA MESSAGE -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="beta" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr hasNoLeftMargin hasLeftPadding hasAutoRows">
-	  <div class="isColumn2 isRow1"><img src="images/betaMessage.png" width="1021" height="469" /></div>
-	</section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- VIEW PHOTO -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="photoView" role="main" aria-label="Main content" class="isGrid has3Columnsof3fr isColumn2 hasNoLeftMargin hasAutoRows"></section>
-
-
-  <!-------------------------------------------------------------------------->
-  <!-- VIEW USER -->
-  <!-------------------------------------------------------------------------->
-    
-    <section id="usersProfile" role="main" aria-label="Main content" class="isColumn2 isGrid hasNoLeftMargin hasAutoRows"></section>
 
 
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
   <!-------------------------------------------------------------------------->
 
-  	<!------------------------------------------------------------------------>
-	<!-- BETA MESSAGE -->
-	<!------------------------------------------------------------------------>
-
-	  <script id="tplBeta" type="text/template">
-		<div class="isColumn2 isRow1">
-		  <img src="images/betaMessage.png" width="1021" height="469" />
-		</div>
-	  </script>
+    <!------------------------------------------------------------------------>
+    <!-- BETA MESSAGE -->
+    <!------------------------------------------------------------------------>
+    
+      <script id="tplBeta" type="text/template">
+        <div class="isColumn2 isRow1">
+      	  <img src="images/betaMessage.png" width="1021" height="469" />
+        </div>
+      </script>
 	  
 	  
-  	<!------------------------------------------------------------------------>
-	<!-- WELCOME -->
-	<!------------------------------------------------------------------------>
-
-	  <script id="tplWelcome" type="text/template">
-		<h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! To get started, all you have to do is choose one of the two free packages. Join and enjoy!</h2>
-		
-		<br><br>
-		
-		<div class="fb-login-button" data-scope="email,user_relationships,user_location,user_hometown,user_birthday,user_activities,user_education_history,read_stream,user_interests,user_likes,user_photos,offline_access">Login with Facebook</div>
-		<div id="fbResponse"></div>
-	  </script>
+    <!------------------------------------------------------------------------>
+    <!-- WELCOME -->
+    <!------------------------------------------------------------------------>
+    
+      <script id="tplWelcome" type="text/template">
+        <h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! To get started, all you have to do is choose one of the two free packages. Join and enjoy!</h2>
+        
+        <br><br>
+        
+        <button id="fb-auth">Login with Facebook</button>
+        <div id="fbResponse"></div>
+      </script>
   
   
-	<!------------------------------------------------------------------------>
-	<!-- SEARCH FILTERS -->
-	<!------------------------------------------------------------------------>
-
-	  <script id="tplSearchFilters" type="text/template">
-		<ul class="isColumn1">
-		  <li>
-			<h2>I’m interested in meeting...</h2>
-			Choose either or both.
-			<p>
-			  <label><input type="checkbox" name="interestedInWomen" value="true">Women</label>
-			  <label><input type="checkbox" name="interestedInMen" value="true">Men</label>
-			</p>
-		  </li>
-		  <li>
-			<h2>I’m interested in people who are aged...</h2>
-			Select an approximate age range on the slider below.
-			<p>
-			  <input type="text" id="ageNum" />          
-			</p>
-			<div id="ageRange"></div>
-		  </li>
-		  <li>
-			<h2>I’d like to meet people who live...</h2>
-			'Near me' will bring up people that live around your area.
-			<p>
-			  <label><input type="radio" name="searchLocation" value="near" />Near me</label>
-			  <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
-			</p>
-		  </li>
-		  <li>
-			<p>
-			  <button id="doSearch">Search for matches!</button>
-			</p>
-		  </li>
-		</ul>
-		<ul class="isColumn3" style="position:relative;">
-		  <li>
-			<h2>My favourite things are...</h2>
-			Which of your Facebook likes are the most important to you.
-		  </li>
-		  <li>
-			<p>
-			  Due to the beta nature of the app and the low number of users, we'll show you all members in the search results.
-			</p>
-		  </li>
-		  <li>
-			<button id="buttonAddLikes">+ Add likes</button>
-		  </li>
-		</ul>
-	  </script>
+    <!------------------------------------------------------------------------>
+    <!-- SEARCH FILTERS -->
+    <!------------------------------------------------------------------------>
+    
+      <script id="tplSearchFilters" type="text/template">
+        <ul class="isColumn1">
+          <li>
+        	<h2>I’m interested in meeting...</h2>
+        	Choose either or both.
+        	<p>
+        	  <label><input type="checkbox" name="interestedInWomen" value="true">Women</label>
+        	  <label><input type="checkbox" name="interestedInMen" value="true">Men</label>
+        	</p>
+          </li>
+          <li>
+        	<h2>I’m interested in people who are aged...</h2>
+        	Select an approximate age range on the slider below.
+        	<p>
+        	  <input type="text" id="ageNum" />          
+        	</p>
+        	<div id="ageRange"></div>
+          </li>
+          <li>
+        	<h2>I’d like to meet people who live...</h2>
+        	'Near me' will bring up people that live around your area.
+        	<p>
+        	  <label><input type="radio" name="searchLocation" value="near" />Near me</label>
+        	  <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
+        	</p>
+          </li>
+          <li>
+        	<p>
+        	  <button id="doSearch">Search for matches!</button>
+        	</p>
+          </li>
+        </ul>
+        <ul class="isColumn3" style="position:relative;">
+          <li>
+        	<h2>My favourite things are...</h2>
+        	Which of your Facebook likes are the most important to you.
+          </li>
+          <li>
+        	<p>
+        	  Due to the beta nature of the app and the low number of users, we'll show you all members in the search results.
+        	</p>
+          </li>
+          <li>
+        	<button id="buttonAddLikes">+ Add likes</button>
+          </li>
+        </ul>
+      </script>
   
   
     <!------------------------------------------------------------------------>
@@ -481,7 +353,7 @@
             <p>
               <ul id="userPictures">
                 {{#p}}
-                  <li class='userPicture'><img src='{{f}}' height=150 width=150></li>
+                  <li class='userPicture'><img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150></li>
                 {{/p}}
               </ul>
               <button id="addPhoto">Add photo</button>
