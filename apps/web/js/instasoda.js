@@ -72,6 +72,7 @@ $(document).ready(function() {
       },
 
       render: function() {
+        console.log('  ~ rendering beta view');
         var template = $('#tplBeta').html();
         $(this.el).html(template);
       }
@@ -87,6 +88,7 @@ $(document).ready(function() {
       },
 
       render: function() {
+        console.log('  ~ rendering welcome view');
         var template = $('#tplWelcome').html();
         $(this.el).html(template);
       }
@@ -96,137 +98,126 @@ $(document).ready(function() {
     // UserSettingsView - the settings page of the person using the app
     //----------------------------------------------------------------------
     var UserSettingsView = Backbone.View.extend({
+      events: {
+        'click #saveProfileButton': 'save',
+        'click #addPhoto': 'addPhoto',
+        'click .userPicture': 'viewPhoto'
+      },
 
-        events: {
-            'click #saveProfileButton': 'save',
-            'click #addPhoto': 'addPhoto',
-            'click .userPicture': 'viewPhoto'
-        },
+      initialize: function(options) {
+        _.bindAll(this, 'render');
+        _.bindAll(this, 'save');
+        this.model.bind('change', this.render);
+      },
+      
+      render: function() {
+        console.log('  ~ rendering user view');
+        var template = $('#tplSettings').html();
+        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+      },
 
-        initialize: function(options) {
-            _.bindAll(this, 'render');
-            _.bindAll(this, 'save');
-            this.model.bind('change', this.render);
-        },
-        render: function() {
-            console.log('~ rendering user');
-            var template = $('#tplSettings').html();
-            $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+      viewPhoto: function(e) {
+        var filename = $(e.currentTarget).data('filename');
 
-            // temp hardcoded UI manipulation:
-            /*var i = 0;
+        //TODO: convert the following code into a template
+        $('#photoView').html('<div class="isColumn1 isRow1"><button onclick="IS.deletePhoto(\'' + $(e.currentTarget).data('filenameshort') + '\');">Delete photo</button><br /><img src="' + filename + '"></div>');
+        IS.navigateTo('#photoView', 'Photo');
+        $('#photoView img').one('click', function() {
+            IS.navigateTo('#settings', 'My profile');
+        });
+      },
 
-            // add photos
-            if (this.model.get('photos') != null && this.model.get('photos') != "") {
-                var images = this.model.get('photos').split(',');
-                for (i; i < (images.length - 1); i++) {
-                    $('#userPictures').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "' data-filenameshort='" + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
-                }
-            }*/
-        },
-
-        viewPhoto: function(e) {
-            var filename = $(e.currentTarget).data('filename');
-
-            //TODO: convert the following code into a template
-            $('#photoView').html('<div class="isColumn1 isRow1"><button onclick="IS.deletePhoto(\'' + $(e.currentTarget).data('filenameshort') + '\');">Delete photo</button><br /><img src="' + filename + '"></div>');
-            IS.navigateTo('#photoView', 'Photo');
-            $('#photoView img').one('click', function() {
-                IS.navigateTo('#settings', 'My profile');
-            });
-        },
-
-        save: function() {
-          console.log('- saving user');
-          _this = this.model;
-          
-          $('#saveProfileButton').fadeOut();
-          this.$('#working').fadeIn();
-          
-          this.model.save(
-            {
-              'u': this.$('input[name=username]').val(),
-              'a': this.$('#aboutMe').html(),
-              'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
-              'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0)
-            },
-            {
-              error: function(model, response) {
-                //TODO: properly handle errors
-                alert('User save failed!');
+      save: function() {
+        console.log('- saving user');
+        _this = this.model;
+        
+        $('#saveProfileButton').fadeOut();
+        $('#working').fadeIn();
+        
+        this.model.save(
+          {
+            'u': this.$('input[name=username]').val(),
+            'a': this.$('#aboutMe').html(),
+            'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
+            'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0)
+          },
+          {
+            error: function(model, response) {
+              //TODO: properly handle errors
+              alert('User save failed!');
+              $('#saveProfileButton').fadeIn();
+              $('#working').fadeOut();
+            }, 
+            success: function(model, response) {
+              console.log('- got an API response');
+              // SUCCESS
+              if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
+                console.log('- API call was successful');
+                saveLocally("user", _this);
                 $('#saveProfileButton').fadeIn();
                 $('#working').fadeOut();
-              }, 
-              success: function(model, response) {
-                console.log('- got an API response');
-                // SUCCESS
-                if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
-                  console.log('- API call was successful');
-                  saveLocally("user", _this);
-                  $('#saveProfileButton').fadeIn();
-                  $('#working').fadeOut();
-                }
-                // FAIL
-                else {
-                  console.log('- API call failed: ' + response.error);
-                  alert('User save failed: ' + response.error);
-                }
+              }
+              // FAIL
+              else {
+                console.log('- API call failed: ' + response.error);
+                alert('User save failed: ' + response.error);
               }
             }
-          );
-        },
+          }
+        );
+      },
 
-        addPhoto: function() {
-            var fbThirdPartyId = this.model.get('fbThirdPartyId');
-            var that = this;
+      addPhoto: function() {
+        var fbThirdPartyId = this.model.get('fbThirdPartyId');
+        var that = this;
 
-            // create a FileOpenPicker object for the image file picker button
-            var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-            openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail; //show images in thumbnail mode
-            openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
-            openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
-            openPicker.pickSingleFileAsync().then(function(file) {
-                // Ensure picked file is valid and usable
-                if (file) {
-                    // append picture in the page
-                    //$('#userPictures').append('<li class="userPicture"><img height=150 src="' + URL.createObjectURL(file) + '"></li>');
+        // create a FileOpenPicker object for the image file picker button
+        var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
+        openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail; //show images in thumbnail mode
+        openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
+        openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
+        openPicker.pickSingleFileAsync().then(function(file) {
+          // Ensure picked file is valid and usable
+          if (file) {
+            // append picture in the page
+            //$('#userPictures').append('<li class="userPicture"><img height=150 src="' + URL.createObjectURL(file) + '"></li>');
 
-                    // upload the image
-                    file.openAsync(Windows.Storage.FileAccessMode.read).then(function(stream) {
-                        var blob = msWWA.createBlobFromRandomAccessStream(file.contentType, stream);
-                        var xhr = new XMLHttpRequest();
-                        xhr.open('POST', sApi + 'photo.php?a=1&token=' + fbThirdPartyId + '&t=' + file.fileType + '&skey=' + sApiSecretKey, true);
-                        xhr.onload = function(e) {
-                            var imageData = JSON.parse(e.currentTarget.response);
-                            that.model.set(imageData);
-                            that.model.save({
-                                error: function(model, response) {
-                                    //TODO: properly handle errors
-                                    //callback(false, "Ajax error: " + response.status);
-                                }
-                            }, {
-                                success: function(model, response) {
-                                    // SUCCESS
-                                    if (response.status == "success") {
-                                        saveLocally("user", user);
-                                        $('#saveProfileButton').fadeIn();
-                                        $('#working').fadeOut();
-                                    }
-                                    // FAIL
-                                    else {
-                                        //callback(false, response.status);
-                                    }
-                                }
-                            });
-                        };
-                        xhr.send(blob);
-                    });
-                } else {
-                    // File not valid
-                    //$('#userPictures').append("error");
-                }
+            // upload the image
+            file.openAsync(Windows.Storage.FileAccessMode.read).then(function(stream) {
+              var blob = msWWA.createBlobFromRandomAccessStream(file.contentType, stream);
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', sApi + 'photo.php?a=1&token=' + fbThirdPartyId + '&t=' + file.fileType + '&skey=' + sApiSecretKey, true);
+              xhr.onload = function(e) {
+                var imageData = JSON.parse(e.currentTarget.response);
+                that.model.set(imageData);
+                that.model.save({
+                  error: function(model, response) {
+                    //TODO: properly handle errors
+                    //callback(false, "Ajax error: " + response.status);
+                  }
+                }, {
+                  success: function(model, response) {
+                    // SUCCESS
+                    if (response.status == "success") {
+                      saveLocally("user", user);
+                      $('#saveProfileButton').fadeIn();
+                      $('#working').fadeOut();
+                    }
+                    // FAIL
+                    else {
+                      //callback(false, response.status);
+                    }
+                  }
+                });
+              };
+              xhr.send(blob);
             });
-        }
+          } else {
+            // File not valid
+            //$('#userPictures').append("error");
+          }
+        });
+      }
     });
     
     // SearchFilters
@@ -241,6 +232,7 @@ $(document).ready(function() {
       },
 
       render: function() {
+        console.log('  ~ rendering search view');
         var template = $('#tplSearchFilters').html();
         $(this.el).html(template);
       },
