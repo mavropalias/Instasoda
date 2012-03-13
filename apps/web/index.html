@@ -346,14 +346,16 @@
       <script id="tplSettings" type="text/template">
         <h1>My profile</h1>
         
-        <div class="profilePicsData isRow1 isAnimated hasEasing">
+        <div>
           <p>
             <h2>Me at my best! (photos)</h2>
             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
             <p>
               <ul id="userPictures">
                 {{#p}}
-                  <li class='userPicture drop-shadow round'><img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150></li>
+                  <li class='userPicture drop-shadow round animated'>
+					<img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150 class="hidden">
+				  </li>
                 {{/p}}
               </ul>
               <button id="addPhoto">Add photo</button>
@@ -361,13 +363,13 @@
           </p>
         </div>
         
-        <div id="basicSettings" class="column hasRightPadding">
+        <div id="basicSettings" class="column paddingRight2x">
           <h2>Basic info</h2>
           <p>
             <h3>Nickname</h3>
             <span class="tip">This is how other instasoda users will see you.</span>
             <p>
-              <input name="username" value="{{u}}" autofocus required maxlength=50>
+              <input name="username" value="{{u}}" required maxlength=50>
             </p>
           </p>
           
@@ -384,7 +386,7 @@
           <button type="submit" id="working" style="display:none;" disabled>Saving...</button>
         </div>
         
-        <div id="facebookData" class="column hasRightPadding">
+        <div id="facebookData" class="column paddingRight2x">
           <p>
             <h2>Data synced from your Facebook profile:</h2>
             <span class="tip">When you update your Facebook profile details, you can sync them with your Instasoda profile by using the <em>Save profile</em> button in this page.</span>
@@ -400,7 +402,7 @@
           </p>  
         </div>
         
-        <div id="personalInfoText" class="column isRow1">
+        <div class="column">
           <p>
             <h2>A little bit about myself</h2>
             <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
@@ -410,14 +412,14 @@
           </p>
         </div>
                 
-        <div class="facebookLikesData isRow1 isAnimated hasEasing">
+        <div>
           <p>
             <h2>Likes</h2>
             <span class="tip">Likes and interests imported from your Facebook profile.</span>
           </p>
           <ul id="facebookLikesContainer">
             {{#fL}}
-              <li class="fbLike" title="{{n}}">
+              <li class="fbLike">
                 <ul>
                   <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square"></li>
                   <li class="fbLikeName">{{n}}</li>
