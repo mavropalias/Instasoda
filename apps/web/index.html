@@ -32,7 +32,6 @@
   <script defer type="text/javascript" src="js/backbone.js"></script>
   <script defer type="text/javascript" src="js/mustache.js"></script>
   <script defer type="text/javascript" src="js/instasoda.js"></script>
-  <script defer type="text/javascript" src="js/homePage.js"></script>
   <!-- <script defer type="text/javascript" src="js/cssrefresh.js"></script> -->
   
   
@@ -152,6 +151,7 @@
     	    <li><a id="navMatches" href="#beta">Matches</a></li>
     	    <li><a id="navProfile" href="#me">Profile</a></li>
     	    <li><a id="navInbox" href="#beta">Inbox</a></li>
+    	    <li><a id="navLogout" href="#logout">Logout</a></li>
     	  </ul>
     	</ul>
     </nav>
@@ -263,9 +263,9 @@
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersPreview" type="text/template">
-        <ul>
-          <li class="userPreviewPhoto"><img src="{{p.f}}" height="200" /></li>
-          <li class="userPreviewNickname">{{u}}, {{fBd}}</li>
+        <ul class="drop-shadow round animated">
+          {{#p}}<li class="userPreviewPhoto"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}" height="150" /></li>{{/p}}
+          <li class="userPreviewNickname">{{u}}, {{ag}}</li>
         </ul>
       </script>
 
@@ -392,7 +392,7 @@
             <span class="tip">When you update your Facebook profile details, you can sync them with your Instasoda profile by using the <em>Save profile</em> button in this page.</span>
             <p>
               <ul>
-                <li>Age: <span class="facebookData">{{fBd}}</span></li>
+                <li>Age: <span class="facebookData">{{ag}}</span></li>
                 <li>Gender: <span class="facebookData">{{fS}}</span></li>
                 <li>Relationship status: <span class="facebookData">{{fRs}}</span></li>
                 <li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}</span></li>
@@ -421,7 +421,7 @@
             {{#fL}}
               <li class="fbLike">
                 <ul>
-                  <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square"></li>
+                  <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square" width=50 height=50></li>
                   <li class="fbLikeName">{{n}}</li>
 		  <li class="fbLikeNameFull">{{n}}</li>
                 </ul>
