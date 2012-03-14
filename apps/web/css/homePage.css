@@ -171,21 +171,3 @@
     min-width: 720px;
 }
 
-.userPreview {
-    float: left;
-    width: 198px;
-    background-color:#EFF8FA;
-    text-align:center;
-    margin:0 10px 8px 0;
-    border:1px solid #D5EEF2;
-}
-.userPreviewPhoto {
-    overflow: hidden;
-    width: 200px;
-    margin:0 auto;
-}
-.userPreviewNickname {
-    font-size:13px;
-    margin-bottom:5px;
-    color:#00364D;
-}
