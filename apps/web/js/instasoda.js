@@ -473,23 +473,13 @@ $(document).ready(function() {
             }
         }
     }
-
+    
     /**
-     * Calculate user's age, given a birth date
-     * @param {String} sBirthDate
-     * @return {String} age
+     * Logs the user out of the system.
      */
-    var getAge = function(sBirthDate) {
-      //aDate = sBirthDate.split('/');
-      
-      var today = new Date();
-      var birthDate = new Date(sBirthDate);
-      var age = today.getFullYear() - birthDate.getFullYear();
-      var m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-          age--;
-      }
-      return age;
+    var logout = function() {
+      user.clear({ silent: true });
+      saveLocally("user", user);
     }
 
 
@@ -502,6 +492,7 @@ $(document).ready(function() {
     var isLoggedIn = false;
     var navHistoryPage = new Array();
     var navHistoryTitle = new Array();
+    var _this = this;
   
     // Backbone models
     var user = new User();
@@ -546,7 +537,10 @@ $(document).ready(function() {
         "search/:id": "searchResults",
         
         // Beta message
-        "beta": "beta"
+        "beta": "beta",
+        
+        // Logout
+        "logout": "logout"
       },
     
       welcome: function() {
@@ -571,7 +565,11 @@ $(document).ready(function() {
       },
       
       searchResults: function(query) {
-        // TODO
+        console.log('> routing search results page');
+        usersCollection.fetch();
+        usersListView.render();
+        $('#content > div').detach();
+        $('#content').append(usersListView.el);
       },
       
       beta: function() {
@@ -579,6 +577,12 @@ $(document).ready(function() {
         betaView.render();
         $('#content > div').detach();
         $('#content').append(betaView.el);
+      },
+      
+      logout: function() {
+        console.log('> routing logout page');
+        logout();
+        this.navigate("", {trigger: true});
       },
       
     }); 
@@ -728,19 +732,6 @@ $(document).ready(function() {
           }
         }
       });
-    }
-
-    /**
-     * Logs the user out of the system.
-     * @return {Bool} true/false
-     */
-    this.logout = function() {
-        if (user.get('loggedIn') == '1') {
-            user.set({
-                loggedIn: '0'
-            });
-        }
-        return true;
     }
 
     /**
