@@ -129,7 +129,7 @@
     <!------------------------------------------------------------------------>
     
       <script id="tplWelcome" type="text/template">
-        <h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! To get started, all you have to do is choose one of the two free packages. Join and enjoy!</h2>
+        <h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! Join and enjoy!</h2>
         
         <br><br>
         
@@ -217,7 +217,7 @@
             <button onclick="IS.navigateTo('#beta', 'Almost there!');">Similar users</button>
           </p>
           <p>
-            <h2>{{username}}'s basic info</h2>
+            <h2>{{u}}'s basic info</h2>
             <p>
               <ul>
                 <li>Age: <span class="facebookData">{{age}}</span></li>
@@ -251,22 +251,24 @@
           </p>
         </div>
         
-        <div class="facebookLikesData isColumn3 isRow1 hasRightPadding isAnimated hasEasing">
+        <div>
           <p>
-            <h2>{{username}}'s likes</h2>
+            <h2>Likes</h2>
+            <span class="tip">Likes and interests imported from your Facebook profile.</span>
           </p>
           <ul id="facebookLikesContainer">
-            {{#likes}}
-              <li class="facebookLikesItem " title="{{name}}">
+            {{#fL}}
+              <li class="fbLike">
                 <ul>
-                  <li class="facebookLikesItemPicture"><img src="https://graph.facebook.com/{{id}}/picture?access_token={{fbToken}}" width=50 height=50></li>
-                  <li class="facebookLikesItemName">{{name}}</li>
+                  <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square" width=50 height=50></li>
+                  <li class="fbLikeName">{{n}}</li>
+      <li class="fbLikeNameFull">{{n}}</li>
                 </ul>
               </li>
-            {{/likes}}
-            {{^likes}}
-                No likes.
-            {{/likes}}
+            {{/fL}}
+            {{^fL}}
+              No likes.
+            {{/fL}}
           </ul>
         </div>
       </script>

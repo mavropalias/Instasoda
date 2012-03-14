@@ -41,7 +41,12 @@ $(document).ready(function() {
 
     // Users - all other Instasoda users
     //----------------------------------------------------------------------
-    var Users = Backbone.Model.extend({});
+    var Users = Backbone.Model.extend({
+        defaults: {
+        },
+        idAttribute: "_id",
+        urlRoot: sApi + 'user'
+    });
 
 
     // =====================================================================
@@ -343,139 +348,101 @@ $(document).ready(function() {
     // UsersView - a basic view of a user appearing in the search results
     //----------------------------------------------------------------------
     var UsersView = Backbone.View.extend({
-        className: 'userPreview',
-        tagName: 'li',
-        events: {
-            "click .userPreviewPhoto": "viewProfile"
-        },
+      className: 'userPreview',
+      tagName: 'li',
+      events: {
+        "click .userPreviewPhoto": "viewProfile"
+      },
 
-        viewProfile: function(e) {
-            //$('#usersProfile').html(Mustache.to_html(template, this.model.toJSON()));
+      viewProfile: function(e) {
+        router.navigate(this.model.get('_id'), {trigger: true});
+      },
 
-            var usersFullView = new UsersFullView({
-                model: this.model,
-                el: $('#usersProfile')[0]
-            });
-            usersFullView.render();
-            IS.navigateTo('#usersProfile', this.model.get('username') + "'s profile");
-        },
-
-        render: function() {
-            var template = $('#tplUsersPreview').html();
-            $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
-        }
+      render: function() {
+        var template = $('#tplUsersPreview').html();
+        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+      }
     });
 
     // UsersListView - contains a list of UsersView items,
     // used for search results / matches
     //----------------------------------------------------------------------
     var UsersListView = Backbone.View.extend({
-        initialize: function() {
-            _.bindAll(this);
-            this.collection.bind('reset', this.render);
-        },
+      initialize: function() {
+        _.bindAll(this);
+        this.collection.bind('reset', this.render);
+      },
 
-        renderItem: function(model) {
-            var usersView = new UsersView({
-                model: model
-            });
-            usersView.render();
-            //WinJS.Utilities.setInnerHTMLUnsafe(this.el, $(usersView.el).html());
-            $('#searchResults').append(usersView.el);
-        },
+      renderItem: function(model) {
+        var usersView = new UsersView({
+            model: model
+        });
+        usersView.render();
+        //WinJS.Utilities.setInnerHTMLUnsafe(this.el, $(usersView.el).html());
+        $('#searchResults').append(usersView.el);
+      },
 
-        render: function() {
-            //this.collection.each(this.renderItem);
-            this.collection.each(function(a, b, c) {
-                //parse photos string and convert it to json
-                var imagesArray = new Array();
-                if (a.get('photos') != "" && a.get('photos') != null) {
-                    var images = a.get('photos').split(',');
-                    for (var i = 0; i < (images.length - 1); i++) {
-                        imagesArray[i] = sApiPhotos + images[i];
+      render: function() {
+        console.log('  ~ rendering search results view');
+        //this.collection.each(this.renderItem);
+        this.collection.each(function(a, b, c) {
+          //parse photos string and convert it to json
+          var imagesArray = new Array();
+          if (a.get('photos') != "" && a.get('photos') != null) {
+            var images = a.get('photos').split(',');
+            for (var i = 0; i < (images.length - 1); i++) {
+              imagesArray[i] = sApiPhotos + images[i];
 
-                        // set 'main' photo
-                        if (i === 0) a.set({
-                            'profilePhoto': sApiPhotos + images[i]
-                        });
-                    }
-                }
-                a.set({
-                    'photosArray': imagesArray
-                });
-                //a.renderItem;
-            });
-            $(this.el).html('<ul id="searchResults" class="isColumn1 isRow1"></ul>');
-            this.collection.each(this.renderItem);
-        }
+              // set 'main' photo
+              if (i === 0) a.set({
+                'profilePhoto': sApiPhotos + images[i]
+              });
+            }
+          }
+          a.set({
+              'photosArray': imagesArray
+          });
+          //a.renderItem;
+        });
+        $(this.el).html('<ul id="searchResults" class="isColumn1 isRow1"></ul>');
+        this.collection.each(this.renderItem);
+      }
     });
     
     // UsersFullView - a complete view of a user's profile
     //----------------------------------------------------------------------
     var UsersFullView = Backbone.View.extend({
-        events: {
-            'click .userPicture': 'viewPhoto'
-        },
+      events: {
+        'click .userPicture': 'viewPhoto'
+      },
 
-        initialize: function() {
-            _.bindAll(this);
-            this.model.bind('change', this.render);
+      initialize: function() {
+        _.bindAll(this);
+        
+        // Fetch data
+        this.model.fetch();
+      },
 
-            // set model interestedIn
-            if (this.model.get('interestedInMen') == '1' && this.model.get('interestedInWomen') != '1') {
-                this.model.set({
-                    'interestedIn': 'Men'
-                });
-            } else if (this.model.get('interestedInMen') == '1' && this.model.get('interestedInWomen') == '1') {
-                this.model.set({
-                    'interestedIn': 'Men & Women'
-                });
-            } else if (this.model.get('interestedInMen') != '1' && this.model.get('interestedInWomen') == '1') {
-                this.model.set({
-                    'interestedIn': 'Women'
-                });
-            } else {
-                this.model.set({
-                    'interestedIn': 'No preference'
-                });
-            }
-        },
+      viewPhoto: function(e) {
+        var filename = $(e.currentTarget).data("filename");
 
-        viewPhoto: function(e) {
-            var filename = $(e.currentTarget).data("filename");
+        //TODO: convert the following code into a template
+        var that = this;
+        $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
+        IS.navigateTo('#photoView', this.model.get('username') + "'s photo");
+        /*$('#photoView').one('click', function () {
+          IS.navigateTo('#usersProfile', that.model.get('username') + "'s profile");
+          //IS.navigateBack();
+        });*/
+      },
 
-            //TODO: convert the following code into a template
-            var that = this;
-            $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
-            IS.navigateTo('#photoView', this.model.get('username') + "'s photo");
-/*$('#photoView').one('click', function () {
-                IS.navigateTo('#usersProfile', that.model.get('username') + "'s profile");
-                //IS.navigateBack();
-            });*/
-        },
-
-        render: function() {
-            // update template
-            var template = $('#tplUsersProfile').html();
-            WinJS.Utilities.setInnerHTMLUnsafe(this.el, Mustache.to_html(template, this.model.toJSON()));
-
-
-            // temp hardcoded UI manipulation:
-            var i = 0;
-
-            // add photos
-            if (this.model.get('photos') != null && this.model.get('photos') != "") {
-                var images = this.model.get('photos').split(',');
-                for (i; i < (images.length - 1); i++) {
-                    $('#userPhotos').append("<li class='userPicture' data-filename='" + sApiPhotos + images[i] + "'><img src='" + sApiPhotos + images[i] + "' height=150></li>");
-                }
-            }
-
-            // update picsCount
-            this.model.set({
-                picsCount: i
-            });
-        }
+      render: function() {
+        console.log('  ~ rendering userFull view for: ' + this.model.get('_id'));
+        
+        // Update template
+        var template = $('#tplUsersProfile').html();
+        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+      }
     });
 
 
@@ -578,7 +545,7 @@ $(document).ready(function() {
 
     // Backbone collections
     var usersCollection = new UsersCollection({
-        model: users
+      model: users
     });
 
     // Backbone views
@@ -586,7 +553,7 @@ $(document).ready(function() {
     var betaView = new BetaView();
     var searchFiltersView = new SearchFiltersView();
     var userSettingsView = new UserSettingsView({
-        model: user
+      model: user
     });
     var usersListView = new UsersListView({
         collection: usersCollection,
@@ -618,7 +585,10 @@ $(document).ready(function() {
         "beta": "beta",
         
         // Logout
-        "logout": "logout"
+        "logout": "logout",
+
+        // View user
+        ":id": "viewUser"
       },
     
       welcome: function() {
@@ -661,6 +631,22 @@ $(document).ready(function() {
         console.log('> routing logout page');
         logout();
       },
+      
+      viewUser: function(id) {
+        console.log('> routing view user page');
+        
+        users.set({ '_id': id });
+        users.fetch();
+        
+        var usersFullView = new UsersFullView({
+          model: users,
+        });
+        
+        usersFullView.render();
+        
+        $('#content > div').detach();
+        $('#content').append(usersFullView.el);
+      }
       
     }); 
     var router = new Router;
