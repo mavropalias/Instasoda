@@ -82,7 +82,10 @@ $(document).ready(function() {
     // WelcomeView
     //----------------------------------------------------------------------
     var WelcomeView = Backbone.View.extend({
-
+      events: {
+        'click #fb-auth': 'facebookAuth'
+      },
+      
       initialize: function() {
         _.bindAll(this);
       },
@@ -91,6 +94,79 @@ $(document).ready(function() {
         console.log('  ~ rendering welcome view');
         var template = $('#tplWelcome').html();
         $(this.el).html(template);
+      },
+      
+      facebookAuth: function() {
+        console.log('> Doing Facebook auth');
+        
+        FB.getLoginStatus(function(res) {
+          var button = document.getElementById('fb-auth');
+          if (!res.authResponse) {
+            //user is not connected to the app or logged out
+            button.innerHTML = 'Login with Facebook';
+            button.onclick = function() {
+              FB.login(function(response) { 
+                // FB.Event.subscribe('auth.statusChange') will take care of the rest
+                },
+                {
+                  scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+                  + 'user_activities,user_education_history,read_stream,user_interests,'
+                  + 'user_likes,user_photos,offline_access'
+                }
+              );    
+            }
+        } else {
+          if (response.status === 'connected') {
+            console.log('> User is logged into Facebook and has authenticated the application');            
+            
+            // get facebook token data
+            var fbToken = response.authResponse.accessToken;
+            var fbTokenExpires = response.authResponse.expiresIn;
+                        
+            // Check if token is still valid
+            if(fbTokenExpires > 0) {
+              console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
+              console.log('>   -> ' + fbToken);
+              // get third_party_id from Facebook and login the user
+              FB.api(
+                {
+                method: 'fql.query',
+                query: 'SELECT third_party_id FROM user WHERE uid=me()'
+                },
+                function(response) {
+                  console.log('> Attempting to login the user');
+                  IS.login(fbToken, response[0].third_party_id, function(err) {
+                    if(!err) {
+                      console.log('> SUCCESS! User is logged in');
+                      IS.navigateTo('me');
+                    } else {
+                      console.log('> FAIL: Need to create new account');
+                      IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
+                        if(!err) {
+                          console.log('> SUCCESS! Account created');
+                          IS.navigateTo('me');
+                        } else {
+                          console.log('> ERROR: ' + res);
+                        }
+                      });
+                    }
+                  });
+                }
+              );
+            } else {
+              console.log('- Facebook token has expired');
+              FB.logout();
+            }
+          } else if (response.status === 'not_authorized') {
+            console.log('> User is logged into Facebook but has not authenticated the application');
+            //IS.navigateTo('');
+          } else {
+            console.log('> User is not logged into Facebook at this time');
+            //IS.navigateTo('');
+          }
+        }
+          
+        });  
       }
       
     });
@@ -478,8 +554,11 @@ $(document).ready(function() {
      * Logs the user out of the system.
      */
     var logout = function() {
+      // silent only clears locally stored data
+      // without any effect on the API
       user.clear({ silent: true });
       saveLocally("user", user);
+      router.navigate("", {trigger: true});
     }
 
 
@@ -492,7 +571,6 @@ $(document).ready(function() {
     var isLoggedIn = false;
     var navHistoryPage = new Array();
     var navHistoryTitle = new Array();
-    var _this = this;
   
     // Backbone models
     var user = new User();
@@ -582,7 +660,6 @@ $(document).ready(function() {
       logout: function() {
         console.log('> routing logout page');
         logout();
-        this.navigate("", {trigger: true});
       },
       
     }); 
