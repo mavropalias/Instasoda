@@ -255,30 +255,12 @@ $(document).ready(function() {
 
       addPhoto: function() {
         // create plUploader box
-        console.log('- creating plUpload container')
-                
-        this.$("#uploadWidget").pluploadQueue({
-          // General settings
-          runtimes : 'gears,flash,silverlight,browserplus,html5',
-          url : 'upload.php',
-          max_file_size : '4mb',
-          chunk_size : '400kb',
-          unique_names : true,
-        
-          // Resize images on clientside if we can
-          resize : {width : 800, height : 600, quality : 90},
-        
-          // Specify what files to browse for
-          filters : [
-            {title : "Image files", extensions : "jpg,gif,png"},
-          ],
-        
-          // Flash settings
-          flash_swf_url : 'js/plUpload/plupload.flash.swf',
-        
-          // Silverlight settings
-          silverlight_xap_url : 'js/plUpload/plupload.silverlight.xap'
-        });
+        console.log('- creating upload container')
+            var uploader = new qq.FileUploader({
+                element: document.getElementById('uploadWidget'),
+                action: 'do-nothing.htm',
+                debug: true
+            });      
         
         this.$('#photoUploadContainer').fadeIn();
         
