@@ -323,30 +323,30 @@
   }
   .drop-shadow {
     .box-shadows(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.1) inset);
-    position:relative;
-    padding:1em; 
-    margin:2em 0.5em 5em; 
-    background:#fff;
+    position: relative;
+    padding: 1em; 
+    margin: 2em 0.5em 5em; 
+    background: #fff;
   }
 
   .drop-shadow:before,
   .drop-shadow:after {
     content:"";
-    position:absolute; 
-    z-index:-2;
-    bottom:15px;
-    left:10px;
-    width:50%;
-    height:20%;
+    position: absolute; 
+    z-index: -2;
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    height: 20%;
   }
   
   .drop-shadow:hover{
-    background:#f3f3f3;
+    background: #f3f3f3;
   }
 
   .drop-shadow:after{                 
-    right:10px; 
-    left:auto;
+    right: 10px; 
+    left: auto;
   }
   
   .round {
@@ -356,44 +356,44 @@
   .round:before,
   .round:after {
     .box-shadow(0, 15px, 10px, rgba(0, 0, 0, 0.7));
-    max-width:300px;
-    -webkit-transform:rotate(-3deg);    
-       -moz-transform:rotate(-3deg);   
-         -o-transform:rotate(-3deg);
-            transform:rotate(-3deg);
+    max-width: 300px;
+    -webkit-transform: rotate(-3deg);    
+       -moz-transform: rotate(-3deg);   
+         -o-transform: rotate(-3deg);
+            transform: rotate(-3deg);
   }
   
   .round:after {
-    -webkit-transform:rotate(3deg);   
-       -moz-transform:rotate(3deg);  
-         -o-transform:rotate(3deg);
-            transform:rotate(3deg);
+    -webkit-transform: rotate(3deg);   
+       -moz-transform: rotate(3deg);  
+         -o-transform: rotate(3deg);
+            transform: rotate(3deg);
   }
   .curls {
-    border:1px solid #efefef; 
-    -moz-border-radius:0 0 120px 120px / 0 0 6px 6px;    
-         border-radius:0 0 120px 120px / 0 0 6px 6px;
+    border: 1px solid #efefef; 
+    -moz-border-radius: 0 0 120px 120px / 0 0 6px 6px;    
+         border-radius: 0 0 120px 120px / 0 0 6px 6px;
   }
 
   .curls:before,
   .curls:after { 
-      bottom:12px;
-      max-width:200px;
-      height:55%;
-      -webkit-box-shadow:0 8px 16px rgba(0, 0, 0, 0.4); 
-         -moz-box-shadow:0 8px 16px rgba(0, 0, 0, 0.4);
-              box-shadow:0 8px 16px rgba(0, 0, 0, 0.4);
-      -webkit-transform:skew(-8deg) rotate(-4deg);
-         -moz-transform:skew(-8deg) rotate(-4deg);
-           -o-transform:skew(-8deg) rotate(-4deg);
-              transform:skew(-8deg) rotate(-4deg);
+      bottom: 12px;
+      max-width: 200px;
+      height: 55%;
+      -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); 
+         -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+              box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+      -webkit-transform: skew(-8deg) rotate(-4deg);
+         -moz-transform: skew(-8deg) rotate(-4deg);
+           -o-transform: skew(-8deg) rotate(-4deg);
+              transform: skew(-8deg) rotate(-4deg);
   } 
 
   .curls:after { 
-      -webkit-transform:skew(8deg) rotate(4deg); 
-         -moz-transform:skew(8deg) rotate(4deg);     
-           -o-transform:skew(8deg) rotate(4deg); 
-              transform:skew(8deg) rotate(4deg);
+      -webkit-transform: skew(8deg) rotate(4deg); 
+         -moz-transform: skew(8deg) rotate(4deg);     
+           -o-transform: skew(8deg) rotate(4deg); 
+              transform: skew(8deg) rotate(4deg);
   }
 
 
@@ -404,24 +404,43 @@
   .userPreview {
     float: left;
     text-align:center;
-    margin:0 10px 8px 0;
+    margin: 0 10px 8px 0;
   }
   .userPreviewPhoto {
     overflow: hidden;
     width: 200px;
-    margin:0 auto;
+    margin: 0 auto;
   }
   .userPreviewNickname {
     .text-shadow;
-    font-size:12px;
-    margin-top:5px;
-    color:#00364D;
+    font-size: 12px;
+    margin-top: 5px;
+    color: #00364D;
   }
 
   
+// =============================================================================
+// PHOTO UPLOADER
+// =============================================================================  
   
-  
-  
+  #photoUploadContainer {
+    background: #fff;
+    background: rgba(252, 252, 252, .9);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    display: none;
+    
+    #uploadWidget {
+      .box-shadow;
+      margin: 200px auto 0;
+      position: relative;
+      width: 600px;
+      height: 330px;
+    }
+  }
   
   
   
