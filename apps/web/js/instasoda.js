@@ -442,6 +442,11 @@ $(document).ready(function() {
         // Update template
         var template = $('#tplUsersProfile').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // Animate user's photos
+        this.$('.userPicture img').load(function(){
+          $(this).fadeIn();
+        });
       }
     });
 
