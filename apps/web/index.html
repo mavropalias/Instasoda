@@ -208,9 +208,8 @@
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersProfile" type="text/template">
+        <h1>{{u}}, {{ag}}</h1>
         <div id="basicInfo" class="isColumn1 isRow1 hasRightPadding">
-          <p>Instasoda is in Beta and in order to protect our users' privacy we pixelate their photos and do not show parts of their profiles (tagged <span class="protected">protected</span>), for users that joined the Beta through our website (instasoda.com).
-          </p>
           <p>
             <button onclick="IS.navigateTo('#beta', 'Almost there!');">Send message</button>
             <button onclick="IS.navigateTo('#beta', 'Almost there!');">+ Favourite</button>
@@ -220,32 +219,37 @@
             <h2>{{u}}'s basic info</h2>
             <p>
               <ul>
-                <li>Age: <span class="facebookData">{{age}}</span></li>
-                <li>Gender: <span class="facebookData">{{gender}}</span></li>
-                <li>Interested in: {{interestedIn}}</li>
-                <li>Relationship status: <span class="protected facebookData">protected</span></li>
-                <li>Location: <span class="protected facebookData">protected</span></li>
+                <li>Age: <span class="facebookData">{{ag}}</span></li>
+                <li>Gender: <span class="facebookData">{{fS}}</span></li>
+                <li>Interested in: {{#w}}women{{/w}} {{#m}}men{{/m}}</li>
+                <li>Relationship status: {{#fRs}}<span class="facebookData">{{fRs}}</span>{{/fRs}}{{^fRs}}Unknown{{/fRs}}</li>
+                <li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}Unknown{{/fCl}}</span></li>
               </ul>
             </p>
           </p>
           <p>
-            <h2>A little bit about {{username}}</h2>
+            <h2>A little bit about {{u}}</h2>
             <p>       
-              {{#aboutMe}}
-                {{aboutMe}}
-              {{/aboutMe}}     
-              {{^aboutMe}}
-                 {{username}} has not entered anything yet.
-              {{/aboutMe}}
+              {{#a}}
+                {{a}}
+              {{/a}}     
+              {{^a}}
+                 {{u}} has not entered anything yet.
+              {{/a}}
             </p>
           </p>
         </div>
         
         <div class="profilePicsData profilePicsDataSmall isColumn2 isRow1 hasRightPadding isAnimated hasEasing">
           <p>
-            <h2>{{username}}'s best moments!</h2>                        
+            <h2>{{u}}'s best moments!</h2>                        
             <p>
               <ul id="userPhotos">
+                {{#p}}
+                  <li class='userPicture drop-shadow round animated'>
+                    <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150 class="hidden">
+                  </li>
+                {{/p}}
               </ul>
             </p>
           </p>
