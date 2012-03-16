@@ -156,15 +156,22 @@
   h3 {
     font-size:1.3em;
   }
-  button {
+  button,
+  .button {
     background: #BE1E2D;
     padding: 0.5em 1em;
     border: 0 none;
     color: white;
-    font-size:1.3em;
+    font-size: 1.3em;
+    line-height: 1.5em;
     cursor: pointer;
     display: block;
     opacity: 1;
+    text-align: center;
+    
+    &:hover {
+      text-decoration: underline;
+    }
   }
   .column {
     display: table-cell;
@@ -315,14 +322,25 @@
 // USER PHOTOS
 // =============================================================================
   
-  .userPicture > img {
-    border-top: 1px solid #ccc;
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
-    border-bottom: 1px solid #fff;
+  #userPictures {
+    display:block;
+    overflow:hidden;
+    
+    .userPicture {
+      float:left;
+      
+      img {
+        cursor:pointer;
+        border-top: 1px solid #ccc;
+        border-right: 1px solid #ddd;
+        border-left: 1px solid #ddd;
+        border-bottom: 1px solid #fff;
+      }
+    }
   }
+    
   .drop-shadow {
-    .box-shadows(0 1px 4px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.1) inset);
+    .box-shadows(0 2px 2px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.1) inset);
     position: relative;
     padding: 1em; 
     margin: 2em 0.5em 5em; 
@@ -369,32 +387,6 @@
          -o-transform: rotate(3deg);
             transform: rotate(3deg);
   }
-  .curls {
-    border: 1px solid #efefef; 
-    -moz-border-radius: 0 0 120px 120px / 0 0 6px 6px;    
-         border-radius: 0 0 120px 120px / 0 0 6px 6px;
-  }
-
-  .curls:before,
-  .curls:after { 
-      bottom: 12px;
-      max-width: 200px;
-      height: 55%;
-      -webkit-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); 
-         -moz-box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-              box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-      -webkit-transform: skew(-8deg) rotate(-4deg);
-         -moz-transform: skew(-8deg) rotate(-4deg);
-           -o-transform: skew(-8deg) rotate(-4deg);
-              transform: skew(-8deg) rotate(-4deg);
-  } 
-
-  .curls:after { 
-      -webkit-transform: skew(8deg) rotate(4deg); 
-         -moz-transform: skew(8deg) rotate(4deg);     
-           -o-transform: skew(8deg) rotate(4deg); 
-              transform: skew(8deg) rotate(4deg);
-  }
 
 
 // =============================================================================
@@ -423,66 +415,32 @@
 // PHOTO UPLOADER
 // =============================================================================  
   
-  #photoUploadContainer {
-    background: #fff;
-    background: rgba(252, 252, 252, .9);
-    position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    display: none;
-    
+  #uploadPhoto {
+
     #uploadWidget {
-      .box-shadow;
-      background: #fff;
-      margin: 200px auto 0;
-      position: relative;
-      width: 600px;
-      height: 330px;
-      padding: 20px;
+    width: 150px;
+    height: 150px;
       
       .qq-uploader {
         position:relative;
         width: 100%;
       }
       
-      .qq-upload-button {
-          display: block; /* or inline-block */
-          width: 105px;
-          padding: 7px 0;
-          text-align: center;    
-          background: #880000;
-          border-bottom: 1px solid #ddd;
-          color: #fff;
-      }
-      .qq-upload-button-hover {
-        background:#cc0000;
-      }
-      
       .qq-upload-drop-area {
+        .border-radius(8px);
+        background: url(../img/uploadPhotoBg.png) center top no-repeat #fff;
         display: block !important;
         position: absolute;
-        top: 30px;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        height: 70px;
+        top: 72px;
+        left: 0px;
+        right: 0px;
+        height: 72px;
         z-index: 2;
-        background:#FF9797;
         text-align:center;
-        
-        span {
-          display: block;
-          position: absolute;
-          top: 50%;
-          width: 100%;
-          margin-top: -8px;
-          font-size: 16px;
-        }
+        border: 1px dashed #ccc;
       }
       .qq-upload-drop-area-active {
-        background: #FF7171;
+        background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
       }
       
       .qq-upload-list {
