@@ -1,14 +1,4 @@
-﻿#userPictures, #userPhotos {
-    display:block;
-    overflow:hidden;
-}
-
-    #userPictures .userPicture, #userPhotos .userPicture {
-        float:left;
-        cursor:pointer;
-    }
-
-/* Search options */
+﻿/* Search options */
 #searchFilters {
     -ms-grid-columns: 500px 50px 400px;
     color: #007DA6;
