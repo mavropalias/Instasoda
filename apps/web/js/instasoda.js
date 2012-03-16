@@ -182,7 +182,7 @@ $(document).ready(function() {
       events: {
         'click #saveProfileButton': 'save',
         'click #addPhoto': 'addPhoto',
-        'click .userPicture': 'viewPhoto'
+        'click .userPicture > img': 'viewPhoto'
       },
 
       initialize: function(options) {
@@ -195,13 +195,24 @@ $(document).ready(function() {
         console.log('  ~ rendering user view');
         var template = $('#tplSettings').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
-        
-        // animate user's photos
-        this.$('.userPicture img').load(function(){
-          $(this).fadeIn();
-        });
       },
 
+      onView: function() {
+        // animate user's photos
+        $('.userPicture img').load(function(){
+          $(this).fadeIn();
+        });
+        
+        // create upload widget
+        console.log('- creating upload widget')
+          var uploader = new qq.FileUploader({
+            element: document.getElementById('uploadWidget'),
+            action: sApi + 'user/' + user.get('_id') + '/photo',
+            debug: true
+          });
+        this.$('#uploadPhoto').fadeIn();  
+      },
+      
       viewPhoto: function(e) {
         var filename = $(e.currentTarget).data('filename');
 
@@ -254,16 +265,7 @@ $(document).ready(function() {
       },
 
       addPhoto: function() {
-        // create plUploader box
-        console.log('- creating upload container')
-            var uploader = new qq.FileUploader({
-                element: document.getElementById('uploadWidget'),
-                action: 'do-nothing.htm',
-                debug: true
-            });      
-        
-        this.$('#photoUploadContainer').fadeIn();
-        
+       
         // Client side form validation
         /*$('form').submit(function(e) {
               var uploader = $('#uploader').pluploadQueue();
@@ -638,6 +640,7 @@ $(document).ready(function() {
         userSettingsView.render();
         $('#content > div').detach();
         $('#content').append(userSettingsView.el);
+        userSettingsView.onView();
       },
       
       searchFilters: function() {
