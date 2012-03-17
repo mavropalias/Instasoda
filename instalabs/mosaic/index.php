@@ -13,7 +13,7 @@
 
     <!-- TITLE -->
     <title>Instasoda - fizzy not fussy!</title>
-    
+
     <!-- OPEN GRAPH -->
 		<meta property="og:title" content="Instasoda" />
 		<meta property="og:type" content="blog" />
@@ -21,18 +21,18 @@
 		<meta property="og:image" content="" />
 		<meta property="og:site_name" content="Instasoda" />
 		<meta property="fb:admins" content="659710874" />
-    
+
     <!-- MISC TAGS -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="shortcut icon" href="/favicon.ico">
-    
+
 		<!-- STYLESHEET -->
 		<link rel="stylesheet" type="text/css" href="style.css" />
 
 		<!-- SCRIPTS -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>		
-		<script type="text/javascript" src="js/libs/underscore.js"></script>    
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+		<script type="text/javascript" src="js/libs/underscore.js"></script>
 		<script type="text/javascript" src="js/libs/backbone-min.js"></script>
 		<script type="text/javascript" src="js/libs/mustache.js"></script>
     <!--<script type="text/javascript" src="js/jquery.isotope.min.js"></script>-->
@@ -41,7 +41,7 @@
 
 	</head>
 	<body>
-		
+
 	<div id="fb-root"></div>
 	<script>(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];
@@ -73,15 +73,15 @@
 	</header>
 
 	<section id="container">
-	
+
 	</section>
 
 	<article id="articleFullView" class="item">
-	
+
 	</article>
-	
+
 	<span id="curtain"></span>
-	
+
   <script id="tplStories" type="text/template">
       <article class="item">
         <h1><a>{{title}}</a></h1>
@@ -93,14 +93,14 @@
       </article>
   </script>
 
-  <script id="tplFullStory" type="text/template">  
+  <script id="tplFullStory" type="text/template">
 		<h1>{{title}}</h1>
 		<cite>{{date}} by {{author}}</cite>
 		<span>
 			<p>{{content}}</p>
 		</span>
-		<footer></footer> 
-  </script>		 
+		<footer></footer>
+  </script>
 
   <script type="text/javascript">
     (function() {
@@ -109,6 +109,6 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
     })();
   </script>
-    
+
 	</body>
 </html>
