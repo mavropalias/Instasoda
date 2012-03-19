@@ -44,7 +44,7 @@ $(document).ready(function(){
       tagName: 'article',
       className: 'item',
       events: {
-        'click .item':'maximizeStory'
+        'click':'maximizeStory'
       },
 
       maximizeStory: function (e) {
@@ -94,17 +94,18 @@ $(document).ready(function(){
 
     // StoryFullView - Single story view
     var StoryFullView = Backbone.View.extend({
+      tagName: 'section',
+      className: 'item',
+      id: 'articleFullView',
       events: {
-        'click #articleFullView, #curtain': 'hideStory'
+        'click': 'hideStory'
       },
-
       initialize: function () {
         this.model.bind('change', this.render, this);
       },
 
       hideStory: function (e) {
-        alert("poko");
-        closeFullView();
+        mosaicRouter.navigate("", {trigger: true});
       },
 
       render: function () {
@@ -159,7 +160,7 @@ $(document).ready(function(){
         var storyFullView = new StoryFullView({
           model: story
         });
-        $('#articleFullView').append(storyFullView.el);
+        $('body').append(storyFullView.el);
         storyFullView.delegateEvents();
       }
 
@@ -171,10 +172,6 @@ $(document).ready(function(){
 
 	// initialise the rich text-area
 	// $('.rte-zone').rte();
-
-  $('#articleFullView, #curtain').click(function() {
-    closeFullView();
-  });
 
 	function closeFullView(){
 		$('#articleFullView, #curtain').fadeOut(300);
