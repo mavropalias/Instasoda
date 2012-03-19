@@ -2,7 +2,7 @@
  * #3BBDE2
  * #007CA6
  * #00344C
- * 
+ *
  * #DF2027
  * #BE1D2C
  */
@@ -21,8 +21,8 @@
   dl, dt, dd, ol, ul, li,
   fieldset, form, label, legend,
   table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed, 
-  figure, figcaption, footer, header, hgroup, 
+  article, aside, canvas, details, embed,
+  figure, figcaption, footer, header, hgroup,
   menu, nav, output, ruby, section, summary,
   time, mark, audio, video {
     margin: 0;
@@ -32,12 +32,11 @@
     outline:none;
   }
   /* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure, 
+  article, aside, details, figcaption, figure,
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
   body {
-    line-height: 1;
   }
   ol, ul {
     list-style: none;
@@ -54,58 +53,24 @@
     border-collapse: collapse;
     border-spacing: 0;
   }
-  
-  
+
+
 /********************************
  * STYLES
  ********************************/
-  
+
 	body{
-		background:#f9f9f9;
+		background: url("img/bg.png") repeat;
 	  font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
 	  font-weight:300;
 	  font-size:62.5%;
 	}
-	
+
 	#container{
-		width:100%;
-		margin:0 auto;
+		margin:20px;
+    overflow:hidden;
 	}
-	
-	article.item{
-	   float: left;
-		background:#fff;
-		width:300px;
-		height:300px;
-		margin:10px;
-		border:1px solid #C4CDE0;
-		border-bottom:2px solid #C4CDE0;
-		border-radius:4px;
-		box-shadow:0px 4px #C4CDE0;
-		
-		-moz-transition:box-shadow 0.5s ease, border 0.5s ease;
-		-webkit-transition:box-shadow 0.5s ease, border 0.5s ease;
-		-o-transition:box-shadow 0.5s ease, border 0.5s ease;
-		transition:box-shadow 0.5s ease, border 0.5s ease;
-	}
-		.item:hover{
-			cursor:pointer;
-			
-			box-shadow:0px 4px #7288B6;
-			border:1px solid #7288B6;
-			border-bottom:2px solid #7288B6;
-			
-			-moz-transition:box-shadow 0.5s ease, border 0.5s ease;
-			-webkit-transition:box-shadow 0.5s ease, border 0.5s ease;
-			-o-transition:box-shadow 0.5s ease, border 0.5s ease;
-			transition:box-shadow 0.5s ease, border 0.5s ease;
-		}
-		
-	.storyBox{
-		background:#ECEFF4;
-		cursor:default !important;
-	}
-	
+
 /********************************
  * BUTTONS
  ********************************/
@@ -153,7 +118,7 @@
 		border-radius:4px;
 		border-width:1px;
 		border-style:solid;
-	
+
 	}
 	.button:after, button:after{
 		display:block;
@@ -167,21 +132,21 @@
 		left:-1px;
 	}
 	.button:hover, .button:focus, button:hover, button:focus, input[type=button]:hover, input[type=button]:focus, input[type=submit]:hover, input[type=submit]:focus {
-		background-color:#a8c0cb;
+		background-color:#ccc;
 	}
 	.button:active, button:active, input[type=submit]:active, input[type=button]:active {
 		line-height:2.2;
 		-moz-box-shadow
 			:0 .33em 1em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset, 
+			1px 1px 0 rgba(255,255,255,.25) inset,
 			-1px -1px 0 rgba(255,255,255,.25) inset;
 		-webkit-box-shadow:
 			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset, 
+			1px 1px 0 rgba(255,255,255,.25) inset,
 			-1px -1px 0 rgba(255,255,255,.25) inset;
 		box-shadow:
 			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset, 
+			1px 1px 0 rgba(255,255,255,.25) inset,
 			-1px -1px 0 rgba(255,255,255,.25) inset;
 			-webkit-transition: line-height .1s linear;
 			-moz-transition: all .1s linear;
@@ -192,95 +157,149 @@
 		background-image: -moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
 		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
 	}
-	
+
 
 /********************************
  * HEADER
  ********************************/
 
-	header{
-		padding:2em 0 1em;
-	  color:#00334C;
-	  border-bottom:1px solid #ddd;
-	  background:#fff;
-	  margin-bottom:2em;
-	}
-	
-	header > nav{
-		margin:2em 2em 0 0;
-		text-align:right;
-		position:relative;
-		overflow:hidden;
-	}
-		header > nav > ul > li{
-			display:block;
-			float:right;
-			margin-left:2em;
-			color:#999999;
-		}
-	
-	
-	header > article{
-		max-width:520px;
-		min-height:130px;
-		margin:0 auto;
-		background:url(img/instasoda_dating.png) 20px 20px no-repeat transparent;
-		padding:18px 0 0 200px;
-	}
-		header > article > h1{
-			color:#229FC7;
-			font-size:3em;
-			font-weight:normal;
-			line-height:1.7em;
-		}
-		header > article > p{
-			font-size:1.4em;
-			line-height:1.7em;
-		}
-		header > article > aside{
-			position:relative;
-			margin-top:1em;
-		}
-			header > article > aside > .shareFB,
-			header > article > aside > .shareTW,
-			header > article > aside > .shareGP{
-				position:absolute;
-			}
-			header > article > aside > .shareFB{
-				left:0;
-			}
-			header > article > aside > .shareTW{
-				width:96px;
-				left:90px;
-			}
-			header > article > aside > .shareGP{
-				width:60px;
-				left:200px;
-			}
-	
+nav {
+		background: #FFFFFF;
+    box-shadow: 0 0 20px #888;
+    font-size: 2em;
+    font-weight: 700;
+    height: 70px;
+    line-height: 70px;
+    position: relative;
+    width: 100%;
+    z-index: 4;
+    font-family: "futura-pt";
+    font-weight: 500;
+}
+nav > ul {
+    display: block;
+    height: 100%;
+    margin-left: 10px;
+    position: relative;
+}
+nav > ul > li {
+    float: left;
+}
+nav > ul > ul {
+    float: left;
+    height: 70px;
+    margin-left: 20px;
+    overflow: hidden;
+}
+nav > ul > ul > li {
+    display: inline-block;
+}
+nav > ul > ul > li > a {
+    color: #033349;
+    cursor: pointer;
+    padding: 2px 10px 3px;
+    text-decoration: none;
+    border-radius: 3px;
+    border: 1px solid #fff;
+    margin-right: 10px;
+}
+nav > ul > ul > li > a.current , nav > ul > ul > li > a:hover {
+    background: #033349;
+    border: 1px solid #333;
+    color: #ffffff;
+}
+nav aside {
+    position: absolute;
+    right: 20px;
+    top: 6px;
+}
+nav .shareFB, nav .shareTW, nav .shareGP {
+    position: absolute;
+    top: 0;
+}
+nav .shareFB {
+    right: 165px;
+}
+nav .shareTW {
+    right: 70px;
+    width: 90px;
+}
+nav .shareGP {
+    right: 10px;
+    width: 60px;
+}
+nav #instasodaLogo {
+    background: url("http://instasoda.com/area51/productdemo3/images/instasoda_logo.png") no-repeat left top;
+    display: block;
+    height: 29px;
+    margin: 21px 0 0 15px;
+    width: 166px;
+}
+
 /********************************
  * ARTICLES
  ********************************/
 
+	article.item{
+	  float: left;
+	  padding: 10px;
+		background:#fff;
+		width:300px;
+		height:300px;
+		margin:10px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 3px -3px #666;
+	}
+		.item:hover{
+			cursor:pointer;
+		}
 
+	article.item h1, #articleFullView h1{
+		font-size: 2em;
+	}
 
+	article.item cite, #articleFullView cite{
+		font-size: 1.2em;
+	}
+
+	article.item span p, #articleFullView span p{
+		font-size: 1.5em;
+		padding: 10px 0;
+	}
+
+	.storyBox{
+		background: url(img/submit_bg.png) no-repeat 0 -100px!important;
+    border: 1px solid #ff9e9e!important;
+		cursor:default !important;
+	}
+    .storyBox h1{
+      padding-left: 10px;
+    }
+
+	.doubleX{
+		width: 642px!important;
+	}
 /********************************
  * TEXT EDITOR
- ********************************/		
+ ********************************/
 
 	.rte-zone{
-	  width:600px;
+		width:600px;
+	  max-width:600px;
 	  margin:10px;
-	  padding:0;
+	  padding:10px;
 	  border-top:1px solid #ccc;
 	  border-left:1px solid #ddd;
 	  border-right:1px solid #ddd;
 	  border-bottom:1px solid #eee;
 	  clear:both;
 	  height:210px;
+	  max-height:210px;
 	  display:block;
+	  resize: none;
 	  box-shadow:0px 2px 4px #ddd inset;
-	  background:#fff;
+	  background:rgba(255,255,255,0.7);
 	}
 	.storyNickname{
 		margin:0 0 0 10px;
@@ -299,16 +318,16 @@
  ********************************/
 
 	#articleFullView{
-		display:none;
+		padding: 10px;
 		background:#fff;
-		bottom:5em;
 		height:auto;
 		left:50%;
 		position:fixed;
-		top:5em;
+		top:12em;
 		width:780px;
 		z-index:999;
 		margin-left:-380px;
+    border-radius:3px;
 		box-shadow:0 20px 20px -20px #000000;
 	}
 	#curtain{
@@ -319,10 +338,7 @@
     right:0;
     bottom:0;
     z-index:998;
-    
+
     background:#fff;
-    background:rgba(255,255,255,0.8);
+    background:rgba(0,0,0,0.5);
 	}
-
-
-
