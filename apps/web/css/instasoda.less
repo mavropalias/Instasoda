@@ -117,7 +117,8 @@
   .text-shadow { text-shadow: 1px 1px #fff; }
   .round { .border-radius; }
   .animated { .transition(0.4s); }
-  .hidden { opacity: 0; }
+  .hidden { display: none; }
+  .transparent { opacity: 0; }
   
 
 // =============================================================================
@@ -156,6 +157,9 @@
     z-index: 998;
     height: 30px;
     display: none;
+  }
+  a {
+    text-decoration: none;
   }
   p {
     margin:0em 0 1em;
@@ -356,6 +360,7 @@
       
       img {
         cursor:pointer;
+        background: #fff;
         border-top: 1px solid #ccc;
         border-right: 1px solid #ddd;
         border-left: 1px solid #ddd;
@@ -367,6 +372,11 @@
         
         span {
           text-decoration: underline;
+        }
+        
+        .photoIsDefault {
+          text-decoration: none;
+          color: #999;
         }
       }
       
