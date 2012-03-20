@@ -39,7 +39,7 @@
   <script defer type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
   <script defer type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
 
-  <!--<script defer type="text/javascript" src="js/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="js/cssrefresh.js"></script>
   
   
   <!-- OPEN GRAPH -->
@@ -311,9 +311,9 @@
                   <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}">
                     <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150>
                     <div class="photoControls">
-                      <span class="photoMakeDefault left {{#d}}hidden{{/d}}">Make profile default</span>
-                      <span class="photoIsDefault left {{^d}}hidden{{/d}}">default profile photo</span>
-                      <span class="photoDelete right">Delete</span>
+                      <span class="photoMakeDefault left {{#d}}hidden{{/d}}" title="Make this your default profile photo">make default</span>
+                      <span class="photoIsDefault left {{^d}}hidden{{/d}}" title="This is your default profile photo">default photo</span>
+                      <span class="photoDelete right" title="Delete photo"></span>
                     </div>
                   </a>
                 {{/p}}
