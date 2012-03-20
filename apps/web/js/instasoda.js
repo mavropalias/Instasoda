@@ -19,8 +19,6 @@ $(document).ready(function() {
 
     var sApi = "http://localhost:8080/api/";
     var sApiPhotos = "http://localhost:8080/api/photos/";
-    var sApiSecretKey = "aG35svDHJURCG35253dCFDC69fvsf3fhg0f";
-    var sApiSecretKeyGet = "?skey=" + sApiSecretKey;
     jQuery.support.cors = true;
     
    
@@ -58,7 +56,7 @@ $(document).ready(function() {
     // UsersCollection - a collection of Users
     //----------------------------------------------------------------------
     var UsersCollection = Backbone.Collection.extend({
-        url: sApi + 'users/' + sApiSecretKeyGet
+        url: sApi + 'users/'
     });
 
 
@@ -181,8 +179,6 @@ $(document).ready(function() {
     var UserSettingsView = Backbone.View.extend({
       events: {
         'click #saveProfileButton': 'save',
-        'click #addPhoto': 'addPhoto',
-        'click .userPicture > img': 'viewPhoto'
       },
 
       initialize: function(options) {
@@ -195,33 +191,106 @@ $(document).ready(function() {
         console.log('  ~ rendering user view');
         var template = $('#tplSettings').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // fadein user photos
+        this.$('.photo img').load(function(){
+          $(this).parent().removeClass('hidden');
+        });
       },
 
-      onView: function() {
-        // animate user's photos
-        $('.userPicture img').load(function(){
-          $(this).fadeIn();
-        });
-        
+      onView: function() {        
         // create upload widget
+        var _this = this;
+        var iUploads = 0;
         console.log('- creating upload widget')
           var uploader = new qq.FileUploader({
             element: document.getElementById('uploadWidget'),
             action: sApi + 'user/' + user.get('_id') + '/photo',
-            debug: true
-          });
-        this.$('#uploadPhoto').fadeIn();  
-      },
-      
-      viewPhoto: function(e) {
-        var filename = $(e.currentTarget).data('filename');
+            allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+            debug: false,
+            sizeLimit: 3000000, // 3MB
+            maxConnections: 3,
+            onSubmit: function(id, fileName){
+              iUploads++;
+              //$('.qq-upload-drop-area').addClass('working');
+            },
+            onProgress: function(id, fileName, loaded, total){
+              $('.qq-upload-drop-area').addClass('working');
+            },
+            onComplete: function(id, fileName, res){
+              iUploads--;
+              
+              if(res.success === true) {
+                // update model
+                var newPhotoId = Math.floor(Math.random()*10001)+Math.floor(Math.random()*10001);
+                var photos = _this.model.get('p');
+                photos.push(
+                {
+                  id: newPhotoId,
+                  f: res.file,
+                  p: 1,
+                  d: 0
+                });
+                _this.model.set({
+                  'p': photos
+                });
 
-        //TODO: convert the following code into a template
-        $('#photoView').html('<div class="isColumn1 isRow1"><button onclick="IS.deletePhoto(\'' + $(e.currentTarget).data('filenameshort') + '\');">Delete photo</button><br /><img src="' + filename + '"></div>');
-        IS.navigateTo('#photoView', 'Photo');
-        $('#photoView img').one('click', function() {
-            IS.navigateTo('#settings', 'My profile');
-        });
+                // inject new photo into the dom
+                // TODO: make this a template
+                console.log('- injecting photo with id #' + newPhotoId);
+                $('#userPictures').append('<a id="' + newPhotoId + '" tabindex="1" '
+                  + 'class="photo animated hidden fancybox-thumb" rel="fancybox-thumb"'
+                  + 'href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/'
+                  + res.file + '"><img height="150" '
+                  + 'src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/' + res.file + '"'
+                  + '></a>');
+                $('#' + newPhotoId + ' img').load(function(){
+                  console.log('- photo #' + newPhotoId + ' loaded (showing)');
+                  $(this).parent().removeClass('hidden');
+                });
+                
+              } else {
+                // TODO: handle errors
+                console.log('- error uploading photo ' + fileName + ' (' + res.error + ')')
+              }
+              
+              // When all photos have been uploaded:
+              if(iUploads === 0) {
+                // remove loading animation
+                $('.qq-upload-drop-area').removeClass('working');
+                
+                // save model
+                _this.model.save();
+              }
+            }
+          });
+
+        // show photos
+        this.$('#uploadPhoto').fadeIn();
+
+        // activate fancybox for all photos - including the newly uploaded
+        $("#userPictures").on("focusin", function(){
+          _this.$(".fancybox-thumb").fancybox({
+            prevEffect	: 'elastic',
+            nextEffect	: 'elastic',
+            padding: 0,
+            helpers	: {
+              title	: {
+                type: 'outside'
+              },
+              overlay	: {
+                opacity : 0.85,
+                css : {
+                  'background-color' : '#000'
+                }
+              },
+              thumbs	: {
+                width	: 50,
+                height: 50
+              }
+            }
+          }); // fancybox
+        }); // on
       },
 
       save: function() {
@@ -230,7 +299,7 @@ $(document).ready(function() {
         
         $('#saveProfileButton').fadeOut();
         $('#working').fadeIn();
-        
+
         this.model.save(
           {
             'u': this.$('input[name=username]').val(),
@@ -262,82 +331,9 @@ $(document).ready(function() {
             }
           }
         );
-      },
-
-      addPhoto: function() {
-       
-        // Client side form validation
-        /*$('form').submit(function(e) {
-              var uploader = $('#uploader').pluploadQueue();
-        
-              // Files in queue upload them first
-              if (uploader.files.length > 0) {
-                  // When all files are uploaded submit form
-                  uploader.bind('StateChanged', function() {
-                      if (uploader.files.length === (uploader.total.uploaded + uploader.total.failed)) {
-                          $('form')[0].submit();
-                      }
-                  });
-                      
-                  uploader.start();
-              } else {
-                  alert('You must queue at least one file.');
-              }
-        
-              return false;
-          });*/
-        /*var fbThirdPartyId = this.model.get('fbThirdPartyId');
-        var that = this;
-
-        // create a FileOpenPicker object for the image file picker button
-        var openPicker = new Windows.Storage.Pickers.FileOpenPicker();
-        openPicker.viewMode = Windows.Storage.Pickers.PickerViewMode.thumbnail; //show images in thumbnail mode
-        openPicker.suggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.picturesLibrary; // start browsing in My Pictures library
-        openPicker.fileTypeFilter.replaceAll([".png", ".jpg", ".jpeg"]); // show only image files
-        openPicker.pickSingleFileAsync().then(function(file) {
-          // Ensure picked file is valid and usable
-          if (file) {
-            // append picture in the page
-            //$('#userPictures').append('<li class="userPicture"><img height=150 src="' + URL.createObjectURL(file) + '"></li>');
-
-            // upload the image
-            file.openAsync(Windows.Storage.FileAccessMode.read).then(function(stream) {
-              var blob = msWWA.createBlobFromRandomAccessStream(file.contentType, stream);
-              var xhr = new XMLHttpRequest();
-              xhr.open('POST', sApi + 'photo.php?a=1&token=' + fbThirdPartyId + '&t=' + file.fileType + '&skey=' + sApiSecretKey, true);
-              xhr.onload = function(e) {
-                var imageData = JSON.parse(e.currentTarget.response);
-                that.model.set(imageData);
-                that.model.save({
-                  error: function(model, response) {
-                    //TODO: properly handle errors
-                    //callback(false, "Ajax error: " + response.status);
-                  }
-                }, {
-                  success: function(model, response) {
-                    // SUCCESS
-                    if (response.status == "success") {
-                      saveLocally("user", user);
-                      $('#saveProfileButton').fadeIn();
-                      $('#working').fadeOut();
-                    }
-                    // FAIL
-                    else {
-                      //callback(false, response.status);
-                    }
-                  }
-                });
-              };
-              xhr.send(blob);
-            });
-          } else {
-            // File not valid
-            //$('#userPictures').append("error");
-          }
-        });*/
       }
     });
-    
+
     // SearchFilters
     //----------------------------------------------------------------------
     var SearchFiltersView = Backbone.View.extend({
@@ -460,8 +456,7 @@ $(document).ready(function() {
 
         //TODO: convert the following code into a template
         var that = this;
-        $('#photoView').html('<div class="isColumn1 isRow1"><img src="' + filename + '"></div>');
-        IS.navigateTo('#photoView', this.model.get('username') + "'s photo");
+
         /*$('#photoView').one('click', function () {
           IS.navigateTo('#usersProfile', that.model.get('username') + "'s profile");
           //IS.navigateBack();
@@ -481,7 +476,6 @@ $(document).ready(function() {
         });
       }
     });
-
 
 
     // =====================================================================
@@ -593,7 +587,7 @@ $(document).ready(function() {
       model: user
     });
     var usersListView = new UsersListView({
-        collection: usersCollection,
+      collection: usersCollection,
     });
 
 
@@ -652,7 +646,11 @@ $(document).ready(function() {
       
       searchResults: function(query) {
         console.log('> routing search results page');
-        usersCollection.fetch();
+        usersCollection.fetch({
+          data: {
+            id: '123'
+          }
+        });
         usersListView.render();
         $('#content > div').detach();
         $('#content').append(usersListView.el);
