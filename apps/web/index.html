@@ -21,6 +21,8 @@
   
   <!-- STYLES -->
   <link rel="stylesheet" type="text/css" href="css/ui-lightness/jquery-ui-1.8.16.custom.css" />
+  <link rel="stylesheet" type="text/css" href="css/fancybox/jquery.fancybox.css" />
+  <link rel="stylesheet" type="text/css" href="css/fancybox/jquery.fancybox-thumbs.css" />
   <link rel="stylesheet" type="text/css" href="css/instasoda.css">
   <link rel="stylesheet" type="text/css" href="css/homePage.css" />
   
@@ -33,8 +35,11 @@
   <script defer type="text/javascript" src="js/mustache.js"></script>
   <script defer type="text/javascript" src="js/instasoda.js"></script>
   <script defer type="text/javascript" src="js/fileuploader.js"></script>
+  <script defer type="text/javascript" src="js/jquery.mousewheel-3.0.6.pack.js"></script>
+  <script defer type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
+  <script defer type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
 
-  <!--<script defer type="text/javascript" src="js/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="js/cssrefresh.js"></script>
   
   
   <!-- OPEN GRAPH -->
@@ -198,8 +203,14 @@
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersPreview" type="text/template">
-        <ul class="drop-shadow round animated">
-          {{#p}}<li class="userPreviewPhoto"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}" height="150" /></li>{{/p}}
+        <ul>
+		  {{#p}}
+			{{#d}}
+			  <li>
+				<img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}" height="150" />
+			  </li>
+			{{/d}}
+		  {{/p}}
           <li class="userPreviewNickname">{{u}}, {{ag}}</li>
         </ul>
       </script>
@@ -293,14 +304,18 @@
             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
             <p>
               <ul id="userPictures">
+				<li id="uploadPhoto" class='photo animated'>
+				  <div id="uploadWidget"></div>
+				</li>
                 {{#p}}
-                  <li class='userPicture drop-shadow round animated'>
-                    <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150 class="hidden">
-                  </li>
+				  <a class="photo animated hidden fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}">
+					<img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150>
+					<div class="photoControls">
+					  {{^d}}<span class="left">Make profile default</span>{{/d}}
+					  <span class="right">Delete</span>
+					</div>
+				  </a>
                 {{/p}}
-                  <li id="uploadPhoto" class='userPicture drop-shadow round animated'>
-                    <div id="uploadWidget"></div>
-                  </li>
               </ul>
             </p>
           </p>
@@ -377,5 +392,19 @@
         </div>
       </script>
       
+	  
+    <!------------------------------------------------------------------------>
+    <!-- PHOTO VIEWER -->
+    <!------------------------------------------------------------------------>
+      
+      <script id="tplPhotoView" type="text/template">
+		<ul>
+		  {{#p}}
+			<li>
+			  <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}'>
+			</li>
+		  {{/p}}
+		</ul>
+      </script>
 </body>
 </html>
