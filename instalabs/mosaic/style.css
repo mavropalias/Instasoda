@@ -320,7 +320,7 @@ nav #instasodaLogo {
 	#articleFullView{
     display: none;
 		padding: 10px;
-    background:rgba(0,0,0,0.6);
+    background:rgba(255,255,255,0.94);
     position:fixed;
     top:0;
     left:0;
@@ -329,7 +329,6 @@ nav #instasodaLogo {
 		z-index:999;
 		margin-left:-380px;
     border-radius:3px;
-		box-shadow:0 20px 20px -20px #000000;
 	}
 
   #articleFullView > article{
@@ -338,10 +337,22 @@ nav #instasodaLogo {
     height:auto;
     left:50%;
     position:fixed;
-    top:12em;
-    width:780px;
+    top:2em;
+    width:600px;
     z-index:999;
-    margin-left:-380px;
-    border-radius:3px;
-    box-shadow:0 20px 20px -20px #000000;
+    margin-left:-300px;
+    border: 1px solid #eee;
+    box-shadow:0 3px 8px rgba(34, 25, 25, 0.4);
   }
+
+  #articleFullView section#comments {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    background: #f9f9f9;
+  }
+    #articleFullView > article > #comments p {
+      padding: 20px;
+      background: #fff;
+
+    }
