@@ -66,6 +66,10 @@ $(document).ready(function(){
         this.collection.bind('reset', this.render, this);
       },
 
+      events: {
+        'click .button':'save'
+      },
+
       renderItem: function (model) {
         var storyView = new StoryView({
           model: model
@@ -79,16 +83,23 @@ $(document).ready(function(){
         $(this.el).html(template);
       },
 
+      save: function() {
+        console.log('- saving user');
+        var story = new Story();
+        storyTitle = $('textarea[name=storytext]').val();
+
+        story.set({
+          'title': storyTitle
+        });
+
+        story.save();
+      },
+
       render: function () {
         console.log('  ~ rendering welcome view');
         currentLocation = window.location + "";
         this.renderStoryBox();
-        if (!currentLocation.match(/\#story\//)) {
-          closeFullView();
-          this.collection.each(this.renderItem);
-        } else {
-          this.collection.each(this.renderItem);
-        }
+        this.collection.each(this.renderItem);
       }
     });
 
@@ -105,18 +116,14 @@ $(document).ready(function(){
       },
 
       hideStory: function (e) {
-        mosaicRouter.navigate("", {trigger: true});
+        $("#articleFullView").detach();
+        mosaicRouter.navigate("", {replace: true});
       },
 
       render: function () {
-        if ($("#container").html() == "") {
-          storiesCollection.fetch();
-          $("#container").append(storiesListView.el)
-        }
-        $("#curtain").fadeIn();
         var template = $("#tplFullStory").html();
-        $("#articleFullView").html(Mustache.to_html(template, this.model.toJSON()));
-        $("#articleFullView").fadeIn(300);
+        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        $(this.el).show();
       }
     });
 
@@ -149,6 +156,7 @@ $(document).ready(function(){
 
       index: function() {
         console.log('> routing welcome page');
+        $("#articleFullView").detach();
         storiesCollection.fetch();
         $('body').append(storiesListView.el)
         //storiesListView.render();
@@ -156,12 +164,20 @@ $(document).ready(function(){
 
       fullStory: function(id) {
         console.log('> routing view story page');
+        // Avoid empty collection *view* when hotlinking to a single story by
+        // checking if the collection contains only 1 model. If it is, fetch
+        // the collection and render the main view.
+        if (storiesCollection.length == 1) {
+          storiesCollection.fetch();
+          $("body").append(storiesListView.el)
+        }
+
         story.fetch({ data: { id: id } });
         var storyFullView = new StoryFullView({
           model: story
         });
         $('body').append(storyFullView.el);
-        storyFullView.delegateEvents();
+        $("#articleFullView").show();
       }
 
     });
@@ -173,29 +189,4 @@ $(document).ready(function(){
 	// initialise the rich text-area
 	// $('.rte-zone').rte();
 
-	function closeFullView(){
-		$('#articleFullView, #curtain').fadeOut(300);
-	}
-
-	// submit story
-	$('#storySubmit').on('click', function(){
-    $.ajax({
-      type: 'POST',
-      url: "lib/submitStory.php",
-      data: {
-      	"story": $('iframe#storyContent').contents().find('.frameBody').html(),
-      	"nickname": $('.storyNickname').val()
-    	},
-      dataType: "json",
-      success: function(data) {
-       if(data.status == "alright"){
-         //success
-         alert("success");
-       } else {
-         //fail
-         alert("fail");
-       }
-      }
-    });
-	});
 });
