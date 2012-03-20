@@ -269,9 +269,9 @@ $(document).ready(function() {
                   + res.file + '"><img height="150" '
                   + 'src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/' + res.file + '"'
                   + '><div class="photoControls">'
-                  + '<span class="photoMakeDefault left">Make profile default</span>'
-                  + '<span class="photoIsDefault left hidden">default profile photo</span>'
-                  + '<span class="photoDelete right">Delete</span></div></a>');
+                  + '<span class="photoMakeDefault left" title="Make this your default profile photo">make default</span>'
+                  + '<span class="photoIsDefault left hidden" title="This is your default profile photo">default photo</span>'
+                  + '<span class="photoDelete right" title="Delete photo"></span></div></a>');
                 $('#' + newPhotoId + ' img').load(function(){
                   console.log('- photo #' + newPhotoId + ' loaded (showing)');
                   $(this).parent().removeClass('transparent');
@@ -288,7 +288,7 @@ $(document).ready(function() {
                 $('.qq-upload-drop-area').removeClass('working');
                 
                 // save model
-                _this.model.save();
+                _this.save();
               }
             }
           });
