@@ -11,25 +11,26 @@ var IS;
 $(document).ready(function() {
   IS = new function() {
 
-    // =====================================================================
-    // =====================================================================
-    // = Settings
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Config
+    // #########################################################################
+    // #########################################################################
 
+    var appReady = false;
     var sApi = "http://localhost:8080/api/";
     var sApiPhotos = "http://localhost:8080/api/photos/";
     jQuery.support.cors = true;
     
    
-    // =====================================================================
-    // =====================================================================
-    // = Models
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Models
+    // #########################################################################
+    // #########################################################################
 
     // User - the person using the app
-    //----------------------------------------------------------------------
+    // =========================================================================
     var User = Backbone.Model.extend({
         defaults: {
         },
@@ -38,7 +39,7 @@ $(document).ready(function() {
     });
 
     // Users - all other Instasoda users
-    //----------------------------------------------------------------------
+    // =========================================================================
     var Users = Backbone.Model.extend({
         defaults: {
         },
@@ -47,27 +48,28 @@ $(document).ready(function() {
     });
 
 
-    // =====================================================================
-    // =====================================================================
-    // = Collections
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Collections
+    // #########################################################################
+    // #########################################################################
 
     // UsersCollection - a collection of Users
-    //----------------------------------------------------------------------
+    // =========================================================================
     var UsersCollection = Backbone.Collection.extend({
         url: sApi + 'users/'
     });
 
 
-    // =====================================================================
-    // =====================================================================
-    // = Views
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Views
+    // #########################################################################
+    // #########################################################################
 
-    // Beta message
-    //----------------------------------------------------------------------
+    // =========================================================================
+    // Beta message view
+    // =========================================================================
     var BetaView = Backbone.View.extend({
 
       initialize: function() {
@@ -82,23 +84,32 @@ $(document).ready(function() {
       
     });
     
+    // =========================================================================
     // WelcomeView
-    //----------------------------------------------------------------------
+    // =========================================================================
     var WelcomeView = Backbone.View.extend({
+      // events
+      // -----------------------------------------------------------------------
       events: {
         'click #fb-auth': 'facebookAuth'
       },
       
+      // initialize
+      // -----------------------------------------------------------------------
       initialize: function() {
         _.bindAll(this);
       },
 
+      // render
+      // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering welcome view');
         var template = $('#tplWelcome').html();
         $(this.el).html(template);
       },
       
+      // facebookAuth
+      // -----------------------------------------------------------------------
       facebookAuth: function() {
         console.log('> Doing Facebook auth');
         
@@ -141,12 +152,14 @@ $(document).ready(function() {
                   IS.login(fbToken, response[0].third_party_id, function(err) {
                     if(!err) {
                       console.log('> SUCCESS! User is logged in');
+                      appReady = true;
                       IS.navigateTo('me');
                     } else {
                       console.log('> FAIL: Need to create new account');
                       IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
                         if(!err) {
                           console.log('> SUCCESS! Account created');
+                          appReady = true;
                           IS.navigateTo('me');
                         } else {
                           console.log('> ERROR: ' + res);
@@ -174,19 +187,29 @@ $(document).ready(function() {
       
     });
     
+    // =========================================================================
     // UserSettingsView - the settings page of the person using the app
-    //----------------------------------------------------------------------
+    // =========================================================================
     var UserSettingsView = Backbone.View.extend({
+      // events
+      // -----------------------------------------------------------------------
       events: {
         'click #saveProfileButton': 'save',
+        'click .photoMakeDefault': 'photoMakeDefault',
+        'click .photoDelete': 'photoDelete'
       },
 
+      // initialize
+      // -----------------------------------------------------------------------
       initialize: function(options) {
         _.bindAll(this, 'render');
         _.bindAll(this, 'save');
+        _.bindAll(this, 'photoMakeDefault');
         this.model.bind('change', this.render);
       },
       
+      // render
+      // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering user view');
         var template = $('#tplSettings').html();
@@ -194,10 +217,12 @@ $(document).ready(function() {
         
         // fadein user photos
         this.$('.photo img').load(function(){
-          $(this).parent().removeClass('hidden');
+          $(this).parent().removeClass('transparent');
         });
       },
 
+      // onView
+      // -----------------------------------------------------------------------
       onView: function() {        
         // create upload widget
         var _this = this;
@@ -239,14 +264,17 @@ $(document).ready(function() {
                 // TODO: make this a template
                 console.log('- injecting photo with id #' + newPhotoId);
                 $('#userPictures').append('<a id="' + newPhotoId + '" tabindex="1" '
-                  + 'class="photo animated hidden fancybox-thumb" rel="fancybox-thumb"'
+                  + 'class="photo animated transparent fancybox-thumb" rel="fancybox-thumb"'
                   + 'href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/'
                   + res.file + '"><img height="150" '
                   + 'src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/' + res.file + '"'
-                  + '></a>');
+                  + '><div class="photoControls">'
+                  + '<span class="photoMakeDefault left">Make profile default</span>'
+                  + '<span class="photoIsDefault left hidden">default profile photo</span>'
+                  + '<span class="photoDelete right">Delete</span></div></a>');
                 $('#' + newPhotoId + ' img').load(function(){
                   console.log('- photo #' + newPhotoId + ' loaded (showing)');
-                  $(this).parent().removeClass('hidden');
+                  $(this).parent().removeClass('transparent');
                 });
                 
               } else {
@@ -293,6 +321,8 @@ $(document).ready(function() {
         }); // on
       },
 
+      // save
+      // -----------------------------------------------------------------------
       save: function() {
         console.log('- saving user');
         _this = this.model;
@@ -331,20 +361,83 @@ $(document).ready(function() {
             }
           }
         );
+      },
+      
+      // photoMakeDefault
+      // -----------------------------------------------------------------------
+      photoMakeDefault: function(e) {
+        console.log('- changing default photo');
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // get photo id
+        var photoId = parseInt($(e.currentTarget).parent().parent().attr('id')); 
+        var photos = this.model.get('p');
+        
+        // process and update model photos        
+        for(var i = 0; i < photos.length; i++) {
+         if(photos[i].id === photoId) {
+           photos[i].d = 1;
+           console.log('- new default photo: ' + photoId);
+         } else {
+           photos[i].d = 0;
+         }
+        }
+        
+        // update photo text to working
+        $('#userPictures #' + photoId + ' .photoMakeDefault').html('saving...');
+        
+        // save model
+        this.model.save({ 'p': photos }, {
+          error: function(model, res) {
+            $('#userPictures #' + photoId + ' .photoMakeDefault').html('Make profile default');
+            alert('Error: could not change photo status');            
+          },
+          success: function(model, res) {
+            // update UI
+            $('#userPictures .photoMakeDefault').removeClass('hidden');
+            $('#userPictures .photoIsDefault').addClass('hidden');
+            
+            $('#userPictures .photo').removeClass('default');
+            $('#userPictures #' + photoId).addClass('default');
+            
+            $('#userPictures #' + photoId + ' .photoMakeDefault').addClass('hidden');
+            $('#userPictures #' + photoId + ' .photoIsDefault').removeClass('hidden');
+            $('#userPictures #' + photoId + ' .photoMakeDefault').html('Make profile default');
+          }
+        });
+      },
+      
+      // photoDelete
+      // -----------------------------------------------------------------------
+      photoDelete: function(e) {
+        console.log('- deleting photo');
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // TODO: complete this function
+        IS.navigateTo('beta');
       }
     });
-
-    // SearchFilters
-    //----------------------------------------------------------------------
+    
+    // =========================================================================
+    // SearchFilters view
+    // =========================================================================
     var SearchFiltersView = Backbone.View.extend({
+      // events
+      // -----------------------------------------------------------------------
       events: {
         'click #doSearch': 'doSearch'
       },
 
+      // initialize
+      // -----------------------------------------------------------------------
       initialize: function() {
         _.bindAll(this);
       },
 
+      // render
+      // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering search view');
         var template = $('#tplSearchFilters').html();
@@ -367,40 +460,57 @@ $(document).ready(function() {
         this.$("#ageNum").val(this.$("#ageRange").slider("values", 0) + " - " + this.$("#ageRange").slider("values", 1) + " years old");
       },
       
+      // doSearch
+      // -----------------------------------------------------------------------
       doSearch: function() {
         IS.navigateTo('search/all');
       }
     });
 
     
+    // =========================================================================
     // UsersView - a basic view of a user appearing in the search results
-    //----------------------------------------------------------------------
+    // =========================================================================
     var UsersView = Backbone.View.extend({
+      // properties
+      // -----------------------------------------------------------------------
       className: 'userPreview',
       tagName: 'li',
+      
+      // events
+      // -----------------------------------------------------------------------
       events: {
         "click .userPreviewPhoto": "viewProfile"
       },
 
+      // viewProfile
+      // -----------------------------------------------------------------------
       viewProfile: function(e) {
         router.navigate(this.model.get('_id'), {trigger: true});
       },
 
+      // render
+      // -----------------------------------------------------------------------
       render: function() {
         var template = $('#tplUsersPreview').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
       }
     });
 
+    // =========================================================================
     // UsersListView - contains a list of UsersView items,
     // used for search results / matches
-    //----------------------------------------------------------------------
+    // =========================================================================
     var UsersListView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
       initialize: function() {
         _.bindAll(this);
         this.collection.bind('reset', this.render);
       },
 
+      // renderItem
+      // -----------------------------------------------------------------------
       renderItem: function(model) {
         var usersView = new UsersView({
             model: model
@@ -410,6 +520,8 @@ $(document).ready(function() {
         $('#searchResults').append(usersView.el);
       },
 
+      // render
+      // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering search results view');
         //this.collection.each(this.renderItem);
@@ -437,13 +549,18 @@ $(document).ready(function() {
       }
     });
     
+    // =========================================================================
     // UsersFullView - a complete view of a user's profile
-    //----------------------------------------------------------------------
+    // =========================================================================
     var UsersFullView = Backbone.View.extend({
+      // events
+      // -----------------------------------------------------------------------
       events: {
         'click .userPicture': 'viewPhoto'
       },
 
+      // initialize
+      // -----------------------------------------------------------------------
       initialize: function() {
         _.bindAll(this);
         
@@ -451,6 +568,8 @@ $(document).ready(function() {
         this.model.fetch();
       },
 
+      // viewPhoto
+      // -----------------------------------------------------------------------
       viewPhoto: function(e) {
         var filename = $(e.currentTarget).data("filename");
 
@@ -463,6 +582,8 @@ $(document).ready(function() {
         });*/
       },
 
+      // render
+      // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering userFull view for: ' + this.model.get('_id'));
         
@@ -478,11 +599,11 @@ $(document).ready(function() {
     });
 
 
-    // =====================================================================
-    // =====================================================================
-    // = Private methods
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Private methods
+    // #########################################################################
+    // #########################################################################
 
     /**
      * Store data locally, using one of the following methods:
@@ -520,33 +641,6 @@ $(document).ready(function() {
         return false;
       }
     }
-
-    /**
-     * Calculate width of search results
-     * @param {Integer} iProfileCount the number of users in the searc results
-     */
-    var calculateSearchResultsDimensions = function(iProfileCount) {
-        var iWindowHeight = $(window).height();
-        var iWindowWidth = $(window).width();
-        var iHeaderHeight = $(".homePage > header").height() + 60; // 60 is the top margin that we have to calculate too.
-
-        iMaxProfileRows = (iWindowHeight - iHeaderHeight) / 210;
-        iProfilesWrapperWidth = (iProfileCount / iMaxProfileRows) * 350;
-
-        // The 720 below is the minimum width that each block (likes/profile pics) occupies
-        // Doing this so we won't end up with a 1-pic-width / 1-like-width column if the profile pics are too few.
-        if (iProfilesWrapperWidth > 720) {
-            if (iProfilesWrapperWidth < iWindowWidth) {
-                $("#searchResults").css({
-                    'width': iWindowWidth - 200
-                });
-            } else {
-                $("#searchResults").css({
-                    'width': iProfilesWrapperWidth
-                });
-            }
-        }
-    }
     
     /**
      * Logs the user out of the system.
@@ -560,26 +654,25 @@ $(document).ready(function() {
     }
 
 
-    // =====================================================================
-    // =====================================================================
-    // = Private variables
-    // =====================================================================
-    // =====================================================================
-
-    var isLoggedIn = false;
-    var navHistoryPage = new Array();
-    var navHistoryTitle = new Array();
+    // #########################################################################
+    // #########################################################################
+    // # Private variables
+    // #########################################################################
+    // #########################################################################
   
     // Backbone models
+    // -----------------------------------------------------------------------
     var user = new User();
     var users = new Users();
 
     // Backbone collections
+    // -----------------------------------------------------------------------
     var usersCollection = new UsersCollection({
       model: users
     });
 
     // Backbone views
+    // -----------------------------------------------------------------------
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
     var searchFiltersView = new SearchFiltersView();
@@ -591,14 +684,16 @@ $(document).ready(function() {
     });
 
 
-    // =====================================================================
-    // =====================================================================
-    // = Routes
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Routes
+    // #########################################################################
+    // #########################################################################
     
     var Router = Backbone.Router.extend({
     
+      // routes
+      // -----------------------------------------------------------------------
       routes: {
         // Welcome
         "": "welcome",
@@ -622,6 +717,8 @@ $(document).ready(function() {
         ":id": "viewUser"
       },
     
+      // welcome
+      // -----------------------------------------------------------------------
       welcome: function() {
         console.log('> routing welcome page');
         welcomeView.render();
@@ -629,7 +726,13 @@ $(document).ready(function() {
         $('#content').append(welcomeView.el);
       },
       
+      // myProfile
+      // -----------------------------------------------------------------------
       myProfile: function() {
+        if(!appReady) {
+          router.navigate('', {trigger: true});
+          return;
+        }
         console.log('> routing my profile page');
         userSettingsView.render();
         $('#content > div').detach();
@@ -637,14 +740,26 @@ $(document).ready(function() {
         userSettingsView.onView();
       },
       
+      // searchFilters
+      // -----------------------------------------------------------------------
       searchFilters: function() {
+        if(!appReady) {
+          router.navigate('', {trigger: true});
+          return;
+        }
         console.log('> routing search filters page');
         searchFiltersView.render();
         $('#content > div').detach();
         $('#content').append(searchFiltersView.el);
       },
       
+      // searchResults
+      // -----------------------------------------------------------------------
       searchResults: function(query) {
+        if(!appReady) {
+          router.navigate('', {trigger: true});
+          return;
+        }
         console.log('> routing search results page');
         usersCollection.fetch({
           data: {
@@ -656,19 +771,33 @@ $(document).ready(function() {
         $('#content').append(usersListView.el);
       },
       
+      // beta
+      // -----------------------------------------------------------------------
       beta: function() {
+        if(!appReady) {
+          router.navigate('', {trigger: true});
+          return;
+        }
         console.log('> routing beta page');
         betaView.render();
         $('#content > div').detach();
         $('#content').append(betaView.el);
       },
       
+      // logout
+      // -----------------------------------------------------------------------
       logout: function() {
         console.log('> routing logout page');
         logout();
       },
       
+      // viewUser
+      // -----------------------------------------------------------------------
       viewUser: function(id) {
+        if(!appReady) {
+          router.navigate('', {trigger: true});
+          return;
+        }
         console.log('> routing view user page');
         
         users.set({ '_id': id });
@@ -691,11 +820,11 @@ $(document).ready(function() {
     });
     
     
-    // =====================================================================
-    // =====================================================================
-    // = Public methods
-    // =====================================================================
-    // =====================================================================
+    // #########################################################################
+    // #########################################################################
+    // # Public methods
+    // #########################################################################
+    // #########################################################################
     
     /**
      * Navigates to a page.
@@ -703,6 +832,13 @@ $(document).ready(function() {
      */
     this.navigateTo = function(path) {
       router.navigate(path, {trigger: true});
+    }
+    
+    /**
+     * Attempts to auth a FB user.
+     */
+    this.facebookAuth = function(){
+      if(readLocally("user")._id) welcomeView.facebookAuth();
     }
 
     /**
