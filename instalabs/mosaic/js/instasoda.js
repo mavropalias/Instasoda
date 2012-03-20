@@ -84,14 +84,14 @@ $(document).ready(function(){
       },
 
       save: function() {
-        console.log('- saving user');
+        console.log('  ~ saving story');
         var story = new Story();
-        storyTitle = $('textarea[name=storytext]').val();
-
+        storyText = $('textarea[name=storytext]').val();
         story.set({
-          'title': storyTitle
+          'author':'Konstantinos',
+          'content':storyText,
+          'title':'This is a story title',
         });
-
         story.save();
       },
 
@@ -116,8 +116,8 @@ $(document).ready(function(){
       },
 
       hideStory: function (e) {
-        $("#articleFullView").detach();
-        mosaicRouter.navigate("", {replace: true});
+        //$("#articleFullView").detach();
+        mosaicRouter.navigate("", {trigger: true, replace: true});
       },
 
       render: function () {
@@ -156,7 +156,7 @@ $(document).ready(function(){
 
       index: function() {
         console.log('> routing welcome page');
-        $("#articleFullView").detach();
+        $("#articleFullView").hide();
         storiesCollection.fetch();
         $('body').append(storiesListView.el)
         //storiesListView.render();

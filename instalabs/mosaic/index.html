@@ -88,6 +88,19 @@
   		<span>
   			<p>{{content}}</p>
   		</span>
+      <section id="comments">
+        {{#comments}}<p>{{author}}, {{content}}</p>{{/comments}}
+      </section>
+      <section class="commentBox item">
+        <h1>Your opinion:</h1>
+        <form>
+          <p>
+              <textarea name="storytext" id="id_description">type your story here...</textarea>
+          </p>
+        </form>
+        <button class="button">submit your story</button>
+
+      </section>
   		<footer></footer>
     </article>
   </script>
@@ -100,7 +113,7 @@
           <textarea name="storytext" id="id_description"
           class="rte-zone">type your story here...</textarea>
       </p></form>
-      <button class="button" value="submit your story"/>
+      <button class="button">submit your story</button>
 
     </article>
   </script>
