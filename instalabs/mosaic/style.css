@@ -277,6 +277,18 @@ nav #instasodaLogo {
       padding-left: 10px;
     }
 
+  .commentBox{
+      padding: 20px;
+      background:none;
+      cursor:default !important;
+      margin-top: 40px;
+  }
+    .commentBox textarea{
+      width:660px;
+      min-width:660px;
+      height:100px;
+    }
+
 	.doubleX{
 		width: 642px!important;
 	}
@@ -319,7 +331,6 @@ nav #instasodaLogo {
 
 	#articleFullView{
     display: none;
-		padding: 10px;
     background:rgba(255,255,255,0.94);
     position:fixed;
     top:0;
@@ -327,28 +338,26 @@ nav #instasodaLogo {
     right:0;
     bottom:0;
 		z-index:999;
-		margin-left:-380px;
-    border-radius:3px;
 	}
 
   #articleFullView > article{
-    padding: 10px;
+    padding: 30px;
     background:#fff;
     height:auto;
     left:50%;
     position:fixed;
     top:2em;
-    width:600px;
+    width:700px;
     z-index:999;
-    margin-left:-300px;
+    margin-left:-350px;
     border: 1px solid #eee;
     box-shadow:0 3px 8px rgba(34, 25, 25, 0.4);
   }
 
-  #articleFullView section#comments {
+  #articleFullView section {
     border: 1px solid #ddd;
     padding: 10px;
-    margin: 10px 0;
+    margin: 30px 0;
     background: #f9f9f9;
   }
     #articleFullView > article > #comments p {
