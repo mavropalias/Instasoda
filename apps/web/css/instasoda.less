@@ -83,22 +83,41 @@
     -ms-transition: all @duration ease-in-out;
     transition: all @duration ease-in-out;
   }
+  .photo() {
+    .box-shadow(0, 1px, 1px, #888);
+    border: 1px solid #eee;
+    position: relative;
+    padding: 1em; 
+    margin: 0 0.5em 2em; 
+    background: #fff;
+    float:left;
+    
+    img {
+      cursor:pointer;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-bottom: 1px solid #fff;
+    }
+  }
 
 
 // =============================================================================
 // OO STYLES
 // =============================================================================
 
+  .left { float: left; }
+  .right { float: right; }
+  
   .padding1x { padding: 10px; }
   .padding2x { padding: 20px; }
   .padding3x { padding: 40px; }
-  
-  .paddingRight2x { padding-right: 20px; }
+    .paddingRight2x { padding-right: 20px; }
   
   .text-shadow { text-shadow: 1px 1px #fff; }
-  
+  .round { .border-radius; }
   .animated { .transition(0.4s); }
-  .hidden { display: none; }
+  .hidden { opacity: 0; }
   
 
 // =============================================================================
@@ -319,14 +338,20 @@
   
   
 // =============================================================================
-// USER PHOTOS
+// USER PHOTOS + PHOTO VIEWER
 // =============================================================================
   
   #userPictures {
     display:block;
     overflow:hidden;
     
-    .userPicture {
+    .photo {
+      .box-shadow(0, 1px, 1px, #888);
+      border: 1px solid #eee;
+      position: relative;
+      padding: 1em; 
+      margin: 0 0.5em 2em; 
+      background: #fff;
       float:left;
       
       img {
@@ -336,56 +361,35 @@
         border-left: 1px solid #ddd;
         border-bottom: 1px solid #fff;
       }
+      
+      .photoControls {
+        display: none;
+        
+        span {
+          text-decoration: underline;
+        }
+      }
+      
+      &:hover {
+        border: 1px solid #ccc;
+        
+        .photoControls {
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          padding: 10px;
+          background: #fff;
+          background: rgba(255, 255, 255, .95);
+          color: #333;
+        }
+      }
     }
-  }
     
-  .drop-shadow {
-    .box-shadows(0 2px 2px rgba(0, 0, 0, 0.3), 0 0 60px rgba(0, 0, 0, 0.1) inset);
-    position: relative;
-    padding: 1em; 
-    margin: 2em 0.5em 5em; 
-    background: #fff;
-  }
-
-  .drop-shadow:before,
-  .drop-shadow:after {
-    content:"";
-    position: absolute; 
-    z-index: -2;
-    bottom: 15px;
-    left: 10px;
-    width: 50%;
-    height: 20%;
-  }
-  
-  .drop-shadow:hover{
-    background: #f3f3f3;
-  }
-
-  .drop-shadow:after{                 
-    right: 10px; 
-    left: auto;
-  }
-  
-  .round {
-    .border-radius;
-  }
-  
-  .round:before,
-  .round:after {
-    .box-shadow(0, 15px, 10px, rgba(0, 0, 0, 0.7));
-    max-width: 300px;
-    -webkit-transform: rotate(-3deg);    
-       -moz-transform: rotate(-3deg);   
-         -o-transform: rotate(-3deg);
-            transform: rotate(-3deg);
-  }
-  
-  .round:after {
-    -webkit-transform: rotate(3deg);   
-       -moz-transform: rotate(3deg);  
-         -o-transform: rotate(3deg);
-            transform: rotate(3deg);
+    .default {
+      background: #ddd;
+    }
   }
 
 
@@ -394,17 +398,12 @@
 // =============================================================================
 
   .userPreview {
+    .photo;
     float: left;
     text-align:center;
     margin: 0 10px 8px 0;
   }
-  .userPreviewPhoto {
-    overflow: hidden;
-    width: 200px;
-    margin: 0 auto;
-  }
   .userPreviewNickname {
-    .text-shadow;
     font-size: 12px;
     margin-top: 5px;
     color: #00364D;
@@ -419,7 +418,7 @@
 
     #uploadWidget {
     width: 150px;
-    height: 150px;
+    height: 152px;
       
       .qq-uploader {
         position:relative;
@@ -443,7 +442,12 @@
         background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
       }
       
+      .working {
+        background: url(../img/loading.gif) center center no-repeat transparent;
+      }
+      
       .qq-upload-list {
+        display: none;
         margin: 100px 35px 0;
         padding: 0;
         list-style: disc;
