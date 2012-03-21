@@ -79,85 +79,23 @@
 
 	.button, input[type=button], input[type=submit], button{
 		text-decoration: none;
-		border-color:#888;
-		border-color:rgba(0, 0, 0, 0.56);
+    margin: 5px 10px;
 		cursor:pointer;
 		outline:none;
-		color:#111;
+		color:#FFF;
 		font-family:"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
 		display:inline-block;
 		vertical-align:top;
 		position:relative;
-		font-size:12px;
+		font-size:16px;
 		font-weight:bold;
 		text-align:center;
-		background-color:#aaa;
-		background-image:url(gradient.png);
-		background-image:-moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image:-o-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
-		background-image:linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-repeat:repeat-x;
-		text-shadow:1px 1px 0 rgba(255,255,255,.67);
-		line-height:2;
-		margin:0 0 2em 1em;
-		padding:0 1em;
-		height:2em;
-		-moz-box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		-webkit-box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		-webkit-transition:background .185s linear;
-		-moz-transition:all .185s linear;
-		-o-transition:all .185s linear;
-		transition:all .185s linear;
+    background:#BE1D2C;
+    border:none;
+    padding: 5px 20px;
 		/** Make the text unselectable **/
 		-moz-user-select:none;
 		-webkit-user-select:none;
-	}
-	.button, .button:after, button, button:after, input[type=submit], input[type=button]{
-		-moz-border-radius:4px;
-		-webkit-border-radius:4px;
-		border-radius:4px;
-		border-width:1px;
-		border-style:solid;
-
-	}
-	.button:after, button:after{
-		display:block;
-		position:absolute;
-		content:' ';
-		width:100%;
-		height:100%;
-		border-color:transparent transparent #ccc;
-		border-color:transparent transparent rgba(255, 255, 255, 0.67);
-		bottom:-2px;
-		left:-1px;
-	}
-	.button:hover, .button:focus, button:hover, button:focus, input[type=button]:hover, input[type=button]:focus, input[type=submit]:hover, input[type=submit]:focus{
-		background-color:#ccc;
-	}
-	.button:active, button:active, input[type=submit]:active, input[type=button]:active{
-		line-height:2.2;
-		-moz-box-shadow
-			:0 .33em 1em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset,
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-		-webkit-box-shadow:
-			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset,
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-		box-shadow:
-			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset,
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-			-webkit-transition: line-height .1s linear;
-			-moz-transition: all .1s linear;
-			-o-transition: all .1s linear;
-			transition: all .1s linear;
-	}
-	.button.bg, .button.bg:hover, .button.bg:focus{
-		background-image:-moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image:-webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
 	}
 
 
@@ -292,9 +230,7 @@ nav #instasodaLogo {
       resize:none;
     }
     .commentBox button{
-      margin-left:0;
-      margin-top:1em;
-      height:30px;
+      margin:20px 0;
     }
 
 	.doubleX{
@@ -314,8 +250,8 @@ nav #instasodaLogo {
 	  border-right:1px solid #ddd;
 	  border-bottom:1px solid #eee;
 	  clear:both;
-	  height:210px;
-	  max-height:210px;
+	  height:180px;
+	  max-height:180px;
 	  display:block;
 	  resize: none;
 	  box-shadow:0px 2px 4px #ddd inset;
@@ -345,13 +281,14 @@ nav #instasodaLogo {
     right:0;
     bottom:0;
 		z-index:999;
+    overflow-y:scroll;
 	}
     #curtain{
       background:rgba(255,255,255,0.8);
       position:fixed;
       top:0;
       left:0;
-      right:0;
+      right:16px;
       bottom:0;
       z-index:999;
       cursor:pointer;
@@ -372,6 +309,12 @@ nav #instasodaLogo {
       cursor:pointer;
     }
 
+    .fullViewSeparator{
+      height:1px;
+      background:#BE1D2C;
+      margin:20px 0 25px;
+    }
+
     #articleFullView > article > .widget{
       position:absolute;
       right:-68px;
@@ -387,7 +330,7 @@ nav #instasodaLogo {
       padding:0 10px;
       border-bottom-right-radius:8px;
       border-top-right-radius:8px;
-      box-shadow:5px 0px 7px -2px rgba(34, 25, 25, 0.4) inset;
+      box-shadow:8px 0px 12px -7px rgba(34, 25, 25, 0.8) inset;
       cursor:pointer;
     }
 
@@ -396,13 +339,12 @@ nav #instasodaLogo {
       background:#fff;
       height:auto;
       left:50%;
-      position:fixed;
+      position:absolute;
       top:2em;
       width:700px;
       z-index:999;
       margin-left:-350px;
-      border:1px solid #eee;
-      box-shadow:0 3px 8px rgba(34, 25, 25, 0.4);
+      border:1px solid #ddd;
     }
       #articleFullView > article > h1{
         font-size:2.4em;
@@ -411,18 +353,30 @@ nav #instasodaLogo {
         font-size:1.8em;
       }
       #articleFullView > article > #comments{
-        margin:20px 0 10px;
+        margin:5px 0 10px;
         display:block;
         overflow:hidden;
+      }
+      #articleFullView > article > #comments .newComment{
+        display:none;
+      }
+      #articleFullView > article > #comments .noComments{
+        display:block;
+        font-size:1.5em;
+        margin-bottom:20px;
       }
         #articleFullView > article > #comments p{
           margin:10px 0 20px;
           background:#fff;
           overflow:hidden;
+          cursor: default;
         }
+          #articleFullView > article > #comments p:hover{
+            background:#f5f5f5;
+          }
           #articleFullView > article > #comments p > span{
             float:left;
-            padding-left:10px;
+            padding: 5px 10px;
             font-size:1.2em;
           }
             #articleFullView > article > #comments p > span strong{

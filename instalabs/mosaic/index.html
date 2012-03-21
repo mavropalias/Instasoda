@@ -91,8 +91,11 @@
   		<span>
   			<p>{{content}}</p>
   		</span>
+      <div class="fullViewSeparator"></div>
+      <h1>Comments: </h1>
       <section id="comments">
         {{#comments}}<p><img src="img/anon.png" style="float: left;" /><span><strong>{{author}}</strong><br>{{content}}</span></p>{{/comments}}
+        {{^comments}}<span class="noComments">No comments :-(</span>{{/comments}}
       </section>
       <section class="commentBox item">
         <h1>Your opinion:</h1>
