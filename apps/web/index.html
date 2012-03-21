@@ -39,7 +39,7 @@
   <script defer type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
   <script defer type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
 
-  <script defer type="text/javascript" src="js/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="js/cssrefresh.js"></script>-->
   
   
   <!-- OPEN GRAPH -->
@@ -303,20 +303,13 @@
             <h2>Me at my best! (photos)</h2>
             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
             <p>
-              <ul id="userPictures">
+              <ul id="userPhotos">
                 <li id="uploadPhoto" class='photo animated'>
                   <div id="uploadWidget"></div>
                 </li>
-                {{#p}}
-                  <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}">
-                    <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150>
-                    <div class="photoControls">
-                      <span class="photoMakeDefault left {{#d}}hidden{{/d}}" title="Make this your default profile photo">make default</span>
-                      <span class="photoIsDefault left {{^d}}hidden{{/d}}" title="This is your default profile photo">default photo</span>
-                      <span class="photoDelete right" title="Delete photo"></span>
-                    </div>
-                  </a>
-                {{/p}}
+                <div id="userPhotosList">
+                  <!-- MY PHOTOS -->                  
+                </div>
               </ul>
             </p>
           </p>
@@ -376,36 +369,51 @@
             <h2>Likes</h2>
             <span class="tip">Likes and interests imported from your Facebook profile.</span>
           </p>
-          <ul id="facebookLikesContainer">
-            {{#fL}}
-              <li class="fbLike">
-                <ul>
-                  <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square" width=50 height=50></li>
-                  <li class="fbLikeName">{{n}}</li>
-                  <li class="fbLikeNameFull">{{n}}</li>
-                </ul>
-              </li>
-            {{/fL}}
-            {{^fL}}
-              No likes.
-            {{/fL}}
-          </ul>
+          <div id="facebookLikes">
+            <!-- FACEBOOK LIKES -->
+          </div>
         </div>
       </script>
       
       
     <!------------------------------------------------------------------------>
-    <!-- PHOTO VIEWER -->
+    <!-- FACEBOOK LIKES -->
     <!------------------------------------------------------------------------>
       
-      <script id="tplPhotoView" type="text/template">
+      <script id="tplFacebookLikes" type="text/template">
         <ul>
-          {{#p}}
-            <li>
-              <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}'>
+          {{#fL}}
+            <li class="fbLike">
+              <ul>
+                <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square" width=50 height=50></li>
+                <li class="fbLikeName">{{n}}</li>
+                <li class="fbLikeNameFull">{{n}}</li>
+              </ul>
             </li>
-          {{/p}}
+          {{/fL}}
+          {{^fL}}
+            No likes.
+          {{/fL}}
         </ul>
       </script>
+      
+      
+    <!------------------------------------------------------------------------>
+    <!-- MY PHOTOS -->
+    <!------------------------------------------------------------------------>
+      
+      <script id="tplMyPhotos" type="text/template">
+        {{#p}}
+          <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}">
+            <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150>
+            <div class="photoControls">
+              <span class="photoMakeDefault left {{#d}}hidden{{/d}}" title="Make this your default profile photo">make default</span>
+              <span class="photoIsDefault left {{^d}}hidden{{/d}}" title="This is your default profile photo">default photo</span>
+              <span class="photoDelete right" title="Delete photo"></span>
+            </div>
+          </a>
+        {{/p}}
+      </script>
+      
 </body>
 </html>
