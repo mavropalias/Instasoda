@@ -339,87 +339,95 @@
       display: none;
     }
   }
-  
-  
+
+
 // =============================================================================
-// USER PHOTOS + PHOTO VIEWER
+// LIKES
 // =============================================================================
   
-  #userPictures {
-    display:block;
-    overflow:hidden;
+  .photo {
+    .box-shadow(0, 1px, 1px, #888);
+    border: 1px solid #eee;
+    position: relative;
+    padding: 1em; 
+    margin: 0 0.5em 2em; 
+    background: #fff;
+    float:left;
     
-    .photo {
-      .box-shadow(0, 1px, 1px, #888);
-      border: 1px solid #eee;
-      position: relative;
-      padding: 1em; 
-      margin: 0 0.5em 2em; 
+    img {
+      cursor:pointer;
       background: #fff;
-      float:left;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-bottom: 1px solid #fff;
+    }
+    
+    .photoControls {
+      display: none;
+      cursor: default;
       
-      img {
-        cursor:pointer;
-        background: #fff;
-        border-top: 1px solid #ccc;
-        border-right: 1px solid #ddd;
-        border-left: 1px solid #ddd;
-        border-bottom: 1px solid #fff;
+      span {
+        text-decoration: underline;
+        height: 21px;
+        line-height: 20px;
       }
       
-      .photoControls {
-        display: none;
+      .photoIsDefault {
+        text-decoration: none;
+        color: #999;
+        background: url(../img/star.png) left bottom no-repeat;
+        padding-left: 25px;
+      }
+      
+      .photoMakeDefault {
+        text-decoration: none;
+        background: url(../img/star.png) left top no-repeat;
+        padding-left: 25px;
+        cursor: pointer;
         
-        span {
-          text-decoration: underline;
-          height: 21px;
-          line-height: 20px;
-        }
-        
-        .photoIsDefault {
-          text-decoration: none;
-          color: #999;
+        &:hover {
           background: url(../img/star.png) left bottom no-repeat;
-          padding-left: 25px;
-        }
-        
-        .photoMakeDefault {
-          text-decoration: none;
-          background: url(../img/star.png) left top no-repeat;
-          padding-left: 25px;
-          
-          &:hover {
-            background: url(../img/star.png) left bottom no-repeat;
-            text-decoration: underline;
-          }
-        }
-        
-        .photoDelete {
-          width: 15px;
-          background: url(../img/delete.png) right top no-repeat;
-          
-          &:hover {
-            background: url(../img/delete.png) right bottom no-repeat;
-          }
+          text-decoration: underline;
         }
       }
       
-      &:hover {
-        border: 1px solid #ccc;
+      .photoDelete {
+        width: 15px;
+        background: url(../img/delete.png) right top no-repeat;
+        cursor: pointer;
         
-        .photoControls {
-          display: block;
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          padding: 5px 10px;
-          background: #fff;
-          background: rgba(255, 255, 255, .95);
-          color: #333;
+        &:hover {
+          background: url(../img/delete.png) right bottom no-repeat;
         }
       }
     }
+    
+    &:hover {
+      border: 1px solid #ccc;
+      
+      .photoControls {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 5px 10px;
+        background: #fff;
+        background: rgba(255, 255, 255, .95);
+        color: #333;
+      }
+    }
+  }
+  
+  
+// =============================================================================
+// USER PHOTOS
+// =============================================================================
+  
+  #userPhotos {
+    display:block;
+    overflow:hidden;
     
     .default {
       background: #ddd;
