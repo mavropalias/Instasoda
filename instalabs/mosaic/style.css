@@ -1,8 +1,10 @@
 /* COLOURS
+ * Blue (light to dark)
  * #3BBDE2
  * #007CA6
  * #00344C
  *
+ * Red
  * #DF2027
  * #BE1D2C
  */
@@ -24,34 +26,34 @@
   article, aside, canvas, details, embed,
   figure, figcaption, footer, header, hgroup,
   menu, nav, output, ruby, section, summary,
-  time, mark, audio, video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    vertical-align: baseline;
+  time, mark, audio, video{
+    margin:0;
+    padding:0;
+    border:0;
+    vertical-align:baseline;
     outline:none;
   }
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure,
-  footer, header, hgroup, menu, nav, section {
-    display: block;
+  footer, header, hgroup, menu, nav, section{
+    display:block;
   }
-  body {
+  body{
   }
-  ol, ul {
-    list-style: none;
+  ol, ul{
+    list-style:none;
   }
-  blockquote, q {
-    quotes: none;
+  blockquote, q{
+    quotes:none;
   }
   blockquote:before, blockquote:after,
-  q:before, q:after {
-    content: '';
-    content: none;
+  q:before, q:after{
+    content:'';
+    content:none;
   }
-  table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  table{
+    border-collapse:collapse;
+    border-spacing:0;
   }
 
 
@@ -60,8 +62,8 @@
  ********************************/
 
 	body{
-		background: url("img/bg.png") repeat;
-	  font-family: "lucida grande",tahoma,verdana,arial,sans-serif;
+		background:url("img/bg.png") repeat;
+	  font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
 	  font-weight:300;
 	  font-size:62.5%;
 	}
@@ -75,87 +77,25 @@
  * BUTTONS
  ********************************/
 
-	.button, input[type=button], input[type=submit], button {
+	.button, input[type=button], input[type=submit], button{
 		text-decoration: none;
-		border-color:#888;
-		border-color:rgba(0, 0, 0, 0.56);
-		cursor: pointer;
-		outline: none;
-		color:#111;
+    margin: 5px 10px;
+		cursor:pointer;
+		outline:none;
+		color:#FFF;
 		font-family:"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
 		display:inline-block;
 		vertical-align:top;
 		position:relative;
-		font-size:12px;
+		font-size:16px;
 		font-weight:bold;
 		text-align:center;
-		background-color:#aaa;
-		background-image:url(gradient.png);
-		background-image: -moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image: -o-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
-		background-image: linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-repeat:repeat-x;
-		text-shadow:1px 1px 0 rgba(255,255,255,.67);
-		line-height:2;
-		margin:0 0 2em 1em;
-		padding:0 1em;
-		height:2em;
-		-moz-box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		-webkit-box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		box-shadow:1px 1px 0 rgba(255,255,255,.5) inset, -1px -1px 0 rgba(255,255,255,.5) inset;
-		-webkit-transition: background .185s linear;
-		-moz-transition: all .185s linear;
-		-o-transition: all .185s linear;
-		transition: all .185s linear;
+    background:#BE1D2C;
+    border:none;
+    padding: 5px 20px;
 		/** Make the text unselectable **/
-		-moz-user-select: none;
-		-webkit-user-select: none;
-	}
-	.button, .button:after, button, button:after, input[type=submit], input[type=button] {
-		-moz-border-radius:4px;
-		-webkit-border-radius:4px;
-		border-radius:4px;
-		border-width:1px;
-		border-style:solid;
-
-	}
-	.button:after, button:after{
-		display:block;
-		position:absolute;
-		content:' ';
-		width:100%;
-		height:100%;
-		border-color: transparent transparent #ccc;
-		border-color: transparent transparent rgba(255, 255, 255, 0.67);
-		bottom:-2px;
-		left:-1px;
-	}
-	.button:hover, .button:focus, button:hover, button:focus, input[type=button]:hover, input[type=button]:focus, input[type=submit]:hover, input[type=submit]:focus {
-		background-color:#ccc;
-	}
-	.button:active, button:active, input[type=submit]:active, input[type=button]:active {
-		line-height:2.2;
-		-moz-box-shadow
-			:0 .33em 1em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset,
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-		-webkit-box-shadow:
-			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset,
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-		box-shadow:
-			0 .33em 2em rgba(0,0,0,.67) inset,
-			1px 1px 0 rgba(255,255,255,.25) inset,
-			-1px -1px 0 rgba(255,255,255,.25) inset;
-			-webkit-transition: line-height .1s linear;
-			-moz-transition: all .1s linear;
-			-o-transition: all .1s linear;
-			transition: all .1s linear;
-	}
-	.button.bg, .button.bg:hover, .button.bg:focus {
-		background-image: -moz-linear-gradient(top, rgba(255,255,255,.75), rgba(255,255,255,0));
-		background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(255,255,255,.75)), to(rgba(255,255,255,0)));
+		-moz-user-select:none;
+		-webkit-user-select:none;
 	}
 
 
@@ -163,77 +103,77 @@
  * HEADER
  ********************************/
 
-nav {
-		background: #FFFFFF;
-    box-shadow: 0 0 20px #888;
-    font-size: 2em;
-    font-weight: 700;
-    height: 70px;
-    line-height: 70px;
-    position: relative;
-    width: 100%;
-    z-index: 4;
-    font-family: "futura-pt";
-    font-weight: 500;
+nav{
+		background:#FFFFFF;
+    box-shadow:0 0 20px #888;
+    font-size:2em;
+    font-weight:700;
+    height:70px;
+    line-height:70px;
+    position:relative;
+    width:100%;
+    z-index:4;
+    font-family:"futura-pt";
+    font-weight:500;
 }
-nav > ul {
-    display: block;
-    height: 100%;
-    margin-left: 10px;
-    position: relative;
+nav > ul{
+    display:block;
+    height:100%;
+    margin-left:10px;
+    position:relative;
 }
-nav > ul > li {
+nav > ul > li{
     float: left;
 }
-nav > ul > ul {
-    float: left;
-    height: 70px;
-    margin-left: 20px;
-    overflow: hidden;
+nav > ul > ul{
+    float:left;
+    height:70px;
+    margin-left:20px;
+    overflow:hidden;
 }
-nav > ul > ul > li {
-    display: inline-block;
+nav > ul > ul > li{
+    display:inline-block;
 }
-nav > ul > ul > li > a {
-    color: #033349;
-    cursor: pointer;
-    padding: 2px 10px 3px;
-    text-decoration: none;
-    border-radius: 3px;
-    border: 1px solid #fff;
-    margin-right: 10px;
+nav > ul > ul > li > a{
+    color:#033349;
+    cursor:pointer;
+    padding:2px 10px 3px;
+    text-decoration:none;
+    border-radius:3px;
+    border:1px solid #fff;
+    margin-right:10px;
 }
-nav > ul > ul > li > a.current , nav > ul > ul > li > a:hover {
-    background: #033349;
-    border: 1px solid #333;
-    color: #ffffff;
+nav > ul > ul > li > a.current , nav > ul > ul > li > a:hover{
+    background:#033349;
+    border:1px solid #333;
+    color:#ffffff;
 }
-nav aside {
-    position: absolute;
-    right: 20px;
-    top: 6px;
+nav aside{
+    position:absolute;
+    right:20px;
+    top:6px;
 }
-nav .shareFB, nav .shareTW, nav .shareGP {
-    position: absolute;
-    top: 0;
+nav .shareFB, nav .shareTW, nav .shareGP{
+    position:absolute;
+    top:0;
 }
-nav .shareFB {
-    right: 165px;
+nav .shareFB{
+    right:165px;
 }
-nav .shareTW {
-    right: 70px;
-    width: 90px;
+nav .shareTW{
+    right:70px;
+    width:90px;
 }
-nav .shareGP {
-    right: 10px;
-    width: 60px;
+nav .shareGP{
+    right:10px;
+    width:60px;
 }
 nav #instasodaLogo {
-    background: url("http://instasoda.com/area51/productdemo3/images/instasoda_logo.png") no-repeat left top;
-    display: block;
-    height: 29px;
-    margin: 21px 0 0 15px;
-    width: 166px;
+    background:url("http://instasoda.com/area51/productdemo3/images/instasoda_logo.png") no-repeat left top;
+    display:block;
+    height:29px;
+    margin:21px 0 0 15px;
+    width:166px;
 }
 
 /********************************
@@ -241,31 +181,31 @@ nav #instasodaLogo {
  ********************************/
 
 	article.item{
-	  float: left;
-	  padding: 10px;
+	  float:left;
+	  padding:10px;
 		background:#fff;
 		width:300px;
 		height:300px;
 		margin:10px;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-    box-shadow: 0 2px 3px -3px #666;
+    border-radius:3px;
+    border:1px solid #ddd;
+    box-shadow:0 2px 3px -3px #666;
 	}
-		.item:hover{
+		article.item:hover{
 			cursor:pointer;
 		}
 
 	article.item h1, #articleFullView h1{
-		font-size: 2em;
+		font-size:2em;
 	}
 
 	article.item cite, #articleFullView cite{
-		font-size: 1.2em;
+		font-size:1.2em;
 	}
 
 	article.item span p, #articleFullView span p{
-		font-size: 1.5em;
-		padding: 10px 0;
+		font-size:1.5em;
+		padding:10px 0;
 	}
 
 	.storyBox{
@@ -274,19 +214,23 @@ nav #instasodaLogo {
 		cursor:default !important;
 	}
     .storyBox h1{
-      padding-left: 10px;
+      padding-left:10px;
     }
 
   .commentBox{
-      padding: 20px;
-      background:none;
-      cursor:default !important;
-      margin-top: 40px;
+    margin:-10px 0 -20px;
   }
+    .commentBox h1{
+      padding-bottom:10px;
+    }
     .commentBox textarea{
-      width:660px;
-      min-width:660px;
+      width:695px;
+      min-width:695px;
       height:100px;
+      resize:none;
+    }
+    .commentBox button{
+      margin:20px 0;
     }
 
 	.doubleX{
@@ -306,8 +250,8 @@ nav #instasodaLogo {
 	  border-right:1px solid #ddd;
 	  border-bottom:1px solid #eee;
 	  clear:both;
-	  height:210px;
-	  max-height:210px;
+	  height:180px;
+	  max-height:180px;
 	  display:block;
 	  resize: none;
 	  box-shadow:0px 2px 4px #ddd inset;
@@ -331,37 +275,110 @@ nav #instasodaLogo {
 
 	#articleFullView{
     display: none;
-    background:rgba(255,255,255,0.94);
     position:fixed;
     top:0;
     left:0;
     right:0;
     bottom:0;
 		z-index:999;
+    overflow-y:scroll;
 	}
-
-  #articleFullView > article{
-    padding: 30px;
-    background:#fff;
-    height:auto;
-    left:50%;
-    position:fixed;
-    top:2em;
-    width:700px;
-    z-index:999;
-    margin-left:-350px;
-    border: 1px solid #eee;
-    box-shadow:0 3px 8px rgba(34, 25, 25, 0.4);
-  }
-
-  #articleFullView section {
-    border: 1px solid #ddd;
-    padding: 10px;
-    margin: 30px 0;
-    background: #f9f9f9;
-  }
-    #articleFullView > article > #comments p {
-      padding: 20px;
-      background: #fff;
-
+    #curtain{
+      background:rgba(255,255,255,0.8);
+      position:fixed;
+      top:0;
+      left:0;
+      right:16px;
+      bottom:0;
+      z-index:999;
+      cursor:pointer;
     }
+
+    #articleFullView > article > .closeStory{
+      position:absolute;
+      right:-1px;
+      top:-1px;
+      background:#333;
+      color:#fff;
+      font-family:"georgia", "times new roman", serif;
+      font-style:italic;
+      font-size:1.9em;
+      font-weight:bold;
+      padding:4px 20px 6px;
+      border-bottom-left-radius:8px;
+      cursor:pointer;
+    }
+
+    .fullViewSeparator{
+      height:1px;
+      background:#BE1D2C;
+      margin:20px 0 25px;
+    }
+
+    #articleFullView > article > .widget{
+      position:absolute;
+      right:-68px;
+      top:0;
+      width: 48px;
+      margin-top: 32px;
+      background:#BE1D2C;
+      color:#fff;
+      font-family:"georgia", "times new roman", serif;
+      font-style:italic;
+      font-size:1.9em;
+      font-weight:bold;
+      padding:0 10px;
+      border-bottom-right-radius:8px;
+      border-top-right-radius:8px;
+      box-shadow:8px 0px 12px -7px rgba(34, 25, 25, 0.8) inset;
+      cursor:pointer;
+    }
+
+    #articleFullView > article{
+      padding:20px 30px;
+      background:#fff;
+      height:auto;
+      left:50%;
+      position:absolute;
+      top:2em;
+      width:700px;
+      z-index:999;
+      margin-left:-350px;
+      border:1px solid #ddd;
+    }
+      #articleFullView > article > h1{
+        font-size:2.4em;
+      }
+      #articleFullView > article > span > p{
+        font-size:1.8em;
+      }
+      #articleFullView > article > #comments{
+        margin:5px 0 10px;
+        display:block;
+        overflow:hidden;
+      }
+      #articleFullView > article > #comments .newComment{
+        display:none;
+      }
+      #articleFullView > article > #comments .noComments{
+        display:block;
+        font-size:1.5em;
+        margin-bottom:20px;
+      }
+        #articleFullView > article > #comments p{
+          margin:10px 0 20px;
+          background:#fff;
+          overflow:hidden;
+          cursor: default;
+        }
+          #articleFullView > article > #comments p:hover{
+            background:#f5f5f5;
+          }
+          #articleFullView > article > #comments p > span{
+            float:left;
+            padding: 5px 10px;
+            font-size:1.2em;
+          }
+            #articleFullView > article > #comments p > span strong{
+              font-weight: bold;
+            }

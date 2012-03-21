@@ -22,6 +22,11 @@ $(document).ready(function(){
       url: sApiMosaic + 'story.php'
     });
 
+    // Comment - Single story comment @ Mosaic
+    var Comment = Backbone.Model.extend({
+      url: sApiMosaic + 'comment.php'
+    });
+
     // ===================================================
     // ===================================================
     // = Collections
@@ -62,8 +67,9 @@ $(document).ready(function(){
     var StoriesListView = Backbone.View.extend({
       tagName: 'section',
       id: 'container',
-      initialize: function () {
+      initialize: function (model) {
         this.collection.bind('reset', this.render, this);
+        this.collection.bind('add', this.render, this);
       },
 
       events: {
@@ -87,12 +93,23 @@ $(document).ready(function(){
         console.log('  ~ saving story');
         var story = new Story();
         storyText = $('textarea[name=storytext]').val();
-        story.set({
+
+        story.save(
+        {
           'author':'Konstantinos',
           'content':storyText,
           'title':'This is a story title',
+        },
+        {
+          success: function(model, response) {
+            console.log('SUCCESS: Added a new story to the database!');
+            storiesCollection.add(story);
+          },
+          error: function (model, response) {
+            console.log('ERROR: Could not add a new story in the database!');
+          }
         });
-        story.save();
+
       },
 
       render: function () {
@@ -109,21 +126,50 @@ $(document).ready(function(){
       className: 'item',
       id: 'articleFullView',
       events: {
-        'click': 'hideStory'
+        'click #articleFullView > #curtain, .closeStory': 'hideStory',
+        'click .commentSubmit':'save'
       },
+
       initialize: function () {
         this.model.bind('change', this.render, this);
+        this.model.bind("add", this.render, this);
+      },
+
+      save: function() {
+        console.log('  ~ saving story');
+        var comment = new Comment();
+        commentText = $('textarea[name=commenttext]').val();
+        commentAuthor = story.get('author');
+        console.log('Preparing to add a new comment to the story with ID: ' + story.id);
+
+        comment.save(
+        {
+          'postId':story.id,
+          'author':commentAuthor,
+          'content':commentText
+        },
+        {
+          success: function (model, response){
+            // SUCCESS
+            console.log('Success!');
+            //story.fetch({ data: { id: story.id } });
+            processComment();
+          },
+          error: function (model, response) {
+            alert('error');
+          }
+        });
       },
 
       hideStory: function (e) {
-        //$("#articleFullView").detach();
+        $("#articleFullView").detach();
+        $("body").css({'overflow':'auto'});
         mosaicRouter.navigate("", {trigger: true, replace: true});
       },
 
       render: function () {
         var template = $("#tplFullStory").html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
-        $(this.el).show();
       }
     });
 
@@ -156,7 +202,7 @@ $(document).ready(function(){
 
       index: function() {
         console.log('> routing welcome page');
-        $("#articleFullView").hide();
+        $("#articleFullView").detach();
         storiesCollection.fetch();
         $('body').append(storiesListView.el)
         //storiesListView.render();
@@ -178,6 +224,7 @@ $(document).ready(function(){
         });
         $('body').append(storyFullView.el);
         $("#articleFullView").show();
+        $("body").css({'overflow':'hidden'});
       }
 
     });
@@ -188,5 +235,22 @@ $(document).ready(function(){
 
 	// initialise the rich text-area
 	// $('.rte-zone').rte();
+
+  function processComment() {
+    if ( $(".noComments").length > 0 ) {
+      $(".noComments").slideUp(300, function () {
+        appendNewCommentToFullStoryView();
+      });
+    } else {
+      appendNewCommentToFullStoryView();
+    }
+  }
+
+  function appendNewCommentToFullStoryView() {
+    $("#comments").prepend('<p class="newComment"><img src="img/anon.png" style="float: left;" /><span><strong>' + commentAuthor + '</strong><br>' + commentText + '</span></p>');
+    $("#comments > p:first-child").fadeOut(0, function() {
+      $(this).slideDown(300);
+    })
+  }
 
 });
