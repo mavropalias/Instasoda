@@ -82,23 +82,26 @@
   </script>
 
   <script id="tplFullStory" type="text/template">
+    <div id="curtain"></div>
     <article>
+      <div class="closeStory">close</div>
+      <div class="widget"><img src="img/nolove.png" /></div>
   		<h1>{{title}}</h1>
-  		<cite>{{date}} by {{author}}</cite>
+  		<cite>by {{author}} at {{date}}</cite>
   		<span>
   			<p>{{content}}</p>
   		</span>
       <section id="comments">
-        {{#comments}}<p>{{author}}, {{content}}</p>{{/comments}}
+        {{#comments}}<p><img src="img/anon.png" style="float: left;" /><span><strong>{{author}}</strong><br>{{content}}</span></p>{{/comments}}
       </section>
       <section class="commentBox item">
         <h1>Your opinion:</h1>
         <form>
           <p>
-              <textarea name="storytext" id="id_description">type your story here...</textarea>
+              <textarea name="commenttext" id="id_description">type your story here...</textarea>
           </p>
         </form>
-        <button class="button">submit your story</button>
+        <button class="commentSubmit">submit your story</button>
 
       </section>
   		<footer></footer>
