@@ -188,9 +188,9 @@ $(document).ready(function() {
     });
     
     // =========================================================================
-    // UserSettingsView - the settings page of the person using the app
+    // MyProfileView - the profile page of the person using the app
     // =========================================================================
-    var UserSettingsView = Backbone.View.extend({
+    var MyProfileView = Backbone.View.extend({
       // events
       // -----------------------------------------------------------------------
       events: {
@@ -202,23 +202,34 @@ $(document).ready(function() {
       // initialize
       // -----------------------------------------------------------------------
       initialize: function(options) {
-        _.bindAll(this, 'render');
-        _.bindAll(this, 'save');
-        _.bindAll(this, 'photoMakeDefault');
-        this.model.bind('change', this.render);
+        console.log('  ~ initializing MyProfileView');
+        
+        // bindings
+        _.bindAll(this);
+                
+        // initialize sub-views
+        this.facebookLikesView = new FacebookLikesView({ model: this.model });
+        this.myPhotosView = new MyPhotosView({ model: this.model });
       },
       
       // render
       // -----------------------------------------------------------------------
-      render: function() {
-        console.log('  ~ rendering user view');
+      render: function(cb) {
+        var _this = this;
+        console.log('  ~ rendering MyProfileView');
+        
+        // render master template
         var template = $('#tplSettings').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
         
-        // fadein user photos
-        this.$('.photo img').load(function(){
-          $(this).parent().removeClass('transparent');
-        });
+        // render sub views
+        this.myPhotosView.setElement(this.$('#userPhotosList')).render();
+        this.facebookLikesView.setElement(this.$('#facebookLikes')).render();
+               
+        setTimeout(function() {
+          _this.onView();
+          //_this.facebookLikesView.setElement(_this.$('#facebookLikes')).render();
+        }, 0);
       },
 
       // onView
@@ -249,8 +260,7 @@ $(document).ready(function() {
                 // update model
                 var newPhotoId = Math.floor(Math.random()*10001)+Math.floor(Math.random()*10001);
                 var photos = _this.model.get('p');
-                photos.push(
-                {
+                photos.push({
                   id: newPhotoId,
                   f: res.file,
                   p: 1,
@@ -260,23 +270,17 @@ $(document).ready(function() {
                   'p': photos
                 });
 
-                // inject new photo into the dom
-                // TODO: make this a template
-                console.log('- injecting photo with id #' + newPhotoId);
-                $('#userPictures').append('<a id="' + newPhotoId + '" tabindex="1" '
-                  + 'class="photo animated transparent fancybox-thumb" rel="fancybox-thumb"'
-                  + 'href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/'
-                  + res.file + '"><img height="150" '
-                  + 'src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/' + res.file + '"'
-                  + '><div class="photoControls">'
-                  + '<span class="photoMakeDefault left" title="Make this your default profile photo">make default</span>'
-                  + '<span class="photoIsDefault left hidden" title="This is your default profile photo">default photo</span>'
-                  + '<span class="photoDelete right" title="Delete photo"></span></div></a>');
-                $('#' + newPhotoId + ' img').load(function(){
-                  console.log('- photo #' + newPhotoId + ' loaded (showing)');
-                  $(this).parent().removeClass('transparent');
-                });
+                console.log('- inserting new photo to the model');
                 
+                // trigger newPhoto event for myPhotosView
+                _this.myPhotosView.trigger('newPhoto', {
+                  p: {
+                    id: newPhotoId,
+                    f: res.file,
+                    p: 1,
+                    d: 0
+                  }
+                });   
               } else {
                 // TODO: handle errors
                 console.log('- error uploading photo ' + fileName + ' (' + res.error + ')')
@@ -293,11 +297,8 @@ $(document).ready(function() {
             }
           });
 
-        // show photos
-        this.$('#uploadPhoto').fadeIn();
-
         // activate fancybox for all photos - including the newly uploaded
-        $("#userPictures").on("focusin", function(){
+        $("#userPhotos").on("focusin", function(){
           _this.$(".fancybox-thumb").fancybox({
             prevEffect	: 'elastic',
             nextEffect	: 'elastic',
@@ -385,25 +386,25 @@ $(document).ready(function() {
         }
         
         // update photo text to working
-        $('#userPictures #' + photoId + ' .photoMakeDefault').html('saving...');
+        $('#userPhotos #' + photoId + ' .photoMakeDefault').html('saving...');
         
         // save model
         this.model.save({ 'p': photos }, {
           error: function(model, res) {
-            $('#userPictures #' + photoId + ' .photoMakeDefault').html('Make profile default');
+            $('#userPhotos #' + photoId + ' .photoMakeDefault').html('Make profile default');
             alert('Error: could not change photo status');            
           },
           success: function(model, res) {
             // update UI
-            $('#userPictures .photoMakeDefault').removeClass('hidden');
-            $('#userPictures .photoIsDefault').addClass('hidden');
+            $('#userPhotos .photoMakeDefault').removeClass('hidden');
+            $('#userPhotos .photoIsDefault').addClass('hidden');
             
-            $('#userPictures .photo').removeClass('default');
-            $('#userPictures #' + photoId).addClass('default');
+            $('#userPhotos .photo').removeClass('default');
+            $('#userPhotos #' + photoId).addClass('default');
             
-            $('#userPictures #' + photoId + ' .photoMakeDefault').addClass('hidden');
-            $('#userPictures #' + photoId + ' .photoIsDefault').removeClass('hidden');
-            $('#userPictures #' + photoId + ' .photoMakeDefault').html('Make profile default');
+            $('#userPhotos #' + photoId + ' .photoMakeDefault').addClass('hidden');
+            $('#userPhotos #' + photoId + ' .photoIsDefault').removeClass('hidden');
+            $('#userPhotos #' + photoId + ' .photoMakeDefault').html('Make profile default');
           }
         });
       },
@@ -440,6 +441,9 @@ $(document).ready(function() {
               
               // save view
               _this.save();
+              
+              // trigger deletePhoto event for myPhotosView
+              _this.myPhotosView.trigger('deletePhoto', photoId); 
             } else {
               alert('Error deleting photo');
             }
@@ -625,7 +629,92 @@ $(document).ready(function() {
         });
       }
     });
+    
+    // =========================================================================
+    // FacebookLikesView
+    // =========================================================================
+    var FacebookLikesView = Backbone.View.extend({
+      // events
+      // -----------------------------------------------------------------------
+      events: {
+        //TODO: enable clicking on a like to view users with similar likes
+      },
+      
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing FacebookLikesView');
+        _.bindAll(this);
+        this.model.bind('change:fL', this.render);
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering FacebookLikesView');
+        var template = $('#tplFacebookLikes').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+      }
+    });
+    
+    // =========================================================================
+    // MyPhotosView
+    // =========================================================================
+    var MyPhotosView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing MyPhotosView');
+        _.bindAll(this);
+        //this.model.bind('change:p', this.render);
+        this.bind('newPhoto', this.renderNewPhoto);
+        this.bind('deletePhoto', this.deletePhoto);
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering MyPhotosView');
+        var template = $('#tplMyPhotos').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // fadein user photos
+        this.$('.photo img').load(function(){
+          $(this).parent().removeClass('transparent');
+        });
+      },
+      
+      // renderNewPhoto
+      // -----------------------------------------------------------------------
+      renderNewPhoto: function(newPhoto) {
+        console.log('  ~ rendering new photo ');
+        
+        // inject new photo into view
+        var template = $('#tplMyPhotos').html();
+        this.$el.append(Mustache.to_html(template, newPhoto));
+        
+        // fadein photo
+        this.$('.photo img').load(function(){
+          $(this).parent().removeClass('transparent');
+        });
+      },
+      
+      // deletePhoto
+      // -----------------------------------------------------------------------
+      deletePhoto: function(photoId) {
+        console.log('  ~ deleting photo ');
 
+        // fadeout photo...
+        var _this = this;
+        this.$('#' + photoId).addClass('transparent');
+        
+        // ...and detach it from the dom after 400ms
+        setTimeout(function() {
+          _this.$('#' + photoId).detach();
+        }, 400);
+      }
+    });
+    
 
     // #########################################################################
     // #########################################################################
@@ -704,7 +793,7 @@ $(document).ready(function() {
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
     var searchFiltersView = new SearchFiltersView();
-    var userSettingsView = new UserSettingsView({
+    var myProfileView = new MyProfileView({
       model: user
     });
     var usersListView = new UsersListView({
@@ -762,10 +851,9 @@ $(document).ready(function() {
           return;
         }
         console.log('> routing my profile page');
-        userSettingsView.render();
+        myProfileView.render();
         $('#content > div').detach();
-        $('#content').append(userSettingsView.el);
-        userSettingsView.onView();
+        $('#content').append(myProfileView.el);
       },
       
       // searchFilters
