@@ -371,7 +371,7 @@ $(document).ready(function() {
         e.stopPropagation();
         
         // get photo id
-        var photoId = parseInt($(e.currentTarget).parent().parent().attr('id')); 
+        var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
         var photos = this.model.get('p');
         
         // process and update model photos        
@@ -411,12 +411,40 @@ $(document).ready(function() {
       // photoDelete
       // -----------------------------------------------------------------------
       photoDelete: function(e) {
+        var _this = this;
         console.log('- deleting photo');
         e.preventDefault();
         e.stopPropagation();
         
-        // TODO: complete this function
-        IS.navigateTo('beta');
+        // Get photo id
+        var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
+        
+        // Make an API call to delete the photo
+        $.ajax({
+          url: sApi + 'user/' + user.get('_id') + '/photo/' + photoId,
+          type: 'DELETE',
+          data: {
+            'fTkn': user.get('fTkn')
+          },
+          success: function(data, textStatus, jqXHR){
+            if(textStatus === 'success') {
+              console.log('- photo deleted from S3');
+              // Remove photo from the model
+              var photos = _this.model.get('p');                      
+              for(var i = 0; i < photos.length; i++) {
+               if(photos[i].id === photoId) {
+                 photos.splice(i, 1);
+               }
+              }
+              _this.model.set({ 'p': photos });
+              
+              // save view
+              _this.save();
+            } else {
+              alert('Error deleting photo');
+            }
+          }
+        });
       }
     });
     
