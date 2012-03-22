@@ -173,8 +173,8 @@
             <h2>I’d like to meet people who live...</h2>
             'Near me' will bring up people that live around your area.
             <p>
-              <label><input type="radio" name="searchLocation" value="near" />Near me</label>
-              <label><input type="radio" name="searchLocation" value="global" />Everywhere</label>
+              <label><input type="radio" name="searchLocation" value="near" disabled />Near me</label>
+              <label><input type="radio" name="searchLocation" value="global" checked />Everywhere</label>
             </p>
           </li>
           <li>
@@ -211,9 +211,14 @@
               <li>
                 <img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}" height="150" />
               </li>
-            {{/d}}
+            {{/d}}			
           {{/p}}
-        <li class="userPreviewNickname">{{u}}, {{ag}}</li>
+		  {{^p}}
+			<li>
+			  <img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/noPhoto.png" height="150" />
+			</li>
+		  {{/p}}
+        <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
         </ul>
       </script>
 
