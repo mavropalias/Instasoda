@@ -60,6 +60,7 @@ $(document).ready(function(){
       },
 
       maximizeStory: function (e) {
+        console.log('  > Navigate to the [Full story]');
         mosaicRouter.navigate("story/" + this.model.get('id'), {trigger: true});
       },
 
@@ -108,7 +109,7 @@ $(document).ready(function(){
       },
 
       save: function() {
-        console.log('  ~ Saving new story');
+        console.log('  ~ Preparing new story');
         var story = new Story();
         var storyText = $('textarea[name=storytext]').val();
 
@@ -121,13 +122,13 @@ $(document).ready(function(){
         {
           success: function(model, response) {
             $('textarea[name=storytext]').val('');
-            console.log('  ~ SUCCESS: Added a new story to database!');
+            console.log('   ~~~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
-            console.log('  ~ Show the new [Full story]');
+            console.log('  > Navigate to the new [Full story]');
             mosaicRouter.navigate("story/" + story.id, {trigger: true});
           },
           error: function (model, response) {
-            console.log('  ! ERROR: Could not add the new story to database!');
+            console.log('   !!! ERROR: Could not add the new story to database!');
           }
         });
 
@@ -135,7 +136,6 @@ $(document).ready(function(){
 
       render: function () {
         console.log('  ~ Rendering [C]ollection view');
-        currentLocation = window.location + "";
         this.renderStoryForm();
         this.collection.each(this.renderStory);
       }
@@ -159,7 +159,6 @@ $(document).ready(function(){
       },
 
       save: function() {
-        console.log('  ~ saving story');
         var comment = new Comment();
         commentText = $('textarea[name=commenttext]').val();
         commentAuthor = story.get('author');
@@ -173,17 +172,17 @@ $(document).ready(function(){
         },
         {
           success: function (model, response){
-            console.log('  ~ SUCCESS: Added the new [Comment] to database');
+            console.log('   ~~~ SUCCESS: Added the new [Comment] to database');
             processComment();
           },
           error: function (model, response) {
-            console.log('  ! ERROR: Could not add [Comment] to database');
+            console.log('   !!! ERROR: Could not add [Comment] to database');
           }
         });
       },
 
       hideStory: function (e) {
-        this.remove();
+        $('#articleFullView').detach();
         $("body").css({'overflow':'auto'});
         mosaicRouter.navigate("/");
       },
