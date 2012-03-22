@@ -651,9 +651,26 @@ $(document).ready(function() {
       // render
       // -----------------------------------------------------------------------
       render: function() {
+        var _this = this;
         console.log('  ~ rendering FacebookLikesView');
         var template = $('#tplFacebookLikes').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // show like images when they load
+        this.$('.fbLikePic img').load(function(){
+          $(this).parent().removeClass('hidden');
+          $(this).parent().parent().find('.fbLikePicLoading').remove();
+        });
+        
+        // reload like images until they load, while the API moves them to S3
+        this.$('.fbLikePic img').error(function(){
+          var _this = this;
+          setTimeout(function() {
+            var src = $(_this).attr('src');
+            var date = new Date();
+            $(_this).attr('src', src + "?v=" + date.getTime());
+          }, 2500);
+        });
       }
     });
     
