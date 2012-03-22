@@ -954,7 +954,11 @@ $(document).ready(function() {
      * Attempts to auth a FB user.
      */
     this.facebookAuth = function(){
-      if(readLocally("user")._id) welcomeView.facebookAuth();
+      if(readLocally("user") !== null) {
+        if(typeof readLocally("user")._id !== 'undefined') {
+          welcomeView.facebookAuth();
+        }
+      }
     }
 
     /**
