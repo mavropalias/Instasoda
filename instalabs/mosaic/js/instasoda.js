@@ -11,6 +11,8 @@ $(document).ready(function(){
     jQuery.support.cors = true;
     Backbone.emulateHTTP = true;
 
+
+
     // ===================================================
     // ===================================================
     // = Models
@@ -27,6 +29,8 @@ $(document).ready(function(){
       url: sApiMosaic + 'comment.php'
     });
 
+
+
     // ===================================================
     // ===================================================
     // = Collections
@@ -38,13 +42,16 @@ $(document).ready(function(){
       url: sApiMosaic + 'stories.php'
     });
 
+
+
     // ===================================================
     // ===================================================
     // = Views
     // ===================================================
     // ===================================================
 
-    // StoryView - a basic view of a story appearing in the mosaic
+    //  StoryView:
+    //  A basic view of a story appearing in the mosaic
     var StoryView = Backbone.View.extend({
       tagName: 'article',
       className: 'item',
@@ -63,8 +70,8 @@ $(document).ready(function(){
       }
     });
 
-
-    // StoriesListView - contains a list of StoryView items, to show the stories in the main mosaic page
+    //  StoriesListView:
+    //  Contains a list of StoryView items, to show the stories in the main mosaic page
     var StoriesListView = Backbone.View.extend({
       tagName: 'section',
       id: 'container',
@@ -103,7 +110,7 @@ $(document).ready(function(){
       save: function() {
         console.log('  ~ Saving new story');
         var story = new Story();
-        storyText = $('textarea[name=storytext]').val();
+        var storyText = $('textarea[name=storytext]').val();
 
         story.save(
         {
@@ -113,8 +120,11 @@ $(document).ready(function(){
         },
         {
           success: function(model, response) {
+            $('textarea[name=storytext]').val('');
             console.log('  ~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
+            console.log('  ~ Show the new [Full story]');
+            mosaicRouter.navigate("story/" + story.id, {trigger: true});
           },
           error: function (model, response) {
             console.log('  ! ERROR: Could not add the new story to database!');
@@ -131,7 +141,8 @@ $(document).ready(function(){
       }
     });
 
-    // StoryFullView - Single story view
+    //  StoryFullView:
+    //  Single story view
     var StoryFullView = Backbone.View.extend({
       tagName: 'section',
       className: 'item',
@@ -184,6 +195,12 @@ $(document).ready(function(){
     });
 
 
+    // =====================================================================
+    // =====================================================================
+    // = Instantiate Models, Collections and Views
+    // =====================================================================
+    // =====================================================================
+
     var story = new Story();
     var storiesCollection = new StoriesCollection({
       model: story
@@ -192,6 +209,7 @@ $(document).ready(function(){
     var storiesListView = new StoriesListView({
       collection: storiesCollection
     });
+
 
 
     // =====================================================================
@@ -211,10 +229,13 @@ $(document).ready(function(){
         "story/:id": "fullStory"
       },
 
+      initialize: function(){
+        appReady = false;
+      },
+
       index: function() {
         $("#articleFullView").remove();
         console.log('> Routing [Index] page');
-        appReady = false;
         if (appReady == false) {
           storiesCollection.fetch();
           $('body').append(storiesListView.el)
