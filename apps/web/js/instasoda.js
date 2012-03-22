@@ -368,12 +368,14 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       photoMakeDefault: function(e) {
         console.log('- changing default photo');
+        var _this = this;
         e.preventDefault();
         e.stopPropagation();
         
         // get photo id
         var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
         var photos = this.model.get('p');
+        console.log(photos);
         
         // process and update model photos        
         for(var i = 0; i < photos.length; i++) {
@@ -395,6 +397,9 @@ $(document).ready(function() {
             alert('Error: could not change photo status');            
           },
           success: function(model, res) {
+            // save locally
+            saveLocally("user", _this.model);
+            
             // update UI
             $('#userPhotos .photoMakeDefault').removeClass('hidden');
             $('#userPhotos .photoIsDefault').addClass('hidden');
@@ -495,7 +500,22 @@ $(document).ready(function() {
       // doSearch
       // -----------------------------------------------------------------------
       doSearch: function() {
-        IS.navigateTo('search/all');
+        // fetch search options
+        var options = new Object({
+            'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'male' : '0'),
+            'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'female' : '0'),
+            'nearMe': 0,
+            'ageMin': this.$("#ageRange").slider("values", 0),
+            'ageMax': this.$("#ageRange").slider("values", 1)
+        });     
+        
+        IS.navigateTo('search/'
+                      + options.w + '/'
+                      + options.m + '/'
+                      + options.nearMe + '/'
+                      + options.ageMin + '/'
+                      + options.ageMax
+        );
       }
     });
 
@@ -841,7 +861,7 @@ $(document).ready(function() {
         "search": "searchFilters",
         
         // Search results
-        "search/:id": "searchResults",
+        "search/:m/:w/:nearMe/:ageMin/:ageMax": "searchResults",
         
         // Beta message
         "beta": "beta",
@@ -890,7 +910,7 @@ $(document).ready(function() {
       
       // searchResults
       // -----------------------------------------------------------------------
-      searchResults: function(query) {
+      searchResults: function(m, w, nearMe, ageMin, ageMax) {
         if(!appReady) {
           router.navigate('', {trigger: true});
           return;
@@ -898,8 +918,11 @@ $(document).ready(function() {
         console.log('> routing search results page');
         usersCollection.fetch({
           data: {
-            m: 1,
-            f: 0
+            'm': m,
+            'w': w,
+            'nearMe': nearMe,
+            'ageMin': ageMin,
+            'ageMax': ageMax
           }
         });
         usersListView.render();
