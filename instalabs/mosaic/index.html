@@ -39,7 +39,7 @@
 		<script type="text/javascript" src="js/libs/underscore.js"></script>
 		<script type="text/javascript" src="js/libs/backbone-min.js"></script>
 		<script type="text/javascript" src="js/libs/mustache.js"></script>
-		<!--<script type="text/javascript" src="js/jquery.rte.js"></script>-->
+		<script type="text/javascript" src="js/jquery.rte.js"></script>
 		<script type="text/javascript" src="js/instasoda.js"></script>
 
 	</head>
@@ -97,7 +97,7 @@
         {{#comments}}<p><img src="img/anon.png" style="float: left;" /><span><strong>{{author}}</strong><br>{{content}}</span></p>{{/comments}}
         {{^comments}}<span class="noComments">No comments :-(</span>{{/comments}}
       </section>
-      <section class="commentBox item">
+      <section class="commentForm item">
         <h1>Your opinion:</h1>
         <form>
           <p>
@@ -112,7 +112,7 @@
   </script>
 
   <script id="tplSubmitStory" type="text/template">
-    <article class="doubleX storyBox item">
+    <article class="doubleX storyForm">
       <h1>Tell us your dating story:</h1>
       <form>
       <p>

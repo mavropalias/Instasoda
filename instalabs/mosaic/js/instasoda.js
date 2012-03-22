@@ -59,6 +59,7 @@ $(document).ready(function(){
       render: function () {
         var template = $('#tplStories').html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        console.log('  ~ Rendering [Model] view with ID: ' + this.model.id);
       }
     });
 
@@ -68,15 +69,16 @@ $(document).ready(function(){
       tagName: 'section',
       id: 'container',
       initialize: function (model) {
+        appReady = true;
         this.collection.bind('reset', this.render, this);
-        this.collection.bind('add', this.render, this);
+        this.collection.bind('add', this.renderNewStory, this);
       },
 
       events: {
         'click .button':'save'
       },
 
-      renderItem: function (model) {
+      renderStory: function (model) {
         var storyView = new StoryView({
           model: model
         });
@@ -84,13 +86,22 @@ $(document).ready(function(){
         $("#container").append(storyView.el);
       },
 
-      renderStoryBox: function () {
+      renderNewStory: function (model) {
+        var storyView = new StoryView({
+          model: model
+        });
+        storyView.render();
+        $(".storyForm").after(storyView.el);
+      },
+
+      renderStoryForm: function () {
         var template = $('#tplSubmitStory').html();
         $(this.el).html(template);
+        console.log('  ~ Rendering new story [Form] view');
       },
 
       save: function() {
-        console.log('  ~ saving story');
+        console.log('  ~ Saving new story');
         var story = new Story();
         storyText = $('textarea[name=storytext]').val();
 
@@ -102,21 +113,21 @@ $(document).ready(function(){
         },
         {
           success: function(model, response) {
-            console.log('SUCCESS: Added a new story to the database!');
+            console.log('  ~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
           },
           error: function (model, response) {
-            console.log('ERROR: Could not add a new story in the database!');
+            console.log('  ! ERROR: Could not add the new story to database!');
           }
         });
 
       },
 
       render: function () {
-        console.log('  ~ rendering welcome view');
+        console.log('  ~ Rendering [C]ollection view');
         currentLocation = window.location + "";
-        this.renderStoryBox();
-        this.collection.each(this.renderItem);
+        this.renderStoryForm();
+        this.collection.each(this.renderStory);
       }
     });
 
@@ -140,7 +151,7 @@ $(document).ready(function(){
         var comment = new Comment();
         commentText = $('textarea[name=commenttext]').val();
         commentAuthor = story.get('author');
-        console.log('Preparing to add a new comment to the story with ID: ' + story.id);
+        console.log('  ~ Preparing to add a new [Comment] to the story with ID: ' + story.id);
 
         comment.save(
         {
@@ -150,26 +161,25 @@ $(document).ready(function(){
         },
         {
           success: function (model, response){
-            // SUCCESS
-            console.log('Success!');
-            //story.fetch({ data: { id: story.id } });
+            console.log('  ~ SUCCESS: Added the new [Comment] to database');
             processComment();
           },
           error: function (model, response) {
-            alert('error');
+            console.log('  ! ERROR: Could not add [Comment] to database');
           }
         });
       },
 
       hideStory: function (e) {
-        $("#articleFullView").detach();
+        this.unbind().remove();
         $("body").css({'overflow':'auto'});
-        mosaicRouter.navigate("", {trigger: true, replace: true});
+        mosaicRouter.navigate("/");
       },
 
       render: function () {
         var template = $("#tplFullStory").html();
         $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        console.log('  ~ Rendering [Full story] view')
       }
     });
 
@@ -195,21 +205,24 @@ $(document).ready(function(){
       routes: {
         // Mosaic index
         "": "index",
+        "/": "index",
 
-        // A single story
+        // Mosaic Full story
         "story/:id": "fullStory"
       },
 
       index: function() {
-        console.log('> routing welcome page');
-        $("#articleFullView").detach();
-        storiesCollection.fetch();
-        $('body').append(storiesListView.el)
-        //storiesListView.render();
+        $("#articleFullView").remove();
+        console.log('> Routing [Index] page');
+        appReady = false;
+        if (appReady == false) {
+          storiesCollection.fetch();
+          $('body').append(storiesListView.el)
+        }
       },
 
       fullStory: function(id) {
-        console.log('> routing view story page');
+        console.log('> Routing [Full story] page');
         // Avoid empty collection *view* when hotlinking to a single story by
         // checking if the collection contains only 1 model. If it is, fetch
         // the collection and render the main view.
@@ -223,7 +236,7 @@ $(document).ready(function(){
           model: story
         });
         $('body').append(storyFullView.el);
-        $("#articleFullView").show();
+        $("#articleFullView").fadeIn();
         $("body").css({'overflow':'hidden'});
       }
 
@@ -235,6 +248,9 @@ $(document).ready(function(){
 
 	// initialise the rich text-area
 	// $('.rte-zone').rte();
+
+
+
 
   function processComment() {
     if ( $(".noComments").length > 0 ) {
