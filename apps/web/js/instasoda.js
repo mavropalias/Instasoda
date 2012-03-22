@@ -57,7 +57,7 @@ $(document).ready(function() {
     // UsersCollection - a collection of Users
     // =========================================================================
     var UsersCollection = Backbone.Collection.extend({
-        url: sApi + 'users/'
+        url: sApi + 'user/search'
     });
 
 
@@ -898,7 +898,8 @@ $(document).ready(function() {
         console.log('> routing search results page');
         usersCollection.fetch({
           data: {
-            id: '123'
+            m: 1,
+            f: 0
           }
         });
         usersListView.render();
