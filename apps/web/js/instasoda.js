@@ -391,7 +391,7 @@ $(document).ready(function() {
         // save model
         this.model.save({ 'p': photos }, {
           error: function(model, res) {
-            $('#userPhotos #' + photoId + ' .photoMakeDefault').html('Make profile default');
+            $('#userPhotos #' + photoId + ' .photoMakeDefault').html('make default');
             alert('Error: could not change photo status');            
           },
           success: function(model, res) {
@@ -404,7 +404,7 @@ $(document).ready(function() {
             
             $('#userPhotos #' + photoId + ' .photoMakeDefault').addClass('hidden');
             $('#userPhotos #' + photoId + ' .photoIsDefault').removeClass('hidden');
-            $('#userPhotos #' + photoId + ' .photoMakeDefault').html('Make profile default');
+            $('#userPhotos #' + photoId + ' .photoMakeDefault').html('make default');
           }
         });
       },
@@ -656,21 +656,23 @@ $(document).ready(function() {
         var template = $('#tplFacebookLikes').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
-        // show like images when they load
-        this.$('.fbLikePic img').load(function(){
-          $(this).parent().removeClass('hidden');
-          $(this).parent().parent().find('.fbLikePicLoading').remove();
-        });
-        
-        // reload like images until they load, while the API moves them to S3
-        this.$('.fbLikePic img').error(function(){
-          var _this = this;
-          setTimeout(function() {
-            var src = $(_this).attr('src');
-            var date = new Date();
-            $(_this).attr('src', src + "?v=" + date.getTime());
-          }, 2500);
-        });
+        if(this.model.get('u') === "") {
+          // show like images when they load
+          this.$('.fbLikePic img').load(function(){
+            $(this).parent().show();
+            $(this).parent().parent().find('.fbLikePicLoading').remove();
+          });
+          
+          // reload like images until they load, while the API moves them to S3
+          this.$('.fbLikePic img').error(function(){
+            var _this = this;
+            setTimeout(function() {
+              var src = $(_this).attr('src');
+              var date = new Date();
+              $(_this).attr('src', src + "?v=" + date.getTime());
+            }, 2500);
+          });
+        }
       }
     });
     

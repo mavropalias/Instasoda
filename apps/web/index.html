@@ -385,8 +385,10 @@
           {{#fL}}
             <li class="fbLike">
               <ul>
-                <li class="fbLikePicLoading"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/loading.gif" width=20 height=20></li>
-                <li class="fbLikePic hidden"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/l/{{_id}}.jpg" width=50 height=50></li>
+                {{^u}}
+                  <li class="fbLikePicLoading"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/loading.gif" width=20 height=20></li>
+                {{/u}}
+                <li class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/l/{{_id}}.jpg" width=50 height=50></li>
                 <li class="fbLikeName">{{n}}</li>
                 <li class="fbLikeNameFull">{{n}}</li>
               </ul>
