@@ -153,6 +153,7 @@ $(document).ready(function(){
       },
 
       initialize: function () {
+        this.render();
         this.model.bind('change', this.render, this);
         this.model.bind("add", this.render, this);
       },
@@ -182,7 +183,7 @@ $(document).ready(function(){
       },
 
       hideStory: function (e) {
-        this.unbind().remove();
+        this.remove();
         $("body").css({'overflow':'auto'});
         mosaicRouter.navigate("/");
       },
@@ -234,7 +235,6 @@ $(document).ready(function(){
       },
 
       index: function() {
-        $("#articleFullView").remove();
         console.log('> Routing [Index] page');
         if (appReady == false) {
           storiesCollection.fetch();
@@ -257,7 +257,7 @@ $(document).ready(function(){
           model: story
         });
         $('body').append(storyFullView.el);
-        $("#articleFullView").fadeIn();
+        $("#articleFullView").show();
         $("body").css({'overflow':'hidden'});
       }
 
