@@ -20,14 +20,13 @@
         try {
             $STH = $DB->prepare('SELECT 
               username AS u, 
-              age AS age, 
+              age AS ag, 
               gender AS fS, 
               email AS fE, 
               aboutMe AS a, 
               interestedInMen AS m, 
               interestedInWomen AS w, 
               photos, 
-              ip, 
               fbToken AS fTkn, 
               fbUid as fId, 
               fbLocation AS fCl, 
@@ -85,7 +84,7 @@
 				          $photo = new stdClass();
                   $photo->f = $element;
                   $photo->p = 1;
-                  $photo->d = 0;
+                  $photo->d = 1;
                   
                   array_push($row->p, $photo);
                 }
