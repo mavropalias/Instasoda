@@ -476,16 +476,25 @@ $(document).ready(function() {
       // render
       // -----------------------------------------------------------------------
       render: function() {
+        var _this = this;
         console.log('  ~ rendering search view');
+        
+        // determine default filter values
+        var nearMe = 0;
+        var userAge = _this.model.get('ag');
+        var ageMin = ( userAge > 0) ? userAge - 5 : 18;
+        var ageMax = ( userAge > 0) ? userAge + 5 : 60;
+        
+        // render template
         var template = $('#tplSearchFilters').html();
-        $(this.el).html(template);
+        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
         
         // enable jquery slider
         this.$("#ageRange").slider({
           range: true,
           min: 18,
           max: 99,
-          values: [26, 91],
+          values: [ageMin, ageMax],
           slide: function (event, ui) {
             $("#ageNum").val(ui.values[0] + " - " + ui.values[1] + " years old");
             // small easter egg :)
@@ -502,8 +511,8 @@ $(document).ready(function() {
       doSearch: function() {
         // fetch search options
         var options = new Object({
-            'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'male' : '0'),
-            'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'female' : '0'),
+            'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : '0'),
+            'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : '0'),
             'nearMe': 0,
             'ageMin': this.$("#ageRange").slider("values", 0),
             'ageMax': this.$("#ageRange").slider("values", 1)
@@ -831,7 +840,9 @@ $(document).ready(function() {
     // -----------------------------------------------------------------------
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
-    var searchFiltersView = new SearchFiltersView();
+    var searchFiltersView = new SearchFiltersView({
+      model: user
+    });
     var myProfileView = new MyProfileView({
       model: user
     });
