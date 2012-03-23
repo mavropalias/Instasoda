@@ -74,7 +74,7 @@
 
   <script id="tplStories" type="text/template">
       <h1><a>{{title}}</a></h1>
-      <cite>{{date}} by {{author}}</cite>
+      <cite>by&nbsp;<span>{{author}}</span> at {{date}}</cite>
       <span>
         <p>{{content}}</p>
       </span>
@@ -86,8 +86,8 @@
     <article>
       <div class="closeStory">close</div>
       <div class="widget"><img src="img/nolove.png" /></div>
-  		<h1>{{title}}</h1>
-  		<cite>by {{author}} at {{date}}</cite>
+  		<h1 class="fullTitle">{{title}}</h1>
+  		<cite>by&nbsp;&nbsp;<span>{{author}}</span> at {{date}}</cite>
   		<span>
   			<p>{{content}}</p>
   		</span>
@@ -101,11 +101,10 @@
         <h1>Your opinion:</h1>
         <form>
           <p>
-              <textarea placeholder="type your comment here..." name="commenttext" id="id_description"></textarea>
+            <textarea placeholder="type your comment here..." name="commenttext" id="id_description" class="commentText"></textarea>
           </p>
         </form>
         <button class="commentSubmit">add your comment</button>
-
       </section>
   		<footer></footer>
     </article>
@@ -116,10 +115,10 @@
       <h1>Tell us your dating story:</h1>
       <form>
       <p>
-          <textarea placeholder="type your story here..." name="storytext" id="id_description" class="rte-zone"></textarea>
+        <input type="text" name="storytitle" class="storyTitle" placeholder="Your storie's title..."></input>
+        <textarea placeholder="Your story..." name="storytext" id="id_description" class="storyText"></textarea>
       </p></form>
       <button class="button">submit your story</button>
-
     </article>
   </script>
 

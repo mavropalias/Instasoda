@@ -62,14 +62,25 @@
  ********************************/
 
 	body{
-		background:url("img/bg.png") repeat;
-	  font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
-	  font-weight:300;
-	  font-size:62.5%;
-	}
+    /*background:url("img/bg.png") repeat;
+    */
+    background: -webkit-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
+    background: -moz-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
+    background: -o-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
+    background: -ms-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
+    background: linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
+    font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+    font-weight:300;
+    font-size:62.5%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /*background-image: url('http://instasoda.com/area51/productdemo3/images/bubbles.png');
+    background-position: 0 0;
+    background-color: #007CA5;*/
+  }
 
 	#container{
-		margin:20px;
+		padding:20px;
     overflow:hidden;
 	}
 
@@ -92,7 +103,8 @@
 		text-align:center;
     background:#BE1D2C;
     border:none;
-    padding: 5px 20px;
+    height:40px;
+    padding: 0px 20px;
 		/** Make the text unselectable **/
 		-moz-user-select:none;
 		-webkit-user-select:none;
@@ -105,7 +117,8 @@
 
 nav{
 		background:#FFFFFF;
-    box-shadow:0 0 20px #888;
+    /*box-shadow:0 0 20px #888;*/
+    box-shadow:0 0 40px rgba(0, 52, 76, 0.7);
     font-size:2em;
     font-weight:700;
     height:70px;
@@ -113,7 +126,6 @@ nav{
     position:relative;
     width:100%;
     z-index:4;
-    font-family:"futura-pt";
     font-weight:500;
 }
 nav > ul{
@@ -181,47 +193,107 @@ nav #instasodaLogo {
  ********************************/
 
 	article.item{
+    position: relative;
 	  float:left;
-	  padding:10px;
+    width:260px;
+    height:325px;
+    margin:5px 30px 25px 5px;
+	  padding:20px 30px 20px 20px;
 		background:#fff;
-		width:300px;
-		height:300px;
-		margin:10px;
-    border-radius:3px;
-    border:1px solid #ddd;
-    box-shadow:0 2px 3px -3px #666;
+    border-right-width:2px;
+    border-style:solid;
+    border-color:#ffffff;
+    outline:5px solid white;
+    overflow-y:hidden;
+    -webkit-transition: border-color 0.2s ease;
+    -moz-transition: border-color 0.2s ease;
+    -o-transition: border-color 0.2s ease;
+    -ms-transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease;
 	}
 		article.item:hover{
-			cursor:pointer;
-		}
+      cursor:pointer;
+      border-color:#BE1D2C;
+      -webkit-transition: border-color 0.2s ease;
+      -moz-transition: border-color 0.2s ease;
+      -o-transition: border-color 0.2s ease;
+      -ms-transition: border-color 0.2s ease;
+      transition: border-color 0.2s ease;
+    }
+    article.item footer {
+      position: absolute; width: 100%; height: 100px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;
+    }
 
 	article.item h1, #articleFullView h1, .storyForm h1{
-		font-size:2em;
+    font-family:"liberation-serif", serif;
+    font-size:2.4em;
+    font-style:italic;
+    font-weight:700;
+    margin-bottom:0.1em;
 	}
 
-	article.item cite, #articleFullView cite{
-		font-size:1.2em;
-	}
+  article.item cite, #articleFullView cite{
+    font-size:1.2em;
+    color: #666666;
+    margin-bottom: 0.2em;
+  }
+    article.item cite > span, #articleFullView cite > span{
+      background: #EEE;
+      padding: 2px 7px;
+      border-radius: 9px;
+      font-style: normal;
+    }
+
+  article.item span p{
+    height:255px;
+    overflow-y:hidden;
+  }
 
 	article.item span p, #articleFullView span p{
-		font-size:1.5em;
+		font-size:1.3em;
 		padding:10px 0;
+    display:block;
+    margin-top:0.2em;
+    line-height:1.5em;
 	}
 
 	.storyForm{
-		background: url(img/submit_bg.png) no-repeat 0 -100px!important;
-    border: 1px solid #ff9e9e;
-		cursor:default !important;
+    position:relative;
+    z-index:1;
     float:left;
-    padding:10px;
     width:300px;
-    height:300px;
-    margin:10px;
-    border-radius:3px;
-    box-shadow:0 2px 3px -3px #666;
+    height:295px;
+    margin:10px 5px 10px 10px;
+    padding:15px;
+    background:#FFFFFF;
+    border:15px solid #BE1D2C;
+    outline:10px solid #fff;
 	}
+    .storyForm button{
+      position: absolute;
+      bottom: 0px;
+      left: 25px;
+      margin: 0;
+      -webkit-transition: box-shadow 0.3s ease;
+      -moz-transition: box-shadow 0.3s ease;
+      -o-transition: box-shadow 0.3s ease;
+      -ms-transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease;
+    }
+    .storyForm button:hover{
+      box-shadow:0 5px 16px -7px #000 inset;
+      -webkit-transition: box-shadow 0.3s ease;
+      -moz-transition: box-shadow 0.3s ease;
+      -o-transition: box-shadow 0.3s ease;
+      -ms-transition: box-shadow 0.3s ease;
+      transition: box-shadow 0.3s ease;
+    }
     .storyForm h1{
       padding-left:10px;
+      font-family: "liberation-serif",serif;
+      font-weight: 700;
+      font-style: italic;
+      font-size: 3em;
     }
 
   .commentForm{
@@ -231,9 +303,6 @@ nav #instasodaLogo {
       padding-bottom:10px;
     }
     .commentForm textarea{
-      width:695px;
-      min-width:695px;
-      height:100px;
       resize:none;
     }
     .commentForm button{
@@ -241,29 +310,55 @@ nav #instasodaLogo {
     }
 
 	.doubleX{
-		width: 642px!important;
+		width: 620px!important;
 	}
 /********************************
  * TEXT EDITOR
  ********************************/
-
-	.rte-zone{
-		width:600px;
-	  max-width:600px;
-	  margin:10px;
-	  padding:10px;
-	  border-top:1px solid #ccc;
-	  border-left:1px solid #ddd;
-	  border-right:1px solid #ddd;
-	  border-bottom:1px solid #eee;
+  .storyTitle{
+    width:100%;
+    padding:5px 0 10px;
+    clear:both;
+    height:20px;
+    max-height:20px;
+    border:none;
+    border-bottom:1px solid #eee;
+    display:block;
+    outline:none;
+    font-family:helvetica, arial, sans-serif;
+    font-size:1.6em;
+  }
+	.storyText, .commentText{
+		width:100%;
+    height:120px;
+	  padding:10px 0;
 	  clear:both;
-	  height:180px;
-	  max-height:180px;
 	  display:block;
-	  resize: none;
-	  box-shadow:0px 2px 4px #ddd inset;
-	  background:rgba(255,255,255,0.7);
+    border:none;
+    outline:none;
+	  resize:none;
+    font-family:helvetica, arial, sans-serif;
+    font-size:1.6em;
 	}
+
+  .commentText{
+    height: 160px;
+  }
+
+  form{
+    padding:10px;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #eee;
+    clear:both;
+    height:180px;
+    max-height:180px;
+    display:block;
+    box-shadow:0px 2px 4px #ddd inset;
+    background:rgba(255,255,255,0.7);
+
+  }
 	.storyNickname{
 		margin:0 0 0 10px;
 		padding:0 0.5em;
@@ -291,7 +386,7 @@ nav #instasodaLogo {
     overflow-y:scroll;
 	}
     #curtain{
-      background:rgba(255,255,255,0.8);
+      background:rgba(255,255,255,0.9);
       position:fixed;
       top:0;
       left:0;
@@ -319,7 +414,7 @@ nav #instasodaLogo {
     .fullViewSeparator{
       height:1px;
       background:#BE1D2C;
-      margin:20px 0 25px;
+      margin:15px 0 20px;
     }
 
     #articleFullView > article > .widget{
@@ -337,7 +432,7 @@ nav #instasodaLogo {
       padding:0 10px;
       border-bottom-right-radius:8px;
       border-top-right-radius:8px;
-      box-shadow:8px 0px 12px -7px rgba(34, 25, 25, 0.8) inset;
+      box-shadow:13px 0 12px -12px rgba(34, 25, 25, 1) inset;
       cursor:pointer;
     }
 
@@ -348,16 +443,18 @@ nav #instasodaLogo {
       left:50%;
       position:absolute;
       top:2em;
-      width:700px;
+      width:500px;
       z-index:999;
-      margin-left:-350px;
-      border:1px solid #ddd;
+      margin-left:-250px;
+      border:20px solid rgba(0, 0, 0, 0.54);
     }
-      #articleFullView > article > h1{
-        font-size:2.4em;
+      #articleFullView > article > .fullTitle{
+        font-size:3em;
       }
       #articleFullView > article > span > p{
-        font-size:1.8em;
+        margin-top:0.5em;
+        font-size:1.65em;
+        font-family: "liberation-serif", serif;
       }
       #articleFullView > article > #comments{
         margin:5px 0 10px;
@@ -376,15 +473,15 @@ nav #instasodaLogo {
           margin:10px 0 20px;
           background:#fff;
           overflow:hidden;
-          cursor: default;
         }
-          #articleFullView > article > #comments p:hover{
-            background:#f5f5f5;
-          }
           #articleFullView > article > #comments p > span{
-            float:left;
-            padding: 5px 10px;
-            font-size:1.2em;
+            float:right;
+            width:410px;
+            min-height:70px;
+            margin-top:-3px;
+            padding: 0px 10px;
+            font-size:1.3em;
+            line-height:1.3em;
           }
             #articleFullView > article > #comments p > span strong{
               font-weight: bold;
