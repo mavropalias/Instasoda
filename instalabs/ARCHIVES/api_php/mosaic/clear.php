@@ -6,12 +6,14 @@
     	
 		// delete all posts
         try {
-            $STH = $DB->prepare('DELETE FROM posts, comments');
-            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH = $DB->prepare('DELETE FROM comments');
+            $STH->execute($data);
+			
+            $STH = $DB->prepare('DELETE FROM posts');
             $STH->execute($data);
         } catch (PDOException $e) {
             header( 'HTTP/1.1 400: BAD REQUEST' );
-            echo json_encode(array("status"=>"Could not read database."));
+            echo json_encode(array("status"=>$e));
             file_put_contents('InstasodaPDOErrors.txt', $e->getMessage(), FILE_APPEND);
             die();
         }
