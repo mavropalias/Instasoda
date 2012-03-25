@@ -158,6 +158,7 @@
   .animated { .transition(0.4s); }
   .hidden { display: none; }
   .transparent { opacity: 0; }
+  .clearBoth { clear: both; }
   
 
 // =============================================================================
@@ -513,6 +514,91 @@
 
 
 // =============================================================================
+// PHOTO UPLOADER
+// =============================================================================  
+  
+  #uploadPhoto {
+
+    #uploadWidget {
+    width: 150px;
+    height: 152px;
+      
+      .qq-uploader {
+        position:relative;
+        width: 100%;
+      }
+      
+      .qq-upload-drop-area {
+        .border-radius(8px);
+        background: url(../img/uploadPhotoBg.png) center top no-repeat #fff;
+        display: block !important;
+        position: absolute;
+        top: 72px;
+        left: 0px;
+        right: 0px;
+        height: 72px;
+        z-index: 2;
+        text-align:center;
+        border: 1px dashed #ccc;
+      }
+      
+      .qq-upload-drop-area-active {
+        background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
+      }
+      
+      .working {
+        background: url(../img/loading.gif) center center no-repeat transparent;
+      }
+      
+      .qq-upload-list {
+        display: none;
+        margin: 100px 35px 0;
+        padding: 0;
+        list-style: disc;
+        
+        li {
+          margin: 0;
+          padding: 0;
+          line-height: 15px;
+          font-size: 12px;
+        }
+      }
+      
+      .qq-upload-file,
+      .qq-upload-spinner,
+      .qq-upload-size,
+      .qq-upload-cancel,
+      .qq-upload-failed-text {
+        margin-right: 7px;
+      }
+      
+      .qq-upload-file {}
+      
+      .qq-upload-spinner {
+        display: inline-block;
+        background: url("../img/loading.gif");
+        width: 15px;
+        height: 15px;
+        vertical-align: text-bottom;
+      }
+      
+      .qq-upload-size,
+      .qq-upload-cancel {
+        font-size: 11px;
+      }
+      
+      .qq-upload-failed-text {
+        display:none;
+      }
+      
+      .qq-upload-fail .qq-upload-failed-text {
+        display:inline;
+      }
+    }
+  }
+  
+
+// =============================================================================
 // SEARCH PAGE
 // =============================================================================
   
@@ -604,93 +690,17 @@
       color: #00364D;
     } 
   }
-
+  
   
 // =============================================================================
-// PHOTO UPLOADER
-// =============================================================================  
-  
-  #uploadPhoto {
+// VIEWING OTHER USER PROFILES
+// =============================================================================
 
-    #uploadWidget {
-    width: 150px;
-    height: 152px;
-      
-      .qq-uploader {
-        position:relative;
-        width: 100%;
-      }
-      
-      .qq-upload-drop-area {
-        .border-radius(8px);
-        background: url(../img/uploadPhotoBg.png) center top no-repeat #fff;
-        display: block !important;
-        position: absolute;
-        top: 72px;
-        left: 0px;
-        right: 0px;
-        height: 72px;
-        z-index: 2;
-        text-align:center;
-        border: 1px dashed #ccc;
-      }
-      
-      .qq-upload-drop-area-active {
-        background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
-      }
-      
-      .working {
-        background: url(../img/loading.gif) center center no-repeat transparent;
-      }
-      
-      .qq-upload-list {
-        display: none;
-        margin: 100px 35px 0;
-        padding: 0;
-        list-style: disc;
-        
-        li {
-          margin: 0;
-          padding: 0;
-          line-height: 15px;
-          font-size: 12px;
-        }
-      }
-      
-      .qq-upload-file,
-      .qq-upload-spinner,
-      .qq-upload-size,
-      .qq-upload-cancel,
-      .qq-upload-failed-text {
-        margin-right: 7px;
-      }
-      
-      .qq-upload-file {}
-      
-      .qq-upload-spinner {
-        display: inline-block;
-        background: url("../img/loading.gif");
-        width: 15px;
-        height: 15px;
-        vertical-align: text-bottom;
-      }
-      
-      .qq-upload-size,
-      .qq-upload-cancel {
-        font-size: 11px;
-      }
-      
-      .qq-upload-failed-text {
-        display:none;
-      }
-      
-      .qq-upload-fail .qq-upload-failed-text {
-        display:inline;
-      }
-    }
+  #connectOptions {
+    overflow: hidden;
+    clear: both;
+    margin-bottom: 20px;
   }
-  
-
   
   
   
