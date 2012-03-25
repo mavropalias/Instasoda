@@ -153,7 +153,6 @@ $(document).ready(function(){
       },
 
       initialize: function () {
-        this.render();
         this.model.bind('change', this.render, this);
         this.model.bind("add", this.render, this);
       },
@@ -210,6 +209,10 @@ $(document).ready(function(){
       collection: storiesCollection
     });
 
+    var storyFullView = new StoryFullView({
+      model: story
+    });
+
 
 
     // =====================================================================
@@ -251,12 +254,14 @@ $(document).ready(function(){
           $("body").append(storiesListView.el)
         }
 
-        story.fetch({ data: { id: id } });
-        var storyFullView = new StoryFullView({
-          model: story
+        story.fetch({
+          data: { id: id },
+          success: function() {
+            $('body').append(storyFullView.el);
+            $("#articleFullView").show();
+          }
         });
-        $('body').append(storyFullView.el);
-        $("#articleFullView").show();
+        console.log('Append and show');
         $("body").css({'overflow':'hidden'});
       }
 
