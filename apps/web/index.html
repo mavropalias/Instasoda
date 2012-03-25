@@ -241,48 +241,46 @@
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersProfile" type="text/template">
-        <h1>{{u}}, {{ag}}</h1>
-        <div id="basicInfo" class="isColumn1 isRow1 hasRightPadding">
-          <p>
-            <button onclick="IS.navigateTo('#beta', 'Almost there!');">Send message</button>
-            <button onclick="IS.navigateTo('#beta', 'Almost there!');">+ Favourite</button>
-            <button onclick="IS.navigateTo('#beta', 'Almost there!');">Similar users</button>
-          </p>
-          <p>
-            <h2>{{u}}'s basic info</h2>
-            <p>
-              <ul>
-                <li>Age: <span class="facebookData">{{ag}}</span></li>
-                <li>Gender: <span class="facebookData">{{fS}}</span></li>
-                <li>Interested in: {{#w}}women{{/w}} {{#m}}men{{/m}}</li>
-                <li>Relationship status: {{#fRs}}<span class="facebookData">{{fRs}}</span>{{/fRs}}{{^fRs}}Unknown{{/fRs}}</li>
-                <li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}Unknown{{/fCl}}</span></li>
-              </ul>
-            </p>
-          </p>
-          <p>
-            <h2>A little bit about {{u}}</h2>
-            <p>       
-              {{#a}}
-                {{a}}
-              {{/a}}     
-              {{^a}}
-                 {{u}} has not entered anything yet.
-              {{/a}}
-            </p>
-          </p>
+		
+        <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</h1>
+		
+		<div id="connectOptions">
+		  <button class="left" onclick="IS.navigateTo('beta');">Send message</button>
+		  <button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
+		  <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>
+		</div>
+		
+        <div id="basicInfo" class="column paddingRight2x">
+		  <h2>Basic info</h2>
+		  <ul>
+			<li>Age: <span class="facebookData">{{ag}}</span></li>
+			<li>Gender: <span class="facebookData">{{fS}}</span></li>
+			<li>Interested in: {{#w}}women{{/w}} {{#m}}men{{/m}}</li>
+			<li>Relationship status: {{#fRs}}<span class="facebookData">{{fRs}}</span>{{/fRs}}{{^fRs}}Unknown{{/fRs}}</li>
+			<li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}Unknown{{/fCl}}</span></li>
+		  </ul>
+		</div>
+		  
+		<div class="column">
+		  <h2>A little bit about {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}</h2>
+		  <p>       
+			{{#a}}
+			  {{a}}
+			{{/a}}     
+			{{^a}}
+			   Nothing yet! :(
+			{{/a}}
+		  </p>
         </div>
         
-        <div class="profilePicsData profilePicsDataSmall isColumn2 isRow1 hasRightPadding isAnimated hasEasing">
+        <div>
           <p>
-            <h2>{{u}}'s best moments!</h2>                        
+            <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s best moments!</h2>
             <p>
               <ul id="userPhotos">
-                {{#p}}
-                  <li class='userPicture drop-shadow round animated'>
-                    <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150 class="transparent">
-                  </li>
-                {{/p}}
+                <div id="userPhotosList">
+                  <!-- USER PHOTOS -->                  
+                </div>
               </ul>
             </p>
           </p>
@@ -291,22 +289,11 @@
         <div>
           <p>
             <h2>Likes</h2>
-            <span class="tip">Likes and interests imported from your Facebook profile.</span>
+            <span class="tip">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s likes and interests.</span>
           </p>
-          <ul id="facebookLikesContainer">
-            {{#fL}}
-              <li class="fbLike">
-                <ul>
-                  <li class="fbLikePic"><img src="https://graph.facebook.com/{{_id}}/picture?type=square" width=50 height=50></li>
-                  <li class="fbLikeName">{{n}}</li>
-                  <li class="fbLikeNameFull">{{n}}</li>
-                </ul>
-              </li>
-            {{/fL}}
-            {{^fL}}
-              No likes.
-            {{/fL}}
-          </ul>
+          <div id="facebookLikes">
+            <!-- FACEBOOK LIKES -->
+          </div>
         </div>
       </script>
 
