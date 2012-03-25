@@ -274,7 +274,7 @@ $(document).ready(function(){
 
 
 
-/*
+
   function processComment() {
     if ( $(".noComments").length > 0 ) {
       $(".noComments").slideUp(300, function () {
@@ -291,5 +291,5 @@ $(document).ready(function(){
       $(this).slideDown(300);
     })
   }
-*/
+
 });
