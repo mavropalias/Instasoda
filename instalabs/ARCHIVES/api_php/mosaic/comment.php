@@ -14,13 +14,21 @@
         $item = json_decode($rawJSONString);
 				
         $data = array( 
-        		'postId' => $item->postId,
+        	'postId' => $item->postId,
             'author' => $item->author,
             'content' => $item->content,
             'ip' => $_SERVER['REMOTE_ADDR'],
-				);
+		);
+		
+        $data2 = array( 
+        	'postId' => $item->postId,
+		);
 
         try {
+            $STH = $DB->prepare('UPDATE posts SET comments=comments+1 WHERE id=:postId');
+            $STH->setFetchMode(PDO::FETCH_OBJ);
+            $STH->execute($data2);
+			
             $STH = $DB->prepare('INSERT INTO comments (postId, author, content, ip) VALUES (:postId, :author, :content, :ip)');
             $STH->setFetchMode(PDO::FETCH_OBJ);
             $STH->execute($data);
