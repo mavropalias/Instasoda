@@ -5,6 +5,13 @@
   <!-- TITLE -->
   <title>Instasoda - fizzy not fussy!</title>
   
+  <!-- Scripts for the less fortunate browsers -->
+  <!--[if lt IE 9]>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" type="text/javascript"></script>
+	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/ie7-squish.js" type="text/javascript"></script>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Instasoda" />
   <meta property="og:type" content="website" />
@@ -24,7 +31,6 @@
   <link rel="stylesheet" type="text/css" href="css/fancybox/jquery.fancybox.css" />
   <link rel="stylesheet" type="text/css" href="css/fancybox/jquery.fancybox-thumbs.css" />
   <link rel="stylesheet" type="text/css" href="css/instasoda.css">
-  <link rel="stylesheet" type="text/css" href="css/homePage.css" />
   
   <!-- SCRIPTS -->
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
@@ -39,7 +45,7 @@
   <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
 
-  <!--<script defer type="text/javascript" src="js/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="js/cssrefresh.js"></script>
   
   
   <!-- OPEN GRAPH -->
@@ -145,66 +151,73 @@
         <button id="fb-auth">Login with Facebook</button>
         <div id="fbResponse"></div>
       </script>
-  
-  
+	  
+	  
     <!------------------------------------------------------------------------>
-    <!-- SEARCH FILTERS -->
+    <!-- SEARCH VIEW -->
     <!------------------------------------------------------------------------>
     
-      <script id="tplSearchFilters" type="text/template">
-        <ul class="isColumn1">
-          <li>
-            <h2>I’m interested in meeting...</h2>
-            Choose either or both.
-            <p>
-              <label><input type="checkbox" name="interestedInWomen" value="true" {{#w}}checked{{/w}}>Women</label>
-              <label><input type="checkbox" name="interestedInMen" value="true" {{#m}}checked{{/m}}>Men</label>
-            </p>
-          </li>
-          <li>
-            <h2>I’m interested in people who are aged...</h2>
-            Select an approximate age range on the slider below.
-            <p>
-              <input type="text" id="ageNum" />          
-            </p>
-            <div id="ageRange"></div>
-          </li>
-          <li>
-            <h2>I’d like to meet people who live...</h2>
-            'Near me' will bring up people that live around your area.
-            <p>
-              <label><input type="radio" name="searchLocation" value="near" disabled />Near me</label>
-              <label><input type="radio" name="searchLocation" value="global" checked />Everywhere</label>
-            </p>
-          </li>
-          <li>
-            <p>
-              <button id="doSearch">Search for matches!</button>
-            </p>
-          </li>
-        </ul>
-        <ul class="isColumn3" style="position:relative;">
-          <li>
-            <h2>My favourite things are...</h2>
-            Which of your Facebook likes are the most important to you.
-          </li>
-          <li>
-            <p>
-              Due to the beta nature of the app and the low number of users, we'll show you all members in the search results.
-            </p>
-          </li>
-          <li>
-           <button id="buttonAddLikes">+ Add likes</button>
-          </li>
-        </ul>
+      <script id="tplSearch" type="text/template">
+        <div id="searchFilters"></div>
+		<div id="searchResults"></div>
       </script>
   
   
     <!------------------------------------------------------------------------>
-    <!-- VIEW USER PREVIEW -->
+    <!-- SEARCH FILTERS VIEW -->
+    <!------------------------------------------------------------------------>
+    
+      <script id="tplSearchFilters" type="text/template">
+        <section>
+		  <h3>I’m interested in meeting...</h3>
+		  <span class="tip">Choose either or both.</span>
+		  <p>
+			<label>
+			  <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
+			  Women
+			</label>
+			<label>
+			  <input type="checkbox" name="interestedInMen" value="true" {{#so.m}}checked{{/so.m}}>
+			  Men
+			</label>
+		  </p>
+		</section>
+		<section>
+		  <h3>Who are aged...</h3>
+		  <span class="tip">Set an approximate age range on the slider.</span>
+		  <p>
+			<h3 id="ageNum"></h3>
+			<div id="ageRange"></div>
+		  </p>
+		</section>
+		<!--<section>
+		  <h3>I’d like to meet people who live...</h3>
+		  <span class="tip">'Near me' will bring up people that live around your area.</span>
+		  <p>
+			<label><input type="radio" name="searchLocation" value="near" disabled />Near me</label>
+			<label><input type="radio" name="searchLocation" value="global" checked />Everywhere</label>
+		  </p>
+		</section>-->
+		<section>
+		  <p>
+			<button id="doSearch">Search for matches!</button>
+		  </p>
+		</section>
+		<!--<section>
+		  <h3>My favourite things are...</h3>
+		  <span class="tip">Which of your Facebook likes are the most important to you.</span>
+		</section>
+		<section>
+          <button id="buttonAddLikes">+ Add likes</button>
+		</section>-->
+      </script>
+  
+  
+    <!------------------------------------------------------------------------>
+    <!-- SEARCH RESULT -->
     <!------------------------------------------------------------------------>
       
-      <script id="tplUsersPreview" type="text/template">
+      <script id="tplSearchResult" type="text/template">
         <ul>
           {{#p}}
             {{#d}}
@@ -224,7 +237,7 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- VIEW USER FULL PROFILE -->
+    <!-- USER PROFILE VIEW -->
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersProfile" type="text/template">
