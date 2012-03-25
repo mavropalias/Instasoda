@@ -112,16 +112,16 @@ $(document).ready(function(){
         console.log('  ~ Preparing new story');
         var story = new Story();
         var storyText = $('textarea[name=storytext]').val();
-        var storyTitle = $('input[name=storytitle]').val();
+
         story.save(
         {
           'author':'Konstantinos',
           'content':storyText,
-          'title':storyTitle,
+          'title':'This is a story title',
         },
         {
           success: function(model, response) {
-            $('textarea[name=storytext], input[name=storytitle]').val('');
+            $('textarea[name=storytext]').val('');
             console.log('   ~~~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
             console.log('  > Navigate to the new [Full story]');
@@ -173,7 +173,6 @@ $(document).ready(function(){
         {
           success: function (model, response){
             console.log('   ~~~ SUCCESS: Added the new [Comment] to database');
-            $('textarea[name=commenttext]').val('');
             processComment();
           },
           error: function (model, response) {

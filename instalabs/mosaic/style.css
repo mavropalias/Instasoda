@@ -229,7 +229,7 @@ nav #instasodaLogo {
     font-size:2.4em;
     font-style:italic;
     font-weight:700;
-    margin-bottom:0.1em;
+    margin-bottom:0.2em;
 	}
 
   article.item cite, #articleFullView cite{
@@ -289,11 +289,11 @@ nav #instasodaLogo {
       transition: box-shadow 0.3s ease;
     }
     .storyForm h1{
-      padding-left:10px;
       font-family: "liberation-serif",serif;
       font-weight: 700;
       font-style: italic;
       font-size: 3em;
+      margin-bottom:0.4em;
     }
 
   .commentForm{
