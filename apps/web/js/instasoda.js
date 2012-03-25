@@ -198,7 +198,7 @@ $(document).ready(function() {
         'click .photoMakeDefault': 'photoMakeDefault',
         'click .photoDelete': 'photoDelete'
       },
-
+      
       // initialize
       // -----------------------------------------------------------------------
       initialize: function(options) {
@@ -206,7 +206,7 @@ $(document).ready(function() {
         
         // bindings
         _.bindAll(this);
-                
+        
         // initialize sub-views
         this.facebookLikesView = new FacebookLikesView({ model: this.model });
         this.myPhotosView = new MyPhotosView({ model: this.model });
@@ -218,9 +218,9 @@ $(document).ready(function() {
         var _this = this;
         console.log('  ~ rendering MyProfileView');
         
-        // render master template
+        // render template
         var template = $('#tplSettings').html();
-        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
         // render sub views
         this.myPhotosView.setElement(this.$('#userPhotosList')).render();
@@ -458,6 +458,38 @@ $(document).ready(function() {
     });
     
     // =========================================================================
+    // SearchView
+    // =========================================================================
+    var SearchView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing SearchView');
+        
+        // bindings
+        _.bindAll(this);
+        
+        // initialize sub-views
+        this.searchResultsView = new SearchResultsView({ collection: this.collection });
+        this.searchFiltersView = new SearchFiltersView({ model: this.model });
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering SearchView');
+        
+        // render template
+        var template = $('#tplSearch').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // render sub views
+        this.searchFiltersView.setElement(this.$('#searchFilters')).render();
+        this.searchResultsView.setElement(this.$('#searchResults'));
+      }
+    });
+    
+    // =========================================================================
     // SearchFilters view
     // =========================================================================
     var SearchFiltersView = Backbone.View.extend({
@@ -470,6 +502,7 @@ $(document).ready(function() {
       // initialize
       // -----------------------------------------------------------------------
       initialize: function() {
+        console.log('  ~ initializing SearchFiltersView');
         _.bindAll(this);
       },
 
@@ -477,33 +510,30 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       render: function() {
         var _this = this;
-        console.log('  ~ rendering search view');
+        console.log('  ~ rendering SearchFiltersView');
         
         // determine default filter values
-        var nearMe = 0;
-        var userAge = _this.model.get('ag');
-        var ageMin = ( userAge > 0) ? userAge - 5 : 18;
-        var ageMax = ( userAge > 0) ? userAge + 5 : 60;
+        var userSearchOptions = this.model.get('so');
         
         // render template
         var template = $('#tplSearchFilters').html();
-        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
         // enable jquery slider
         this.$("#ageRange").slider({
           range: true,
           min: 18,
-          max: 99,
-          values: [ageMin, ageMax],
+          max: 70,
+          values: [userSearchOptions.ageMin, userSearchOptions.ageMax],
           slide: function (event, ui) {
-            $("#ageNum").val(ui.values[0] + " - " + ui.values[1] + " years old");
+            $("#ageNum").text(ui.values[0] + " - " + ui.values[1] + " years old");
             // small easter egg :)
             if (ui.values[1] == 99) {
-              $("#ageNum").val(ui.values[0] + " - " + ui.values[1] + " years old (wow!)");
+              $("#ageNum").text(ui.values[0] + " - " + ui.values[1] + " years old (wow!)");
             }
           }
         });
-        this.$("#ageNum").val(this.$("#ageRange").slider("values", 0) + " - " + this.$("#ageRange").slider("values", 1) + " years old");
+        this.$("#ageNum").text(this.$("#ageRange").slider("values", 0) + " - " + this.$("#ageRange").slider("values", 1) + " years old");
       },
       
       // doSearch
@@ -511,23 +541,60 @@ $(document).ready(function() {
       doSearch: function() {
         // fetch search options
         var options = new Object({
-            'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : '0'),
-            'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : '0'),
-            'nearMe': 0,
-            'ageMin': this.$("#ageRange").slider("values", 0),
-            'ageMax': this.$("#ageRange").slider("values", 1)
-        });     
+          'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : 0),
+          'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : 0),
+          'nearMe': 0,
+          'ageMin': this.$("#ageRange").slider("values", 0),
+          'ageMax': this.$("#ageRange").slider("values", 1)
+        });
+        
+        // save these preferences into the user model
+        this.model.set({ so: options });
+        this.model.save();
+        saveLocally('user', user);
         
         IS.navigateTo('search/'
-                      + options.w + '/'
                       + options.m + '/'
+                      + options.w + '/'
                       + options.nearMe + '/'
                       + options.ageMin + '/'
                       + options.ageMax
         );
       }
     });
+    
+    // =========================================================================
+    // SearchResultsView - contains a list of UsersView items,
+    // used for search results / matches
+    // =========================================================================
+    var SearchResultsView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing SearchResultsView');
+        
+        _.bindAll(this);
+        this.collection.bind('reset', this.render);
+      },
 
+      // renderItem
+      // -----------------------------------------------------------------------
+      renderItem: function(model) {
+        var usersView = new UsersView({
+            model: model
+        });
+        usersView.render();
+        this.$el.append(usersView.el);
+      },
+
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering SearchResultsView');
+        this.$el.html('');
+        this.collection.each(this.renderItem);
+      }
+    });
     
     // =========================================================================
     // UsersView - a basic view of a user appearing in the search results
@@ -553,60 +620,8 @@ $(document).ready(function() {
       // render
       // -----------------------------------------------------------------------
       render: function() {
-        var template = $('#tplUsersPreview').html();
-        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
-      }
-    });
-
-    // =========================================================================
-    // UsersListView - contains a list of UsersView items,
-    // used for search results / matches
-    // =========================================================================
-    var UsersListView = Backbone.View.extend({
-      // initialize
-      // -----------------------------------------------------------------------
-      initialize: function() {
-        _.bindAll(this);
-        this.collection.bind('reset', this.render);
-      },
-
-      // renderItem
-      // -----------------------------------------------------------------------
-      renderItem: function(model) {
-        var usersView = new UsersView({
-            model: model
-        });
-        usersView.render();
-        //WinJS.Utilities.setInnerHTMLUnsafe(this.el, $(usersView.el).html());
-        $('#searchResults').append(usersView.el);
-      },
-
-      // render
-      // -----------------------------------------------------------------------
-      render: function() {
-        console.log('  ~ rendering search results view');
-        //this.collection.each(this.renderItem);
-        this.collection.each(function(a, b, c) {
-          //parse photos string and convert it to json
-          var imagesArray = new Array();
-          if (a.get('photos') != "" && a.get('photos') != null) {
-            var images = a.get('photos').split(',');
-            for (var i = 0; i < (images.length - 1); i++) {
-              imagesArray[i] = sApiPhotos + images[i];
-
-              // set 'main' photo
-              if (i === 0) a.set({
-                'profilePhoto': sApiPhotos + images[i]
-              });
-            }
-          }
-          a.set({
-              'photosArray': imagesArray
-          });
-          //a.renderItem;
-        });
-        $(this.el).html('<ul id="searchResults" class="isColumn1 isRow1"></ul>');
-        this.collection.each(this.renderItem);
+        var template = $('#tplSearchResult').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
       }
     });
     
@@ -840,14 +855,12 @@ $(document).ready(function() {
     // -----------------------------------------------------------------------
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
-    var searchFiltersView = new SearchFiltersView({
-      model: user
-    });
     var myProfileView = new MyProfileView({
       model: user
     });
-    var usersListView = new UsersListView({
+    var searchView = new SearchView({
       collection: usersCollection,
+      model: user
     });
 
 
@@ -869,10 +882,10 @@ $(document).ready(function() {
         "me": "myProfile"
         ,
         // Search filters
-        "search": "searchFilters",
+        "search": "search",
         
         // Search results
-        "search/:m/:w/:nearMe/:ageMin/:ageMax": "searchResults",
+        "search/:m/:w/:nearMe/:ageMin/:ageMax": "search",
         
         // Beta message
         "beta": "beta",
@@ -905,40 +918,41 @@ $(document).ready(function() {
         $('#content > div').detach();
         $('#content').append(myProfileView.el);
       },
-      
-      // searchFilters
+           
+      // search
       // -----------------------------------------------------------------------
-      searchFilters: function() {
+      search: function(m, w, nearMe, ageMin, ageMax) {
         if(!appReady) {
           router.navigate('', {trigger: true});
           return;
         }
-        console.log('> routing search filters page');
-        searchFiltersView.render();
-        $('#content > div').detach();
-        $('#content').append(searchFiltersView.el);
-      },
-      
-      // searchResults
-      // -----------------------------------------------------------------------
-      searchResults: function(m, w, nearMe, ageMin, ageMax) {
-        if(!appReady) {
-          router.navigate('', {trigger: true});
-          return;
+        console.log('> routing search page');
+        
+        // fetch options - if null then load user defaults
+        if(ageMin > 0) {
+          usersCollection.fetch({
+            data: {
+              'm': m,
+              'w': w,
+              'nearMe': nearMe,
+              'ageMin': ageMin,
+              'ageMax': ageMax
+            }
+          });
+        } else {
+          usersCollection.fetch({
+            data: {
+              'm': user.get('so').m,
+              'w': user.get('so').w,
+              'nearMe': user.get('so').nearMe,
+              'ageMin': user.get('so').ageMin,
+              'ageMax': user.get('so').ageMax
+            }
+          });
         }
-        console.log('> routing search results page');
-        usersCollection.fetch({
-          data: {
-            'm': m,
-            'w': w,
-            'nearMe': nearMe,
-            'ageMin': ageMin,
-            'ageMax': ageMax
-          }
-        });
-        usersListView.render();
+        searchView.render();
         $('#content > div').detach();
-        $('#content').append(usersListView.el);
+        $('#content').append(searchView.el);
       },
       
       // beta
