@@ -228,7 +228,6 @@ $(document).ready(function() {
                
         setTimeout(function() {
           _this.onView();
-          //_this.facebookLikesView.setElement(_this.$('#facebookLikes')).render();
         }, 0);
       },
 
@@ -608,7 +607,7 @@ $(document).ready(function() {
       // events
       // -----------------------------------------------------------------------
       events: {
-        "click .userPreviewPhoto": "viewProfile"
+        'click': 'viewProfile'
       },
 
       // viewProfile
@@ -632,45 +631,33 @@ $(document).ready(function() {
       // events
       // -----------------------------------------------------------------------
       events: {
-        'click .userPicture': 'viewPhoto'
+        //'click .userPicture': 'viewPhoto'
       },
-
+      
       // initialize
       // -----------------------------------------------------------------------
       initialize: function() {
+        console.log('  ~ initializing UsersFullView');
         _.bindAll(this);
+        //this.model.bind('change', this.render);
         
-        // Fetch data
-        this.model.fetch();
+        // initialize sub-views
+        this.facebookLikesView = new FacebookLikesView({ model: this.model });
+        this.myPhotosView = new MyPhotosView({ model: this.model });
       },
-
-      // viewPhoto
-      // -----------------------------------------------------------------------
-      viewPhoto: function(e) {
-        var filename = $(e.currentTarget).data("filename");
-
-        //TODO: convert the following code into a template
-        var that = this;
-
-        /*$('#photoView').one('click', function () {
-          IS.navigateTo('#usersProfile', that.model.get('username') + "'s profile");
-          //IS.navigateBack();
-        });*/
-      },
-
+      
       // render
       // -----------------------------------------------------------------------
       render: function() {
-        console.log('  ~ rendering userFull view for: ' + this.model.get('_id'));
+        console.log('  ~ rendering UsersFullView for: ' + this.model.get('_id'));
         
         // Update template
         var template = $('#tplUsersProfile').html();
-        $(this.el).html(Mustache.to_html(template, this.model.toJSON()));
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
-        // Animate user's photos
-        this.$('.userPicture img').load(function(){
-          $(this).fadeIn();
-        });
+        // render sub views
+        this.myPhotosView.setElement(this.$('#userPhotosList')).render();
+        this.facebookLikesView.setElement(this.$('#facebookLikes')).render();
       }
     });
     
@@ -862,8 +849,11 @@ $(document).ready(function() {
       collection: usersCollection,
       model: user
     });
-
-
+    var usersFullView = new UsersFullView({
+      model: users,
+    });
+    
+    
     // #########################################################################
     // #########################################################################
     // # Routes
@@ -984,17 +974,14 @@ $(document).ready(function() {
         }
         console.log('> routing view user page');
         
-        users.set({ '_id': id });
-        users.fetch();
-        
-        var usersFullView = new UsersFullView({
-          model: users,
+        users.set({ '_id': id }, {silent: true});
+        users.fetch({
+          success: function() {
+            usersFullView.render();
+            $('#content > div').detach();
+            $('#content').append(usersFullView.el);
+          }
         });
-        
-        usersFullView.render();
-        
-        $('#content > div').detach();
-        $('#content').append(usersFullView.el);
       }
       
     }); 
