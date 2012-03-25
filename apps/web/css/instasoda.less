@@ -21,25 +21,31 @@
     vertical-align: baseline;
     outline:none;
   }
+  
   /* HTML5 display-role reset for older browsers */
   article, aside, details, figcaption, figure, 
   footer, header, hgroup, menu, nav, section {
     display: block;
   }
+  
   body {
     line-height: 1;
   }
-  ol, ul {
+  
+  ol, ul, li {
     list-style: none;
   }
+  
   blockquote, q {
     quotes: none;
   }
+  
   blockquote:before, blockquote:after,
   q:before, q:after {
     content: '';
     content: none;
   }
+  
   table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -48,6 +54,7 @@
 // =============================================================================
 // MIXINS
 // =============================================================================
+
   .linear-gradient (@from: #fff, @to: #eee) {
     background: @to;
     background: -ms-linear-gradient(@from 0%, @to 100%);
@@ -56,26 +63,31 @@
     background: -o-linear-gradient(@from 0%, @to 100%);
     background: linear-gradient(@from 0%, @to 100%);
   }
+  
   .box-shadow (@x: 0px, @y: 0px, @spread: 40px, @color: rgba(0, 0, 0, 0.4)) {
     -moz-box-shadow: @x @y @spread @color;
     -webkit-box-shadow: @x @y @spread @color;
     box-shadow: @x @y @spread @color;
   }
+  
   .box-shadows (@sh1, @sh2) {
     -moz-box-shadow: @sh1, @sh2;
     -webkit-box-shadow: @sh1, @sh2;
     box-shadow: @sh1, @sh2;
   }
+  
   .border-radius(@arg: 4px) {
     -webkit-border-radius: @arg;
     -moz-border-radius: @arg;
     border-radius: @arg;
   }
+  
   .scale (@arg) {
     -moz-transform: scale(@arg);
     -webkit-transform: scale(@arg);
     transform: scale(@arg);
   }
+  
   .transition(@duration) {
     -webkit-transition: all @duration ease-in-out;
     -moz-transition: all @duration ease-in-out;
@@ -83,6 +95,7 @@
     -ms-transition: all @duration ease-in-out;
     transition: all @duration ease-in-out;
   }
+  
   .photo() {
     .box-shadow(0, 1px, 1px, #888);
     border: 1px solid #eee;
@@ -103,9 +116,35 @@
 
 
 // =============================================================================
-// OO STYLES
+// COLOR PALETTE VARIABLES
 // =============================================================================
 
+  // Primary brand colors
+  @color1: #00364d; // dark blue
+  @color2: #3dbcdf; // light blue
+  @color3: #be1e2d; // red
+  
+  // Scale of blues including the two primary blues
+  @colorBlue1: #00364d; // darker blue
+  @colorBlue2: #007da6;
+  @colorBlue3: #3dbcdf;
+  @colorBlue4: #96d9ee;
+  @colorBlue5: #d5eef2;
+  @colorBlue6: #eff8fa; // lighter blue
+  
+  // Complimentary red, including primary red
+  @colorRed1:  #be1e2d; // darker red (primary)
+  @colorRed2:  #ed1c24; // lighter red
+  
+  // Additional colors (use little)
+  @colorGreen: #74b843;
+  @colorOrange: #faa73f;
+  
+  
+// =============================================================================
+// OO STYLES
+// =============================================================================
+  
   .left { float: left; }
   .right { float: right; }
   
@@ -128,6 +167,7 @@
   html {
     height: 100%;
   }
+  
   body {
     font-family: helvetica, arial,sans-serif;
     font-weight: 300;
@@ -147,6 +187,7 @@
       display: block;
     }
   }
+  
   body > header {
     .linear-gradient;
     .padding1x;
@@ -158,12 +199,15 @@
     height: 30px;
     display: none;
   }
+  
   a {
     text-decoration: none;
   }
+  
   p {
     margin:0em 0 1em;
   }
+  
   h1 {
     .text-shadow;
     font-size:2.0em;
@@ -172,13 +216,16 @@
     padding-bottom:0.5em;
     color:#666;
   }
+  
   h2 {
     font-size:2.4em;
     color: #00364D;
   }
+  
   h3 {
-    font-size:1.3em;
+    font-size:1.4em;
   }
+  
   button,
   .button {
     background: #BE1E2D;
@@ -196,6 +243,7 @@
       text-decoration: underline;
     }
   }
+  
   .column {
     display: table-cell;
     width: 33%;
@@ -204,7 +252,9 @@
 
 // =============================================================================
 // NAVIGATION + HEADER
-// =============================================================================  
+// =============================================================================
+
+  //TODO: FORMAT CSS
   nav {
     .linear-gradient;
     .box-shadow(0px, 0px, 10px);
@@ -293,6 +343,24 @@
   
   
 // =============================================================================
+// FORMS
+// =============================================================================
+
+  label {
+    .linear-gradient(@colorBlue5, @colorBlue6);
+    .border-radius(2px);
+    .box-shadow(0, 2px, 5px, rgba(0,0,0,.2) inset);
+    text-shadow: 1px 1px #fff;
+    color: @color1;
+    font-weight: 700;
+    font-size: 1.4em;
+    float: left;
+    margin: 5px 5px 5px 0;
+    padding: 5px;
+  }
+  
+  
+// =============================================================================
 // LIKES
 // =============================================================================
   
@@ -302,6 +370,7 @@
     margin: 0 20px 20px 0;
     border: 1px solid transparent;
     overflow: hidden;
+    
     &:hover {
       .scale(2);
       .box-shadow();
@@ -310,9 +379,11 @@
       .fbLikePic{
         .scale(0.5);
       }
+      
       .fbLikeName{
         color: #fff;
       }
+      
       .fbLikeNameFull {
         display: block;
         position: absolute;
@@ -326,6 +397,7 @@
         cursor: default;
       }
     }
+    
     .fbLikeName {
       font-size: 11px;
       width: 80px;
@@ -335,9 +407,11 @@
       white-space: nowrap;
       text-overflow: ellipsis;
     }
+    
     .fbLikeNameFull {
       display: none;
     }
+    
     .fbLikePicLoading > img {
       margin: 15px;
     }
@@ -439,19 +513,96 @@
 
 
 // =============================================================================
-// SEARCH RESULTS
+// SEARCH PAGE
 // =============================================================================
-
-  .userPreview {
-    .photo;
-    float: left;
-    text-align:center;
-    margin: 0 10px 8px 0;
+  
+  // Search filters
+  #searchFilters {
+    .box-shadow(0, 0, 10px, rgba(0,0,0,.2));
+    position: fixed;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    width: 300px;
+    z-index: 2;
+    color: @color1;
+    overflow: auto;
+    
+    section {
+      clear: both;
+      overflow: hidden;
+      padding: 20px 20px 0;
+      
+      .tip {
+        color: @colorBlue2;
+        font-size: 1.2em;
+      }
+    }
+    
+    #ageNum {
+      background: none transparent;
+      border: 0 none;
+      color: inherit;
+      font-weight: 700;
+    }
+    
+    #ageRange {
+      .box-shadow(0, 1px, 3px, rgba(0,0,0,.5) inset);
+      .border-radius(3px);
+      width: 100%;
+      margin-top: 10px;
+      background: none @colorBlue6;
+      border: 0 none;
+      padding: 1px 0;
+      
+      .ui-slider-range {
+        .box-shadow(0, 1px, 3px, rgba(0,0,0,.3) inset);
+        background: none @colorBlue4;
+        border: 0 none;
+      }
+      
+      .ui-slider-handle {
+        .border-radius(20px);
+        .box-shadow(0, 1px, 3px, rgba(0,0,0,.5));
+        padding: 2px;
+        border: 0 none;
+        background: none #fff;
+        cursor: ew-resize;
+        margin-top: -1px;
+      }
+    }
+    
+    #buttonAddLikes {
+      background-color: #3DBCDF;
+      color: white;
+      border: none;
+      font-size:10pt;
+    }
   }
-  .userPreviewNickname {
-    font-size: 12px;
-    margin-top: 5px;
-    color: #00364D;
+
+  // Search results
+  #searchResults {
+    position: fixed;
+    left: 300px;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    overflow: auto;
+    
+    .userPreview {
+      .photo;
+      position: relative;
+      float: left;
+      text-align: center;
+      margin: 0 10px 8px 0;
+    }
+    
+    .userPreviewNickname {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #00364D;
+    } 
   }
 
   
@@ -483,6 +634,7 @@
         text-align:center;
         border: 1px dashed #ccc;
       }
+      
       .qq-upload-drop-area-active {
         background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
       }
