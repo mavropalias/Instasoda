@@ -45,7 +45,7 @@
   <script type="text/javascript" src="js/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="js/jquery.fancybox-thumbs.js"></script>
 
-  <script defer type="text/javascript" src="js/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="js/cssrefresh.js"></script>-->
   
   
   <!-- OPEN GRAPH -->
@@ -66,8 +66,10 @@
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '372501186096211',
-          channelUrl : 'http://localhost:8081/is/channel.html',  
+          appId      : '372501186096211', // dev
+		  //appId      : '254623907964581', // test
+		  //appId      : '159444727449256', // prod
+          channelUrl : 'http://instasoda.com/channel.html',  
           status     : true, 
           cookie     : true,
           oauth      : true,
@@ -134,7 +136,7 @@
     
       <script id="tplBeta" type="text/template">
         <div class="isColumn2 isRow1">
-          <img src="images/betaMessage.png" width="1021" height="469" />
+          <img src="img/betaMessage.png" width="1021" height="469" />
         </div>
       </script>
     
@@ -222,13 +224,13 @@
           {{#p}}
             {{#d}}
               <li>
-                <img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}" height="150" />
+                <img src="http://img.instasoda.com/u/{{f}}" height="150" />
               </li>
             {{/d}}			
           {{/p}}
           {{^p}}
           <li>
-            <img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/noPhoto.png" height="150" />
+            <img src="http://img.instasoda.com/i/noPhoto.png" height="150" />
           </li>
           {{/p}}
           <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
@@ -392,8 +394,8 @@
           {{#fL}}
             <li class="fbLike">
               <ul>
-                <li class="fbLikePicLoading"><img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/loading.gif" width=20 height=20></li>
-                <li class="fbLikePic {{^u}}hidden{{/u}}"><img data-src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/l/{{_id}}.jpg" src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/loading.gif" width=50 height=50></li>
+                <li class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></li>
+                <li class="fbLikePic {{^u}}hidden{{/u}}"><img data-src="http://img.instasoda.com/l/{{_id}}.jpg" src="http://img.instasoda.com/i/loading.gif" width=50 height=50></li>
                 <li class="fbLikeName">{{n}}</li>
                 <li class="fbLikeNameFull">{{n}}</li>
               </ul>
@@ -412,8 +414,8 @@
       
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
-          <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}">
-            <img src='http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/u/{{f}}' height=150>
+          <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com/u/{{f}}">
+            <img src='http://img.instasoda.com/u/{{f}}' height=150>
             <div class="photoControls">
               <span class="photoMakeDefault left {{#d}}hidden{{/d}}" title="Make this your default profile photo">make default</span>
               <span class="photoIsDefault left {{^d}}hidden{{/d}}" title="This is your default profile photo">default photo</span>
