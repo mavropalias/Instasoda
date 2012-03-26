@@ -297,7 +297,7 @@ $(document).ready(function() {
           });
 
         // activate fancybox for all photos - including the newly uploaded
-        $("#userPhotos").on("focusin", function(){
+        this.$("#userPhotos").on("focusin", function(){
           _this.$(".fancybox-thumb").fancybox({
             prevEffect	: 'elastic',
             nextEffect	: 'elastic',
@@ -650,6 +650,7 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering UsersFullView for: ' + this.model.get('_id'));
+        var _this = this;
         
         // Update template
         var template = $('#tplUsersProfile').html();
@@ -658,6 +659,30 @@ $(document).ready(function() {
         // render sub views
         this.myPhotosView.setElement(this.$('#userPhotosList')).render();
         this.facebookLikesView.setElement(this.$('#facebookLikes')).render();
+        
+        // activate fancybox for all photos - including the newly uploaded
+        this.$("#userPhotos").on("focusin", function(){
+          _this.$(".fancybox-thumb").fancybox({
+            prevEffect  : 'elastic',
+            nextEffect  : 'elastic',
+            padding: 0,
+            helpers : {
+              title : {
+                type: 'outside'
+              },
+              overlay : {
+                opacity : 0.85,
+                css : {
+                  'background-color' : '#000'
+                }
+              },
+              thumbs  : {
+                width : 50,
+                height: 50
+              }
+            }
+          }); // fancybox
+        }); // on
       }
     });
     
@@ -926,7 +951,9 @@ $(document).ready(function() {
               'w': w,
               'nearMe': nearMe,
               'ageMin': ageMin,
-              'ageMax': ageMax
+              'ageMax': ageMax,
+              '_id': user.get('_id'),
+              'fTkn': user.get('fTkn')
             }
           });
         } else {
@@ -936,7 +963,9 @@ $(document).ready(function() {
               'w': user.get('so').w,
               'nearMe': user.get('so').nearMe,
               'ageMin': user.get('so').ageMin,
-              'ageMax': user.get('so').ageMax
+              'ageMax': user.get('so').ageMax,
+              '_id': user.get('_id'),
+              'fTkn': user.get('fTkn')
             }
           });
         }
