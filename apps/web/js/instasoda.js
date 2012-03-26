@@ -712,14 +712,16 @@ $(document).ready(function() {
         var template = $('#tplFacebookLikes').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
-        if(this.model.get('u') === "") {
-          // show like images when they load
-          this.$('.fbLikePic img').load(function(){
-            $(this).parent().show();
-            $(this).parent().parent().find('.fbLikePicLoading').remove();
-          });
+        // show a loading animation, until the image comes into view and loads
+        this.$('.fbLikePic img').attr('src', function(index, attr) {
+          return $(this).data('src');
+        }).load(function(){
+          $(this).parent().show();
+          $(this).parent().parent().find('.fbLikePicLoading').remove();
+        });
           
-          // reload like images until they load, while the API moves them to S3
+        // reload like images until they load, while the API moves them to S3
+        if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {         
           this.$('.fbLikePic img').error(function(){
             var _this = this;
             setTimeout(function() {
