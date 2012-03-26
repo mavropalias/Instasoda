@@ -74,8 +74,8 @@
         });
       
         $(document).ready(function() {
-		  IS.facebookAuth();
-		});
+          IS.facebookAuth();
+        });
       };
       (function(d){
         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -151,15 +151,15 @@
         <button id="fb-auth">Login with Facebook</button>
         <div id="fbResponse"></div>
       </script>
-	  
-	  
+    
+    
     <!------------------------------------------------------------------------>
     <!-- SEARCH VIEW -->
     <!------------------------------------------------------------------------>
     
       <script id="tplSearch" type="text/template">
         <div id="searchFilters"></div>
-		<div id="searchResults"></div>
+        <div id="searchResults"></div>
       </script>
   
   
@@ -169,47 +169,47 @@
     
       <script id="tplSearchFilters" type="text/template">
         <section>
-		  <h3>I’m interested in meeting...</h3>
-		  <span class="tip">Choose either or both.</span>
-		  <p>
-			<label>
-			  <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
-			  Women
-			</label>
-			<label>
-			  <input type="checkbox" name="interestedInMen" value="true" {{#so.m}}checked{{/so.m}}>
-			  Men
-			</label>
-		  </p>
-		</section>
-		<section>
-		  <h3>Who are aged...</h3>
-		  <span class="tip">Set an approximate age range on the slider.</span>
-		  <p>
-			<h3 id="ageNum"></h3>
-			<div id="ageRange"></div>
-		  </p>
-		</section>
-		<!--<section>
-		  <h3>I’d like to meet people who live...</h3>
-		  <span class="tip">'Near me' will bring up people that live around your area.</span>
-		  <p>
-			<label><input type="radio" name="searchLocation" value="near" disabled />Near me</label>
-			<label><input type="radio" name="searchLocation" value="global" checked />Everywhere</label>
-		  </p>
-		</section>-->
-		<section>
-		  <p>
-			<button id="doSearch">Search for matches!</button>
-		  </p>
-		</section>
-		<!--<section>
-		  <h3>My favourite things are...</h3>
-		  <span class="tip">Which of your Facebook likes are the most important to you.</span>
-		</section>
-		<section>
+          <h3>I’m interested in meeting...</h3>
+          <span class="tip">Choose either or both.</span>
+          <p>
+            <label>
+              <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
+              Women
+            </label>
+            <label>
+              <input type="checkbox" name="interestedInMen" value="true" {{#so.m}}checked{{/so.m}}>
+              Men
+            </label>
+          </p>
+        </section>
+        <section>
+          <h3>Who are aged...</h3>
+          <span class="tip">Set an approximate age range on the slider.</span>
+          <p>
+            <h3 id="ageNum"></h3>
+            <div id="ageRange"></div>
+          </p>
+        </section>
+        <!--<section>
+          <h3>I’d like to meet people who live...</h3>
+          <span class="tip">'Near me' will bring up people that live around your area.</span>
+          <p>
+            <label><input type="radio" name="searchLocation" value="near" disabled />Near me</label>
+            <label><input type="radio" name="searchLocation" value="global" checked />Everywhere</label>
+          </p>
+        </section>-->
+        <section>
+          <p>
+            <button id="doSearch">Search for matches!</button>
+          </p>
+        </section>
+        <!--<section>
+          <h3>My favourite things are...</h3>
+          <span class="tip">Which of your Facebook likes are the most important to you.</span>
+        </section>
+        <section>
           <button id="buttonAddLikes">+ Add likes</button>
-		</section>-->
+        </section>-->
       </script>
   
   
@@ -226,12 +226,12 @@
               </li>
             {{/d}}			
           {{/p}}
-		  {{^p}}
-			<li>
-			  <img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/noPhoto.png" height="150" />
-			</li>
-		  {{/p}}
-        <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
+          {{^p}}
+          <li>
+            <img src="http://img.instasoda.com.s3-website-eu-west-1.amazonaws.com/i/noPhoto.png" height="150" />
+          </li>
+          {{/p}}
+          <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
         </ul>
       </script>
 
@@ -241,36 +241,36 @@
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersProfile" type="text/template">
-		
+        
         <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</h1>
-		
-		<div id="connectOptions">
-		  <button class="left" onclick="IS.navigateTo('beta');">Send message</button>
-		  <button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
-		  <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>
-		</div>
-		
-        <div id="basicInfo" class="column paddingRight2x">
-		  <h2>Basic info</h2>
-		  <ul>
-			<li>Age: <span class="facebookData">{{ag}}</span></li>
-			<li>Gender: <span class="facebookData">{{fS}}</span></li>
-			<li>Interested in: {{#w}}women{{/w}} {{#m}}men{{/m}}</li>
-			<li>Relationship status: {{#fRs}}<span class="facebookData">{{fRs}}</span>{{/fRs}}{{^fRs}}Unknown{{/fRs}}</li>
-			<li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}Unknown{{/fCl}}</span></li>
-		  </ul>
-		</div>
-		  
-		<div class="column">
-		  <h2>A little bit about {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}</h2>
-		  <p>       
-			{{#a}}
-			  {{a}}
-			{{/a}}     
-			{{^a}}
-			   Nothing yet! :(
-			{{/a}}
-		  </p>
+        
+        <div id="connectOptions">
+          <button class="left" onclick="IS.navigateTo('beta');">Send message</button>
+          <button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
+          <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>
+        </div>
+        
+            <div id="basicInfo" class="column paddingRight2x">
+          <h2>Basic info</h2>
+          <ul>
+          <li>Age: <span class="facebookData">{{ag}}</span></li>
+          <li>Gender: <span class="facebookData">{{fS}}</span></li>
+          <li>Interested in: {{#w}}women{{/w}} {{#m}}men{{/m}}</li>
+          <li>Relationship status: {{#fRs}}<span class="facebookData">{{fRs}}</span>{{/fRs}}{{^fRs}}Unknown{{/fRs}}</li>
+          <li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}Unknown{{/fCl}}</span></li>
+          </ul>
+        </div>
+          
+        <div class="column">
+          <h2>A little bit about {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}</h2>
+          <p>       
+          {{#a}}
+            {{a}}
+          {{/a}}     
+          {{^a}}
+             Nothing yet! :(
+          {{/a}}
+          </p>
         </div>
         
         <div>
@@ -278,7 +278,7 @@
             <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s best moments!</h2>
             <p>
               <ul id="userPhotos">
-                <div id="userPhotosList">
+                <div id="userPhotosList" class="noControls">
                   <!-- USER PHOTOS -->                  
                 </div>
               </ul>
