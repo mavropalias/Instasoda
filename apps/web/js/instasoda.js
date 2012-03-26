@@ -111,80 +111,79 @@ $(document).ready(function() {
       // facebookAuth
       // -----------------------------------------------------------------------
       facebookAuth: function() {
+        var self = this;
         console.log('> Doing Facebook auth');
         
         FB.getLoginStatus(function(res) {
           var button = document.getElementById('fb-auth');
           if (!res.authResponse) {
             //user is not connected to the app or logged out
-            button.innerHTML = 'Login with Facebook';
-            button.onclick = function() {
+            //button.innerHTML = 'Login with Facebook';
+            
               FB.login(function(response) { 
                 // FB.Event.subscribe('auth.statusChange') will take care of the rest
-                },
-                {
-                  scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
-                  + 'user_activities,user_education_history,read_stream,user_interests,'
-                  + 'user_likes,user_photos,offline_access'
-                }
-              );    
-            }
-        } else {
-          if (response.status === 'connected') {
-            console.log('> User is logged into Facebook and has authenticated the application');            
+                self.facebookAuth();
+              },
+              {
+                scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+                + 'user_activities,user_education_history,read_stream,user_interests,'
+                + 'user_likes,user_photos,offline_access'
+              });    
             
-            // get facebook token data
-            var fbToken = response.authResponse.accessToken;
-            var fbTokenExpires = response.authResponse.expiresIn;
-                        
-            // Check if token is still valid
-            if(fbTokenExpires > 0) {
-              console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
-              console.log('>   -> ' + fbToken);
-              // get third_party_id from Facebook and login the user
-              FB.api(
-                {
-                method: 'fql.query',
-                query: 'SELECT third_party_id FROM user WHERE uid=me()'
-                },
-                function(response) {
-                  console.log('> Attempting to login the user');
-                  IS.login(fbToken, response[0].third_party_id, function(err) {
-                    if(!err) {
-                      console.log('> SUCCESS! User is logged in');
-                      appReady = true;
-                      IS.navigateTo('me');
-                    } else {
-                      console.log('> FAIL: Need to create new account');
-                      IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
-                        if(!err) {
-                          console.log('> SUCCESS! Account created');
-                          appReady = true;
-                          IS.navigateTo('me');
-                        } else {
-                          console.log('> ERROR: ' + res);
-                        }
-                      });
-                    }
-                  });
-                }
-              );
-            } else {
-              console.log('- Facebook token has expired');
-              FB.logout();
-            }
-          } else if (response.status === 'not_authorized') {
-            console.log('> User is logged into Facebook but has not authenticated the application');
-            //IS.navigateTo('');
           } else {
-            console.log('> User is not logged into Facebook at this time');
-            //IS.navigateTo('');
+            if (response.status === 'connected') {
+              console.log('> User is logged into Facebook and has authenticated the application');            
+              
+              // get facebook token data
+              var fbToken = response.authResponse.accessToken;
+              var fbTokenExpires = response.authResponse.expiresIn;
+                          
+              // Check if token is still valid
+              if(fbTokenExpires > 0) {
+                console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
+                console.log('>   -> ' + fbToken);
+                // get third_party_id from Facebook and login the user
+                FB.api(
+                  {
+                    method: 'fql.query',
+                    query: 'SELECT third_party_id FROM user WHERE uid=me()'
+                  },
+                  function(response) {
+                    console.log('> Attempting to login the user');
+                    IS.login(fbToken, response[0].third_party_id, function(err) {
+                      if(!err) {
+                        console.log('> SUCCESS! User is logged in');
+                        appReady = true;
+                        IS.navigateTo('me');
+                      } else {
+                        console.log('> FAIL: Need to create new account');
+                        IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
+                          if(!err) {
+                            console.log('> SUCCESS! Account created');
+                            appReady = true;
+                            IS.navigateTo('me');
+                          } else {
+                            console.log('> ERROR: ' + res);
+                          }
+                        });
+                      }
+                    });
+                  }
+                );
+              } else {
+                console.log('- Facebook token has expired');
+                FB.logout();
+              }
+            } else if (response.status === 'not_authorized') {
+              console.log('> User is logged into Facebook but has not authenticated the application');
+              //IS.navigateTo('');
+            } else {
+              console.log('> User is not logged into Facebook at this time');
+              //IS.navigateTo('');
+            }
           }
-        }
-          
         });  
       }
-      
     });
     
     // =========================================================================
@@ -721,7 +720,7 @@ $(document).ready(function() {
         });
           
         // reload like images until they load, while the API moves them to S3
-        if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {         
+        if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
           this.$('.fbLikePic img').error(function(){
             var _this = this;
             setTimeout(function() {
@@ -1040,10 +1039,8 @@ $(document).ready(function() {
      * Attempts to auth a FB user.
      */
     this.facebookAuth = function(){
-      if(readLocally("user") !== null) {
-        if(typeof readLocally("user")._id !== 'undefined') {
-          welcomeView.facebookAuth();
-        }
+      if(!!readLocally("user") && readLocally("user").hasOwnProperty('fTkn')) {
+        welcomeView.facebookAuth();
       }
     }
 
