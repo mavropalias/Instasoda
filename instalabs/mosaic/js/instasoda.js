@@ -170,6 +170,7 @@ $(document).ready(function(){
         },
         {
           success: function (model, response){
+            $('textarea[name=commenttext]').val('');
             console.log('   ~~~ SUCCESS: Added the new [Comment] to database');
             processComment();
           },
