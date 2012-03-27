@@ -1,0 +1,738 @@
+// =============================================================================
+// RESET STYLES          
+// =============================================================================
+
+  html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  b, u, i, center,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td,
+  article, aside, canvas, details, embed, 
+  figure, figcaption, footer, header, hgroup, 
+  menu, nav, output, ruby, section, summary,
+  time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    outline:none;
+  }
+  
+  /* HTML5 display-role reset for older browsers */
+  article, aside, details, figcaption, figure, 
+  footer, header, hgroup, menu, nav, section {
+    display: block;
+  }
+  
+  body {
+    line-height: 1;
+  }
+  
+  ol, ul, li {
+    list-style: none;
+  }
+  
+  blockquote, q {
+    quotes: none;
+  }
+  
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+    content: '';
+    content: none;
+  }
+  
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  
+// =============================================================================
+// MIXINS
+// =============================================================================
+
+  .linear-gradient (@from: #fff, @to: #eee) {
+    background: @to;
+    background: -ms-linear-gradient(@from 0%, @to 100%);
+    background: -moz-linear-gradient(@from 0%, @to 100%);
+    background: -webkit-linear-gradient(@from 0%, @to 100%);
+    background: -o-linear-gradient(@from 0%, @to 100%);
+    background: linear-gradient(@from 0%, @to 100%);
+  }
+  
+  .box-shadow (@x: 0px, @y: 0px, @spread: 40px, @color: rgba(0, 0, 0, 0.4)) {
+    -moz-box-shadow: @x @y @spread @color;
+    -webkit-box-shadow: @x @y @spread @color;
+    box-shadow: @x @y @spread @color;
+  }
+  
+  .box-shadows (@sh1, @sh2) {
+    -moz-box-shadow: @sh1, @sh2;
+    -webkit-box-shadow: @sh1, @sh2;
+    box-shadow: @sh1, @sh2;
+  }
+  
+  .border-radius(@arg: 4px) {
+    -webkit-border-radius: @arg;
+    -moz-border-radius: @arg;
+    border-radius: @arg;
+  }
+  
+  .scale (@arg) {
+    -moz-transform: scale(@arg);
+    -webkit-transform: scale(@arg);
+    transform: scale(@arg);
+  }
+  
+  .transition(@duration) {
+    -webkit-transition: all @duration ease-in-out;
+    -moz-transition: all @duration ease-in-out;
+    -o-transition: all @duration ease-in-out;
+    -ms-transition: all @duration ease-in-out;
+    transition: all @duration ease-in-out;
+  }
+  
+  .photo() {
+    .box-shadow(0, 1px, 1px, #888);
+    border: 1px solid #eee;
+    position: relative;
+    padding: 1em; 
+    margin: 0 0.5em 2em; 
+    background: #fff;
+    float:left;
+    
+    img {
+      cursor:pointer;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-bottom: 1px solid #fff;
+    }
+  }
+
+
+// =============================================================================
+// COLOR PALETTE VARIABLES
+// =============================================================================
+
+  // Primary brand colors
+  @color1: #00364d; // dark blue
+  @color2: #3dbcdf; // light blue
+  @color3: #be1e2d; // red
+  
+  // Scale of blues including the two primary blues
+  @colorBlue1: #00364d; // darker blue
+  @colorBlue2: #007da6;
+  @colorBlue3: #3dbcdf;
+  @colorBlue4: #96d9ee;
+  @colorBlue5: #d5eef2;
+  @colorBlue6: #eff8fa; // lighter blue
+  
+  // Complimentary red, including primary red
+  @colorRed1:  #be1e2d; // darker red (primary)
+  @colorRed2:  #ed1c24; // lighter red
+  
+  // Additional colors (use little)
+  @colorGreen: #74b843;
+  @colorOrange: #faa73f;
+  
+  
+// =============================================================================
+// OO STYLES
+// =============================================================================
+  
+  .left { float: left; }
+  .right { float: right; }
+  
+  .padding1x { padding: 10px; }
+  .padding2x { padding: 20px; }
+  .padding3x { padding: 40px; }
+    .paddingRight2x { padding-right: 20px; }
+  
+  .text-shadow { text-shadow: 1px 1px #fff; }
+  .round { .border-radius; }
+  .animated { .transition(0.4s); }
+  .hidden { display: none; }
+  .transparent { opacity: 0; }
+  .clearBoth { clear: both; }
+  
+
+// =============================================================================
+// MAIN STYLES
+// =============================================================================
+  
+  html {
+    height: 100%;
+  }
+  
+  body {
+    font-family: helvetica, arial,sans-serif;
+    font-weight: 300;
+    font-size: 62.5%;
+    overflow: auto;
+    background:#fcfcfc;
+  
+    section[role=main] {
+      .padding3x;
+      position: relative;
+      margin-top: 70px;
+      overflow: hidden;
+      display: none;
+    }
+    
+    #content {
+      display: block;
+    }
+  }
+  
+  body > header {
+    .linear-gradient;
+    .padding1x;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    height: 30px;
+    display: none;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  p {
+    margin:0em 0 1em;
+  }
+  
+  h1 {
+    .text-shadow;
+    font-size:2.0em;
+    border-bottom:1px solid #999;
+    margin:0 0 1em;
+    padding-bottom:0.5em;
+    color:#666;
+  }
+  
+  h2 {
+    font-size:2.4em;
+    color: #00364D;
+  }
+  
+  h3 {
+    font-size:1.4em;
+  }
+  
+  button,
+  .button {
+    background: #BE1E2D;
+    padding: 0.5em 1em;
+    border: 0 none;
+    color: white;
+    font-size: 1.3em;
+    line-height: 1.5em;
+    cursor: pointer;
+    display: block;
+    opacity: 1;
+    text-align: center;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  .column {
+    display: table-cell;
+    width: 33%;
+  }
+
+
+// =============================================================================
+// NAVIGATION + HEADER
+// =============================================================================
+
+  //TODO: FORMAT CSS
+  nav {
+    .linear-gradient;
+    .box-shadow(0px, 0px, 10px);
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    font-size: 1.5em;
+    font-weight: 700;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    
+    #instasodaLogo {
+      background: url(../img/instasoda_logo.png) top left no-repeat;
+      width: 166px;
+      height: 29px;
+      margin: 21px 0 0 15px;
+      display: block;
+    }
+  }
+    nav > ul {
+      display: block;
+      margin-left: 10px;
+      height: 100%;
+      position: relative;
+    }
+    nav > ul > li {
+      float: left;
+    }
+    nav > ul > ul {
+      float: left;
+      height: 50px;
+      margin-left: 20px;
+      overflow: hidden;
+    }
+      nav > ul > ul > li{
+        display: inline-block;
+      }
+        nav > ul > ul > li > a {
+          display: block;
+          padding: 0 10px;
+          color: #007CA5;
+          cursor: pointer;
+          text-shadow: 1px 1px #fff;
+        }
+          nav > ul > ul > li > a.current,
+          nav > ul > ul > li > a:hover{
+            text-decoration: underline;
+          }
+
+
+// =============================================================================
+// REUSABLE UI ELEMENTS
+// =============================================================================
+
+  .tip {
+    color: #444;
+    display: block;
+    font-size: 1.4em;
+    line-height: 1.2em;
+  }
+  
+  .protected {
+    color: #BE1E2D;
+    font-style: italic;
+  }
+  
+  .facebookData {
+    background: url(../img/fb_icon.png) center left no-repeat;
+    padding-left: 14px;
+  }
+  
+  .textArea {
+    .box-shadow(2px, 2px, 2px, rgba(0, 0, 0, 0.4) inset);
+    width: 100%;
+    overflow-y: auto;
+    word-wrap: break-word;
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 1em;
+    font-size: 1.3em;
+    line-height: 1.2em;
+  }
+  
+  
+// =============================================================================
+// FORMS
+// =============================================================================
+
+  label {
+    .linear-gradient(@colorBlue5, @colorBlue6);
+    .border-radius(2px);
+    .box-shadow(0, 2px, 5px, rgba(0,0,0,.2) inset);
+    text-shadow: 1px 1px #fff;
+    color: @color1;
+    font-weight: 700;
+    font-size: 1.4em;
+    float: left;
+    margin: 5px 5px 5px 0;
+    padding: 5px;
+  }
+  
+  
+// =============================================================================
+// LIKES
+// =============================================================================
+  
+  .fbLike {
+    float: left;
+    text-align: center;
+    margin: 0 20px 20px 0;
+    border: 1px solid transparent;
+    overflow: hidden;
+    
+    &:hover {
+      .scale(2);
+      .box-shadow();
+      background: #fff;
+      
+      .fbLikePic{
+        .scale(0.5);
+      }
+      
+      .fbLikeName{
+        color: #fff;
+      }
+      
+      .fbLikeNameFull {
+        display: block;
+        position: absolute;
+        left:-30px;
+        bottom: -5px;
+        right: -30px;
+        font-size: 1.3em;
+        height: 53px;
+        overflow: hidden;
+        .scale(0.5);
+        cursor: default;
+      }
+    }
+    
+    .fbLikeName {
+      font-size: 11px;
+      width: 80px;
+      height: 20px;
+      overflow: hidden;
+      margin-top: 5px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    
+    .fbLikeNameFull {
+      display: none;
+    }
+    
+    .fbLikePicLoading > img {
+      margin: 15px;
+    }
+  }
+
+
+// =============================================================================
+// PHOTOS
+// =============================================================================
+  
+  .photo {
+    .box-shadow(0, 1px, 1px, #888);
+    border: 1px solid #eee;
+    position: relative;
+    padding: 1em; 
+    margin: 0 0.5em 2em; 
+    background: #fff;
+    float:left;
+    
+    img {
+      cursor:pointer;
+      background: #fff;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-bottom: 1px solid #fff;
+    }
+    
+    .photoControls {
+      display: none;
+      cursor: default;
+      
+      span {
+        text-decoration: underline;
+        height: 21px;
+        line-height: 20px;
+      }
+      
+      .photoIsDefault {
+        text-decoration: none;
+        color: #999;
+        background: url(../img/star.png) left bottom no-repeat;
+        padding-left: 25px;
+      }
+      
+      .photoMakeDefault {
+        text-decoration: none;
+        background: url(../img/star.png) left top no-repeat;
+        padding-left: 25px;
+        cursor: pointer;
+        
+        &:hover {
+          background: url(../img/star.png) left bottom no-repeat;
+          text-decoration: underline;
+        }
+      }
+      
+      .photoDelete {
+        width: 15px;
+        background: url(../img/delete.png) right top no-repeat;
+        cursor: pointer;
+        
+        &:hover {
+          background: url(../img/delete.png) right bottom no-repeat;
+        }
+      }
+    }
+    
+    &:hover {
+      border: 1px solid #ccc;
+      
+      .photoControls {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 5px 10px;
+        background: #fff;
+        background: rgba(255, 255, 255, .95);
+        color: #333;
+      }
+    }
+  }
+  
+  .noControls {
+    .photo {
+      .photoControls {
+        display: none;
+      }
+    }
+  }
+  
+  
+// =============================================================================
+// USER PHOTOS
+// =============================================================================
+  
+  #userPhotos {
+    display:block;
+    overflow:hidden;
+    
+    .default {
+      background: #ddd;
+    }
+  }
+
+
+// =============================================================================
+// PHOTO UPLOADER
+// =============================================================================  
+  
+  #uploadPhoto {
+
+    #uploadWidget {
+    width: 150px;
+    height: 152px;
+      
+      .qq-uploader {
+        position:relative;
+        width: 100%;
+      }
+      
+      .qq-upload-drop-area {
+        .border-radius(8px);
+        background: url(../img/uploadPhotoBg.png) center top no-repeat #fff;
+        display: block !important;
+        position: absolute;
+        top: 72px;
+        left: 0px;
+        right: 0px;
+        height: 72px;
+        z-index: 2;
+        text-align:center;
+        border: 1px dashed #ccc;
+      }
+      
+      .qq-upload-drop-area-active {
+        background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
+      }
+      
+      .working {
+        background: url(../img/loading.gif) center center no-repeat transparent;
+      }
+      
+      .qq-upload-list {
+        display: none;
+        margin: 100px 35px 0;
+        padding: 0;
+        list-style: disc;
+        
+        li {
+          margin: 0;
+          padding: 0;
+          line-height: 15px;
+          font-size: 12px;
+        }
+      }
+      
+      .qq-upload-file,
+      .qq-upload-spinner,
+      .qq-upload-size,
+      .qq-upload-cancel,
+      .qq-upload-failed-text {
+        margin-right: 7px;
+      }
+      
+      .qq-upload-file {}
+      
+      .qq-upload-spinner {
+        display: inline-block;
+        background: url("../img/loading.gif");
+        width: 15px;
+        height: 15px;
+        vertical-align: text-bottom;
+      }
+      
+      .qq-upload-size,
+      .qq-upload-cancel {
+        font-size: 11px;
+      }
+      
+      .qq-upload-failed-text {
+        display:none;
+      }
+      
+      .qq-upload-fail .qq-upload-failed-text {
+        display:inline;
+      }
+    }
+  }
+  
+
+// =============================================================================
+// SEARCH PAGE
+// =============================================================================
+  
+  // Search filters
+  #searchFilters {
+    .box-shadow(0, 0, 10px, rgba(0,0,0,.2));
+    position: fixed;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    width: 300px;
+    z-index: 2;
+    color: @color1;
+    overflow: auto;
+    
+    section {
+      clear: both;
+      overflow: hidden;
+      padding: 20px 20px 0;
+      
+      .tip {
+        color: @colorBlue2;
+        font-size: 1.2em;
+      }
+    }
+    
+    #ageNum {
+      background: none transparent;
+      border: 0 none;
+      color: inherit;
+      font-weight: 700;
+    }
+    
+    #ageRange {
+      .box-shadow(0, 1px, 3px, rgba(0,0,0,.5) inset);
+      .border-radius(3px);
+      width: 100%;
+      margin-top: 10px;
+      background: none @colorBlue6;
+      border: 0 none;
+      padding: 1px 0;
+      
+      .ui-slider-range {
+        .box-shadow(0, 1px, 3px, rgba(0,0,0,.3) inset);
+        background: none @colorBlue4;
+        border: 0 none;
+      }
+      
+      .ui-slider-handle {
+        .border-radius(20px);
+        .box-shadow(0, 1px, 3px, rgba(0,0,0,.5));
+        padding: 2px;
+        border: 0 none;
+        background: none #fff;
+        cursor: ew-resize;
+        margin-top: -1px;
+      }
+    }
+    
+    #buttonAddLikes {
+      background-color: #3DBCDF;
+      color: white;
+      border: none;
+      font-size:10pt;
+    }
+  }
+
+  // Search results
+  #searchResults {
+    position: fixed;
+    left: 300px;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    overflow: auto;
+    
+    .userPreview {
+      .photo;
+      position: relative;
+      float: left;
+      text-align: center;
+      margin: 0 10px 8px 0;
+    }
+    
+    .userPreviewNickname {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #00364D;
+    } 
+  }
+  
+  
+// =============================================================================
+// VIEWING OTHER USER PROFILES
+// =============================================================================
+
+  #connectOptions {
+    overflow: hidden;
+    clear: both;
+    margin-bottom: 20px;
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
