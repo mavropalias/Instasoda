@@ -18,8 +18,7 @@ $(document).ready(function() {
     // #########################################################################
 
     var appReady = false;
-    var sApi = "http://localhost:8080/api/";
-    var sApiPhotos = "http://localhost:8080/api/photos/";
+    var sApi = "http://localhost:8080/api/"; //##apiUrl##
     jQuery.support.cors = true;
     
    
@@ -1017,7 +1016,7 @@ $(document).ready(function() {
     }); 
     var router = new Router;
     Backbone.history.start({
-      root: "/is/"
+
     });
     
     
