@@ -61,7 +61,7 @@ $(document).ready(function(){
 
       maximizeStory: function (e) {
         console.log('> Navigate to the [Full story]');
-        mosaicRouter.navigate("story/" + this.model.get('id'), {trigger: true});
+        mosaicRouter.navigate("story/" + this.model.get('id'), {trigger: true, replace: false});
       },
 
       render: function () {
@@ -123,7 +123,7 @@ $(document).ready(function(){
             console.log('   ~~~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
             console.log('  > Navigate to the new [Full story]');
-            mosaicRouter.navigate("story/" + story.id, {trigger: true});
+            mosaicRouter.navigate("story/" + story.id, {trigger: true, replace: true});
           },
           error: function (model, response) {
             console.log('   !!! ERROR: Could not add the new story to database!');
