@@ -87,6 +87,9 @@ $(document).ready(function() {
     // WelcomeView
     // =========================================================================
     var WelcomeView = Backbone.View.extend({
+      // settings
+      id: 'welcome',
+      
       // events
       // -----------------------------------------------------------------------
       events: {
