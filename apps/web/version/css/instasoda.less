@@ -85,6 +85,8 @@
   .scale (@arg) {
     -moz-transform: scale(@arg);
     -webkit-transform: scale(@arg);
+    -o-transform: scale(@arg);
+    -ms-transform: scale(@arg);
     transform: scale(@arg);
   }
   
@@ -94,6 +96,14 @@
     -o-transition: all @duration ease-in-out;
     -ms-transition: all @duration ease-in-out;
     transition: all @duration ease-in-out;
+  }
+  
+  .animation(@keyframes: slide, @duration: 10s, @delay: 1s, @easing: ease-in, @repeat: infinite) {
+    -webkit-animation: @keyframes @duration @delay @easing @repeat;
+    -moz-animation: @keyframes @duration @delay @easing @repeat;
+    -o-animation: @keyframes @duration @delay @easing @repeat;
+    -ms-animation: @keyframes @duration @delay @easing @repeat;
+    animation: @keyframes @duration @delay @easing @repeat;
   }
   
   .photo() {
@@ -113,6 +123,33 @@
       border-bottom: 1px solid #fff;
     }
   }
+  
+  // ---------------------------------------------------------------------------
+  // KEYFRAME ANIMATIONS
+  // ---------------------------------------------------------------------------
+  // # SLIDE
+  // ---------------------------------------------------------------------------
+    
+    .frames() {
+      0% {
+        opacity: 0;
+        left: 20px;
+      }
+      20%{
+        opacity: 1;
+      }
+      100% {
+        top: 0px;
+        left: 650px;
+        opacity: 0;
+      }
+    }
+    
+    @keyframes slide { .frames; }
+    @-webkit-keyframes slide { .frames; }
+    @-moz-keyframes slide { .frames; }
+    @-ms-keyframes slide { .frames; }
+    @-o-keyframes slide { .frames; }
 
 
 // =============================================================================
@@ -505,7 +542,7 @@
       }
     }
   }
-  
+
   
 // =============================================================================
 // USER PHOTOS
@@ -605,6 +642,266 @@
     }
   }
   
+  
+// =============================================================================
+// WELCOME PAGE
+// =============================================================================
+  
+  #welcome {
+    .linear-gradient(#55BEE5, #007CA5);
+    padding: 80px;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    
+    h2,
+    h3 {
+      text-shadow: 1px 1px @color1;
+      font-size: 4em;
+      color: #fff;
+      position: relative;
+      width: 15em;
+      z-index: 6;
+    }
+    
+    h3 {
+      font-size: 2.0em;
+      font-weight: 300;
+      width: auto;
+      color: @colorBlue6;
+      margin: 0.5em 0 1em;
+    }
+    
+    #fb-auth {
+      .box-shadow(1px, 1px, 1px, @color1);
+      text-shadow: 1px 1px @color1;
+      font-weight: 700;
+      font-size: 1.6em;
+      position: relative;
+      z-index: 6;
+    }
+    
+    .feature {
+      padding-left: 65px;
+      display: block;
+      line-height: 57px;
+      font-size: 1.5em;
+      position: absolute;
+      font-weight: 700;
+      z-index: 5;
+      color: @colorBlue6;
+      text-shadow: 1px 1px @colorBlue1;
+      cursor: pointer;
+      
+      &:hover {
+        text-decoration: underline;
+      }
+      
+      .featureBubble {
+        background: url(../img/sprites.png) 0 0 no-repeat transparent;
+        display: block;
+        width: 58px;
+        height: 57px;
+        position: absolute;
+        left: 0;
+        
+        .featureIcon {
+          width: 40px;
+          height: 38px;
+          display: block;
+          position: relative;
+          top: 6px;
+          left: 9px;
+        }
+      }
+    }
+    
+      .instantProfiles {
+        bottom: 380px;
+        left: 175px;
+        
+        .featureIcon {
+          background: url(../img/sprites.png) -58px 0;
+        }
+      }
+      
+      .matching {
+        bottom: 290px;
+        left: 270px;
+        
+        .featureIcon {
+          background: url(../img/sprites.png) -140px 0;
+        }
+      }
+      
+      .privacy {
+        bottom: 450px;
+        left: 380px;
+        
+        .featureIcon {
+          background: url(../img/sprites.png) -181px 0;
+        }
+      }
+      
+      .datingStories {
+        bottom: 300px;
+        left: 500px;
+        
+        .featureIcon {
+          background: url(../img/sprites.png) -99px 0;
+        }
+      }
+    
+    .instasodaLogoCap {
+      background: url(../img/instasoda_logo_cap.png) top left no-repeat transparent;
+      width: 440px;
+      height: 437px;
+      display: block;
+      position: fixed;
+      bottom: 0;
+      left: -66px;
+      z-index: 4;
+    }
+    
+    .bubbleTexture {
+      background: url(../img/texture.png) top left repeat transparent;
+      z-index: 3;
+    }
+    
+    .staticBubbles {
+      background: url(../img/bubbles.png) left bottom no-repeat transparent;
+      z-index: 1;
+    }
+    
+    .bubbleTexture,
+    .staticBubbles {
+      position: fixed;
+      display: block;
+      top: 70px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+    
+    #animatedBubbles {
+      width: 100%;
+      height: 450px;
+      position: fixed;
+      bottom: 110px;
+      left: 35px;
+      z-index: 2;
+    
+      .bubble {
+        //.transition(0.4s);
+        display: block;
+        position: absolute;
+        background: url(../img/bubble1.png) top left no-repeat transparent;
+        left: 0;
+        top: 350px;
+        width: 39px;
+        height: 40px;
+        opacity: 0;
+        
+          &:nth-child(odd) {
+            background: url(../img/bubble2.png) top left no-repeat transparent;
+            width: 38px;
+            height: 38px;
+          }
+          
+          &:nth-child(1) {
+            .animation(slide, 10s, 0s, ease-in, infinite);
+            .scale(0.7);
+            margin-left:0px;
+          }
+          &:nth-child(2) {
+            .animation(slide, 10s, 0.5s, ease-in, infinite);
+            .scale(0.5);
+            margin-left:250px;
+          }
+          &:nth-child(3) {
+            .animation(slide, 10s, 1s, ease-in, infinite);
+            margin-left:120px;
+          }
+          &:nth-child(4) {
+            .animation(slide, 10s, 1.5s, ease-in, infinite);
+            .scale(0.5);
+            margin-left:-130px;
+          }
+          &:nth-child(5) {
+            .animation(slide, 10s, 2s, ease-in, infinite);
+            margin-left:40px;
+          }
+          &:nth-child(6) {
+            .animation(slide, 10s, 2.5s, ease-in, infinite);
+            margin-left:150px;
+          }
+          &:nth-child(7) {
+            .animation(slide, 10s, 3s, ease-in, infinite);
+            .scale(0.8);
+            margin-left:-60px;
+          }
+          &:nth-child(8) {
+            .animation(slide, 10s, 3.5s, ease-in, infinite);
+            margin-left:170px;
+          }
+          &:nth-child(9) {
+            .animation(slide, 10s, 4s, ease-in, infinite);
+            .scale(0.7);
+            margin-left:-80px;
+          }
+          &:nth-child(10) {
+            .animation(slide, 10s, 4.5s, ease-in, infinite);
+            margin-left:90px;
+          }
+          &:nth-child(11) {
+            .animation(slide, 10s, 5s, ease-in, infinite);
+            .scale(0.5);
+            margin-left:20px;
+          }
+          &:nth-child(12) {
+            .animation(slide, 10s, 5.5s, ease-in, infinite);
+            margin-left:0px;
+          }
+          &:nth-child(13) {
+            .animation(slide, 10s, 6s, ease-in, infinite);
+            .scale(0.7);
+            margin-left:-50px;
+          }
+          &:nth-child(14) {
+            .animation(slide, 10s, 6.5s, ease-in, infinite);
+            margin-left:20px;
+          }
+          &:nth-child(15) {
+            .animation(slide, 10s, 7s, ease-in, infinite);
+            .scale(0.7);
+            margin-left:130px;
+          }
+          &:nth-child(16) {
+            .animation(slide, 10s, 7.5s, ease-in, infinite);
+            margin-left:40px;
+          }
+          &:nth-child(17) {
+            .animation(slide, 10s, 8s, ease-in, infinite);
+            margin-left:-50px;
+          }
+          &:nth-child(18) {
+            .animation(slide, 10s, 8.5s, ease-in, infinite);
+            .scale(0.5);
+            margin-left:60px;
+          }
+          &:nth-child(19) {
+            .animation(slide, 10s, 9s, ease-in, infinite);
+            margin-left:170px;
+          }
+          &:nth-child(20) {
+            .animation(slide, 10s, 9.5s, ease-in, infinite);
+            margin-left:80px;
+          }
+      }
+    }
+  }
 
 // =============================================================================
 // SEARCH PAGE
