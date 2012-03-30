@@ -185,10 +185,14 @@
   .left { float: left; }
   .right { float: right; }
   
+  .margin1x { margin: 10px; }
+  .margin2x { margin: 20px; }
+  
   .padding1x { padding: 10px; }
   .padding2x { padding: 20px; }
   .padding3x { padding: 40px; }
     .paddingRight2x { padding-right: 20px; }
+    .paddingRight3x { padding-right: 40px; }
   
   .text-shadow { text-shadow: 1px 1px #fff; }
   .round { .border-radius; }
@@ -214,7 +218,6 @@
     background:#fcfcfc;
   
     section[role=main] {
-      .padding3x;
       position: relative;
       margin-top: 70px;
       overflow: hidden;
@@ -284,7 +287,9 @@
   
   .column {
     display: table-cell;
-    width: 33%;
+    width: auto;
+    vertical-align: top;
+    text-align: left;
   }
 
 
@@ -362,7 +367,7 @@
     font-style: italic;
   }
   
-  .facebookData {
+  .fbData {
     background: url(../img/fb_icon.png) center left no-repeat;
     padding-left: 14px;
   }
@@ -393,7 +398,6 @@
     font-weight: 700;
     font-size: 1.4em;
     float: left;
-    margin: 5px 5px 5px 0;
     padding: 5px;
   }
   
@@ -460,12 +464,42 @@
 // PHOTOS
 // =============================================================================
   
+  #photoSection {
+    .padding3x;
+    .linear-gradient(#000, @colorBlue1);
+    .box-shadow(0, 5px, 40px, #000 inset);
+    color: @colorBlue6;
+    
+    h2 {
+      text-shadow: 1px 1px #000;
+      color: @colorBlue4;
+      margin-bottom: 0.2em;
+    }
+    
+    .tip {
+      color: @colorBlue6;
+      margin-bottom: 2em;
+    }
+    
+    #userPhotos {
+      display: block;
+      overflow: hidden;
+      height: 175px;
+      overflow: auto;
+      width: 1900px;
+      
+      .default {
+        background: #ddd;
+      }
+    }
+  }
+  
   .photo {
     .box-shadow(0, 1px, 1px, #888);
     border: 1px solid #eee;
     position: relative;
     padding: 1em; 
-    margin: 0 0.5em 2em; 
+    margin: 0 0.5em 0em; 
     background: #fff;
     float:left;
     
@@ -540,20 +574,6 @@
       .photoControls {
         display: none;
       }
-    }
-  }
-
-  
-// =============================================================================
-// USER PHOTOS
-// =============================================================================
-  
-  #userPhotos {
-    display:block;
-    overflow:hidden;
-    
-    .default {
-      background: #ddd;
     }
   }
 
@@ -998,13 +1018,73 @@
   
   
 // =============================================================================
-// VIEWING OTHER USER PROFILES
+// USER PROFILES
 // =============================================================================
 
   #connectOptions {
     overflow: hidden;
     clear: both;
     margin-bottom: 20px;
+  }
+  
+  #basicInfo {
+    
+    h3 {
+      line-height: 2em;
+    }
+    
+    .tip {
+      line-height: 1em;
+      font-size: 1.2em;
+    }
+    
+    .sidebar {
+      text-align: left;
+      
+      .photo {
+        float: none;
+        margin: 0;
+      }
+      
+      img {
+        display: block;
+        width: 250px;
+      }
+      
+      button {
+        margin: 1em auto;
+      }
+      
+      .tip {
+        font-size: 1em;
+        font-style: italic;
+        color: #666;
+      }
+    }
+  }
+  
+  .fbInformation {
+    
+    padding: 1em 0 3em;
+    line-height: 1.3em;
+    overflow: hidden;
+    
+    .fbTitle {
+      color: #666;
+      margin-right: 0.5em;      
+    }
+    
+    .fbData {
+      font-weight: 700;
+      font-size: 1.3em;
+      clear: both;
+      display: block;
+    }
+    
+    li {
+      float: left;
+      margin-right: 2em;
+    }
   }
   
   

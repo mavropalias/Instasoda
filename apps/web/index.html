@@ -30,7 +30,7 @@
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery-ui-1.8.18.custom.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox-thumbs.css" />
-  <link rel="stylesheet/less" type="text/css" href="VERSION/css/instasoda.less">
+  <link rel="stylesheet" type="text/css" href="VERSION/css/instasoda.css">
   <!-- STYLES END -->
   
   <!-- SCRIPTS START -->
@@ -46,8 +46,7 @@
   <script type="text/javascript" src="VERSION/js/jquery.fancybox-thumbs.js"></script>
   <script type="text/javascript" src="VERSION/js/instasoda.js"></script>
   
-  <script defer type="text/javascript" src="VERSION/js/less-1.3.0.min.js"></script>
-  <!--<script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
   
   
@@ -324,7 +323,7 @@
           </p>
         </div>
         
-        <div>
+        <div id="photoSection">
           <p>
             <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s best moments!</h2>
             <p>
@@ -354,9 +353,64 @@
     <!------------------------------------------------------------------------>
     
       <script id="tplSettings" type="text/template">
-        <h1>My profile</h1>
         
-        <div>
+        <div id="basicInfo" class="padding3x">
+          
+          <div class="sidebar column paddingRight3x" style="width: 200px;">
+            {{#p}}
+              {{#d}}
+                <div class="photo">
+                  <img src="http://img.instasoda.com/u/{{f}}" />
+                </div>
+              {{/d}}      
+            {{/p}}
+            {{^p}}
+              <div class="photo">
+                <img src="http://img.instasoda.com/i/noPhoto.png" />
+              </div>
+            {{/p}}
+            
+            <button type="submit" id="saveProfileButton">Save profile</button>
+            <button type="submit" id="working" style="display:none;" disabled>Saving...</button>
+            
+            <p>
+              <span class="tip">
+                Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced automatically every once in a while. No, we will not make <em>any</em> changes (we can't!) to your Facebook acount ;)
+              </span>
+            </p>
+          </div>
+          
+          <div class="column">
+            <h2>My basic info</h2>
+            
+            <ul class="fbInformation">
+              <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
+              <li><span class="fbTitle">Gender:</span><span class="fbData">{{fS}}</span></li>
+              <li><span class="fbTitle">Relationship:</span><span class="fbData">{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</span></li>
+              <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
+              <li><span class="fbTitle">Email (only you can see it):</span><span class="fbData">{{fE}}</span></li>
+            </ul>
+              
+            <div class="column paddingRight3x">
+              <h3>My dating name:</h3>
+              <p>
+                <input name="username" value="{{u}}" required maxlength=50>
+                <span class="tip">This is how other instasoda users will see you.</span>
+              </p>
+            </div>
+            
+            <div class="column">
+              <h3>I would like to meet:</h3>
+              <p>
+                <label><input type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>women</label>
+                <label><input type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>men</label>
+              </p>
+            </div>    
+             
+          </div>
+        </div>
+        
+        <div id="photoSection">
           <p>
             <h2>Me at my best! (photos)</h2>
             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
@@ -371,45 +425,6 @@
               </ul>
             </p>
           </p>
-        </div>
-        
-        <div id="basicSettings" class="column paddingRight2x">
-          <h2>Basic info</h2>
-          <p>
-            <h3>Nickname</h3>
-            <span class="tip">This is how other instasoda users will see you.</span>
-            <p>
-              <input name="username" value="{{u}}" required maxlength=50>
-            </p>
-          </p>
-          
-          <p>
-            <h3>I would like to meet</h3>
-            <span class="tip">Choose either or both.</span>
-            <p>
-              <label><input type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>women</label>
-              <label><input type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>men</label>
-            </p>
-          </p>    
-          
-          <button type="submit" id="saveProfileButton" >Save profile</button>
-          <button type="submit" id="working" style="display:none;" disabled>Saving...</button>
-        </div>
-        
-        <div id="facebookData" class="column paddingRight2x">
-          <p>
-            <h2>Data synced from your Facebook profile:</h2>
-            <span class="tip">When you update your Facebook profile details, you can sync them with your Instasoda profile by using the <em>Save profile</em> button in this page.</span>
-            <p>
-              <ul>
-                <li>Age: <span class="facebookData">{{ag}}</span></li>
-                <li>Gender: <span class="facebookData">{{fS}}</span></li>
-                <li>Relationship status: <span class="facebookData">{{fRs}}</span></li>
-                <li>Location: <span class="facebookData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}</span></li>
-                <li>Email: <span class="facebookData">{{fE}}</span> (only you can see this)</li>
-              </ul>
-            </p>
-          </p>  
         </div>
         
         <div class="column">
