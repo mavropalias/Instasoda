@@ -30,7 +30,7 @@
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery-ui-1.8.18.custom.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox-thumbs.css" />
-  <link rel="stylesheet" type="text/css" href="VERSION/css/instasoda.css">
+  <link rel="stylesheet/less" type="text/css" href="VERSION/css/instasoda.less">
   <!-- STYLES END -->
   
   <!-- SCRIPTS START -->
@@ -46,6 +46,7 @@
   <script type="text/javascript" src="VERSION/js/jquery.fancybox-thumbs.js"></script>
   <script type="text/javascript" src="VERSION/js/instasoda.js"></script>
   
+  <script defer type="text/javascript" src="VERSION/js/less-1.3.0.min.js"></script>
   <!--<script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>-->
   <!-- SCRIPTS END -->
   
@@ -98,9 +99,7 @@
         <li><a id="instasodaLogo" href="#"></a></li>
         <ul>
           <li><a id="navSearch" href="#search">Search</a></li>
-          <li><a id="navMatches" href="#beta">Matches</a></li>
           <li><a id="navProfile" href="#me">Profile</a></li>
-          <li><a id="navInbox" href="#beta">Inbox</a></li>
           <li><a id="navLogout" href="#logout">Logout</a></li>
         </ul>
       </ul>
@@ -146,12 +145,62 @@
     <!------------------------------------------------------------------------>
     
       <script id="tplWelcome" type="text/template">
-        <h2>Instasoda is a free, fun and easy way of finding new people, instantly. We create your dating profile automatically based on your Facebook profile, meaning it only takes you moments to get dating! Join and enjoy!</h2>
-        
-        <br><br>
+        <h2>Find & date people who share the things that you like*</h2>
+		<h3>*it’s free, fun, super easy and totally anonymous</h3>
         
         <button id="fb-auth">Login with Facebook</button>
-        <div id="fbResponse"></div>
+		
+		<span class="feature instantProfiles">
+		  <span class="featureBubble">
+			<span class="featureIcon"></span>
+		  </span>
+		  instant profiles
+		</span>
+		<span class="feature privacy">
+		  <span class="featureBubble">
+			<span class="featureIcon"></span>
+		  </span>
+		  privacy
+		</span>
+		<span class="feature matching">
+		  <span class="featureBubble">
+			<span class="featureIcon"></span>
+		  </span>
+		  matching
+		</span>
+		<span class="feature datingStories">
+		  <span class="featureBubble">
+			<span class="featureIcon"></span>
+		  </span>
+		  dating stories
+		</span>
+		
+		<span class="instasodaLogoCap"></span>
+		<span class="bubbleTexture"></span>
+        <span class="staticBubbles"></span>
+		
+		<div id="animatedBubbles">
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		  <span class="bubble"></span>
+		</div>
       </script>
     
     
