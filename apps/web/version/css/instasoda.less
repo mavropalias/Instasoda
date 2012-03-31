@@ -465,43 +465,51 @@
 // =============================================================================
   
   #photoSection {
-    .padding3x;
-    .linear-gradient(#000, @colorBlue1);
-    .box-shadow(0, 5px, 40px, #000 inset);
-    color: @colorBlue6;
+    .linear-gradient(#eee, #fff);
+    .box-shadow(0, 5px, 30px, #bbb inset);
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #fff;
+    margin: 0 -20px;
+    padding: 40px 60px 20px;
     
     h2 {
-      text-shadow: 1px 1px #000;
-      color: @colorBlue4;
       margin-bottom: 0.2em;
     }
     
     .tip {
-      color: @colorBlue6;
       margin-bottom: 2em;
     }
     
     #userPhotos {
       display: block;
       overflow: hidden;
-      height: 175px;
-      overflow: auto;
-      width: 1900px;
+      width: 100%;
       
       .default {
         background: #ddd;
+        
+        .photoControls {
+          background: #ddd !important;
+        }
+      }
+      
+      .photo {
+        .box-shadow(0, 4px, 8px -3px, #888);
+        margin-bottom: 20px;
       }
     }
   }
   
   .photo {
     .box-shadow(0, 1px, 1px, #888);
-    border: 1px solid #eee;
+    border: 1px solid #ddd;
     position: relative;
     padding: 1em; 
     margin: 0 0.5em 0em; 
     background: #fff;
     float:left;
+    overflow: hidden;
+    display: block;
     
     img {
       cursor:pointer;
@@ -553,7 +561,7 @@
     }
     
     &:hover {
-      border: 1px solid #ccc;
+      border: 1px solid #bbb;
       
       .photoControls {
         display: block;
@@ -574,6 +582,9 @@
       .photoControls {
         display: none;
       }
+    }
+    .default {
+      background: #fff !important;
     }
   }
 
@@ -678,7 +689,7 @@
     
     h2,
     h3 {
-      text-shadow: 1px 1px @color1;
+      text-shadow: -1px 1px @color1;
       font-size: 4em;
       color: #fff;
       position: relative;
@@ -695,8 +706,8 @@
     }
     
     #fb-auth {
-      .box-shadow(1px, 1px, 1px, @color1);
-      text-shadow: 1px 1px @color1;
+      .box-shadow(-2px, 2px, 2px, @color1);
+      text-shadow: -1px 1px @color1;
       font-weight: 700;
       font-size: 1.6em;
       position: relative;
@@ -712,7 +723,7 @@
       font-weight: 700;
       z-index: 5;
       color: @colorBlue6;
-      text-shadow: 1px 1px @colorBlue1;
+      text-shadow: -1px 1px @colorBlue1;
       cursor: pointer;
       
       &:hover {
@@ -1044,11 +1055,16 @@
       .photo {
         float: none;
         margin: 0;
-      }
-      
-      img {
-        display: block;
-        width: 250px;
+        
+        img {
+          display: block;
+          width: 250px;
+          cursor: default;
+        }
+        
+        &:hover {
+          border: 1px solid #ddd;
+        }
       }
       
       button {

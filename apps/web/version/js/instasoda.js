@@ -374,8 +374,8 @@ $(document).ready(function() {
         
         // get photo id
         var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
+        var photoSrc = $(e.currentTarget).parent().parent().find('img').attr('src');
         var photos = this.model.get('p');
-        console.log(photos);
         
         // process and update model photos        
         for(var i = 0; i < photos.length; i++) {
@@ -410,6 +410,9 @@ $(document).ready(function() {
             $('#userPhotos #' + photoId + ' .photoMakeDefault').addClass('hidden');
             $('#userPhotos #' + photoId + ' .photoIsDefault').removeClass('hidden');
             $('#userPhotos #' + photoId + ' .photoMakeDefault').html('make default');
+            
+            // update default photo in the top sidebar
+            _this.$('#basicInfo .photo img').attr('src', photoSrc);
           }
         });
       },
@@ -424,6 +427,15 @@ $(document).ready(function() {
         
         // Get photo id
         var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
+        var isDefault = false;
+        
+        // Check if this is the default profile photo
+        this.model.get('p').forEach(function(photo, index) {
+          if(photo.id === photoId && photo.d === 1) {
+            console.log(' - warning: deleting the default photo!');
+            isDefault = true;
+          }
+        });
         
         // Make an API call to delete the photo
         $.ajax({
@@ -448,7 +460,11 @@ $(document).ready(function() {
               _this.save();
               
               // trigger deletePhoto event for myPhotosView
-              _this.myPhotosView.trigger('deletePhoto', photoId); 
+              _this.myPhotosView.trigger('deletePhoto', photoId);
+              
+              // update default photo in the top sidebar
+              console.log(' - replacing default photo with a generic one');
+              if(isDefault) _this.$('#basicInfo .photo img').attr('src', 'http://img.instasoda.com/i/noPhoto.png');
             } else {
               alert('Error deleting photo');
             }
@@ -713,16 +729,14 @@ $(document).ready(function() {
         var template = $('#tplFacebookLikes').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
-        // show a loading animation, until the image comes into view and loads
-        this.$('.fbLikePic img').attr('src', function(index, attr) {
-          return $(this).data('src');
-        }).load(function(){
-          $(this).parent().show();
-          $(this).parent().parent().find('.fbLikePicLoading').remove();
-        });
-          
         // reload like images until they load, while the API moves them to S3
         if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
+          console.log('- reloading like photos');
+
+          this.$('.fbLikePic img').load(function(){
+            $(this).parent().show().parent().find('.fbLikePicLoading').remove();
+          });
+          
           this.$('.fbLikePic img').error(function(){
             var _this = this;
             setTimeout(function() {
