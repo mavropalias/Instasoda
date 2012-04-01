@@ -70,15 +70,37 @@ $(document).ready(function() {
     // Beta message view
     // =========================================================================
     var BetaView = Backbone.View.extend({
-
+      // initialize
       initialize: function() {
         _.bindAll(this);
       },
-
+      
+      // render
       render: function() {
         console.log('  ~ rendering beta view');
         var template = $('#tplBeta').html();
         $(this.el).html(template);
+      }
+      
+    });
+    
+    // =========================================================================
+    // Navigation view
+    // =========================================================================
+    var NavigationView = Backbone.View.extend({      
+      // initialize
+      initialize: function() {
+        _.bindAll(this);
+        this.model.bind('change', this.render);
+        this.model.bind('reset', this.render);
+        this.render();
+      },
+      
+      // render
+      render: function() {
+        console.log('  ~ rendering NavigationView');
+        var template = $('#tplNavigation').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
       }
       
     });
@@ -101,7 +123,7 @@ $(document).ready(function() {
       initialize: function() {
         _.bindAll(this);
       },
-
+      
       // render
       // -----------------------------------------------------------------------
       render: function() {
@@ -859,6 +881,7 @@ $(document).ready(function() {
       // without any effect on the API
       user.clear({ silent: true });
       saveLocally("user", user);
+      navigationView.render();
       router.navigate("", {trigger: true});
     }
 
@@ -882,6 +905,10 @@ $(document).ready(function() {
 
     // Backbone views
     // -----------------------------------------------------------------------
+    var navigationView = new NavigationView({
+      el: $('nav')[0],
+      model: user
+    });
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
     var myProfileView = new MyProfileView({
@@ -924,7 +951,7 @@ $(document).ready(function() {
         
         // Logout
         "logout": "logout",
-
+        
         // View user
         ":id": "viewUser"
       },
