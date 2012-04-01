@@ -92,7 +92,6 @@ $(document).ready(function() {
       initialize: function() {
         _.bindAll(this);
         this.model.bind('change', this.render);
-        this.model.bind('reset', this.render);
         this.render();
       },
       

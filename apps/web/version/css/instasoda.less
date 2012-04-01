@@ -319,38 +319,58 @@
       margin: 21px 0 0 15px;
       display: block;
     }
-  }
-    nav > ul {
+    
+    &> ul {
       display: block;
       margin-left: 10px;
       height: 100%;
       position: relative;
-    }
-    nav > ul > li {
-      float: left;
-    }
-    nav > ul > ul {
-      float: left;
-      height: 50px;
-      margin-left: 20px;
-      overflow: hidden;
-    }
-      nav > ul > ul > li{
-        display: inline-block;
-      }
-        nav > ul > ul > li > a {
-          display: block;
-          padding: 0 10px;
-          color: #007CA5;
-          cursor: pointer;
-          text-shadow: 1px 1px #fff;
-        }
-          nav > ul > ul > li > a.current,
-          nav > ul > ul > li > a:hover{
+      
+      &> ul {
+        float: left;
+        height: 50px;
+        margin-left: 20px;
+        
+        &> li{
+          display: inline-block;
+          
+          #navNotifications {
+            .border-radius(2px);
+            .box-shadow(0px, 1px, 2px, @colorBlue3 inset);
+            margin: 0.5em 10px;
+            cursor: default;
+            font-weight: 300;
+            color: @colorBlue2;
+            padding: 0.5em;
+            height: 1.2em;
+            font-size: 0.9em;
+            line-height: 1.2em;
+            border: 1px solid #ddd;
+            position: relative;
+          }
+          
+          &> a {
+            display: block;
+            padding: 0 10px;
+            color: #007CA5;
+            cursor: pointer;
+            text-shadow: 1px 1px #fff;
+          }
+          
+          &> a.current,
+          &> a:hover{
             text-decoration: underline;
           }
-
-
+        }
+      }
+      
+      &> li {
+        float: left;
+      }
+    }
+  }
+  
+  
 // =============================================================================
 // REUSABLE UI ELEMENTS
 // =============================================================================
