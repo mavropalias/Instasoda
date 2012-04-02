@@ -45,9 +45,11 @@
   <script type="text/javascript" src="VERSION/js/jquery.mousewheel-3.0.6.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery.fancybox-thumbs.js"></script>
+  <script type="text/javascript" src="VERSION/js/async.min.js"></script>
+  <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="VERSION/js/instasoda.js"></script>
   
-  <script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>-->
   <!-- SCRIPTS END -->
   
   
@@ -116,6 +118,7 @@
 			{{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
 			{{#_id}}<li><a id="navProfile" href="#me">Profile</a></li>{{/_id}}
 			{{#_id}}<li><a id="navLogout" href="#logout">Logout</a></li>{{/_id}}
+			<li id="navOnlineUsers"></li>
 		  </ul>
 		</ul>
 	  </script>
@@ -195,6 +198,23 @@
 		</div>
       </script>
 	  
+	  
+    <!------------------------------------------------------------------------>
+    <!-- ONLINE USERS VIEW -->
+    <!------------------------------------------------------------------------>
+    
+      <script id="tplOnlineUsers" type="text/template">
+         <div id="navOnlineUsers">
+           Online users: 
+           <span id="navOnlineUsersCount">
+            {{count}}
+            {{^count}}
+              <img src="version/img/loading.gif">
+            {{/count}}
+           </span>
+         </div>
+      </script>
+      
 	  
     <!------------------------------------------------------------------------>
     <!-- SEARCH VIEW -->
