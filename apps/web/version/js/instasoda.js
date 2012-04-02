@@ -18,6 +18,7 @@ $(document).ready(function() {
     // #########################################################################
 
     var appReady = false;
+    var socketIoHost = "http://localhost:8082"; //##socketIoHost##
     var sApi = "http://localhost:8080/api/"; //##apiUrl##
     jQuery.support.cors = true;
     
@@ -44,6 +45,13 @@ $(document).ready(function() {
         },
         idAttribute: "_id",
         urlRoot: sApi + 'user'
+    });
+    
+    // OnlineUsers
+    // =========================================================================
+    var OnlineUsers = Backbone.Model.extend({
+        defaults: {
+        }
     });
 
 
@@ -89,6 +97,7 @@ $(document).ready(function() {
     // =========================================================================
     var NavigationView = Backbone.View.extend({      
       // initialize
+      // -----------------------------------------------------------------------
       initialize: function() {
         _.bindAll(this);
         this.model.bind('change', this.render);
@@ -96,10 +105,15 @@ $(document).ready(function() {
       },
       
       // render
+      // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering NavigationView');
         var template = $('#tplNavigation').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // render sub views
+        this.onlineUsersView = new OnlineUsersView({ model: onlineUsers });
+        this.onlineUsersView.setElement(this.$('#navOnlineUsers')).render();
       }
       
     });
@@ -828,6 +842,27 @@ $(document).ready(function() {
       }
     });
     
+    // =========================================================================
+    // OnlineUsersView
+    // =========================================================================
+    var OnlineUsersView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing OnlineUsersView');
+        _.bindAll(this);
+        this.model.bind('change', this.render);
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering FacebookLikesView');
+        var template = $('#tplOnlineUsers').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+      }
+    });
+    
 
     // #########################################################################
     // #########################################################################
@@ -855,18 +890,19 @@ $(document).ready(function() {
     // #########################################################################
   
     // Backbone models
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     var user = new User();
     var users = new Users();
+    var onlineUsers = new OnlineUsers();
 
     // Backbone collections
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     var usersCollection = new UsersCollection({
       model: users
     });
 
     // Backbone views
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     var navigationView = new NavigationView({
       el: $('nav')[0],
       model: user
@@ -884,6 +920,21 @@ $(document).ready(function() {
       model: users,
     });
     
+    // Socket.io
+    // =========================================================================
+    var socket = io.connect(socketIoHost);
+    
+    // Connected
+    // -------------------------------------------------------------------------
+    socket.on('connected', function (data) {
+      console.log('- SOCKET.IO status: ' + data.status);
+    });
+    
+    // Receive online users
+    // -------------------------------------------------------------------------
+    socket.on('onlineUsers', function (msg) {
+      onlineUsers.set({ count: msg.count });
+    });
     
     // #########################################################################
     // #########################################################################
