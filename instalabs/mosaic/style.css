@@ -222,13 +222,30 @@ nav #instasodaLogo {
       transition: border-color 0.2s ease;
     }
     article.item footer {
-      position: absolute; width: 100%; height: 100px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;
+      position: absolute; width: 100%; height: 65px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;z-index:3;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      transition: all 0.3s ease;
     }
+      article.item:hover footer{
+        height:105px;
+        -webkit-transition: all 0.3s ease;
+        -moz-transition: all 0.3s ease;
+        -o-transition: all 0.3s ease;
+        -ms-transition: all 0.3s ease;
+        transition: all 0.4s ease;
+      }
       article.item footer img{
         display:none;
         position:absolute;
         right:5px;
-        bottom:5px;
+        bottom:3px;
+      }
+      article.item footer i{
+        color:#BE1D2C;
+        font-size: 24px;
       }
 
 	article.item h1, #articleFullView h1, .storyForm h1{
@@ -252,7 +269,7 @@ nav #instasodaLogo {
     }
 
   article.item span p{
-    height:255px;
+    height:275px;
     overflow-y:hidden;
   }
 
@@ -267,29 +284,32 @@ nav #instasodaLogo {
   .commentTooltip{
     position:fixed;
     width:272px;
-    margin-top: 21px;
-    padding:20px;
-    background:#BE1D2C;
-    color:white;
-    text-shadow:1px 1px 0px #444;
+    margin-top:13px;
+    padding:0 20px 5px;
+    background:#fff;
+    color:#333;
     font-size: 1.5em;
     border:5px solid #fff;
-    border-top: 10px solid #fff;
-    border-radius: 8px;
-    z-index:1;
+    border-top: none;
+    box-shadow: 0 5px 10px -5px #444;
+    z-index:2;
     display:none;
   }
     .commentTooltip > header{
-      padding-bottom: 10px;
-      font-size: 1.8em;
+      margin-bottom: 10px;
+      padding:5px 10px 0px 0px;
+      border-bottom:5px solid #BE1D2C;
       font-family: liberation-serif;
       font-weight:700;
       font-style:italic;
     }
-      .commentTooltip > section > p{
-        padding-bottom: 10px;
-        padding-top: 0;
+      .commentTooltip > header > h1{
+        font-size: 1.3em;
       }
+    .commentTooltip > section > p{
+      padding-bottom: 10px;
+      padding-top: 0;
+    }
 
 	.storyForm{
     position:relative;
@@ -297,30 +317,35 @@ nav #instasodaLogo {
     float:left;
     width:300px;
     height:295px;
-    margin:10px 5px 10px 10px;
+    margin:10px 5px 10px 9px;
     padding:15px;
     background:#FFFFFF;
     border:15px solid #BE1D2C;
     outline:10px solid #fff;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -ms-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 	}
     .storyForm button{
       position: absolute;
       bottom: 0px;
       left: 25px;
       margin: 0;
-      -webkit-transition: box-shadow 0.3s ease;
-      -moz-transition: box-shadow 0.3s ease;
-      -o-transition: box-shadow 0.3s ease;
-      -ms-transition: box-shadow 0.3s ease;
-      transition: box-shadow 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      transition: all 0.3s ease;
     }
     .storyForm button:hover{
       box-shadow:0 5px 16px -7px #000 inset;
-      -webkit-transition: box-shadow 0.3s ease;
-      -moz-transition: box-shadow 0.3s ease;
-      -o-transition: box-shadow 0.3s ease;
-      -ms-transition: box-shadow 0.3s ease;
-      transition: box-shadow 0.3s ease;
+      -webkit-transition: all 0.3s ease;
+      -moz-transition: all 0.3s ease;
+      -o-transition: all 0.3s ease;
+      -ms-transition: all 0.3s ease;
+      transition: all 0.3s ease;
     }
     .storyForm h1{
       font-family: "liberation-serif",serif;
@@ -329,6 +354,13 @@ nav #instasodaLogo {
       font-size: 3em;
       margin-bottom:0.4em;
     }
+
+    .sendingStory {
+      border-color: #555!important;
+    }
+      .sendingStory > button{
+        background: #555!important;
+      }
 
   .commentForm{
     margin:-10px 0 -20px;
@@ -533,13 +565,13 @@ nav #instasodaLogo {
  * WIDGETS
  ********************************/
 .widget-comment{
-  position:absolute;
-  bottom:6px;
-  left:15px;
-  height:22px;
-  font-size:1.1em;
-  background: url(img/icon-comments.png) no-repeat 0 5px;
-  padding: 13px 0 0 32px;
+  color: #555;
+  margin-top: 75px;
+  margin-left: 20px;
+  font-size: 24px;
+  font-family: liberation-serif;
+  font-style: italic;
+  font-weight: bold;
   -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
   opacity: 0;

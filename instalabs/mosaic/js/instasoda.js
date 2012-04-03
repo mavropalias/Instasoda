@@ -72,40 +72,46 @@ $(document).ready(function(){
       mouseoverstory: function(e) {
         var _storyID = this.model.get('id');
         var _storyOffset = this.$el.offset();
-        _currentStoryElement = "#" + _storyID + 'tooltip';
-        _currentStoryElementSection = _currentStoryElement + '> section';
+        var _tooltipLoader = this.$el.find('img');
+        var _currentStoryElement = "#" + _storyID + 'tooltip';
+        var _currentStoryElementSection = _currentStoryElement + '> section';
 
         if ( $(_currentStoryElement).is('.loadedComment') ) {
-          $(_currentStoryElement).css({left:_storyOffset.left - 5},{top:_storyOffset.top}).slideDown(300).addClass('loadedComment');
+          $(_currentStoryElement).css({left:_storyOffset.left - 5},{top:_storyOffset.top})
+                                 .stop(true,true)
+                                 .fadeIn(300)
+                                 .addClass('loadedComment');
         } else {
-          _tooltipLoader = this.$el.find('img');
-          _tooltipLoader.delay(500).fadeIn(500);
           tooltipFetchInfo = setTimeout(function() {
-            _DISQUS(_storyID, function(data) {
-              $(_currentStoryElement).css({left:_storyOffset.left - 5},{top:_storyOffset.top}).slideDown(300).addClass('loadedComment');
+            _tooltipLoader.fadeIn(500);
 
-              console.log(data);
-              $.each(data, function() {
-                var $i = 0;
-                $.each(this, function(k, v) {
-                  $(_currentStoryElementSection).append(data.response[$i].author.name + ' said: ' + data.response[$i].message);
-                  $i++;
-                });
+            // DISQUS API: Get the comments of a specific _storyID
+            _DISQUS(_storyID, function(data) {
+              // DISQUS API: Get the number of comments and likes of a specific _storyID
+              _DISQUScomments(_storyID, function(pdata) {
+                $('footer > #' + _storyID + ' > .icon-comments').after(pdata.response[0].posts);
+                $('footer > #' + _storyID + ' > .icon-heart').after(pdata.response[0].likes);
+                $('footer > #' + _storyID).css({opacity:1});
+              });
+              $(_currentStoryElement).css({left:_storyOffset.left - 5},{top:_storyOffset.top})
+                                     .stop(true,true)
+                                     .fadeIn(300)
+                                     .addClass('loadedComment');
+              $.each(data.response, function(){
+                $(_currentStoryElementSection).append(this.author.name + ' said: ' + this.message);
               });
 
-              //$(_currentStoryElementSection).append(data.response[0].author.name);
               _tooltipLoader.hide();
             });
-          }, 2000);
+          }, 600);
         }
       },
 
       mouseleavestory: function(e) {
         clearTimeout(tooltipFetchInfo);
-        _tooltipLoader.hide();
-        setTimeout(function() {
-          $('.commentTooltip').fadeOut(300);
-        }, 1500);
+        this.$el.find('img').fadeOut(500);
+        var _storyID = this.model.get('id');
+        $("#" + _storyID + "tooltip").fadeOut(300);
       },
 
       maximizeStory: function (e) {
@@ -117,7 +123,7 @@ $(document).ready(function(){
         _DISQUScomments(model.get('id'), function(data) {
           model.set({comments: data});
           $('footer > #' + model.get('id'))
-            .text(data)
+            .html('<i class="icon-comments"></i>&nbsp' + data)
             .css({opacity:1});
         });
       },
@@ -147,7 +153,7 @@ $(document).ready(function(){
 
       renderStory: function (model) {
         var storyView = new StoryView({ model: model });
-        storyView.renderComments(model);
+        //storyView.renderComments(model);
         storyView.render();
         $("#container").append(storyView.el);
       },
@@ -166,9 +172,12 @@ $(document).ready(function(){
 
       save: function() {
         console.log('  ~ Preparing new story');
-        var story = new Story();
-        var storyText = $('textarea[name=storytext]').val();
-        var storyTitle = $('input[name=storytitle]').val();
+        var story = new Story(),
+            storyText = $('textarea[name=storytext]').val(),
+            storyTitle = $('input[name=storytitle]').val();
+        $(".storyForm").addClass('sendingStory');
+        $(".storyForm > button").text('sending story...')
+
 
         story.save(
         {
@@ -181,8 +190,10 @@ $(document).ready(function(){
             $('textarea[name=storytext], input[name=storytitle]').val('');
             console.log('   ~~~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
-            console.log('  > Navigate to the new [Full story]');
-            mosaicRouter.navigate("!/story/" + story.id, {trigger: true, replace: true});
+            $(".storyForm > button").text('submit your story');
+            $(".storyForm").removeClass('sendingStory');
+            //console.log('  > Navigate to the new [Full story]');
+            //mosaicRouter.navigate("!/story/" + story.id, {trigger: true, replace: true});
           },
           error: function (model, response) {
             console.log('   !!! ERROR: Could not add the new story to database!');
@@ -206,7 +217,7 @@ $(document).ready(function(){
       id: 'articleFullView',
       events: {
         'click #articleFullView > #curtain, .closeStory': 'hideStory',
-        'click .commentSubmit':'save'
+        //'click .commentSubmit':'save'
       },
 
       initialize: function () {
@@ -372,10 +383,11 @@ $(document).ready(function(){
           'thread': 'link:' + _disqus_url + _disqus_story + id
       },
       success: function(data) {
-        cb(data.response[0].posts);
+        cb(data);
       }
     });
   }
+
 
   function _DISQUS(id,cb) {
     //Get all comments
@@ -385,9 +397,11 @@ $(document).ready(function(){
       data: {
           'api_key': papi_key,
           'forum': disqus_shortname,
-          'thread': 'link:' + _disqus_url + _disqus_story + _storyID
+          'thread': 'link:[' + _disqus_url + _disqus_story + _storyID + ']'
       },
       success: function(data) {
+        console.log('link:[' + _disqus_url + _disqus_story + _storyID + ']');
+        console.log(data); return false;
         var _threadID = data.response[0].id;
         $.ajax({
           url: 'https://disqus.com/api/3.0/threads/listPosts.json',

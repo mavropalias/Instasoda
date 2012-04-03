@@ -29,7 +29,8 @@
     <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 
 		<!-- STYLESHEET -->
-		<link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+		<link rel="stylesheet" type="text/css" href="font-awesome.css" />
 
 		<!-- SCRIPTS -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -76,10 +77,10 @@
         <p>{{content}}</p>
       </span>
       <footer>
-        <div id="{{id}}" class="widget-comment">{{comments}}</div><img src="img/loader.gif" />
+        <div id="{{id}}" class="widget-comment"><i class="icon-comments">&nbsp;</i><i style="margin-left: 20px;" class="icon-heart">&nbsp;</i></div><img src="img/loader.gif" />
       </footer>
       <div id="{{id}}tooltip" class="commentTooltip">
-        <header>Latest Comments!</header>
+        <header><h1>Latest Comments!</h1></header>
         <section></section>
       </div>
   </script>
@@ -117,13 +118,13 @@
 
   <script id="tplSubmitStory" type="text/template">
     <article class="doubleX storyForm">
-      <h1>Tell us your dating story:</h1>
-      <form>
-      <p>
-        <input type="text" name="storytitle" class="storyTitle" placeholder="Your storie's title..."></input>
-        <textarea placeholder="Your story..." name="storytext" id="id_description" class="storyText"></textarea>
-      </p></form>
-      <button class="button">submit your story</button>
+        <h1>Tell us your dating story:</h1>
+        <form>
+        <p>
+          <input type="text" name="storytitle" class="storyTitle" placeholder="Your storie's title..."></input>
+          <textarea placeholder="Your story..." name="storytext" id="id_description" class="storyText"></textarea>
+        </p></form>
+        <button class="button">submit your story</button>
     </article>
   </script>
 
