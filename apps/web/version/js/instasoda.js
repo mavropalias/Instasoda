@@ -18,6 +18,7 @@ $(document).ready(function() {
     // #########################################################################
 
     var appReady = false;
+    var socketIoHost = "http://localhost:8082"; //##socketIoHost##
     var sApi = "http://localhost:8080/api/"; //##apiUrl##
     jQuery.support.cors = true;
     
@@ -45,6 +46,13 @@ $(document).ready(function() {
         idAttribute: "_id",
         urlRoot: sApi + 'user'
     });
+    
+    // OnlineUsers
+    // =========================================================================
+    var OnlineUsers = Backbone.Model.extend({
+        defaults: {
+        }
+    });
 
 
     // #########################################################################
@@ -70,15 +78,42 @@ $(document).ready(function() {
     // Beta message view
     // =========================================================================
     var BetaView = Backbone.View.extend({
-
+      // initialize
       initialize: function() {
         _.bindAll(this);
       },
-
+      
+      // render
       render: function() {
         console.log('  ~ rendering beta view');
         var template = $('#tplBeta').html();
         $(this.el).html(template);
+      }
+      
+    });
+    
+    // =========================================================================
+    // Navigation view
+    // =========================================================================
+    var NavigationView = Backbone.View.extend({      
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        _.bindAll(this);
+        this.model.bind('change', this.render);
+        this.render();
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering NavigationView');
+        var template = $('#tplNavigation').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // render sub views
+        this.onlineUsersView = new OnlineUsersView({ model: onlineUsers });
+        this.onlineUsersView.setElement(this.$('#navOnlineUsers')).render();
       }
       
     });
@@ -101,7 +136,7 @@ $(document).ready(function() {
       initialize: function() {
         _.bindAll(this);
       },
-
+      
       // render
       // -----------------------------------------------------------------------
       render: function() {
@@ -350,7 +385,7 @@ $(document).ready(function() {
               // SUCCESS
               if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
                 console.log('- API call was successful');
-                saveLocally("user", _this);
+                store.set("user", _this);
                 $('#saveProfileButton').fadeIn();
                 $('#working').fadeOut();
               }
@@ -398,7 +433,7 @@ $(document).ready(function() {
           },
           success: function(model, res) {
             // save locally
-            saveLocally("user", _this.model);
+            store.set("user", _this.model);
             
             // update UI
             $('#userPhotos .photoMakeDefault').removeClass('hidden');
@@ -567,7 +602,7 @@ $(document).ready(function() {
         // save these preferences into the user model
         this.model.set({ so: options });
         this.model.save();
-        saveLocally('user', user);
+        store.set('user', user);
         
         IS.navigateTo('search/'
                       + options.m + '/'
@@ -807,49 +842,33 @@ $(document).ready(function() {
       }
     });
     
+    // =========================================================================
+    // OnlineUsersView
+    // =========================================================================
+    var OnlineUsersView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing OnlineUsersView');
+        _.bindAll(this);
+        this.model.bind('change', this.render);
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering FacebookLikesView');
+        var template = $('#tplOnlineUsers').html();
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+      }
+    });
+    
 
     // #########################################################################
     // #########################################################################
     // # Private methods
     // #########################################################################
     // #########################################################################
-
-    /**
-     * Store data locally, using one of the following methods:
-     * 1. localStorage
-     * 2. local DB
-     * 3. Cookies
-     * @param {String} varName
-     * @param {Object} data
-     * @return {Bool} success
-     */
-    var saveLocally = function(sVarName, jData) {
-      if ( !! window.localStorage) {
-        console.log("    (local storage save in process)");
-        window.localStorage.setItem(sVarName, JSON.stringify(jData));
-        return true;
-      } else {
-        //TODO: alternative storage solution, when localStorage is not available
-        console.log("    (local storage is not available)");
-        throw ("Local storage is not available");
-      }
-    }
-
-    /**
-     * Update data that have been saved locally.
-     * @param {String} varName
-     * @return {Object} object
-     */
-    var readLocally = function(sVarName) {
-      if ( !! window.localStorage) {
-        console.log("    (local storage read in process)");
-        return JSON.parse(window.localStorage.getItem(sVarName));
-      } else {
-        //TODO: alternative storage solution, when localStorage is not available
-        console.log("    (local storage is not available)");
-        return false;
-      }
-    }
     
     /**
      * Logs the user out of the system.
@@ -858,7 +877,8 @@ $(document).ready(function() {
       // silent only clears locally stored data
       // without any effect on the API
       user.clear({ silent: true });
-      saveLocally("user", user);
+      store.clear();
+      navigationView.render();
       router.navigate("", {trigger: true});
     }
 
@@ -870,18 +890,23 @@ $(document).ready(function() {
     // #########################################################################
   
     // Backbone models
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     var user = new User();
     var users = new Users();
+    var onlineUsers = new OnlineUsers();
 
     // Backbone collections
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
     var usersCollection = new UsersCollection({
       model: users
     });
 
     // Backbone views
-    // -----------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    var navigationView = new NavigationView({
+      el: $('nav')[0],
+      model: user
+    });
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
     var myProfileView = new MyProfileView({
@@ -895,6 +920,21 @@ $(document).ready(function() {
       model: users,
     });
     
+    // Socket.io
+    // =========================================================================
+    var socket = io.connect(socketIoHost);
+    
+    // Connected
+    // -------------------------------------------------------------------------
+    socket.on('connected', function (data) {
+      console.log('- SOCKET.IO status: ' + data.status);
+    });
+    
+    // Receive online users
+    // -------------------------------------------------------------------------
+    socket.on('onlineUsers', function (msg) {
+      onlineUsers.set({ count: msg.count });
+    });
     
     // #########################################################################
     // #########################################################################
@@ -924,7 +964,7 @@ $(document).ready(function() {
         
         // Logout
         "logout": "logout",
-
+        
         // View user
         ":id": "viewUser"
       },
@@ -1055,7 +1095,7 @@ $(document).ready(function() {
      * Attempts to auth a FB user.
      */
     this.facebookAuth = function(){
-      if(!!readLocally("user") && readLocally("user").hasOwnProperty('fTkn')) {
+      if(!!store.get("user") && store.get("user").hasOwnProperty('fTkn')) {
         welcomeView.facebookAuth();
       }
     }
@@ -1078,7 +1118,7 @@ $(document).ready(function() {
         // try to read locally saved data to read the login status
         // -------------------------------------------------------
         console.log('- reading local storage');
-        user.set(readLocally("user"));
+        user.set(store.get("user"));
 
         if (user.get('_id')) {
           console.log('- found user in local storage');
@@ -1086,7 +1126,7 @@ $(document).ready(function() {
           // TODO sync data from API
           
           user.set({ 'fTkn': fTkn });
-          saveLocally("user", user);
+          store.set("user", user);
           
           cb(null);
         } else {
@@ -1121,7 +1161,7 @@ $(document).ready(function() {
                 if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
                   // store the user details locally
                   // ------------------------------
-                  saveLocally("user", user);
+                  store.set("user", user);
   
                   // callback success
                   // ----------------
@@ -1172,7 +1212,7 @@ $(document).ready(function() {
           if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
             // store the user details locally
             // ------------------------------
-            saveLocally("user", user);
+            store.set("user", user);
     
             // callback success
             // ----------------
@@ -1219,7 +1259,7 @@ $(document).ready(function() {
             success: function(model, response) {
                 // SUCCESS
                 if (response.status == "success") {
-                    saveLocally("user", user);
+                    store.set("user", user);
                     IS.navigateBack();
                 }
                 // FAIL

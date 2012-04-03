@@ -35,18 +35,21 @@
   
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="VERSION/js/jquery.min.js"></script>
+  <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery-ui-1.8.18.custom.min.js"></script>
   <script type="text/javascript" src="VERSION/js/underscore-min.js"></script>
   <script type="text/javascript" src="VERSION/js/json2.js"></script>
   <script type="text/javascript" src="VERSION/js/backbone-min.js"></script>
+  <script type="text/javascript" src="VERSION/js/store.min.js"></script>
   <script type="text/javascript" src="VERSION/js/mustache.js"></script>
   <script type="text/javascript" src="VERSION/js/fileuploader.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery.mousewheel-3.0.6.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery.fancybox-thumbs.js"></script>
+  <script type="text/javascript" src="VERSION/js/async.min.js"></script>
   <script type="text/javascript" src="VERSION/js/instasoda.js"></script>
   
-  <script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>-->
   <!-- SCRIPTS END -->
   
   
@@ -64,12 +67,13 @@
   <!-------------------------------------------------------------------------->
   <!-- FACEBOOK SDK -->
   <!-------------------------------------------------------------------------->
-    <div id="fb-root"></div>
+    
+	<div id="fb-root"></div>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '372501186096211', // ##appId##
-          channelUrl : 'channel.html',  
+          channelUrl : 'http://localhost:8081/is/channel.html', // ##channel##
           status     : true, 
           cookie     : true,
           oauth      : true,
@@ -86,63 +90,55 @@
         js.src = "//connect.facebook.net/en_US/all.js";
         ref.parentNode.insertBefore(js, ref);
        }(document));
-    </script>  
-  
-  
-  <!-------------------------------------------------------------------------->  
-  <!-- NAVIGATION -->
-  <!-------------------------------------------------------------------------->
-  
-    <nav>
-      <ul>
-        <li><a id="instasodaLogo" href="#"></a></li>
-        <ul>
-          <li><a id="navSearch" href="#search">Search</a></li>
-          <li><a id="navProfile" href="#me">Profile</a></li>
-          <li><a id="navLogout" href="#logout">Logout</a></li>
-        </ul>
-      </ul>
-    </nav>
-  
-  
-  <!-------------------------------------------------------------------------->
-  <!-- HEADER -->
-  <!-------------------------------------------------------------------------->
-  
-    <header role="banner" aria-label="Header content">
-      <div class="titleArea">
-        <h1 class="pageTitle win-title">Welcome to Instasoda!</h1><br />
-        <h2>Fizzy, not fussy</h2>                
-      </div>
-    </header>
-  
-  
+    </script>
+	
+	
   <!-------------------------------------------------------------------------->
   <!-- CONTENT -->
   <!-------------------------------------------------------------------------->
-
-    <section id="content" role="main"></section>
-
-
+    
+	<nav></nav>
+	<section id="content" role="main"></section>
+	
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
   <!-------------------------------------------------------------------------->
-
+    
+	<!------------------------------------------------------------------------>
+    <!-- NAVIGATION -->
+    <!------------------------------------------------------------------------>
+	  
+	  <script id="tplNavigation" type="text/template">
+		<ul>
+		  <li><a id="instasodaLogo" href="#"></a></li>
+		  <ul>
+			{{^_id}}<li><a id="navWelcome" href="#">Instasoda</a></li>{{/_id}}
+			{{#_id}}<li><div id="navNotifications">0</div></li>{{/_id}}
+			{{#_id}}<li><a id="navHome" href="#">Home</a></li>{{/_id}}
+			{{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
+			{{#_id}}<li><a id="navProfile" href="#me">Profile</a></li>{{/_id}}
+			{{#_id}}<li><a id="navLogout" href="#logout">Logout</a></li>{{/_id}}
+			<li id="navOnlineUsers"></li>
+		  </ul>
+		</ul>
+	  </script>
+	  
+	  
     <!------------------------------------------------------------------------>
     <!-- BETA MESSAGE -->
     <!------------------------------------------------------------------------>
-    
+	  
       <script id="tplBeta" type="text/template">
-        <div class="isColumn2 isRow1">
+        <div>
           <img src="img/betaMessage.png" width="1021" height="469" />
         </div>
       </script>
-    
-    
+	  
+	  
     <!------------------------------------------------------------------------>
     <!-- WELCOME -->
     <!------------------------------------------------------------------------>
-    
+	  
       <script id="tplWelcome" type="text/template">
         <h2>Find & date people who share the things that you like*</h2>
 		<h3>*it’s free, fun, super easy and totally anonymous</h3>
@@ -201,22 +197,39 @@
 		  <span class="bubble"></span>
 		</div>
       </script>
+	  
+	  
+    <!------------------------------------------------------------------------>
+    <!-- ONLINE USERS VIEW -->
+    <!------------------------------------------------------------------------>
     
-    
+      <script id="tplOnlineUsers" type="text/template">
+         <div id="navOnlineUsers">
+           Online users: 
+           <span id="navOnlineUsersCount">
+            {{count}}
+            {{^count}}
+              <img src="VERSION/img/loading.gif">
+            {{/count}}
+           </span>
+         </div>
+      </script>
+      
+	  
     <!------------------------------------------------------------------------>
     <!-- SEARCH VIEW -->
     <!------------------------------------------------------------------------>
-    
+	  
       <script id="tplSearch" type="text/template">
         <div id="searchFilters"></div>
         <div id="searchResults"></div>
       </script>
-  
-  
+	  
+	  
     <!------------------------------------------------------------------------>
     <!-- SEARCH FILTERS VIEW -->
     <!------------------------------------------------------------------------>
-    
+	  
       <script id="tplSearchFilters" type="text/template">
         <section>
           <h3>I’m interested in meeting...</h3>
@@ -261,8 +274,8 @@
           <button id="buttonAddLikes">+ Add likes</button>
         </section>-->
       </script>
-  
-  
+	  
+	  
     <!------------------------------------------------------------------------>
     <!-- SEARCH RESULT -->
     <!------------------------------------------------------------------------>
@@ -284,8 +297,8 @@
           <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
         </ul>
       </script>
-
-
+	  
+	  
     <!------------------------------------------------------------------------>
     <!-- USER PROFILE VIEW -->
     <!------------------------------------------------------------------------>
@@ -367,12 +380,12 @@
           </div>
         </div>
       </script>
-
-
+	  
+	  
     <!------------------------------------------------------------------------>
     <!-- MY PROFILE -->
     <!------------------------------------------------------------------------>
-    
+	  
       <script id="tplSettings" type="text/template">
         
         <div id="basicInfo" class="padding3x">
