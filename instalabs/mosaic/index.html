@@ -76,10 +76,12 @@
         <p>{{content}}</p>
       </span>
       <footer>
-        <div class="widget-comment">
-          <a href="http://localhost/Instasoda/instalabs/mosaic/#!story/{{id}}#disqus_thread" data-disqus-identifier="{{id}}">{{comments}}</a>
-        </div>
+        <div id="{{id}}" class="widget-comment">{{comments}}</div><img src="img/loader.gif" />
       </footer>
+      <div id="{{id}}tooltip" class="commentTooltip">
+        <header>Latest Comments!</header>
+        <section></section>
+      </div>
   </script>
 <!--
       <h1>Comments: </h1>
@@ -109,17 +111,6 @@
   		</span>
       <div class="fullViewSeparator"></div>
       <div id="disqus_thread"></div>
-      <script type="text/javascript">
-          var disqus_identifier = '{{id}}';
-          var disqus_url = "http://localhost/Instasoda/instalabs/mosaic/#!story/{{id}}";
-          var disqus_developer = 1;
-          (function() {
-              var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-              dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-              (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-          })();
-      </script>
-      <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
   		<footer></footer>
     </article>
   </script>
@@ -134,16 +125,6 @@
       </p></form>
       <button class="button">submit your story</button>
     </article>
-  </script>
-
-  <script type="text/javascript">
-      var disqus_shortname = 'mosaicdev';
-      (function () {
-          var s = document.createElement('script'); s.async = true;
-          s.type = 'text/javascript';
-          s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
-          (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
-      }());
   </script>
 
   <script type="text/javascript">

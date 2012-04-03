@@ -205,7 +205,7 @@ nav #instasodaLogo {
     border-style:solid;
     border-color:#ffffff;
     outline:5px solid white;
-    overflow-y:hidden;
+    overflow:hidden;
     -webkit-transition: border-color 0.2s ease;
     -moz-transition: border-color 0.2s ease;
     -o-transition: border-color 0.2s ease;
@@ -224,6 +224,12 @@ nav #instasodaLogo {
     article.item footer {
       position: absolute; width: 100%; height: 100px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;
     }
+      article.item footer img{
+        display:none;
+        position:absolute;
+        right:5px;
+        bottom:5px;
+      }
 
 	article.item h1, #articleFullView h1, .storyForm h1{
     font-family:"liberation-serif", serif;
@@ -257,6 +263,33 @@ nav #instasodaLogo {
     margin-top:0.2em;
     line-height:1.5em;
 	}
+
+  .commentTooltip{
+    position:fixed;
+    width:272px;
+    margin-top: 21px;
+    padding:20px;
+    background:#BE1D2C;
+    color:white;
+    text-shadow:1px 1px 0px #444;
+    font-size: 1.5em;
+    border:5px solid #fff;
+    border-top: 10px solid #fff;
+    border-radius: 8px;
+    z-index:1;
+    display:none;
+  }
+    .commentTooltip > header{
+      padding-bottom: 10px;
+      font-size: 1.8em;
+      font-family: liberation-serif;
+      font-weight:700;
+      font-style:italic;
+    }
+      .commentTooltip > section > p{
+        padding-bottom: 10px;
+        padding-top: 0;
+      }
 
 	.storyForm{
     position:relative;
@@ -507,12 +540,15 @@ nav #instasodaLogo {
   font-size:1.1em;
   background: url(img/icon-comments.png) no-repeat 0 5px;
   padding: 13px 0 0 32px;
+  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  opacity: 0;
+  -webkit-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  -ms-transition-duration: 0.4s;
+  transition-duration: 0.4s;
 }
-  .widget-comment a{
-    font-weight:bold;
-    color:#333;
-    text-decoration:none;
-  }
 
 
 /********************************
