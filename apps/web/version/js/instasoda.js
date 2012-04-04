@@ -150,13 +150,14 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       featureInstantProfiles: function() {
         var _this = this;
-        // render faces
+        
+        var frameRate = 100;
+        var counter = 0;
         var boxSize = 80;
         var winWidth = $(window).width();
         var winHeight = $(window).height();
         var boxColumns = 0;
         var boxRows = 0;
-        var rnd = 0;
         
         winWidth = $(window).width();
         winHeight = $(window).height();
@@ -175,43 +176,39 @@ $(document).ready(function() {
             _this.$('.faces').append("<div id='row"+ n +"' class='row'>");
             _this.$('#row'+n).css("top",(n*boxSize + 70)+"px");
             
-            for(m = 0; m < cols; m++){
+            for(m = 0; m < cols; m++) {
               (function() {
-                _this.$('#row'+n).append("<div id='box"+ n + "-" + m +"' class='box animated transparent'></div>");
+                _this.$('#row'+n).append("<div id='box"+ n + "-" + m +"' class='box animated transparent row" + n + " col" + m + "'></div>");
                 var object = _this.$('#box'+n+"-"+m);
                 object.css("left",(m*boxSize)+"px");
                 
                 //load random image
-                rnd = Math.floor(Math.random() * (21 - 1) + 1);
+                var rnd = Math.floor(Math.random() * (12) + 1);
                 object.css("background-image",'url(faces/'+(rnd)+'.png)').delay(rnd * 50).queue(function() {
                   $(this).removeClass('transparent');
                 });
-                
-                // animate faces
-                setInterval(function() {
-                  highlightFace(object);
-                  //console.log(object);
-                }, (rnd * 2000));
               })();
             }
-              
             _this.$('.faces').append("</div>")
           }
-           
+          
           // set row width
           _this.$('.row').css('width',(boxSize * boxColumns)+'px');
+          
+          // star animations
+          $('.box').removeClass('animated');
+          playAnimation(cols,rows)
         }
         
-        function highlightFace(face) {
-          face.css({
-            opacity: 0.7
-          });
-          
-          setTimeout(function() {
-            face.css({
-              opacity: 1
-            });
-          }, 1000)
+        function playAnimation() {
+          if(counter < boxColumns) {
+            _this.$('.col' + (counter - 3)).css('opacity', '1');
+            _this.$('.col' + (counter - 2)).css('opacity', '0.5');
+            _this.$('.col' + (counter - 1)).css('opacity', '0.8');
+            _this.$('.col' + counter).css('opacity', '0.5');
+            counter++;
+            setTimeout(playAnimation, frameRate);
+          }
         }
       },
       
