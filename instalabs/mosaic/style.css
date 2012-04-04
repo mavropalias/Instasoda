@@ -196,47 +196,34 @@ nav #instasodaLogo {
 	article.item{
     position: relative;
 	  float:left;
-    width:260px;
+    width:270px;
     height:335px;
-    margin:5px 30px 25px 5px;
-	  padding:10px 30px 20px 20px;
+    margin:0px 30px 25px 0px;
+    padding:10px 20px 20px 20px;
 		background:#fff;
-    border-right-width:2px;
-    border-style:solid;
-    border-color:#ffffff;
-    outline:5px solid white;
+    border:5px solid white;
     overflow:hidden;
-    -webkit-transition: border-color 0.2s ease;
-    -moz-transition: border-color 0.2s ease;
-    -o-transition: border-color 0.2s ease;
-    -ms-transition: border-color 0.2s ease;
-    transition: border-color 0.2s ease;
+    color:#333;
+    box-shadow:2px 2px 10px -2px rgba(0,0,0,0.5);
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+      transition: all 0.2s ease;
 	}
 		article.item:hover{
       cursor:pointer;
-      border-color:#BE1D2C;
-      -webkit-transition: border-color 0.2s ease;
-      -moz-transition: border-color 0.2s ease;
-      -o-transition: border-color 0.2s ease;
-      -ms-transition: border-color 0.2s ease;
-      transition: border-color 0.2s ease;
+      border:5px solid #DDD;
+      box-shadow:4px 4px 15px rgba(0,0,0,0.3);
+      -webkit-transition: all 0.2s ease;
+      -moz-transition: all 0.2s ease;
+      -o-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+      transition: all 0.2s ease;
     }
     article.item footer {
-      position: absolute; width: 100%; height: 65px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;z-index:3;
-      -webkit-transition: all 0.3s ease;
-      -moz-transition: all 0.3s ease;
-      -o-transition: all 0.3s ease;
-      -ms-transition: all 0.3s ease;
-      transition: all 0.3s ease;
+      position: absolute; width: 100%; height: 105px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;z-index:3;
     }
-      article.item:hover footer{
-        height:105px;
-        -webkit-transition: all 0.3s ease;
-        -moz-transition: all 0.3s ease;
-        -o-transition: all 0.3s ease;
-        -ms-transition: all 0.3s ease;
-        transition: all 0.4s ease;
-      }
       article.item footer img{
         display:none;
         position:absolute;
@@ -245,8 +232,11 @@ nav #instasodaLogo {
       }
       article.item footer i{
         color:#BE1D2C;
-        font-size: 24px;
+        font-size: 16px;
       }
+        article.item footer i span{
+          color:#333;
+        }
 
 	article.item h1, #articleFullView h1, .storyForm h1{
     font-family:"liberation-serif", serif;
@@ -317,11 +307,11 @@ nav #instasodaLogo {
     float:left;
     width:300px;
     height:295px;
-    margin:10px 5px 10px 9px;
+    margin:0px;
     padding:15px;
     background:#FFFFFF;
     border:15px solid #BE1D2C;
-    outline:10px solid #fff;
+    box-shadow:15px 0px 40px -10px rgba(0,0,0,0.4);
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
@@ -568,18 +558,10 @@ nav #instasodaLogo {
   color: #555;
   margin-top: 75px;
   margin-left: 20px;
-  font-size: 24px;
+  font-size: 16px;
   font-family: liberation-serif;
   font-style: italic;
   font-weight: bold;
-  -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
-  opacity: 0;
-  -webkit-transition-duration: 0.4s;
-  -moz-transition-duration: 0.4s;
-  -o-transition-duration: 0.4s;
-  -ms-transition-duration: 0.4s;
-  transition-duration: 0.4s;
 }
 
 

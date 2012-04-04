@@ -64,54 +64,7 @@ $(document).ready(function(){
       tagName: 'article',
       className: 'item',
       events: {
-        'click':'maximizeStory',
-        'mouseenter': 'mouseoverstory',
-        'mouseleave' : 'mouseleavestory'
-      },
-
-      mouseoverstory: function(e) {
-        var _storyID = this.model.get('id');
-        var _storyOffset = this.$el.offset();
-        var _tooltipLoader = this.$el.find('img');
-        var _currentStoryElement = "#" + _storyID + 'tooltip';
-        var _currentStoryElementSection = _currentStoryElement + '> section';
-
-        if ( $(_currentStoryElement).is('.loadedComment') ) {
-          $(_currentStoryElement).css({left:_storyOffset.left - 5},{top:_storyOffset.top})
-                                 .stop(true,true)
-                                 .fadeIn(300)
-                                 .addClass('loadedComment');
-        } else {
-          tooltipFetchInfo = setTimeout(function() {
-            _tooltipLoader.fadeIn(500);
-
-            // DISQUS API: Get the comments of a specific _storyID
-            _DISQUS(_storyID, function(data) {
-              // DISQUS API: Get the number of comments and likes of a specific _storyID
-              _DISQUScomments(_storyID, function(pdata) {
-                $('footer > #' + _storyID + ' > .icon-comments').after(pdata.response[0].posts);
-                $('footer > #' + _storyID + ' > .icon-heart').after(pdata.response[0].likes);
-                $('footer > #' + _storyID).css({opacity:1});
-              });
-              $(_currentStoryElement).css({left:_storyOffset.left - 5},{top:_storyOffset.top})
-                                     .stop(true,true)
-                                     .fadeIn(300)
-                                     .addClass('loadedComment');
-              $.each(data.response, function(){
-                $(_currentStoryElementSection).append(this.author.name + ' said: ' + this.message);
-              });
-
-              _tooltipLoader.hide();
-            });
-          }, 600);
-        }
-      },
-
-      mouseleavestory: function(e) {
-        clearTimeout(tooltipFetchInfo);
-        this.$el.find('img').fadeOut(500);
-        var _storyID = this.model.get('id');
-        $("#" + _storyID + "tooltip").fadeOut(300);
+        'click':'maximizeStory'
       },
 
       maximizeStory: function (e) {
@@ -119,12 +72,13 @@ $(document).ready(function(){
         mosaicRouter.navigate("!/story/" + this.model.get('id'), {trigger: true, replace: false});
       },
 
-      renderComments: function(model) {
-        _DISQUScomments(model.get('id'), function(data) {
-          model.set({comments: data});
-          $('footer > #' + model.get('id'))
-            .html('<i class="icon-comments"></i>&nbsp' + data)
-            .css({opacity:1});
+      renderStoryWidgets: function(model) {
+        $.each(_DISQUSarr, function(){
+          var myModelId = model.get('id');
+          if (this.link == _disqus_url + _disqus_story + myModelId) {
+            model.set({comments: this.posts});
+            return false;
+          }
         });
       },
 
@@ -153,13 +107,14 @@ $(document).ready(function(){
 
       renderStory: function (model) {
         var storyView = new StoryView({ model: model });
-        //storyView.renderComments(model);
+        storyView.renderStoryWidgets(model);
         storyView.render();
         $("#container").append(storyView.el);
       },
 
       renderNewStory: function (model) {
         var storyView = new StoryView({ model: model });
+        storyView.renderStoryWidgets(model);
         storyView.render();
         $(".storyForm").after(storyView.el);
       },
@@ -192,8 +147,6 @@ $(document).ready(function(){
             storiesCollection.add(story);
             $(".storyForm > button").text('submit your story');
             $(".storyForm").removeClass('sendingStory');
-            //console.log('  > Navigate to the new [Full story]');
-            //mosaicRouter.navigate("!/story/" + story.id, {trigger: true, replace: true});
           },
           error: function (model, response) {
             console.log('   !!! ERROR: Could not add the new story to database!');
@@ -217,37 +170,12 @@ $(document).ready(function(){
       id: 'articleFullView',
       events: {
         'click #articleFullView > #curtain, .closeStory': 'hideStory',
-        //'click .commentSubmit':'save'
       },
 
       initialize: function () {
         _.bindAll(this);
         this.model.bind('change', this.render);
         this.model.bind("add", this.render);
-      },
-
-      save: function() {
-        console.log('  ~ Preparing to add a new [Comment] to the story with ID: ' + story.id);
-        var comment = new Comment();
-        //commentText = $('textarea[name=commenttext]').val();
-        //commentAuthor = story.get('author');
-
-        comment.save(
-        {
-          'postId':story.id,
-          'author':'someone',
-          'content':'something'
-        },
-        {
-          success: function (model, response){
-            //$('textarea[name=commenttext]').val('');
-            console.log('   ~~~ SUCCESS: Added the new [Comment] to database');
-            //processComment();
-          },
-          error: function (model, response) {
-            console.log('   !!! ERROR: Could not add [Comment] to database');
-          }
-        });
       },
 
       hideStory: function (e) {
@@ -309,8 +237,12 @@ $(document).ready(function(){
       index: function() {
         console.log('> Routing [Index] page');
         if (appReady == false) {
-          storiesCollection.fetch();
-          $('body').append(storiesListView.el);
+          // Calling the DISQUS API to get a an array of objects/stories
+          _DISQUS_get_comments(function(data) {
+            _DISQUSarr = data.response;
+            storiesCollection.fetch();
+            $('body').append(storiesListView.el);
+          })
         }
       },
 
@@ -344,19 +276,6 @@ $(document).ready(function(){
 	// initialise the rich text-area
 	// $('.rte-zone').rte();
 
-
-
-
-  function processComment() {
-    if ( $(".noComments").length > 0 ) {
-      $(".noComments").slideUp(300, function () {
-        appendNewCommentToFullStoryView();
-      });
-    } else {
-      appendNewCommentToFullStoryView();
-    }
-  }
-
   function appendNewCommentToFullStoryView() {
     $("#comments").prepend('<p class="newComment"><img src="img/anon.png" style="float: left;" /><span><strong>' + commentAuthor + '</strong><br>' + commentText + '</span></p>');
     $("#comments > p:first-child").fadeOut(0, function() {
@@ -373,48 +292,16 @@ $(document).ready(function(){
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   }
 
-  function _DISQUScomments(id, cb) {
+  function _DISQUS_get_comments(cb) {
     // Get a story's comments
     $.ajax({
       url: 'https://disqus.com/api/3.0/threads/list.json',
       data: {
           'api_key': papi_key,
-          'forum': disqus_shortname,
-          'thread': 'link:' + _disqus_url + _disqus_story + id
+          'forum': disqus_shortname
       },
       success: function(data) {
         cb(data);
-      }
-    });
-  }
-
-
-  function _DISQUS(id,cb) {
-    //Get all comments
-    var _storyID = id;
-    $.ajax({
-      url: 'https://disqus.com/api/3.0/threads/list.json',
-      data: {
-          'api_key': papi_key,
-          'forum': disqus_shortname,
-          'thread': 'link:[' + _disqus_url + _disqus_story + _storyID + ']'
-      },
-      success: function(data) {
-        console.log('link:[' + _disqus_url + _disqus_story + _storyID + ']');
-        console.log(data); return false;
-        var _threadID = data.response[0].id;
-        $.ajax({
-          url: 'https://disqus.com/api/3.0/threads/listPosts.json',
-          data: {
-              'api_key': papi_key,
-              'thread': _threadID
-          },
-          success: function(data) {
-            cb(data);
-            console.log(data);
-          }
-        });
-
       }
     });
   }
