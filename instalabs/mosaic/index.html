@@ -37,7 +37,6 @@
 		<script type="text/javascript" src="js/libs/underscore-min.js"></script>
 		<script type="text/javascript" src="js/libs/backbone-min.js"></script>
 		<script type="text/javascript" src="js/libs/mustache.js"></script>
-		<script type="text/javascript" src="js/jquery.rte.js"></script>
 		<script type="text/javascript" src="js/instasoda.js"></script>
 
 	</head>
@@ -54,6 +53,7 @@
       </ul>
     </nav>
 	</header>
+  <div id="wrapper"></div>
 
   <script id="tplStories" type="text/template">
       <h1><a>{{title}}</a></h1>
@@ -83,8 +83,8 @@
   </script>
 
   <script id="tplSubmitStory" type="text/template">
-  <div style="float: left; position: relative; background: white; padding: 10px;z-index:4;">
-    <article class="doubleX storyForm">
+  <section id="formWrapper">
+    <div class="doubleX storyForm">
         <h1>Tell us your dating story:</h1>
         <form>
         <p>
@@ -92,8 +92,8 @@
           <textarea placeholder="Your story..." name="storytext" id="id_description" class="storyText"></textarea>
         </p></form>
         <button class="button">submit your story</button>
-    </article>
-  </div>
+    </div>
+  </section>
   </script>
 
   <script type="text/javascript">

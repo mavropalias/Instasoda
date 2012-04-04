@@ -74,13 +74,16 @@
     font-size:62.5%;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    /*background-image: url('http://instasoda.com/area51/productdemo3/images/bubbles.png');
-    background-position: 0 0;
-    background-color: #007CA5;*/
   }
 
+  #wrapper{
+    margin:0 auto;
+    position:relative;
+  }
 	#container{
-		padding:20px;
+    margin:0 auto;
+    padding:20px;
+    padding-left:30px;
     overflow:hidden;
     background: url(img/bubbles.png) no-repeat top center;
 	}
@@ -211,6 +214,9 @@ nav #instasodaLogo {
       -ms-transition: all 0.2s ease;
       transition: all 0.2s ease;
 	}
+    article.item:first-child{
+      margin-left: 1200px!important;
+    }
 		article.item:hover{
       cursor:pointer;
       border:5px solid #DDD;
@@ -300,6 +306,14 @@ nav #instasodaLogo {
       padding-bottom: 10px;
       padding-top: 0;
     }
+
+  #formWrapper{
+    float:left;
+    position:relative;
+    padding:10px;
+    background:white;
+    z-index:4;
+  }
 
 	.storyForm{
     position:relative;

@@ -78,6 +78,8 @@ $(document).ready(function(){
           if (this.link == _disqus_url + _disqus_story + myModelId) {
             model.set({comments: this.posts});
             return false;
+          } else {
+            model.set({comments: 0});
           }
         });
       },
@@ -241,8 +243,8 @@ $(document).ready(function(){
           _DISQUS_get_comments(function(data) {
             _DISQUSarr = data.response;
             storiesCollection.fetch();
-            $('body').append(storiesListView.el);
-          })
+            $('#wrapper').append(storiesListView.el);
+          });
         }
       },
 
@@ -275,13 +277,6 @@ $(document).ready(function(){
 
 	// initialise the rich text-area
 	// $('.rte-zone').rte();
-
-  function appendNewCommentToFullStoryView() {
-    $("#comments").prepend('<p class="newComment"><img src="img/anon.png" style="float: left;" /><span><strong>' + commentAuthor + '</strong><br>' + commentText + '</span></p>');
-    $("#comments > p:first-child").fadeOut(0, function() {
-      $(this).slideDown(300);
-    })
-  }
 
   function _DISQUSappend(id) {
     var disqus_identifier = id;
