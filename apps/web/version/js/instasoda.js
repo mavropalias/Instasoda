@@ -128,7 +128,8 @@ $(document).ready(function() {
       // events
       // -----------------------------------------------------------------------
       events: {
-        'click #fb-auth': 'facebookAuth'
+        'click #fb-auth': 'facebookAuth',
+        'click .instantProfiles': 'featureInstantProfiles'
       },
       
       // initialize
@@ -143,6 +144,75 @@ $(document).ready(function() {
         console.log('  ~ rendering welcome view');
         var template = $('#tplWelcome').html();
         $(this.el).html(template);
+      },
+      
+      // featureInstantProfiles
+      // -----------------------------------------------------------------------
+      featureInstantProfiles: function() {
+        var _this = this;
+        // render faces
+        var boxSize = 80;
+        var winWidth = $(window).width();
+        var winHeight = $(window).height();
+        var boxColumns = 0;
+        var boxRows = 0;
+        var rnd = 0;
+        
+        winWidth = $(window).width();
+        winHeight = $(window).height();
+      
+        boxColumns = (Math.round(winWidth / boxSize))+1;
+        boxRows = (Math.round(winHeight / boxSize))+1;
+        
+        _this.$('.faces').width($(window).width());
+        _this.$('.faces').height($(window).height());
+        
+        addBoxes(boxColumns,boxRows);
+        
+        function addBoxes(cols,rows) {
+          _this.$('.faces').empty();
+          for(n = 0; n < rows; n++){
+            _this.$('.faces').append("<div id='row"+ n +"' class='row'>");
+            _this.$('#row'+n).css("top",(n*boxSize + 70)+"px");
+            
+            for(m = 0; m < cols; m++){
+              (function() {
+                _this.$('#row'+n).append("<div id='box"+ n + "-" + m +"' class='box animated transparent'></div>");
+                var object = _this.$('#box'+n+"-"+m);
+                object.css("left",(m*boxSize)+"px");
+                
+                //load random image
+                rnd = Math.floor(Math.random() * (21 - 1) + 1);
+                object.css("background-image",'url(faces/'+(rnd)+'.png)').delay(rnd * 50).queue(function() {
+                  $(this).removeClass('transparent');
+                });
+                
+                // animate faces
+                setInterval(function() {
+                  highlightFace(object);
+                  //console.log(object);
+                }, (rnd * 2000));
+              })();
+            }
+              
+            _this.$('.faces').append("</div>")
+          }
+           
+          // set row width
+          _this.$('.row').css('width',(boxSize * boxColumns)+'px');
+        }
+        
+        function highlightFace(face) {
+          face.css({
+            opacity: 0.7
+          });
+          
+          setTimeout(function() {
+            face.css({
+              opacity: 1
+            });
+          }, 1000)
+        }
       },
       
       // facebookAuth

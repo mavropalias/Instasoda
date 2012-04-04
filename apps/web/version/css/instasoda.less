@@ -198,7 +198,7 @@
   .round { .border-radius; }
   .animated { .transition(0.4s); }
   .hidden { display: none; }
-  .transparent { opacity: 0; }
+  .transparent { opacity: 0 !important; }
   .clearBoth { clear: both; }
 
 
@@ -297,7 +297,6 @@
 // NAVIGATION + HEADER
 // =============================================================================
 
-  //TODO: FORMAT CSS
   nav {
     .linear-gradient;
     .box-shadow(0px, 0px, 10px);
@@ -334,21 +333,7 @@
         &> li{
           display: inline-block;
           
-          #navNotifications {
-            .border-radius(2px);
-            .box-shadow(0px, 1px, 2px, @colorBlue3 inset);
-            margin: 0.5em 10px;
-            cursor: default;
-            font-weight: 300;
-            color: @colorBlue2;
-            padding: 0.5em;
-            height: 1.2em;
-            font-size: 0.9em;
-            line-height: 1.2em;
-            border: 1px solid #ddd;
-            position: relative;
-          }
-          
+          #navNotifications,
           #navOnlineUsers {
             .border-radius(2px);
             .box-shadow(0px, 1px, 2px, @colorBlue3 inset);
@@ -362,6 +347,10 @@
             font-size: 0.7em;
             line-height: 1.2em;
             border: 1px solid #ddd;
+            position: relative;
+          }
+          
+          #navOnlineUsers {
             position: absolute;
             right: 40px;
             top: 20px;
@@ -793,41 +782,41 @@
       }
     }
     
-      .instantProfiles {
-        bottom: 380px;
-        left: 175px;
-        
-        .featureIcon {
-          background: url(../img/sprites.png) -58px 0;
-        }
-      }
+    .instantProfiles {
+      bottom: 380px;
+      left: 175px;
       
-      .matching {
-        bottom: 290px;
-        left: 270px;
-        
-        .featureIcon {
-          background: url(../img/sprites.png) -140px 0;
-        }
+      .featureIcon {
+        background: url(../img/sprites.png) -58px 0;
       }
+    }
+    
+    .matching {
+      bottom: 290px;
+      left: 270px;
       
-      .privacy {
-        bottom: 450px;
-        left: 380px;
-        
-        .featureIcon {
-          background: url(../img/sprites.png) -181px 0;
-        }
+      .featureIcon {
+        background: url(../img/sprites.png) -140px 0;
       }
+    }
+    
+    .privacy {
+      bottom: 450px;
+      left: 380px;
       
-      .datingStories {
-        bottom: 300px;
-        left: 500px;
-        
-        .featureIcon {
-          background: url(../img/sprites.png) -99px 0;
-        }
+      .featureIcon {
+        background: url(../img/sprites.png) -181px 0;
       }
+    }
+    
+    .datingStories {
+      bottom: 300px;
+      left: 500px;
+      
+      .featureIcon {
+        background: url(../img/sprites.png) -99px 0;
+      }
+    }
     
     .instasodaLogoCap {
       background: url(../img/instasoda_logo_cap.png) top left no-repeat transparent;
@@ -974,6 +963,33 @@
             .animation(slide, 10s, 9.5s, ease-in, infinite);
             margin-left:80px;
           }
+      }
+    }
+    
+    .faces{
+      position: fixed;
+      top: 70px;
+      left: 0;
+      z-index: 6;
+      
+      .row{
+        position: fixed;
+        overflow: visible;
+        height: 80px;
+      }
+      
+      .box{
+        width: 80px;
+        height: 80px;
+        position: absolute;
+        overflow: hidden;
+        float: left;
+        background: #eee;
+        z-index: 1;
+      }
+
+      .boxHighlight {
+        .box-shadow(0px, 0px, 30px 5px, @color1 inset);
       }
     }
   }
