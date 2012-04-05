@@ -30,14 +30,14 @@
 
 		<!-- STYLESHEET -->
     <link rel="stylesheet" type="text/css" href="style.css" />
-		<link rel="stylesheet" type="text/css" href="font-awesome.css" />
+    <link rel="stylesheet" type="text/css" href="font-awesome.css" />
 
 		<!-- SCRIPTS -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 		<script type="text/javascript" src="js/libs/underscore-min.js"></script>
 		<script type="text/javascript" src="js/libs/backbone-min.js"></script>
 		<script type="text/javascript" src="js/libs/mustache.js"></script>
-		<script type="text/javascript" src="js/instasoda.js"></script>
+    <script type="text/javascript" src="js/instasoda.js"></script>
 
 	</head>
 	<body>
@@ -59,7 +59,7 @@
       <h1><a>{{title}}</a></h1>
       <cite><span><i class="icon-user"></i>&nbsp;{{author}}</span>&nbsp;&nbsp;<span><i class="icon-calendar"></i>&nbsp;2 hours ago</span></cite>
       <span>
-        <p>{{content}}</p>
+        <p>{{{content}}}</p>
       </span>
       <footer>
         <div id="{{id}}" class="widget-comment"><i class="icon-comment">&nbsp;<span>{{comments}}</span></i><i style="margin-left: 20px;" class="icon-heart">&nbsp;<span>0</span></i></div><img src="img/loader.gif" />
@@ -89,9 +89,10 @@
         <form>
         <p>
           <input type="text" name="storytitle" class="storyTitle" placeholder="Your story's title..."></input>
-          <textarea placeholder="Your story..." name="storytext" id="id_description" class="storyText"></textarea>
+          <textarea placeholder="Your story..." name="storytext" id="markItUp" class="storyText"></textarea>
         </p></form>
         <button class="button">submit your story</button>
+        <img class="submitLoader" src="img/loader.gif" />
     </div>
   </section>
   </script>

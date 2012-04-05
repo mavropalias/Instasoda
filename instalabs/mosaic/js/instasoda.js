@@ -118,7 +118,7 @@ $(document).ready(function(){
         var storyView = new StoryView({ model: model });
         storyView.renderStoryWidgets(model);
         storyView.render();
-        $(".storyForm").after(storyView.el);
+        $("#formWrapper").after(storyView.el);
       },
 
       renderStoryForm: function () {
@@ -129,8 +129,10 @@ $(document).ready(function(){
 
       save: function() {
         console.log('  ~ Preparing new story');
+        $('.storyForm .submitLoader').fadeIn(300);
         var story = new Story(),
-            storyText = $('textarea[name=storytext]').val(),
+            storyTextUnprocessed = $('textarea[name=storytext]').val(),
+            storyText = storyTextUnprocessed.replace(/[\n|\r\n]/g,"<br />");
             storyTitle = $('input[name=storytitle]').val();
         $(".storyForm").addClass('sendingStory');
         $(".storyForm > button").text('sending story...')
@@ -144,6 +146,7 @@ $(document).ready(function(){
         },
         {
           success: function(model, response) {
+            $('.storyForm .submitLoader').fadeOut(300);
             $('textarea[name=storytext], input[name=storytitle]').val('');
             console.log('   ~~~ SUCCESS: Added a new story to database!');
             storiesCollection.add(story);
@@ -274,9 +277,6 @@ $(document).ready(function(){
     Backbone.history.start({
       root: "/"
     });
-
-	// initialise the rich text-area
-	// $('.rte-zone').rte();
 
   function _DISQUSappend(id) {
     var disqus_identifier = id;
