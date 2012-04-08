@@ -73,6 +73,7 @@ $(document).ready(function(){
     },
 
     renderStoryWidgets: function(model) {
+      model.set({date: processStoryDate(model)});
       $.each(_DISQUSarr, function(){
         var myModelId = model.get('id');
         if (this.title == _disqus_url + _disqus_story + myModelId) {
@@ -263,6 +264,7 @@ $(document).ready(function(){
       story.fetch({
         data: { id: id },
         success: function() {
+          story.set({date: processStoryDate(story)});
           $("body").append(storyFullView.el);
           $("#articleFullView").show();
           $("body").css({'overflow':'hidden'});
@@ -276,6 +278,32 @@ $(document).ready(function(){
   Backbone.history.start({
     root: "/"
   });
+
+  // Function to process and prettify the date
+  function processStoryDate(model) {
+    var currentDate = new Date(),
+        storyDate = new Date(model.get('date'));
+    //console.log(Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60))/60)); // Get hour difference (rounded)
+    //console.log(Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60)))); // Get minute difference (rounded)
+    //console.log(currentDate.getMonth() - storyDate.getMonth()); // Get month difference
+    //console.log(currentDate.getYear() - storyDate.getYear()); // Get year difference
+
+    var yearDifference = currentDate.getYear() - storyDate.getYear();
+    var monthDifference = currentDate.getMonth() - storyDate.getMonth();
+    var hourDifference = Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60))/60);
+    var minuteDifference = Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60)));
+    if (yearDifference > 0) {
+      return yearDifference + ' years ago';
+    } else if (yearDifference == 0 && monthDifference > 0) {
+      return monthDifference + ' months ago';
+    } else if (yearDifference == 0 && monthDifference == 0 && hourDifference > 0) {
+      return hourDifference + ' hours ago';
+    } else if (yearDifference == 0 && monthDifference == 0 && hourDifference == 0 && minuteDifference > 0) {
+      return minuteDifference + ' minutes ago';
+    } else {
+      return 'just now';
+    }
+  }
 
   // Function to process the story text
   // (convert new lines to <br /> and " - " to n dashes. More to come for good typography)
