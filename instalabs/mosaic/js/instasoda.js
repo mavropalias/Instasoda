@@ -12,12 +12,12 @@ $(document).ready(function(){
   Backbone.emulateHTTP = true;
 
   // DISQUS settings
-  disqus_developer = 1;
+  //disqus_developer = 1;
   var papi_key = 'gFHfw6LElOAHK7e862NuDxdQl3shnEpcJB1BprqwiBf75n41BbdUtFtV8c5GW94S',
       sapi_key = 'qFNSRuuzMCwIkcSjW8OlKX3hRAOflg86WvoVYbmohyQnFGhMoRfz2Tv52xEKWYBZ',
-      _disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
+      _disqus_url = "http://instasoda.com/mosaic/",
       _disqus_story = "#!/story/",
-      disqus_shortname = 'mosaicdev';
+      disqus_shortname = 'mosaictest';
 
 
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
       model.set({date: processStoryDate(model)});
       $.each(_DISQUSarr, function(){
         var myModelId = model.get('id');
-        if (this.title == _disqus_url + _disqus_story + myModelId) {
+        if (this.link == _disqus_url + _disqus_story + myModelId) {
           model.set({comments: this.posts});
           return false;
         } else {
@@ -308,7 +308,7 @@ $(document).ready(function(){
     }*/
 
     var date = new Date(),
-      diff = (((new Date()).getTime() - new Date(model.get('date'))) / 1000),
+      diff = (((new Date()).getTime() - new Date(model.get('date')).getTime()) / 1000),
       day_diff = Math.floor(diff / 86400);
 
     if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
@@ -345,13 +345,14 @@ $(document).ready(function(){
   function _DISQUS_get_comments(cb) {
     // Get a story's comments
     $.ajax({
-      url: 'https://disqus.com/api/3.0/threads/list.json',
+      url: 'https://disqus.com/api/3.0/threads/list.jsonp',
+      dataType: 'jsonp',
+      //jsonpCallback: '_DISQUS_get_comments',
       data: {
           'api_key': papi_key,
           'forum': disqus_shortname
       },
       success: function(data) {
-        console.log(data);
         cb(data);
       }
     });
