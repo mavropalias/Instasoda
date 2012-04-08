@@ -184,6 +184,7 @@ $(document).ready(function(){
     },
 
     hideStory: function (e) {
+      $('.disqus_thread').remove();
       $('#articleFullView').detach();
       $("body").css({'overflow':'auto'});
       mosaicRouter.navigate("/");
@@ -280,8 +281,10 @@ $(document).ready(function(){
   });
 
   // Function to process and prettify the date
+  // TODO: Get timezones into account
   function processStoryDate(model) {
-    var currentDate = new Date(),
+
+    /*var currentDate = new Date(),
         storyDate = new Date(model.get('date'));
     //console.log(Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60))/60)); // Get hour difference (rounded)
     //console.log(Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60)))); // Get minute difference (rounded)
@@ -302,7 +305,24 @@ $(document).ready(function(){
       return minuteDifference + ' minutes ago';
     } else {
       return 'just now';
-    }
+    }*/
+
+    var date = new Date(),
+      diff = (((new Date()).getTime() - new Date(model.get('date'))) / 1000),
+      day_diff = Math.floor(diff / 86400);
+
+    if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
+      return;
+
+    return day_diff == 0 && (
+        diff < 60 && "just now" ||
+        diff < 120 && "1 minute ago" ||
+        diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
+        diff < 7200 && "1 hour ago" ||
+        diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
+      day_diff == 1 && "Yesterday" ||
+      day_diff < 7 && day_diff + " days ago" ||
+      day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
   }
 
   // Function to process the story text
