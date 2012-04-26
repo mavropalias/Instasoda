@@ -67,18 +67,24 @@
   .box-shadow (@x: 0px, @y: 0px, @spread: 40px, @color: rgba(0, 0, 0, 0.4)) {
     -moz-box-shadow: @x @y @spread @color;
     -webkit-box-shadow: @x @y @spread @color;
+    -ms-box-shadow: @x @y @spread @color;
+    -o-box-shadow: @x @y @spread @color;
     box-shadow: @x @y @spread @color;
   }
   
   .box-shadows (@sh1, @sh2) {
     -moz-box-shadow: @sh1, @sh2;
     -webkit-box-shadow: @sh1, @sh2;
+    -ms-box-shadow: @sh1, @sh2;
+    -o-box-shadow: @sh1, @sh2;
     box-shadow: @sh1, @sh2;
   }
   
   .border-radius(@arg: 4px) {
     -webkit-border-radius: @arg;
     -moz-border-radius: @arg;
+    -ms-border-radius: @arg;
+    -o-border-radius: @arg;
     border-radius: @arg;
   }
   
@@ -708,6 +714,54 @@
   
   
 // =============================================================================
+// FOOTER
+// =============================================================================
+  
+  #footer {
+    .box-shadow(0px, 0px, 10px, rgba(0, 0, 0, 0.2));
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0px 25px;
+    z-index: 2;
+    
+    #chatToggle {
+      .linear-gradient;
+      .text-shadow;
+      padding: 0 20px;
+      font-size: 1.1em;
+      color: #555;
+      font-weight: 700;
+      line-height: 30px;
+      border-left: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      float: left;
+      cursor: pointer;
+      position: relative;
+      z-index: 2;
+      
+      &.active {
+        .box-shadow(0px, 0px, 40px, rgba(0, 0, 0, 0.2));
+      }
+    }
+    
+    #chatPanel {
+      .box-shadow(0px, 0px, 40px, rgba(0, 0, 0, 0.2));
+      background: #fff;
+      border: 1px solid #ddd;
+      position: fixed;
+      bottom: 30px;
+      left: 25px;
+      width: 600px;
+      min-height: 200px;
+      max-height: 500px;
+      z-index: 1;
+    }
+  }
+  
+// =============================================================================
 // WELCOME PAGE
 // =============================================================================
   
@@ -966,19 +1020,19 @@
       }
     }
     
-    .faces{
+    .faces {
       position: fixed;
       top: 70px;
       left: 0;
-      z-index: 4;
+      z-index: 6;
       
-      .row{
+      .row {
         position: fixed;
         overflow: visible;
         height: 80px;
       }
       
-      .box{
+      .box {
         width: 80px;
         height: 80px;
         position: absolute;
@@ -986,6 +1040,12 @@
         float: left;
         background: #eee;
         z-index: 1;
+      }
+      
+      .heartBox {
+        .box-shadow(0, 0, 10px);
+        background: @color3;
+        opacity: 0;
       }
 
       .boxHighlight {

@@ -119,6 +119,27 @@ $(document).ready(function() {
     });
     
     // =========================================================================
+    // Footer view
+    // =========================================================================
+    var FooterView = Backbone.View.extend({      
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        _.bindAll(this);
+        this.render();
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering FooterView');
+        var template = $('#tplFooter').html();
+        this.$el.html(template);
+      }
+      
+    });
+    
+    // =========================================================================
     // WelcomeView
     // =========================================================================
     var WelcomeView = Backbone.View.extend({
@@ -151,7 +172,8 @@ $(document).ready(function() {
       featureInstantProfiles: function() {
         var _this = this;
         
-        var frameRate = 100;
+        var frameRate = 50;
+        var cssTransitionDelay = 400;
         var counter = 0;
         var boxSize = 80;
         var winWidth = $(window).width();
@@ -160,31 +182,35 @@ $(document).ready(function() {
         var boxRows = 0;
         
         winWidth = $(window).width();
-        winHeight = $(window).height();
+        winHeight = $(window).height() - $('body > nav').height();
       
         boxColumns = (Math.round(winWidth / boxSize))+1;
         boxRows = (Math.round(winHeight / boxSize))+1;
         
-        _this.$('.faces').width($(window).width());
-        _this.$('.faces').height($(window).height());
+        _this.$('.faces').width(winWidth);
+        _this.$('.faces').height(winHeight);
         
         addBoxes(boxColumns,boxRows);
         
         function addBoxes(cols,rows) {
+          var faceDelay = 100;
+          var delayToPlayAnimation = 0;
+          
           _this.$('.faces').empty();
           for(n = 0; n < rows; n++){
-            _this.$('.faces').append("<div id='row"+ n +"' class='row'>");
-            _this.$('#row'+n).css("top",(n*boxSize + 70)+"px");
+            _this.$('.faces').append("<div id='row" + n + "' class='row'>");
+            _this.$('#row'+n).css("top",(n * boxSize + 70)+"px");
             
             for(m = 0; m < cols; m++) {
               (function() {
-                _this.$('#row'+n).append("<div id='box"+ n + "-" + m +"' class='box animated transparent row" + n + " col" + m + "'></div>");
-                var object = _this.$('#box'+n+"-"+m);
+                _this.$('#row'+n).append("<div id='box" + n + "-" + m + "' class='box animated transparent row" + n + " col" + m + "'></div>");
+                var object = _this.$('#box' + n + "-" + m);
                 object.css("left",(m*boxSize)+"px");
                 
                 //load random image
                 var rnd = Math.floor(Math.random() * (12) + 1);
-                object.css("background-image",'url(faces/'+(rnd)+'.png)').delay(rnd * 50).queue(function() {
+                if( ( rnd * faceDelay ) > delayToPlayAnimation ) delayToPlayAnimation = rnd * faceDelay;
+                object.css("background-image",'url(faces/'+(rnd)+'.png)').delay(rnd * faceDelay).queue(function() {
                   $(this).removeClass('transparent');
                 });
               })();
@@ -195,19 +221,58 @@ $(document).ready(function() {
           // set row width
           _this.$('.row').css('width',(boxSize * boxColumns)+'px');
           
-          // star animations
-          $('.box').removeClass('animated');
-          playAnimation(cols,rows)
+          // do face animations + effects
+          setTimeout(function() {
+            playAnimation(cols, rows);
+          }, delayToPlayAnimation);
+          
+          // draw the heart
+          setTimeout(function() {
+            drawHeart(cols, rows);
+          }, (delayToPlayAnimation + ((boxColumns) * frameRate)));
         }
         
         function playAnimation() {
           if(counter < boxColumns) {
-            _this.$('.col' + (counter - 3)).css('opacity', '1');
-            _this.$('.col' + (counter - 2)).css('opacity', '0.5');
-            _this.$('.col' + (counter - 1)).css('opacity', '0.8');
-            _this.$('.col' + counter).css('opacity', '0.5');
-            counter++;
+            var internalCounter = counter;
+            _this.$('.col' + counter).css('opacity', '0');
+            
+            // repeat animation
             setTimeout(playAnimation, frameRate);
+            
+            // restore opacity after (cssTransitionDelay + (counter * internalCounter))
+            setTimeout(function() {
+              _this.$('.col' + (internalCounter - 1)).css('opacity', '1');
+            }, (cssTransitionDelay + (counter * internalCounter)));
+            
+            // increase counter
+            counter++;
+          }
+        }
+        
+        function drawHeart(cols, rows) {
+          var startCol = Math.round (cols / 2) - 5;
+          var startRow = Math.round (rows / 2) - 4;
+          var heart = [[0,1,1,0,1,1,0],
+                       [1,1,1,1,1,1,1],
+                       [1,1,1,1,1,1,1],
+                       [0,1,1,1,1,1,0],
+                       [0,0,1,1,1,0,0],
+                       [0,0,0,1,0,0,0]];
+          
+          // draw heart boxes
+          for(n = 0; n < heart.length; n++){            
+            for(m = 0; m < heart[0].length; m++) {
+              // draw a heart box only if the array value is 1
+              if(heart[n][m] === 1) {
+                (function() {
+                  var posX = (boxSize * (startCol + m)) + 'px';
+                  var posY = (boxSize * (startRow + n)) + 'px';
+                  
+                  $("<div class='box heartBox animated' style='left:" + posX + "; top: " + posY + ";'></div>").appendTo(_this.$('.faces')).animate({ opacity: '0.95' }, cssTransitionDelay);
+                })();
+              }
+            }
           }
         }
       },
@@ -235,12 +300,12 @@ $(document).ready(function() {
               });    
             
           } else {
-            if (response.status === 'connected') {
+            if (res.status === 'connected') {
               console.log('> User is logged into Facebook and has authenticated the application');            
               
               // get facebook token data
-              var fbToken = response.authResponse.accessToken;
-              var fbTokenExpires = response.authResponse.expiresIn;
+              var fbToken = res.authResponse.accessToken;
+              var fbTokenExpires = res.authResponse.expiresIn;
                           
               // Check if token is still valid
               if(fbTokenExpires > 0) {
@@ -252,16 +317,16 @@ $(document).ready(function() {
                     method: 'fql.query',
                     query: 'SELECT third_party_id FROM user WHERE uid=me()'
                   },
-                  function(response) {
+                  function(res) {
                     console.log('> Attempting to login the user');
-                    IS.login(fbToken, response[0].third_party_id, function(err) {
+                    IS.login(fbToken, res[0].third_party_id, function(err) {
                       if(!err) {
                         console.log('> SUCCESS! User is logged in');
                         appReady = true;
                         IS.navigateTo('me');
                       } else {
                         console.log('> FAIL: Need to create new account');
-                        IS.createAccount(fbToken, response[0].third_party_id, function (err, res) {
+                        IS.createAccount(fbToken, res[0].third_party_id, function (err, res) {
                           if(!err) {
                             console.log('> SUCCESS! Account created');
                             appReady = true;
@@ -278,7 +343,7 @@ $(document).ready(function() {
                 console.log('- Facebook token has expired');
                 FB.logout();
               }
-            } else if (response.status === 'not_authorized') {
+            } else if (res.status === 'not_authorized') {
               console.log('> User is logged into Facebook but has not authenticated the application');
               //IS.navigateTo('');
             } else {
@@ -973,6 +1038,9 @@ $(document).ready(function() {
     var navigationView = new NavigationView({
       el: $('nav')[0],
       model: user
+    });
+    var footerView = new FooterView({
+      el: $('#footer')[0]
     });
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
