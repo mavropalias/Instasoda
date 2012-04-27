@@ -68,7 +68,7 @@
   <!-- FACEBOOK SDK -->
   <!-------------------------------------------------------------------------->
     
-	<div id="fb-root"></div>
+  <div id="fb-root"></div>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
@@ -91,50 +91,66 @@
         ref.parentNode.insertBefore(js, ref);
        }(document));
     </script>
-	
-	
+    
+    
   <!-------------------------------------------------------------------------->
   <!-- CONTENT -->
   <!-------------------------------------------------------------------------->
-    
-	<nav></nav>
-	<section id="content" role="main"></section>
-	<section id="footer"></section>
-	
+  
+  <nav></nav>
+  <section id="content" role="main"></section>
+  <section id="footer"></section>
+  
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
   <!-------------------------------------------------------------------------->
     
-	<!------------------------------------------------------------------------>
+    <!------------------------------------------------------------------------>
     <!-- NAVIGATION -->
     <!------------------------------------------------------------------------>
-	  
-	  <script id="tplNavigation" type="text/template">
-		<ul>
-		  <li><a id="instasodaLogo" href="#"></a></li>
-		  <ul>
-			{{^_id}}<li><a id="navWelcome" href="#">Instasoda</a></li>{{/_id}}
-			{{#_id}}<li><div id="navNotifications">0</div></li>{{/_id}}
-			{{#_id}}<li><a id="navHome" href="#">Home</a></li>{{/_id}}
-			{{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
-			{{#_id}}<li><a id="navProfile" href="#me">Profile</a></li>{{/_id}}
-			{{#_id}}<li><a id="navLogout" href="#logout">Logout</a></li>{{/_id}}
-			<li id="navOnlineUsers"></li>
-		  </ul>
-		</ul>
-	  </script>
-	  
-	  
-	<!------------------------------------------------------------------------>
+    
+    <script id="tplNavigation" type="text/template">
+      <ul>
+        <li><a id="instasodaLogo" href="#"></a></li>
+        <ul>
+          {{^_id}}<li><a id="navWelcome" href="#">Instasoda</a></li>{{/_id}}
+          {{#_id}}<li><div id="navNotifications">0</div></li>{{/_id}}
+          {{#_id}}<li><a id="navHome" href="#">Home</a></li>{{/_id}}
+          {{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
+          {{#_id}}<li><a id="navProfile" href="#me">Profile</a></li>{{/_id}}
+          {{#_id}}<li><a id="navLogout" href="#logout">Logout</a></li>{{/_id}}
+          <li id="navOnlineUsers"></li>
+        </ul>
+      </ul>
+    </script>
+    
+    
+    <!------------------------------------------------------------------------>
     <!-- FOOTER BAR -->
     <!------------------------------------------------------------------------>
-	  
-	  <script id="tplFooter" type="text/template">
-		<div id="chatToggle" class="active">Chat</div>
-		<div id="chatPanel"></div>
-	  </script>
-	  
-	  
+    
+    <script id="tplFooter" type="text/template">
+      <div id="chatToggle" class="active">Chat</div>
+      <div id="chatPanel">
+        <ul class="chatPeople">
+        {{#chats}}
+          <li>
+            <span>{{u}}</span>
+            <ul class="chatLog">
+              {{#log}}
+                <li class="chatLine">{{u}} ({{time}}): {{msg}}</li>
+              {{/log}}
+            </ul>
+          </li>
+        {{/chats}}
+        {{^chats}}
+          <span class="noSessions">No active chat sessions.</span>
+        {{/chats}}
+        </ul>
+      </div>
+    </script>
+    
+    
     <!------------------------------------------------------------------------>
     <!-- BETA MESSAGE -->
     <!------------------------------------------------------------------------>

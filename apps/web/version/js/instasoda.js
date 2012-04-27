@@ -134,7 +134,7 @@ $(document).ready(function() {
       render: function() {
         console.log('  ~ rendering FooterView');
         var template = $('#tplFooter').html();
-        this.$el.html(template);
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
       }
       
     });
@@ -1040,7 +1040,8 @@ $(document).ready(function() {
       model: user
     });
     var footerView = new FooterView({
-      el: $('#footer')[0]
+      el: $('#footer')[0],
+      model: user
     });
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
