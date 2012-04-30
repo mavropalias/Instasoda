@@ -126,28 +126,60 @@
     
     
     <!------------------------------------------------------------------------>
-    <!-- FOOTER BAR -->
+    <!-- CHAT -->
     <!------------------------------------------------------------------------>
     
-    <script id="tplFooter" type="text/template">
+    <script id="tplChat" type="text/template">
       <div id="chatToggle" class="active">Chat</div>
-      <div id="chatPanel">
-        <ul class="chatPeople">
-        {{#chats}}
-          <li>
-            <span>{{u}}</span>
-            <ul class="chatLog">
-              {{#log}}
-                <li class="chatLine">{{u}} ({{time}}): {{msg}}</li>
-              {{/log}}
-            </ul>
-          </li>
+      <div id="chatWindow"></div>
+    </script>
+    
+    
+    <!------------------------------------------------------------------------>
+    <!-- CHAT SESSIONS -->
+    <!------------------------------------------------------------------------>
+    
+    <script id="tplChatSessions" type="text/template">
+      <ul class="chatSessions">
+        {{#chatSessions}}
+          <li>{{u}}</li>
+        {{/chatSessions}}
+        {{^chatSessions}}
+          <li class="noSessions">No active chat sessions.</li>
         {{/chats}}
-        {{^chats}}
-          <span class="noSessions">No active chat sessions.</span>
-        {{/chats}}
+        <li>Settings</li>
+      </ul>
+    </script>
+    
+    
+    <!------------------------------------------------------------------------>
+    <!-- CHAT SESSION -->
+    <!------------------------------------------------------------------------>
+    
+    <script id="tplChatSession" type="text/template">
+      <section class="chatSession">
+        <ul class="chatLikes">
+          //TODO
         </ul>
-      </div>
+        <ul class="chatLog">
+          
+        </ul>
+        <div class="chatInput">
+          <textarea>
+          <submit>Send</submit>
+        </div>
+      </section>
+    </script>
+    
+    
+    <!------------------------------------------------------------------------>
+    <!-- CHAT LOG -->
+    <!------------------------------------------------------------------------>
+    
+    <script id="tplChatLog" type="text/template">
+      {{#chatLog}}
+        <li class="chatLogLine">{{u}} ({{time}}): {{msg}}</li>
+      {{/chatLog}}
     </script>
     
     
