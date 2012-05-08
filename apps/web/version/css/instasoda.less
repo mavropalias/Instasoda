@@ -725,14 +725,14 @@
     left: 0;
     right: 0;
     padding: 0px 25px;
-    z-index: 2;
+    z-index: 10;
     
     #chatToggle {
-      .linear-gradient;
       .text-shadow;
+      background: #fafafa;
       padding: 0 20px;
       font-size: 1.1em;
-      color: #555;
+      color: #666;
       font-weight: 700;
       line-height: 30px;
       border-left: 1px solid #ddd;
@@ -742,31 +742,116 @@
       position: relative;
       z-index: 2;
       
+      &:hover .toggleTitle {
+        text-decoration: underline;
+      }
+      
       &.active {
-        .box-shadow(0px, 0px, 40px, rgba(0, 0, 0, 0.2));
+        .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
+        background: #fff;
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+      }
+      
+      &.online {
+        .offlineIndicator {
+          display: none;
+        }
+        
+        .onlineIndicator {
+          display: block;
+        }
+      }
+      
+      .toggleTitle {
+        display: block;
+        float: left;
+      }
+      
+      .offlineIndicator {
+        display: block;
+        background: #ccc;
+      }
+      
+      .onlineIndicator {
+        display: none;
+        background: #01FE03;
+        .box-shadow(0, 1px, 1px, #fff);
+      }
+      
+      .offlineIndicator,
+      .onlineIndicator {
+        .border-radius(20px);
+        float: right;
+        margin: 10px 0 0 10px;
+        height: 10px;
+        width: 10px;
       }
     }
     
-    #chatPanel {
-      .box-shadow(0px, 0px, 40px, rgba(0, 0, 0, 0.2));
+    #chatWindow {
+      .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
       background: #fff;
-      border: 1px solid #ddd;
+      border: 1px solid #ccc;
       position: fixed;
-      bottom: 30px;
+      bottom: 29px;
       left: 25px;
       width: 600px;
-      min-height: 200px;
+      min-height: 300px;
       max-height: 500px;
       z-index: 1;
+      display: none;
       
-      .noSessions {
+      .chatSessions {
         position: absolute;
-        top: 50%;
-        left: 50%;
-        margin: -1em 0 0 -7em;
-        font-size: 1.4em;
-        font-weight: 700;
-        color: @colorBlue2;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 130px;
+        border-right: 1px solid #ddd;
+        overflow-y: auto;
+        overflow-x: hidden;
+        
+        .chatSessionsTab {
+          .text-shadow;
+          background: #fafafa;
+          width: 110px;
+          padding: 10px;
+          border-bottom: 1px solid #ddd;
+          border-top: 1px solid #fff;
+          cursor: pointer;
+          position: relative;
+          
+          &:hover {
+            text-decoration: underline;
+          }
+          
+          .user {
+            font-size: 1.1em;
+          }
+          
+          .unreadMessages {
+            .border-radius;
+            font-size: 0.9em;
+            position: absolute;
+            right: 5px;
+            top: 4px;
+            color: #aaa;
+            background: #fff;
+            padding: 5px;
+            border: 1px solid #eee;
+          }
+        }
+       
+        .noSessions {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          margin: -1em 0 0 -7em;
+          font-size: 1.4em;
+          font-weight: 700;
+          color: @colorBlue2;
+        } 
       }
     }
   }

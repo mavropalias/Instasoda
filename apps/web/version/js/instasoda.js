@@ -53,6 +53,13 @@ $(document).ready(function() {
         defaults: {
         }
     });
+    
+    // ChatSession
+    // =========================================================================
+    var ChatSession = Backbone.Model.extend({
+        defaults: {
+        }
+    });
 
 
     // #########################################################################
@@ -66,6 +73,19 @@ $(document).ready(function() {
     var UsersCollection = Backbone.Collection.extend({
         url: sApi + 'user/search'
     });
+    
+    // ChatSessions
+    // =========================================================================
+    var ChatSessions = Backbone.Collection.extend({
+        defaults: {
+          /*chatSessions: [
+            { u: 'kostas', m: 0 },
+            { u: 'gina', m: 3 },
+            { u: 'nicola', m: 2 }
+          ]*/
+        }
+    });
+
 
 
     // #########################################################################
@@ -115,13 +135,18 @@ $(document).ready(function() {
         this.onlineUsersView = new OnlineUsersView({ model: onlineUsers });
         this.onlineUsersView.setElement(this.$('#navOnlineUsers')).render();
       }
-      
     });
     
     // =========================================================================
-    // Footer view
+    // Chat view
     // =========================================================================
-    var FooterView = Backbone.View.extend({      
+    var ChatView = Backbone.View.extend({      
+      // events
+      // -----------------------------------------------------------------------
+      events: {
+        'click #chatToggle': 'toggleChatWindow'
+      },
+      
       // initialize
       // -----------------------------------------------------------------------
       initialize: function() {
@@ -132,11 +157,53 @@ $(document).ready(function() {
       // render
       // -----------------------------------------------------------------------
       render: function() {
-        console.log('  ~ rendering FooterView');
-        var template = $('#tplFooter').html();
-        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-      }
+        console.log('  ~ rendering ChatView');
+        var template = $('#tplChat').html();
+        this.$el.html(template);
+        
+        // render sub views
+        this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
+        this.chatSessionsView.setElement(this.$('.chatSessions')).render();
+      },
       
+      // toggleChatWindow
+      // -----------------------------------------------------------------------
+      toggleChatWindow: function() {
+        console.log('  ~ toggling chat window');
+        this.$('#chatWindow').toggle(0, function() {
+          if($(this).is(':visible')) $('#chatToggle').addClass('active');
+          else $('#chatToggle').removeClass('active');
+        });
+      }
+    });
+    
+    // =========================================================================
+    // ChatSessionsView
+    // =========================================================================
+    var ChatSessionsView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing ChatSessionsView');
+        _.bindAll(this);
+        this.collection.bind('change', this.render);
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering ChatSessionsView');
+        this.$el.html('');
+        this.collection.each(this.renderItem);
+      },
+      
+      // renderItem
+      // -----------------------------------------------------------------------
+      renderItem: function(model) {
+        console.log('  ~ rendering ChatSessionsView item');
+        var template = $('#tplChatSessions').html();
+        this.$el.append(Mustache.to_html(template, model.toJSON()));
+      }
     });
     
     // =========================================================================
@@ -1026,12 +1093,24 @@ $(document).ready(function() {
     var user = new User();
     var users = new Users();
     var onlineUsers = new OnlineUsers();
+    var chatSession = new ChatSession();
 
     // Backbone collections
     // -------------------------------------------------------------------------
     var usersCollection = new UsersCollection({
       model: users
     });
+    var chatSessions = new ChatSessions([
+      { u: 'kostas', m: 0 },
+      { u: 'gina', m: 3 },
+      { u: 'nicola', m: 2 }
+    ]);
+    
+    /*chatSessions.add([
+      { u: 'kostas', m: 0 },
+      { u: 'gina', m: 3 },
+      { u: 'nicola', m: 2 }
+    ]);*/
 
     // Backbone views
     // -------------------------------------------------------------------------
@@ -1039,9 +1118,8 @@ $(document).ready(function() {
       el: $('nav')[0],
       model: user
     });
-    var footerView = new FooterView({
+    var chatView = new ChatView({
       el: $('#footer')[0],
-      model: user
     });
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
