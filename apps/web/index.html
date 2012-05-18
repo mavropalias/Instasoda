@@ -137,16 +137,17 @@
         </div>
         <div id="chatWindow">
           <ul class="chatSessions">no active chat sessions</ul>
+          <span class="chatSessionContainer"></span>
         </div>
       </script>
     
     
     <!------------------------------------------------------------------------>
-    <!-- CHAT SESSIONS -->
+    <!-- CHAT SESSIONS (TABS) -->
     <!------------------------------------------------------------------------>
     
       <script id="tplChatSessions" type="text/template">
-        <li class="chatSessionsTab">
+        <li class="chatSessionsTab" id="{{_id}}">
           <span class="user">{{u}}</span>
           <span class="unreadMessages">{{m}}</span>
         </li>
@@ -158,12 +159,12 @@
     <!------------------------------------------------------------------------>
     
       <script id="tplChatSession" type="text/template">
-        <section class="chatSession">
+        <section class="chatSession" id="session_{{_id}}">
           <ul class="chatLikes">
             //TODO <li class="noSessions">No active chat sessions.</li>
           </ul>
           <ul class="chatLog">
-            
+            {{u}}
           </ul>
           <div class="chatInput">
             <textarea>
@@ -280,7 +281,7 @@
     <!------------------------------------------------------------------------>
     <!-- SEARCH VIEW -->
     <!------------------------------------------------------------------------>
-	  
+    
       <script id="tplSearch" type="text/template">
         <div id="searchFilters"></div>
         <div id="searchResults"></div>

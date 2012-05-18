@@ -818,7 +818,7 @@
           width: 110px;
           padding: 10px;
           border-bottom: 1px solid #ddd;
-          border-top: 1px solid #fff;
+          //border-top: 1px solid #fff;
           cursor: pointer;
           position: relative;
           
@@ -842,16 +842,27 @@
             border: 1px solid #eee;
           }
         }
-       
-        .noSessions {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          margin: -1em 0 0 -7em;
-          font-size: 1.4em;
+        
+        .active {
+          text-shadow: none;
+          background: @color1;
+          color: @colorBlue6;
+          cursor: default;
           font-weight: 700;
-          color: @colorBlue2;
-        } 
+          
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+      
+      .chatSession {
+        display: none;
+        position: absolute;
+        left: 130px;
+        top: 0;
+        right: 0;
+        bottom: 0;
       }
     }
   }

@@ -32,33 +32,32 @@ $(document).ready(function() {
     // User - the person using the app
     // =========================================================================
     var User = Backbone.Model.extend({
-        defaults: {
-        },
-        idAttribute: "_id",
-        urlRoot: sApi + 'user'
+      defaults: {
+      },
+      idAttribute: "_id",
+      urlRoot: sApi + 'user'
     });
 
     // Users - all other Instasoda users
     // =========================================================================
     var Users = Backbone.Model.extend({
-        defaults: {
-        },
-        idAttribute: "_id",
-        urlRoot: sApi + 'user'
+      defaults: {
+      },
+      idAttribute: "_id",
+      urlRoot: sApi + 'user'
     });
     
     // OnlineUsers
     // =========================================================================
     var OnlineUsers = Backbone.Model.extend({
-        defaults: {
-        }
+      defaults: {
+      }
     });
     
     // ChatSession
     // =========================================================================
     var ChatSession = Backbone.Model.extend({
-        defaults: {
-        }
+      idAttribute: "_id"
     });
 
 
@@ -109,7 +108,6 @@ $(document).ready(function() {
         var template = $('#tplBeta').html();
         $(this.el).html(template);
       }
-      
     });
     
     // =========================================================================
@@ -164,6 +162,9 @@ $(document).ready(function() {
         // render sub views
         this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
         this.chatSessionsView.setElement(this.$('.chatSessions')).render();
+        
+        this.chatSessionView = new ChatSessionView({ collection: chatSessions });
+        this.chatSessionView.setElement(this.$('.chatSessionContainer')).render();
       },
       
       // toggleChatWindow
@@ -186,7 +187,14 @@ $(document).ready(function() {
       initialize: function() {
         console.log('  ~ initializing ChatSessionsView');
         _.bindAll(this);
-        this.collection.bind('change', this.render);
+        this.collection.bind('add', this.render);
+        this.collection.bind('remove', this.render);
+      },
+      
+      // events
+      // -----------------------------------------------------------------------
+      events: {
+        'click .chatSessionsTab': 'activateSession'
       },
       
       // render
@@ -194,15 +202,74 @@ $(document).ready(function() {
       render: function() {
         console.log('  ~ rendering ChatSessionsView');
         this.$el.html('');
-        this.collection.each(this.renderItem);
+        this.collection.each(this.renderSessionTab);
       },
       
-      // renderItem
+      // renderSessionTab
       // -----------------------------------------------------------------------
-      renderItem: function(model) {
+      renderSessionTab: function(model) {
         console.log('  ~ rendering ChatSessionsView item');
         var template = $('#tplChatSessions').html();
         this.$el.append(Mustache.to_html(template, model.toJSON()));
+      },
+      
+      // activateSession
+      // -----------------------------------------------------------------------
+      activateSession: function(e) {
+        // apply 'active' style to the tab
+        this.$('.chatSessionsTab').removeClass('active');
+        this.$(e.currentTarget).addClass('active');
+        
+        var iSession = parseInt($(e.currentTarget).attr('id'));
+        this.collection.each(function(m) {
+          m.set({ active: false });
+        });
+        this.collection.each(function(m) {
+          if(m.get('_id') == iSession ) {
+            m.set({ active: true });
+            console.log('  ~ activateSession: ' + m.get('_id'));
+          }
+        });       
+      }
+    });
+    
+    // =========================================================================
+    // ChatSessionView
+    // =========================================================================
+    var ChatSessionView = Backbone.View.extend({
+      // initialize
+      // -----------------------------------------------------------------------
+      initialize: function() {
+        console.log('  ~ initializing ChatSessionView');
+        _.bindAll(this);
+        this.collection.bind('add', this.render);
+        this.collection.bind('remove', this.render);
+        this.collection.bind('change:active', this.showSession);
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      render: function() {
+        console.log('  ~ rendering ChatSessionView');
+        this.$el.html('');
+        this.collection.each(this.prerenderSession);
+      },
+      
+      // prerenderSession
+      // -----------------------------------------------------------------------
+      prerenderSession: function(model) {
+        console.log('  ~ rendering ChatSessionView model');
+        var template = $('#tplChatSession').html();
+        this.$el.append(Mustache.to_html(template, model.toJSON()));
+      },
+      
+      // showSession
+      // -----------------------------------------------------------------------
+      showSession: function(model) {
+        console.log('  ~ rendering showSession ' + model.get('_id'));
+        this.$('.chatSession').hide();
+        this.$('#session_' + model.get('_id')).show();
+        //TODO: investigate why this gets triggered twice
       }
     });
     
@@ -1073,12 +1140,10 @@ $(document).ready(function() {
      * Logs the user out of the system.
      */
     var logout = function() {
-      // silent only clears locally stored data
-      // without any effect on the API
-      user.clear({ silent: true });
-      store.clear();
-      navigationView.render();
-      router.navigate("", {trigger: true});
+      user.clear({ silent: true }); // clear local Backbone model
+      store.clear(); // clear localStorage
+      navigationView.render(); // update nav menu
+      router.navigate("", {trigger: true}); // redirect to homepage
     }
 
 
@@ -1100,17 +1165,8 @@ $(document).ready(function() {
     var usersCollection = new UsersCollection({
       model: users
     });
-    var chatSessions = new ChatSessions([
-      { u: 'kostas', m: 0 },
-      { u: 'gina', m: 3 },
-      { u: 'nicola', m: 2 }
-    ]);
-    
-    /*chatSessions.add([
-      { u: 'kostas', m: 0 },
-      { u: 'gina', m: 3 },
-      { u: 'nicola', m: 2 }
-    ]);*/
+    var chatSessions = new ChatSessions();
+
 
     // Backbone views
     // -------------------------------------------------------------------------
@@ -1134,21 +1190,6 @@ $(document).ready(function() {
       model: users,
     });
     
-    // Socket.io
-    // =========================================================================
-    var socket = io.connect(socketIoHost);
-    
-    // Connected
-    // -------------------------------------------------------------------------
-    socket.on('connected', function (data) {
-      console.log('- SOCKET.IO status: ' + data.status);
-    });
-    
-    // Receive online users
-    // -------------------------------------------------------------------------
-    socket.on('onlineUsers', function (msg) {
-      onlineUsers.set({ count: msg.count });
-    });
     
     // #########################################################################
     // #########################################################################
@@ -1446,6 +1487,7 @@ $(document).ready(function() {
      * Deletes a user photo
      * @param {String} photo
      */
+    //TODO delete this (verify deletion)
     this.deletePhoto = function(imgFile) {
         var fbThirdPartyId = user.get('fbThirdPartyId');
 
@@ -1484,5 +1526,38 @@ $(document).ready(function() {
             }
         });
     }
+    
+    
+    // #########################################################################
+    // #########################################################################
+    // # Socket.io
+    // #########################################################################
+    // #########################################################################
+
+    var socket = io.connect(socketIoHost);
+    
+    // Connected
+    // -------------------------------------------------------------------------
+    socket.on('connected', function (data) {
+      console.log('- SOCKET.IO status: ' + data.status);
+      
+      chatSessions.add([
+        { _id: 123456, u: 'kostas', m: 0, active: true },
+        { _id: 123457, u: 'gina', m: 3, active: false },
+        { _id: 123458, u: 'nicola', m: 2, active: false }
+      ]);
+    });
+    
+    // Receive online users
+    // -------------------------------------------------------------------------
+    socket.on('onlineUsers', function (msg) {
+      onlineUsers.set({ count: msg.count });
+    });
+    
+    // Chat: new session
+    // -------------------------------------------------------------------------
+    socket.on('chatNewSession', function (iChatSessionId, iUserId) {
+      onlineUsers.set({ count: msg.count });
+    });
   }
 });
