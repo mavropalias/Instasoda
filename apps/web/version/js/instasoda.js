@@ -175,6 +175,14 @@ $(document).ready(function() {
           if($(this).is(':visible')) $('#chatToggle').addClass('active');
           else $('#chatToggle').removeClass('active');
         });
+      },
+      
+      // showChatWindow
+      // -----------------------------------------------------------------------
+      showChatWindow: function() {
+        console.log('  ~ showing chat window');
+        this.$('#chatWindow').show();
+        this.$('#chatToggle').addClass('active')
       }
     });
     
@@ -194,7 +202,7 @@ $(document).ready(function() {
       // events
       // -----------------------------------------------------------------------
       events: {
-        'click .chatSessionsTab': 'activateSession'
+        'click .chatSessionsTab': 'chatSessionsTabClick'
       },
       
       // render
@@ -213,23 +221,42 @@ $(document).ready(function() {
         this.$el.append(Mustache.to_html(template, model.toJSON()));
       },
       
-      // activateSession
+      // chatSessionsTabClick
       // -----------------------------------------------------------------------
-      activateSession: function(e) {
+      chatSessionsTabClick: function(e) {        
+        var iSessionId = parseInt($(e.currentTarget).attr('id'));
+        this.showChatSession(iSessionId);
+     
+      },
+      
+      // showChatSession
+      // -----------------------------------------------------------------------
+      showChatSession: function(iSessionId) {
         // apply 'active' style to the tab
         this.$('.chatSessionsTab').removeClass('active');
-        this.$(e.currentTarget).addClass('active');
+        this.$('#' + iSessionId).addClass('active');
         
-        var iSession = parseInt($(e.currentTarget).attr('id'));
+        // set 'active' status for the model in the collection
         this.collection.each(function(m) {
           m.set({ active: false });
         });
         this.collection.each(function(m) {
-          if(m.get('_id') == iSession ) {
+          if(m.get('_id') == iSessionId ) {
             m.set({ active: true });
             console.log('  ~ activateSession: ' + m.get('_id'));
           }
         });       
+      },
+      
+      // initiateSessionWith
+      // -----------------------------------------------------------------------
+      initiateSessionWith: function(iUserId, sUsername) {
+        chatView.showChatWindow();
+        this.collection.add([
+          { _id: iUserId, u: sUsername, m: 0, active: true }
+        ]);
+      
+        this.showChatSession(iUserId);
       }
     });
     
@@ -521,7 +548,7 @@ $(document).ready(function() {
         console.log('  ~ rendering MyProfileView');
         
         // render template
-        var template = $('#tplSettings').html();
+        var template = $('#tplMyProfile').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
         // render sub views
@@ -949,7 +976,7 @@ $(document).ready(function() {
       // events
       // -----------------------------------------------------------------------
       events: {
-        //'click .userPicture': 'viewPhoto'
+        'click #sendMessage': 'sendMessage'
       },
       
       // initialize
@@ -1001,6 +1028,12 @@ $(document).ready(function() {
             }
           }); // fancybox
         }); // on
+      },
+      
+      // render
+      // -----------------------------------------------------------------------
+      sendMessage: function() {
+        chatView.chatSessionsView.initiateSessionWith(this.model.get('_id'), this.model.get('u'));
       }
     });
     
@@ -1554,9 +1587,9 @@ $(document).ready(function() {
       onlineUsers.set({ count: msg.count });
     });
     
-    // Chat: new session
+    // Chat: create new session
     // -------------------------------------------------------------------------
-    socket.on('chatNewSession', function (iChatSessionId, iUserId) {
+    socket.on('chatCreateSession', function (iUserA, iUserB) {
       onlineUsers.set({ count: msg.count });
     });
   }

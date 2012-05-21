@@ -161,14 +161,18 @@
       <script id="tplChatSession" type="text/template">
         <section class="chatSession" id="session_{{_id}}">
           <ul class="chatLikes">
-            //TODO <li class="noSessions">No active chat sessions.</li>
+            likes go here
           </ul>
           <ul class="chatLog">
-            {{u}}
+            <li class="chatLogLine">
+              <span class="user">{{u}}</span> <span class="time">(2 minutes ago)</span>: <span class="message">hello there! how are you? :)</span>
+            </li>
+            <li class="chatLogLine">
+              <span class="user">{{u}}</span> <span class="time">(1 minutes ago)</span>: <span class="message">want to chat?</span>
+            </li>
           </ul>
-          <div class="chatInput">
-            <textarea>
-            <submit>Send</submit>
+          <div class="chatControls">
+            <input autofocus="autofocus" class="chatInput" maxlength="500" placeholder="type here to chat..." />
           </div>
         </section>
       </script>
@@ -362,7 +366,7 @@
       
       
     <!------------------------------------------------------------------------>
-    <!-- USER PROFILE VIEW -->
+    <!-- USER PROFILE -->
     <!------------------------------------------------------------------------>
       
       <script id="tplUsersProfile" type="text/template">
@@ -383,11 +387,11 @@
           <div class="column">
             <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
             
-            <!--<div id="connectOptions">
-              <button class="left" onclick="IS.navigateTo('beta');">Send message</button>
-              <button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
-              <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>
-            </div>-->
+            <div id="connectOptions">
+              <button id="sendMessage" class="left">Send message / Chat</button>
+              <!--<button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
+              <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
+            </div>
             
             <div id="basicInfo">
               <ul class="fbInformation">
@@ -446,7 +450,7 @@
     <!-- MY PROFILE -->
     <!------------------------------------------------------------------------>
     
-      <script id="tplSettings" type="text/template">
+      <script id="tplMyProfile" type="text/template">
         
         <div id="basicInfo" class="padding3x">
           
