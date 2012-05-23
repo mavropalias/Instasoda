@@ -243,20 +243,38 @@ $(document).ready(function() {
         this.collection.each(function(m) {
           if(m.get('_id') == iSessionId ) {
             m.set({ active: true });
-            console.log('  ~ activateSession: ' + m.get('_id'));
+            console.log('  ~ showChatSession: ' + m.get('_id'));
           }
         });       
       },
       
       // initiateSessionWith
       // -----------------------------------------------------------------------
-      initiateSessionWith: function(iUserId, sUsername) {
+      initiateSessionWith: function(userId, username) {
+        var _this = this;
+        
         chatView.showChatWindow();
-        this.collection.add([
-          { _id: iUserId, u: sUsername, m: 0, active: true }
-        ]);
-      
-        this.showChatSession(iUserId);
+        
+        // get session id
+        var sessionId;
+        socket.emit('getChatSession', {
+          userA: user.get('fTid'), 
+          userB: userId
+        }, function(data) {
+          sessionId = data;
+          
+          var sessionExistsLocally = _this.collection.find(function(session) {
+            return session.get('_id') == sessionId
+          });
+          
+          if(!sessionExistsLocally) {
+            _this.collection.add([
+              { _id: sessionId, u: username, m: 0, active: true }
+            ]);
+          }
+        
+          _this.showChatSession(sessionId);
+        });
       }
     });
     
@@ -295,7 +313,7 @@ $(document).ready(function() {
       showSession: function(model) {
         console.log('  ~ rendering showSession ' + model.get('_id'));
         this.$('.chatSession').hide();
-        this.$('#session_' + model.get('_id')).show();
+        this.$('#session_' + model.get('_id')).show().find('.chatInput').focus();
         //TODO: investigate why this gets triggered twice
       }
     });
@@ -1191,14 +1209,15 @@ $(document).ready(function() {
     var user = new User();
     var users = new Users();
     var onlineUsers = new OnlineUsers();
-    var chatSession = new ChatSession();
 
     // Backbone collections
     // -------------------------------------------------------------------------
     var usersCollection = new UsersCollection({
       model: users
     });
-    var chatSessions = new ChatSessions();
+    var chatSessions = new ChatSessions({
+      model: ChatSession
+    });
 
 
     // Backbone views
@@ -1584,12 +1603,6 @@ $(document).ready(function() {
     // Receive online users
     // -------------------------------------------------------------------------
     socket.on('onlineUsers', function (msg) {
-      onlineUsers.set({ count: msg.count });
-    });
-    
-    // Chat: create new session
-    // -------------------------------------------------------------------------
-    socket.on('chatCreateSession', function (iUserA, iUserB) {
       onlineUsers.set({ count: msg.count });
     });
   }
