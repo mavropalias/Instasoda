@@ -130,15 +130,17 @@
     <!------------------------------------------------------------------------>
     
       <script id="tplChat" type="text/template">
-        <div id="chatToggle" class="active online">
-          <span class="toggleTitle">Chat</span>
-          <span class="onlineIndicator"></span>
-          <span class="offlineIndicator">offline</span>
-        </div>
-        <div id="chatWindow">
-          <ul class="chatSessions">no active chat sessions</ul>
-          <span class="chatSessionContainer"></span>
-        </div>
+        {{#_id}}
+          <div id="chatToggle" class="active online">
+            <span class="toggleTitle">Chat</span>
+            <span class="onlineIndicator"></span>
+            <span class="offlineIndicator">offline</span>
+          </div>
+          <div id="chatWindow">
+            <ul class="chatSessions">no active chat sessions</ul>
+            <span class="chatSessionContainer"></span>
+          </div>
+        {{/_id}}
       </script>
     
     
@@ -163,14 +165,7 @@
           <ul class="chatLikes">
             likes go here
           </ul>
-          <ul class="chatLog">
-            <li class="chatLogLine">
-              <span class="user">{{u}}</span> <span class="time">(2 minutes ago)</span>: <span class="message">hello there! how are you? :)</span>
-            </li>
-            <li class="chatLogLine">
-              <span class="user">{{u}}</span> <span class="time">(1 minutes ago)</span>: <span class="message">want to chat?</span>
-            </li>
-          </ul>
+          <ul class="chatLog"></ul>
           <div class="chatControls">
             <input autofocus="autofocus" class="chatInput" maxlength="500" placeholder="type here to chat..." />
           </div>
@@ -184,7 +179,9 @@
     
       <script id="tplChatLog" type="text/template">
         {{#chatLog}}
-          <li class="chatLogLine">{{u}} ({{time}}): {{msg}}</li>
+          <li class="chatLogLine">
+            <span class="user">{{u}}</span> <span class="time">({{t}})</span>: <span class="message">{{m}}</span>
+          </li>
         {{/chatLog}}
       </script>
     

@@ -70,19 +70,13 @@ $(document).ready(function() {
     // UsersCollection - a collection of Users
     // =========================================================================
     var UsersCollection = Backbone.Collection.extend({
-        url: sApi + 'user/search'
+      url: sApi + 'user/search'
     });
     
     // ChatSessions
     // =========================================================================
     var ChatSessions = Backbone.Collection.extend({
-        defaults: {
-          /*chatSessions: [
-            { u: 'kostas', m: 0 },
-            { u: 'gina', m: 3 },
-            { u: 'nicola', m: 2 }
-          ]*/
-        }
+      url: sApi + 'chat'
     });
 
 
@@ -149,6 +143,7 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       initialize: function() {
         _.bindAll(this);
+        this.model.bind('change', this.render);
         this.render();
       },
       
@@ -157,7 +152,17 @@ $(document).ready(function() {
       render: function() {
         console.log('  ~ rendering ChatView');
         var template = $('#tplChat').html();
-        this.$el.html(template);
+        this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+        
+        // fetch chat sessions
+        // ---------------------------------------------------------------------
+        chatSessions.reset();
+        chatSessions.fetch({
+          data: {
+            'id': this.model.get('_id'),
+            'fTkn': this.model.get('fTkn')
+          }
+        });
         
         // render sub views
         this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
@@ -208,7 +213,7 @@ $(document).ready(function() {
       // render
       // -----------------------------------------------------------------------
       render: function() {
-        console.log('  ~ rendering ChatSessionsView');
+        console.log('  ~ rendering ChatSessionsView (tabs)');
         this.$el.html('');
         this.collection.each(this.renderSessionTab);
       },
@@ -216,7 +221,7 @@ $(document).ready(function() {
       // renderSessionTab
       // -----------------------------------------------------------------------
       renderSessionTab: function(model) {
-        console.log('  ~ rendering ChatSessionsView item');
+        console.log('  ~ renderSessionTab');
         var template = $('#tplChatSessions').html();
         this.$el.append(Mustache.to_html(template, model.toJSON()));
       },
@@ -238,7 +243,9 @@ $(document).ready(function() {
         
         // set 'active' status for the model in the collection
         this.collection.each(function(m) {
-          m.set({ active: false });
+          if(m.get('active')) {
+            m.set({ active: false });
+          }
         });
         this.collection.each(function(m) {
           if(m.get('_id') == iSessionId ) {
@@ -264,7 +271,7 @@ $(document).ready(function() {
           sessionId = data;
           
           var sessionExistsLocally = _this.collection.find(function(session) {
-            return session.get('_id') == sessionId
+            return session.get('_id') == sessionId;
           });
           
           if(!sessionExistsLocally) {
@@ -1218,8 +1225,7 @@ $(document).ready(function() {
     var chatSessions = new ChatSessions({
       model: ChatSession
     });
-
-
+    
     // Backbone views
     // -------------------------------------------------------------------------
     var navigationView = new NavigationView({
@@ -1228,6 +1234,7 @@ $(document).ready(function() {
     });
     var chatView = new ChatView({
       el: $('#footer')[0],
+      model: user
     });
     var welcomeView = new WelcomeView();
     var betaView = new BetaView();
@@ -1593,11 +1600,11 @@ $(document).ready(function() {
     socket.on('connected', function (data) {
       console.log('- SOCKET.IO status: ' + data.status);
       
-      chatSessions.add([
+      /*chatSessions.add([
         { _id: 123456, u: 'kostas', m: 0, active: true },
         { _id: 123457, u: 'gina', m: 3, active: false },
         { _id: 123458, u: 'nicola', m: 2, active: false }
-      ]);
+      ]);*/
     });
     
     // Receive online users
