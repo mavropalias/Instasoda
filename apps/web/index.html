@@ -165,9 +165,17 @@
           <ul class="chatLikes">
             likes go here
           </ul>
-          <ul class="chatLog"></ul>
+          <ul class="chatLog">
+            {{#log}}
+              <li class="chatLogLine">
+                <span class="user">{{u}}</span> <span class="time">({{t}})</span> <span class="message">{{m}}</span>
+              </li>
+            {{/log}}
+          </ul>
           <div class="chatControls">
-            <input autofocus="autofocus" class="chatInput" maxlength="500" placeholder="type here to chat..." />
+            <form id="sendMessageForm" data-chatsessionid="{{_id}}">
+              <input autofocus="autofocus" class="chatInput" maxlength="500" placeholder="type here to chat..." />
+            </form>
           </div>
         </section>
       </script>
@@ -178,11 +186,9 @@
     <!------------------------------------------------------------------------>
     
       <script id="tplChatLog" type="text/template">
-        {{#chatLog}}
           <li class="chatLogLine">
             <span class="user">{{u}}</span> <span class="time">({{t}})</span>: <span class="message">{{m}}</span>
           </li>
-        {{/chatLog}}
       </script>
     
     
