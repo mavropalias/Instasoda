@@ -47,6 +47,7 @@
   <script type="text/javascript" src="VERSION/js/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/jquery.fancybox-thumbs.js"></script>
   <script type="text/javascript" src="VERSION/js/async.min.js"></script>
+  <script type="text/javascript" src="VERSION/js/jquery.timeago.js"></script>
   <script type="text/javascript" src="VERSION/js/instasoda.js"></script>
   
   <script defer type="text/javascript" src="VERSION/js/cssrefresh.js"></script>
@@ -168,7 +169,7 @@
           <ul class="chatLog">
             {{#log}}
               <li class="chatLogLine">
-                <span class="user">{{u}}</span> <span class="time">({{t}})</span> <span class="message">{{m}}</span>
+                <span class="user">{{u}}</span> <span class="time" title="{{t}}"></span> <span class="message">{{m}}</span>
               </li>
             {{/log}}
           </ul>
@@ -187,7 +188,7 @@
     
       <script id="tplChatLog" type="text/template">
           <li class="chatLogLine">
-            <span class="user">{{u}}</span> <span class="time">({{t}})</span>: <span class="message">{{m}}</span>
+            <span class="user">{{u}}</span> <span class="time" title="{{t}}"></span>: <span class="message">{{m}}</span>
           </li>
       </script>
     

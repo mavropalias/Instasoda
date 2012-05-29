@@ -163,7 +163,10 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       render: function() {
         console.log('  ~ rendering ChatView');
+        
+        var _this = this;
         var template = $('#tplChat').html();
+        
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
         
         // fetch chat sessions
@@ -173,12 +176,14 @@ $(document).ready(function() {
           data: {
             'id': this.model.get('_id'),
             'fTkn': this.model.get('fTkn')
+          },
+          success: function(model, response) {
+            // render sub views
+            _this.chatSessionTabs.setElement(_this.$('.chatSessions')).render();
+            _this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
           }
-        });
-        
-        // render sub views
-        this.chatSessionTabs.setElement(this.$('.chatSessions')).render();        
-        this.chatSessionsView.setElement(this.$('.chatSessionContainer')).render();
+        }
+        );
       },
       
       // toggleChatWindow
@@ -231,8 +236,39 @@ $(document).ready(function() {
       // -----------------------------------------------------------------------
       renderSessionTab: function(model) {
         console.log('  ~ renderSessionTab');
-        var template = $('#tplChatSessions').html();
-        this.$el.append(Mustache.to_html(template, model.toJSON()));
+        
+        var _this = this;
+        
+        // when fetching the chat sessions from the API server, we need to
+        // pre-process the 'u' property of the model, and set it to the other
+        // person's username
+        if(!model.get('u')) {
+          var otherPersonsId = model.get('uA') == user.get('_id') ? model.get('uB') : model.get('uA');
+          
+          // now find the other person's username, using his id
+          console.log(' - (chat) looking up username for id #' + otherPersonsId);          
+          socket.emit('getUsernameFromId', {
+            userId: otherPersonsId
+          }, function(err, username) {
+            if(!err) {
+              console.log(' - got username: ' + username)
+              model.set({
+                u: username
+              })
+              
+              // render the template
+              var template = $('#tplChatSessions').html();
+              _this.$el.append(Mustache.to_html(template, model.toJSON()));
+            } else {
+              console.log('!!! ERROR: renderSessionTab -> ' + err);
+              //TODO: handle errors
+            }
+          });
+        } else {
+          // render the template
+          var template = $('#tplChatSessions').html();
+          _this.$el.append(Mustache.to_html(template, model.toJSON()));
+        }
       },
       
       // chatSessionsTabClick
@@ -276,22 +312,26 @@ $(document).ready(function() {
         // get session id
         var sessionId;
         socket.emit('getChatSession', {
-          userA: user.get('fTid'), 
+          userA: user.get('_id'), 
           userB: userId
-        }, function(data) {
-          sessionId = data;
+        }, function(err, result) {
+          if(!err) {
+            sessionId = result._id;
+            
+            var sessionExistsLocally = _this.collection.find(function(session) {
+              return session.get('_id') == sessionId;
+            });
+            
+            if(!sessionExistsLocally) {
+              _this.collection.add([
+                { _id: sessionId, u: username, m: 0, active: true, log: result.log }
+              ]);
+            }
           
-          var sessionExistsLocally = _this.collection.find(function(session) {
-            return session.get('_id') == sessionId;
-          });
-          
-          if(!sessionExistsLocally) {
-            _this.collection.add([
-              { _id: sessionId, u: username, m: 0, active: true, log: [] }
-            ]);
+            _this.showChatSession(sessionId);
+          } else {
+            alert("Couldn't initiate chat session!");
           }
-        
-          _this.showChatSession(sessionId);
         });
       }
     });
@@ -336,6 +376,9 @@ $(document).ready(function() {
         this.$('.chatSession').hide();
         this.$('#session_' + model.get('_id')).show().find('.chatInput').focus();
         
+        // convert timestamps to timeago
+        this.$('.time').timeago();
+        
         // scroll to the bottom of the chat log
         oChatLog = $('.chatLog', this.el);
         oChatLog.scrollTop(oChatLog[0].scrollHeight);
@@ -359,6 +402,7 @@ $(document).ready(function() {
       initialize: function() {
         console.log('  ~ initializing ChatSessionView');
         _.bindAll(this);
+        this.model.bind('change:log', this.renderNewChatMessage);
       },
       
       // render
@@ -367,6 +411,23 @@ $(document).ready(function() {
         console.log('  ~ rendering ChatSessionView');
         var template = $('#tplChatSession').html();
         this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+      },
+      
+      // renderNewChatMessage
+      // -----------------------------------------------------------------------
+      renderNewChatMessage: function(sMsg) {
+        console.log('  ~ (chat) renderNewChatMessage');
+        oChatLog = $('.chatLog', this.el);
+        
+        // append the new msg into the dom
+        var template = $('#tplChatLog').html();
+        oChatLog.append(Mustache.to_html(template, sMsg));
+        
+        // convert timestamps to timeago
+        $('.chatLog .time', this.el).timeago();
+        
+        // scroll to the bottom of the chat log
+        oChatLog.scrollTop(oChatLog[0].scrollHeight);
       },
       
       // sendMessage
@@ -378,28 +439,29 @@ $(document).ready(function() {
         if($('.chatInput', this.el).val() == "") return false;
         
         // construct message
-        var date = new Date();
+        var date = new Date().toJSON();
         var sMsg = {
           u: user.get('u'),
-          t: date.getTime(),
+          t: date,
           m: $('.chatInput', this.el).val()
         };
         
-        oChatLog = $('.chatLog', this.el);
-        
         // update the model's log
         this.model.get('log').push(sMsg);
+        this.model.trigger('change:log', sMsg);
         
-        // append the new msg into the html
-        var template = $('#tplChatLog').html();
-        oChatLog.append(Mustache.to_html(template, sMsg));
-        
-        // scroll to the bottom of the chat log
-        oChatLog.scrollTop(oChatLog[0].scrollHeight);
+        // send message to the other person via Socket.IO
+        socket.emit('newChatMessage', {
+          sessionId: this.model.get('_id'),
+          message: sMsg
+        }, function(data) {
+          // TODO:  handle chat msg response
+        });
         
         // clear chat input
         $('.chatInput', this.el).val('');
         
+        // done - prevent default form action
         return false;
       }
     });
@@ -1280,6 +1342,7 @@ $(document).ready(function() {
       user.clear({ silent: true }); // clear local Backbone model
       store.clear(); // clear localStorage
       navigationView.render(); // update nav menu
+      chatView.render(); // update footer/chat view
       router.navigate("", {trigger: true}); // redirect to homepage
     }
 
@@ -1678,12 +1741,6 @@ $(document).ready(function() {
     // -------------------------------------------------------------------------
     socket.on('connected', function (data) {
       console.log('- SOCKET.IO status: ' + data.status);
-      
-      /*chatSessions.add([
-        { _id: 123456, u: 'kostas', m: 0, active: true },
-        { _id: 123457, u: 'gina', m: 3, active: false },
-        { _id: 123458, u: 'nicola', m: 2, active: false }
-      ]);*/
     });
     
     // Receive online users
