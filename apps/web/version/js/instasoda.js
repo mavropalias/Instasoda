@@ -226,7 +226,7 @@ $(document).ready(function() {
       
       // render
       // -----------------------------------------------------------------------
-      render: function(options) {
+      render: function() {
         console.log('  ~ rendering ChatSessionTabs (tabs)');
         this.$el.html('');
         this.collection.each(this.renderSessionTab);
@@ -242,28 +242,30 @@ $(document).ready(function() {
         // when fetching the chat sessions from the API server, we need to
         // pre-process the 'u' property of the model, and set it to the other
         // person's username
-        if(!model.get('u')) {
+        if(nullOrEmpty(model.get('u'))) {
           var otherPersonsId = model.get('uA') == user.get('_id') ? model.get('uB') : model.get('uA');
           
           // now find the other person's username, using his id
-          console.log(' - (chat) looking up username for id #' + otherPersonsId);          
-          socket.emit('getUsernameFromId', {
-            userId: otherPersonsId
-          }, function(err, username) {
-            if(!err) {
-              console.log(' - got username: ' + username)
-              model.set({
-                u: username
-              })
-              
-              // render the template
-              var template = $('#tplChatSessions').html();
-              _this.$el.append(Mustache.to_html(template, model.toJSON()));
-            } else {
-              console.log('!!! ERROR: renderSessionTab -> ' + err);
-              //TODO: handle errors
-            }
-          });
+          if(!nullOrEmpty(otherPersonsId)) {
+            console.log(' - (chat) looking up username for id #' + otherPersonsId);          
+            socket.emit('getUsernameFromId', {
+              userId: otherPersonsId
+            }, function(err, username) {
+              if(!err) {
+                console.log(' - got username: ' + username)
+                model.set({
+                  u: username
+                })
+                
+                // render the template
+                var template = $('#tplChatSessions').html();
+                _this.$el.append(Mustache.to_html(template, model.toJSON()));
+              } else {
+                console.log('!!! ERROR: renderSessionTab -> ' + err);
+                //TODO: handle errors
+              }
+            }); 
+          } // else do nothing
         } else {
           // render the template
           var template = $('#tplChatSessions').html();
@@ -1345,6 +1347,14 @@ $(document).ready(function() {
       chatView.render(); // update footer/chat view
       router.navigate("", {trigger: true}); // redirect to homepage
     }
+    
+    /**
+     * Checks if a property is null or empty "". If so, returns true.
+     */
+    var nullOrEmpty = function(property) {
+      if(property == '' || property == null || typeof property == 'undefined' ) return true;
+      else return false;
+    }
 
 
     // #########################################################################
@@ -1752,10 +1762,8 @@ $(document).ready(function() {
           }, function(data) {
             // TODO
           });
-        } else {
-          // do nothing
-        }
-      }, 1500);
+        } // else do nothing
+      }, 2000);
     });
     
     // Receive online users

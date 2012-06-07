@@ -169,7 +169,9 @@
           <ul class="chatLog">
             {{#log}}
               <li class="chatLogLine">
-                <span class="user">{{u}},</span> <span class="time" title="{{t}}"></span>: <span class="message">{{m}}</span>
+                <span class="user">{{u}}:</span>
+                <span class="time" title="{{t}}"></span>
+                <span class="message">{{m}}</span>
               </li>
             {{/log}}
           </ul>
@@ -188,7 +190,9 @@
     
       <script id="tplChatLog" type="text/template">
           <li class="chatLogLine">
-            <span class="user">{{u}},</span> <span class="time" title="{{t}}"></span>: <span class="message">{{m}}</span>
+            <span class="user">{{u}}:</span>
+            <span class="time" title="{{t}}"></span>
+            <span class="message">{{m}}</span>
           </li>
       </script>
     
