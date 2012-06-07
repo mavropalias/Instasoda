@@ -1,0 +1,92 @@
+// =============================================================================
+// SEARCH PAGE
+// =============================================================================
+  
+  // Search filters
+  #searchFilters {
+    .box-shadow(0, 0, 10px, rgba(0,0,0,.2));
+    position: fixed;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    width: 300px;
+    z-index: 2;
+    color: @color1;
+    overflow: auto;
+    
+    section {
+      clear: both;
+      overflow: hidden;
+      padding: 20px 20px 0;
+      
+      .tip {
+        color: @colorBlue2;
+        font-size: 1.2em;
+      }
+    }
+    
+    #ageNum {
+      background: none transparent;
+      border: 0 none;
+      color: inherit;
+      font-weight: 700;
+    }
+    
+    #ageRange {
+      .box-shadow(0, 1px, 3px, rgba(0,0,0,.5) inset);
+      .border-radius(3px);
+      width: 100%;
+      margin-top: 10px;
+      background: none @colorBlue6;
+      border: 0 none;
+      padding: 1px 0;
+      
+      .ui-slider-range {
+        .box-shadow(0, 1px, 3px, rgba(0,0,0,.3) inset);
+        background: none @colorBlue4;
+        border: 0 none;
+      }
+      
+      .ui-slider-handle {
+        .border-radius(20px);
+        .box-shadow(0, 1px, 3px, rgba(0,0,0,.5));
+        padding: 2px;
+        border: 0 none;
+        background: none #fff;
+        cursor: ew-resize;
+        margin-top: -1px;
+      }
+    }
+    
+    #buttonAddLikes {
+      background-color: #3DBCDF;
+      color: white;
+      border: none;
+      font-size:10pt;
+    }
+  }
+
+  // Search results
+  #searchResults {
+    position: fixed;
+    left: 300px;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+    padding: 20px;
+    overflow: auto;
+    
+    .userPreview {
+      .photo;
+      position: relative;
+      float: left;
+      text-align: center;
+      margin: 0 10px 8px 0;
+    }
+    
+    .userPreviewNickname {
+      font-size: 12px;
+      margin-top: 5px;
+      color: #00364D;
+    } 
+  }

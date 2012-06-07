@@ -1,0 +1,56 @@
+// =============================================================================
+// LIKES
+// =============================================================================
+  
+  .fbLike {
+    float: left;
+    text-align: center;
+    margin: 0 20px 20px 0;
+    border: 1px solid transparent;
+    overflow: hidden;
+    
+    &:hover {
+      .scale(2);
+      .box-shadow();
+      background: #fff;
+      
+      .fbLikePic{
+        .scale(0.5);
+      }
+      
+      .fbLikeName{
+        color: #fff;
+      }
+      
+      .fbLikeNameFull {
+        display: block;
+        position: absolute;
+        left:-30px;
+        bottom: -5px;
+        right: -30px;
+        font-size: 1.3em;
+        height: 53px;
+        overflow: hidden;
+        .scale(0.5);
+        cursor: default;
+      }
+    }
+    
+    .fbLikeName {
+      font-size: 11px;
+      width: 80px;
+      height: 20px;
+      overflow: hidden;
+      margin-top: 5px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    
+    .fbLikeNameFull {
+      display: none;
+    }
+    
+    .fbLikePicLoading > img {
+      margin: 15px;
+    }
+  }

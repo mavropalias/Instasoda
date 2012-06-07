@@ -1,0 +1,27 @@
+  // ---------------------------------------------------------------------------
+  // KEYFRAME ANIMATIONS
+  // ---------------------------------------------------------------------------
+  
+  // # SLIDE
+  // ---------------------------------------------------------------------------
+    
+    .frames() {
+      0% {
+        opacity: 0;
+        left: 20px;
+      }
+      20%{
+        opacity: 1;
+      }
+      100% {
+        top: 0px;
+        left: 650px;
+        opacity: 0;
+      }
+    }
+    
+    @keyframes slide { .frames; }
+    @-webkit-keyframes slide { .frames; }
+    @-moz-keyframes slide { .frames; }
+    @-ms-keyframes slide { .frames; }
+    @-o-keyframes slide { .frames; }

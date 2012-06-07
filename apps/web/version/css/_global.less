@@ -1,0 +1,93 @@
+// =============================================================================
+// MAIN STYLES
+// =============================================================================
+  
+  html {
+    height: 100%;
+  }
+  
+  body {
+    font-family: helvetica, arial,sans-serif;
+    font-weight: 300;
+    font-size: 62.5%;
+    overflow: auto;
+    background:#fcfcfc;
+  
+    section[role=main] {
+      position: relative;
+      margin-top: 70px;
+      overflow: hidden;
+      display: none;
+    }
+    
+    #content {
+      display: block;
+    }
+  }
+  
+  body > header {
+    .linear-gradient;
+    .padding1x;
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    z-index: 998;
+    height: 30px;
+    display: none;
+  }
+  
+  a {
+    text-decoration: none;
+  }
+  
+  p {
+    margin:0em 0 1em;
+  }
+  
+  h1 {
+    .text-shadow;
+    font-size:2.0em;
+    border-bottom:1px solid #999;
+    margin:0 0 1em;
+    padding-bottom:0.5em;
+    color:#666;
+  }
+  
+  h2 {
+    font-size:2.4em;
+    color: #00364D;
+  }
+  
+  h3 {
+    font-size:1.4em;
+  }
+  
+  button,
+  .button {
+    background: #BE1E2D;
+    padding: 0.5em 1em;
+    border: 0 none;
+    color: white;
+    font-size: 1.3em;
+    line-height: 1.5em;
+    cursor: pointer;
+    display: block;
+    opacity: 1;
+    text-align: center;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  .column {
+    display: table-cell;
+    width: auto;
+    vertical-align: top;
+    text-align: left;
+  }
+  
+  textarea {
+    font-family: helvetica,arial,sans-serif;
+  }

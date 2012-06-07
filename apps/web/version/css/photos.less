@@ -1,0 +1,212 @@
+// =============================================================================
+// PHOTOS
+// =============================================================================
+  
+  #photoSection {
+    .linear-gradient(#eee, #fff);
+    .box-shadow(0, 5px, 30px, #bbb inset);
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #fff;
+    margin: 0 -20px;
+    padding: 40px 60px 20px;
+    
+    h2 {
+      margin-bottom: 0.2em;
+    }
+    
+    .tip {
+      margin-bottom: 2em;
+    }
+    
+    #userPhotos {
+      display: block;
+      overflow: hidden;
+      width: 100%;
+      
+      .default {
+        background: #ddd;
+        
+        .photoControls {
+          background: #ddd !important;
+        }
+      }
+      
+      .photo {
+        .box-shadow(0, 4px, 8px -3px, #888);
+        margin-bottom: 20px;
+      }
+    }
+  }
+  
+  .photo {
+    .box-shadow(0, 1px, 1px, #888);
+    border: 1px solid #ddd;
+    position: relative;
+    padding: 1em; 
+    margin: 0 0.5em 0em; 
+    background: #fff;
+    float:left;
+    overflow: hidden;
+    display: block;
+    
+    img {
+      cursor:pointer;
+      background: #fff;
+      border-top: 1px solid #ccc;
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #ddd;
+      border-bottom: 1px solid #fff;
+    }
+    
+    .photoControls {
+      display: none;
+      cursor: default;
+      
+      span {
+        text-decoration: underline;
+        height: 21px;
+        line-height: 20px;
+      }
+      
+      .photoIsDefault {
+        text-decoration: none;
+        color: #999;
+        background: url(../img/star.png) left bottom no-repeat;
+        padding-left: 25px;
+      }
+      
+      .photoMakeDefault {
+        text-decoration: none;
+        background: url(../img/star.png) left top no-repeat;
+        padding-left: 25px;
+        cursor: pointer;
+        
+        &:hover {
+          background: url(../img/star.png) left bottom no-repeat;
+          text-decoration: underline;
+        }
+      }
+      
+      .photoDelete {
+        width: 15px;
+        background: url(../img/delete.png) right top no-repeat;
+        cursor: pointer;
+        
+        &:hover {
+          background: url(../img/delete.png) right bottom no-repeat;
+        }
+      }
+    }
+    
+    &:hover {
+      border: 1px solid #bbb;
+      
+      .photoControls {
+        display: block;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 5px 10px;
+        background: #fff;
+        background: rgba(255, 255, 255, .95);
+        color: #333;
+      }
+    }
+  }
+  
+  .noControls {
+    .photo {
+      .photoControls {
+        display: none;
+      }
+    }
+    .default {
+      background: #fff !important;
+    }
+  }
+
+
+// =============================================================================
+// PHOTO UPLOADER
+// =============================================================================  
+  
+  #uploadPhoto {
+
+    #uploadWidget {
+    width: 150px;
+    height: 152px;
+      
+      .qq-uploader {
+        position:relative;
+        width: 100%;
+      }
+      
+      .qq-upload-drop-area {
+        .border-radius(8px);
+        background: url(../img/uploadPhotoBg.png) center top no-repeat #fff;
+        display: block !important;
+        position: absolute;
+        top: 72px;
+        left: 0px;
+        right: 0px;
+        height: 72px;
+        z-index: 2;
+        text-align:center;
+        border: 1px dashed #ccc;
+      }
+      
+      .qq-upload-drop-area-active {
+        background: url(../img/uploadPhotoBg.png) center bottom no-repeat #BE1E2C;
+      }
+      
+      .working {
+        background: url(../img/loading.gif) center center no-repeat transparent;
+      }
+      
+      .qq-upload-list {
+        display: none;
+        margin: 100px 35px 0;
+        padding: 0;
+        list-style: disc;
+        
+        li {
+          margin: 0;
+          padding: 0;
+          line-height: 15px;
+          font-size: 12px;
+        }
+      }
+      
+      .qq-upload-file,
+      .qq-upload-spinner,
+      .qq-upload-size,
+      .qq-upload-cancel,
+      .qq-upload-failed-text {
+        margin-right: 7px;
+      }
+      
+      .qq-upload-file {}
+      
+      .qq-upload-spinner {
+        display: inline-block;
+        background: url("../img/loading.gif");
+        width: 15px;
+        height: 15px;
+        vertical-align: text-bottom;
+      }
+      
+      .qq-upload-size,
+      .qq-upload-cancel {
+        font-size: 11px;
+      }
+      
+      .qq-upload-failed-text {
+        display:none;
+      }
+      
+      .qq-upload-fail .qq-upload-failed-text {
+        display:inline;
+      }
+    }
+  }
