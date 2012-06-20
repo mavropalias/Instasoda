@@ -12,10 +12,13 @@ $(document).ready(function(){
   Backbone.emulateHTTP = true;
 
   // DISQUS settings
-  //disqus_developer = 1;
+  disqus_developer = 1;
   var papi_key = 'gFHfw6LElOAHK7e862NuDxdQl3shnEpcJB1BprqwiBf75n41BbdUtFtV8c5GW94S',
       sapi_key = 'qFNSRuuzMCwIkcSjW8OlKX3hRAOflg86WvoVYbmohyQnFGhMoRfz2Tv52xEKWYBZ',
-      _disqus_url = "http://instasoda.com/mosaic/",
+      // Deployment settings
+      //_disqus_url = "http://instasoda.com/mosaic/",
+      // Development settings
+      _disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
       _disqus_story = "#!/story/",
       disqus_shortname = 'mosaictest';
 
@@ -73,7 +76,8 @@ $(document).ready(function(){
     },
 
     renderStoryWidgets: function(model) {
-      model.set({date: processStoryDate(model)});
+      console.log(model.get('date'));
+      model.set({date: moment(model.get('date')).fromNow()});
       $.each(_DISQUSarr, function(){
         var myModelId = model.get('id');
         if (this.link == _disqus_url + _disqus_story + myModelId) {
@@ -117,6 +121,7 @@ $(document).ready(function(){
 
     renderNewStory: function (model) {
       var storyView = new StoryView({ model: model });
+      model.set({date: moment().fromNow(true)});
       storyView.renderStoryWidgets(model);
       storyView.render();
       $("#formWrapper").after(storyView.el);
@@ -265,7 +270,8 @@ $(document).ready(function(){
       story.fetch({
         data: { id: id },
         success: function() {
-          story.set({date: processStoryDate(story)});
+          storyDate = story.get('date').replace(' ', 'T') + 'Z';
+          story.set({date: humaneDate(storyDate)});
           $("body").append(storyFullView.el);
           $("#articleFullView").show();
           $("body").css({'overflow':'hidden'});
@@ -279,51 +285,6 @@ $(document).ready(function(){
   Backbone.history.start({
     root: "/"
   });
-
-  // Function to process and prettify the date
-  // TODO: Get timezones into account
-  function processStoryDate(model) {
-
-    /*var currentDate = new Date(),
-        storyDate = new Date(model.get('date'));
-    //console.log(Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60))/60)); // Get hour difference (rounded)
-    //console.log(Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60)))); // Get minute difference (rounded)
-    //console.log(currentDate.getMonth() - storyDate.getMonth()); // Get month difference
-    //console.log(currentDate.getYear() - storyDate.getYear()); // Get year difference
-
-    var yearDifference = currentDate.getYear() - storyDate.getYear();
-    var monthDifference = currentDate.getMonth() - storyDate.getMonth();
-    var hourDifference = Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60))/60);
-    var minuteDifference = Math.round(((currentDate.getTime() - storyDate.getTime())/(1000*60)));
-    if (yearDifference > 0) {
-      return yearDifference + ' years ago';
-    } else if (yearDifference == 0 && monthDifference > 0) {
-      return monthDifference + ' months ago';
-    } else if (yearDifference == 0 && monthDifference == 0 && hourDifference > 0) {
-      return hourDifference + ' hours ago';
-    } else if (yearDifference == 0 && monthDifference == 0 && hourDifference == 0 && minuteDifference > 0) {
-      return minuteDifference + ' minutes ago';
-    } else {
-      return 'just now';
-    }*/
-
-    var date = new Date(),
-      diff = (((new Date()).getTime() - new Date(model.get('date')).getTime()) / 1000),
-      day_diff = Math.floor(diff / 86400);
-
-    if ( isNaN(day_diff) || day_diff < 0 || day_diff >= 31 )
-      return;
-
-    return day_diff == 0 && (
-        diff < 60 && "just now" ||
-        diff < 120 && "1 minute ago" ||
-        diff < 3600 && Math.floor( diff / 60 ) + " minutes ago" ||
-        diff < 7200 && "1 hour ago" ||
-        diff < 86400 && Math.floor( diff / 3600 ) + " hours ago") ||
-      day_diff == 1 && "Yesterday" ||
-      day_diff < 7 && day_diff + " days ago" ||
-      day_diff < 31 && Math.ceil( day_diff / 7 ) + " weeks ago";
-  }
 
   // Function to process the story text
   // (convert new lines to <br /> and " - " to n dashes. More to come for good typography)
