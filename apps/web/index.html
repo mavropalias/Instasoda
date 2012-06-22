@@ -144,9 +144,15 @@
       <script id="tplChat" type="text/template">
         {{#_id}}
           <div id="chatToggle" class="active online">
-            <span class="toggleTitle">Chat</span>
-            <span class="onlineIndicator"></span>
-            <span class="offlineIndicator">offline</span>
+            <span class="toggleTitle">
+              Chat
+              <span id="toggleIcon" class=""></span>
+            </span>
+            <label class="chatStatusControls">
+              <input type="checkbox" name="chatStatus" class="chatStatus" value="true" checked>
+              <span class="onlineInChat">online</span>
+              <span class="offlineInChat">offline</span>
+            </label>
           </div>
           <div id="chatWindow">
             <ul class="chatSessions">no active chat sessions</ul>
@@ -318,7 +324,6 @@
       <script id="tplSearchFilters" type="text/template">
         <section>
           <h3>I’m interested in meeting...</h3>
-          <span class="tip">Choose either or both.</span>
           <p>
             <label>
               <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
@@ -453,7 +458,7 @@
           </p>
         </div>
         
-        <div class="padding3x">
+        <div>
           <p>
             <h2>Likes</h2>
             <span class="tip">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s likes and interests.</span>
@@ -514,9 +519,15 @@
               </p>
               
               <h3>I would like to meet:</h3>
-              <p>
-                <label><input type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>women</label>
-                <label><input type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>men</label>
+              <p class="meetPrefs">
+                <label class="meetWomen">
+                  <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
+                  <span class="meetGender">women</span>
+                </label>
+                <label class="meetMen">
+                  <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
+                  <span class="meetGender">men</span>
+                </label>
               </p>
             </div>
             
@@ -548,7 +559,7 @@
           </p>
         </div>
                 
-        <div class="padding3x">
+        <div>
           <p>
             <h2>Likes</h2>
             <span class="tip">Likes and interests imported from your Facebook profile.</span>
