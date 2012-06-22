@@ -33,7 +33,6 @@ var ChatView = Backbone.View.extend({
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
     
     // fetch chat sessions
-    // ---------------------------------------------------------------------
     chatSessions.reset();
     chatSessions.fetch({
       data: {
@@ -45,8 +44,16 @@ var ChatView = Backbone.View.extend({
         _this.chatSessionTabs.setElement(_this.$('.chatSessions')).render();
         _this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
       }
-    }
-    );
+    });
+
+    // enable custom scrollbars
+    this.$('.chatSessions').slimScroll({
+      height: '300px',
+      allowPageScroll: false,
+      alwaysVisible: false,
+      railVisible: true,
+      position: 'left',
+    });
   },
   
   // toggleChatWindow
@@ -248,10 +255,18 @@ var ChatSessionsView = Backbone.View.extend({
     
     // convert timestamps to timeago
     this.$('.time').timeago();
+
+    // enable custom scrollbars
+    this.$('.chatLog').slimScroll({
+      height: '190px',
+      allowPageScroll: false,
+      alwaysVisible: true,
+      railVisible: true
+    });
     
     // scroll to the bottom of the chat log
-    oChatLog = $('.chatLog', this.el);
-    oChatLog.scrollTop(oChatLog[0].scrollHeight);
+    //oChatLog = $('.chatLog', this.el);
+    //oChatLog.scrollTop(oChatLog[0].scrollHeight);
     
     //TODO: investigate why this gets triggered twice
   }

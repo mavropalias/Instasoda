@@ -36,7 +36,7 @@
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="VERSION/js/lib/jquery.min.js"></script>
   <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="VERSION/js/lib/jquery-ui-1.8.18.custom.min.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/underscore-min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/json2.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/backbone-min.js"></script>
@@ -48,6 +48,7 @@
   <script type="text/javascript" src="VERSION/js/lib/jquery.fancybox-thumbs.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/async.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.timeago.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/slimScroll.min.js"></script>
 
   <script type="text/javascript" src="VERSION/js/_app.js"></script>
   <script type="text/javascript" src="VERSION/js/router.js"></script>
@@ -155,7 +156,9 @@
             </label>
           </div>
           <div id="chatWindow">
-            <ul class="chatSessions">no active chat sessions</ul>
+            <div id="chatSessionsScroller">
+              <ul class="chatSessions">no active chat sessions</ul>
+            </div>
             <span class="chatSessionContainer"></span>
           </div>
         {{/_id}}
@@ -183,15 +186,17 @@
           <ul class="chatLikes">
             likes go here
           </ul>
-          <ul class="chatLog">
-            {{#log}}
-              <li class="chatLogLine">
-                <span class="user">{{u}}:</span>
-                <span class="time" title="{{t}}"></span>
-                <span class="message">{{m}}</span>
-              </li>
-            {{/log}}
-          </ul>
+          <div id="scroller_{{_id}}" class="chatLogScrollWrapper">
+            <ul class="chatLog">
+              {{#log}}
+                <li class="chatLogLine">
+                  <span class="user">{{u}}:</span>
+                  <span class="time" title="{{t}}"></span>
+                  <span class="message">{{m}}</span>
+                </li>
+              {{/log}}
+            </ul>
+          </div>
           <div class="chatControls">
             <form id="sendMessageForm" data-chatsessionid="{{_id}}">
               <input autofocus="autofocus" class="chatInput" maxlength="500" placeholder="type here to chat..." />
@@ -459,10 +464,12 @@
         </div>
         
         <div>
-          <p>
+          <div style="padding:40px 40px 0">
             <h2>Likes</h2>
-            <span class="tip">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s likes and interests.</span>
-          </p>
+            <span class="tip">
+              {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s likes and interests.
+            </span>
+          </div>
           <div id="facebookLikes">
             <!-- FACEBOOK LIKES -->
           </div>
@@ -560,10 +567,10 @@
         </div>
                 
         <div>
-          <p>
+          <div style="padding:40px 40px 0">
             <h2>Likes</h2>
             <span class="tip">Likes and interests imported from your Facebook profile.</span>
-          </p>
+          </div>
           <div id="facebookLikes">
             <!-- FACEBOOK LIKES -->
           </div>

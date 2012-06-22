@@ -111,7 +111,7 @@
       z-index: 1;
       display: none;
       
-      .chatSessions {
+      #chatSessionsScroller {
         position: absolute;
         top: 0;
         left: 0;
@@ -120,6 +120,9 @@
         border-right: 1px solid #ddd;
         overflow-y: auto;
         overflow-x: hidden;
+      }
+
+      .chatSessions {
         
         .chatSessionsTab {
           .text-shadow;
@@ -183,8 +186,8 @@
           height: 40px;
           background: #f3f3f3;
         }
-        
-        .chatLog {
+
+        .chatLogScrollWrapper {
           position: absolute;
           top: 50px;
           right: 0;
@@ -192,11 +195,16 @@
           bottom: 40px;
           margin: 10px;
           overflow: auto;
+        }
+        
+        .chatLog {
+          display: block;
           line-height: 1.5em;
           
           .chatLogLine {
             .clearBoth;
             margin-bottom: 0.5em;
+            margin-right: 15px;
             
             .user {
               color: #999;
