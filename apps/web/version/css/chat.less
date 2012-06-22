@@ -15,7 +15,6 @@
     #chatToggle {
       .text-shadow;
       background: #fafafa;
-      padding: 0 20px;
       font-size: 1.1em;
       color: #666;
       font-weight: 700;
@@ -27,50 +26,75 @@
       position: relative;
       z-index: 2;
       
-      &:hover .toggleTitle {
-        text-decoration: underline;
-      }
-      
       &.active {
         .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
-        background: #fff;
+        .linear-gradient();
+        color: #333;
         border-left: 1px solid #ccc;
         border-right: 1px solid #ccc;
+
+        #toggleIcon {
+          background: url(../img/toggle.png) bottom left no-repeat transparent;
+        }
       }
       
       &.online {
-        .offlineIndicator {
-          display: none;
+        .onlineInChat {
+          display: inline-block;
         }
         
-        .onlineIndicator {
-          display: block;
+        .offlineInChat {
+          display: none;
         }
       }
       
+      .chatStatusControls {
+        height: 30px;
+        display: block;
+        float: right;
+        border-left: 1px solid #eee;
+        padding: 0 10px;
+      }
+
+      .chatStatus {
+        float: left;
+        margin: 10px 0 0 0;
+      }
+
       .toggleTitle {
         display: block;
         float: left;
+        padding: 0 10px;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      #toggleIcon {
+        width: 6px;
+        height: 5px;
+        display: inline-block;
+        margin: 0 0 1px 3px;
+        background: url(../img/toggle.png) top left no-repeat transparent;
       }
       
-      .offlineIndicator {
-        display: block;
-        background: #ccc;
+      .offlineInChat {
+        display: inline-block;
       }
       
-      .onlineIndicator {
+      .onlineInChat {
         display: none;
-        background: #01FE03;
-        .box-shadow(0, 1px, 1px, #fff);
       }
       
-      .offlineIndicator,
-      .onlineIndicator {
-        .border-radius(20px);
+      .offlineInChat,
+      .onlineInChat {
         float: right;
         margin: 10px 0 0 10px;
-        height: 10px;
-        width: 10px;
+        line-height: 10px;
+        font-size: 10px;
+        position: relative;
+        overflow: hidden;
       }
     }
     
@@ -92,7 +116,7 @@
         top: 0;
         left: 0;
         bottom: 0;
-        width: 130px;
+        width: 148px;
         border-right: 1px solid #ddd;
         overflow-y: auto;
         overflow-x: hidden;
@@ -100,7 +124,7 @@
         .chatSessionsTab {
           .text-shadow;
           background: #fafafa;
-          width: 110px;
+          width: 128px;
           padding: 10px;
           border-bottom: 1px solid #ddd;
           //border-top: 1px solid #fff;
@@ -144,7 +168,7 @@
       .chatSession {
         display: none;
         position: absolute;
-        left: 130px;
+        left: 148px;
         top: 0;
         right: 0;
         bottom: 0;
@@ -192,7 +216,7 @@
           left: 0;
           
           .chatInput {
-            width: 438px;
+            width: 421px;
             margin: 10px;
             border: 1px solid #d9d9d9;
             border-top: 1px solid silver;
