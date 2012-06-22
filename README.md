@@ -64,10 +64,9 @@ Install required software
 		cd npm
 		sudo make install
 		
-3. **Express (NodeJS MCV framework + EJS template engine)**
+3. **Express.js**
 
 		sudo npm install -g express
-		npm install ejs
 	
 4. **MongoDB (v2.0.0)**
 
