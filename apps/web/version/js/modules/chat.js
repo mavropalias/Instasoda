@@ -1,6 +1,7 @@
 // =========================================================================
 // Chat view
 // =========================================================================
+
 var ChatView = Backbone.View.extend({      
   // events
   // -----------------------------------------------------------------------
@@ -66,6 +67,7 @@ var ChatView = Backbone.View.extend({
     this.$('#chatToggle').addClass('active')
   }
 });
+
 
 // =========================================================================
 // ChatSessionTabs
@@ -200,9 +202,11 @@ var ChatSessionTabs = Backbone.View.extend({
   }
 });
 
+
 // =========================================================================
 // ChatSessionsView
 // =========================================================================
+
 var ChatSessionsView = Backbone.View.extend({      
   // initialize
   // -----------------------------------------------------------------------
@@ -251,9 +255,11 @@ var ChatSessionsView = Backbone.View.extend({
   }
 });
 
+
 // =========================================================================
 // ChatSessionView
 // =========================================================================
+
 var ChatSessionView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
@@ -316,6 +322,7 @@ var ChatSessionView = Backbone.View.extend({
     
     // send message to the other person via Socket.IO
     socket.emit('newChatMessage', {
+      uid: user.get('_id'),
       sessionId: this.model.get('_id'),
       message: sMsg
     }, function(data) {
