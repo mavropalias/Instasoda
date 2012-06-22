@@ -6,7 +6,7 @@ var ChatView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #chatToggle': 'toggleChatWindow'
+    'click .toggleTitle': 'toggleChatWindow'
   },
   
   // initialize
