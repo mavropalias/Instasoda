@@ -2,13 +2,13 @@ Instasoda
 =========
 
 ### /apps
-Code repo for our phone & tablets apps.
+Code repo for our desktop & mobile apps.
 
 ### /instalabs
 A place to experiment with new features, mockups and ideas and showcase them to the rest of the team.
 
 ### /web
-Code repo for the main + mobile website.
+Code repo for the main + mobile website. **(Legacy - to be removed)
 
 
 Getting the code
