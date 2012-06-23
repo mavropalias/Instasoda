@@ -12,13 +12,13 @@ $(document).ready(function(){
   Backbone.emulateHTTP = true;
 
   // DISQUS settings
-  //  disqus_developer = 1;
+  disqus_developer = 1;
   var papi_key = 'gFHfw6LElOAHK7e862NuDxdQl3shnEpcJB1BprqwiBf75n41BbdUtFtV8c5GW94S',
       sapi_key = 'qFNSRuuzMCwIkcSjW8OlKX3hRAOflg86WvoVYbmohyQnFGhMoRfz2Tv52xEKWYBZ',
       // Deployment settings
-      _disqus_url = "http://instasoda.com/mosaic/",
+      //_disqus_url = "http://instasoda.com/mosaic/",
       // Development settings
-      //_disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
+      _disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
       _disqus_story = "#!/story/",
       disqus_shortname = 'mosaictest';
 
@@ -306,7 +306,7 @@ $(document).ready(function(){
   function _DISQUS_get_comments(cb) {
     // Get a story's comments
     $.ajax({
-      url: 'https://disqus.com/api/3.0/threads/list.jsonp',
+      url: 'http://disqus.com/api/3.0/threads/list.jsonp',
       dataType: 'jsonp',
       //jsonpCallback: '_DISQUS_get_comments',
       data: {
