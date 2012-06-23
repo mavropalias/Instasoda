@@ -49,6 +49,8 @@ socket.on('connected', function (data) {
 
               } else {
                 // chat session is new
+                console.log(' - new chat session notification');
+                chatView.chatSessionTabs.fetchChatSessionFromServerById(newMessages[i].sId);
               }
             }
 

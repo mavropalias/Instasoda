@@ -206,6 +206,28 @@ var ChatSessionTabs = Backbone.View.extend({
         alert("Couldn't initiate chat session!");
       }
     });
+  },
+
+  // fetchChatSessionFromServerById
+  // -----------------------------------------------------------------------
+  fetchChatSessionFromServerById: function(sessionId) {
+    console.log('  - fetchChatSessionFromServerById: ' + sessionId);
+
+    var _this = this;
+    
+    // get session details
+    socket.emit('getChatSessionById', {
+      sId: sessionId
+    }, function(err, result) {
+      if(!err) {
+        // add new chat session into the chatSessions collection
+        _this.collection.add([
+          { _id: result._id, u: result.log[0].u, m: result.log.length, active: false, log: result.log }
+        ]);
+      } else {
+        // counld't get chat session
+      }
+    });
   }
 });
 
@@ -257,16 +279,17 @@ var ChatSessionsView = Backbone.View.extend({
     this.$('.time').timeago();
 
     // enable custom scrollbars
-    this.$('.chatLog').slimScroll({
+    var scroller = this.$('#scroller_' + model.get('_id') + ' > .chatLog');
+
+    //scroller.slimScroll({ scroll: 'bottom' });
+
+    scroller.slimScroll({
       height: '190px',
       allowPageScroll: false,
       alwaysVisible: true,
-      railVisible: true
+      railVisible: true,
+      start: 'bottom'
     });
-    
-    // scroll to the bottom of the chat log
-    //oChatLog = $('.chatLog', this.el);
-    //oChatLog.scrollTop(oChatLog[0].scrollHeight);
     
     //TODO: investigate why this gets triggered twice
   }
