@@ -12,13 +12,13 @@ $(document).ready(function(){
   Backbone.emulateHTTP = true;
 
   // DISQUS settings
-  disqus_developer = 1;
+  //  disqus_developer = 1;
   var papi_key = 'gFHfw6LElOAHK7e862NuDxdQl3shnEpcJB1BprqwiBf75n41BbdUtFtV8c5GW94S',
       sapi_key = 'qFNSRuuzMCwIkcSjW8OlKX3hRAOflg86WvoVYbmohyQnFGhMoRfz2Tv52xEKWYBZ',
       // Deployment settings
-      //_disqus_url = "http://instasoda.com/mosaic/",
+      _disqus_url = "http://instasoda.com/mosaic/",
       // Development settings
-      _disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
+      //_disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
       _disqus_story = "#!/story/",
       disqus_shortname = 'mosaictest';
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
     },
 
     renderStoryWidgets: function(model) {
-      console.log(model.get('date'));
+      //console.log(model.get('date'));
       model.set({date: moment(model.get('date')).fromNow()});
       $.each(_DISQUSarr, function(){
         var myModelId = model.get('id');
