@@ -18,7 +18,7 @@ $(document).ready(function(){
       // Deployment settings
       //_disqus_url = "http://instasoda.com/mosaic/",
       // Development settings
-      _disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
+      _disqus_url = "http://localhost:8083/Instasoda/apps/web/mosaic/",
       _disqus_story = "#!/story/",
       disqus_shortname = 'mosaictest';
 
@@ -271,7 +271,7 @@ $(document).ready(function(){
         data: { id: id },
         success: function() {
           storyDate = story.get('date').replace(' ', 'T') + 'Z';
-          story.set({date: humaneDate(storyDate)});
+          story.set({date: moment(storyDate).fromNow()});
           $("body").append(storyFullView.el);
           $("#articleFullView").show();
           $("body").css({'overflow':'hidden'});

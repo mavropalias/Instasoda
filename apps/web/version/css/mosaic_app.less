@@ -9,59 +9,11 @@
  * #BE1D2C
  */
 
-
-/********************************
- * RESET STYLES
- ********************************/
-
-  html, body, div, span, applet, object, iframe,
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-  a, abbr, acronym, address, big, cite, code,
-  del, dfn, em, img, ins, kbd, q, s, samp,
-  small, strike, strong, sub, sup, tt, var,
-  b, u, i, center,
-  dl, dt, dd, ol, ul, li,
-  fieldset, form, label, legend,
-  table, caption, tbody, tfoot, thead, tr, th, td,
-  article, aside, canvas, details, embed,
-  figure, figcaption, footer, header, hgroup,
-  menu, nav, output, ruby, section, summary,
-  time, mark, audio, video{
-    margin:0;
-    padding:0;
-    border:0;
-    vertical-align:baseline;
-    outline:none;
-  }
-  /* HTML5 display-role reset for older browsers */
-  article, aside, details, figcaption, figure,
-  footer, header, hgroup, menu, nav, section{
-    display:block;
-  }
-  body{
-  }
-  ol, ul{
-    list-style:none;
-  }
-  blockquote, q{
-    quotes:none;
-  }
-  blockquote:before, blockquote:after,
-  q:before, q:after{
-    content:'';
-    content:none;
-  }
-  table{
-    border-collapse:collapse;
-    border-spacing:0;
-  }
-
-
 /********************************
  * STYLES
  ********************************/
 
-	body{
+  body{
     /*background:url("img/bg.png") repeat;
     */
     background: -webkit-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
@@ -80,39 +32,39 @@
     margin:0 auto;
     position:relative;
   }
-	#container{
+  #container{
     margin:0 auto;
     padding:20px;
     padding-left:30px;
     overflow:hidden;
-    background: url(img/bubbles.png) no-repeat top center;
-	}
+    background: url(../../version/img/bubbles.png) no-repeat top center;
+  }
 
 /********************************
  * BUTTONS
  ********************************/
 
-	.button, input[type=button], input[type=submit], button{
-		text-decoration: none;
+  .button, input[type=button], input[type=submit], button{
+    text-decoration: none;
     margin: 5px 10px;
-		cursor:pointer;
-		outline:none;
-		color:#FFF;
-		font-family:"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
-		display:inline-block;
-		vertical-align:top;
-		position:relative;
-		font-size:16px;
-		font-weight:bold;
-		text-align:center;
+    cursor:pointer;
+    outline:none;
+    color:#FFF;
+    font-family:"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
+    display:inline-block;
+    vertical-align:top;
+    position:relative;
+    font-size:16px;
+    font-weight:bold;
+    text-align:center;
     background:#BE1D2C;
     border:none;
     height:40px;
     padding: 0px 20px;
-		/** Make the text unselectable **/
-		-moz-user-select:none;
-		-webkit-user-select:none;
-	}
+    /** Make the text unselectable **/
+    -moz-user-select:none;
+    -webkit-user-select:none;
+  }
 
 
 /********************************
@@ -120,7 +72,7 @@
  ********************************/
 
 nav{
-		background:#FFFFFF;
+    background:#FFFFFF;
     /*box-shadow:0 0 20px #888;*/
     box-shadow:0 0 40px rgba(0, 52, 76, 0.7);
     font-size:2em;
@@ -196,14 +148,14 @@ nav #instasodaLogo {
  * ARTICLES
  ********************************/
 
-	article.item{
+  article.item{
     position: relative;
-	  float:left;
+    float:left;
     width:230px;
     height:335px;
     margin:0px 30px 25px 0px;
     padding:10px 20px 20px 20px;
-		background:#fff;
+    background:#fff;
     border:5px solid white;
     overflow:hidden;
     color:#333;
@@ -213,11 +165,11 @@ nav #instasodaLogo {
       -o-transition: all 0.2s ease;
       -ms-transition: all 0.2s ease;
       transition: all 0.2s ease;
-	}
+  }
     article.item:first-child{
       margin-left: 1200px!important;
     }
-		article.item:hover{
+    article.item:hover{
       cursor:pointer;
       border:5px solid #DDD;
       box-shadow:4px 4px 15px rgba(0,0,0,0.3);
@@ -228,7 +180,7 @@ nav #instasodaLogo {
       transition: all 0.2s ease;
     }
     article.item footer {
-      position: absolute; width: 100%; height: 105px; bottom:0; left: 0; background: url(img/fade-white.png) repeat-x;z-index:3;
+      position: absolute; width: 100%; height: 105px; bottom:0; left: 0; background: url(../../mosaic/img/fade-white.png) repeat-x;z-index:3;
     }
       article.item footer img{
         display:none;
@@ -244,13 +196,13 @@ nav #instasodaLogo {
           color:#333;
         }
 
-	article.item h1, #articleFullView h1, .storyForm h1{
+  article.item h1, #articleFullView h1, .storyForm h1{
     font-family:"liberation-serif", serif;
     font-size:2.4em;
     font-style:italic;
     font-weight:700;
     margin-bottom:0.2em;
-	}
+  }
 
   article.item cite, #articleFullView cite{
     font-size:1.2em;
@@ -269,13 +221,13 @@ nav #instasodaLogo {
     overflow-y:hidden;
   }
 
-	article.item span p, #articleFullView span p{
-		font-size:1.3em;
-		padding:10px 0;
+  article.item span p, #articleFullView span p{
+    font-size:1.3em;
+    padding:10px 0;
     display:block;
     margin-top:0.2em;
     line-height:1.5em;
-	}
+  }
 
   .commentTooltip{
     position:fixed;
@@ -315,7 +267,7 @@ nav #instasodaLogo {
     z-index:4;
   }
 
-	.storyForm{
+  .storyForm{
     position:relative;
     z-index:1;
     float:left;
@@ -331,7 +283,7 @@ nav #instasodaLogo {
     -o-transition: all 0.3s ease;
     -ms-transition: all 0.3s ease;
     transition: all 0.3s ease;
-	}
+  }
     .storyForm button{
       position: absolute;
       bottom: 0px;
@@ -391,9 +343,9 @@ nav #instasodaLogo {
       margin:20px 0;
     }
 
-	.doubleX{
-		width: 540px!important;
-	}
+  .doubleX{
+    width: 540px!important;
+  }
 /********************************
  * TEXT EDITOR
  ********************************/
@@ -410,18 +362,18 @@ nav #instasodaLogo {
     font-family:helvetica, arial, sans-serif;
     font-size:1.6em;
   }
-	.storyText, .commentText{
-		width:100%;
+  .storyText, .commentText{
+    width:100%;
     height:130px;
-	  padding:10px 0;
-	  clear:both;
-	  display:block;
+    padding:10px 0;
+    clear:both;
+    display:block;
     border:none;
     outline:none;
-	  resize:none;
+    resize:none;
     font-family:helvetica, arial, sans-serif;
     font-size:1.6em;
-	}
+  }
 
   .commentText{
     height:80px;
@@ -441,32 +393,32 @@ nav #instasodaLogo {
     background:rgba(255,255,255,0.7);
 
   }
-	.storyNickname{
-		margin:0 0 0 10px;
-		padding:0 0.5em;
-		width:13em;
-		height:2em;
-	  border-top:1px solid #ccc;
-	  border-left:1px solid #ddd;
-	  border-right:1px solid #ddd;
-	  border-bottom:1px solid #eee;
-		box-shadow:0px 2px 4px #ddd inset;
-	}
+  .storyNickname{
+    margin:0 0 0 10px;
+    padding:0 0.5em;
+    width:13em;
+    height:2em;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ddd;
+    border-right:1px solid #ddd;
+    border-bottom:1px solid #eee;
+    box-shadow:0px 2px 4px #ddd inset;
+  }
 
 /********************************
  * ARTICLE - FULL VIEW
  ********************************/
 
-	#articleFullView{
+  #articleFullView{
     display: none;
     position:fixed;
     top:0;
     left:0;
     right:0;
     bottom:0;
-		z-index:999;
+    z-index:999;
     overflow-y:scroll;
-	}
+  }
     #curtain{
       background:rgba(255,255,255,0.9);
       position:fixed;
