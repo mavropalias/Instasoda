@@ -1,17 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-  
+
   <!-- TITLE -->
   <title>Instasoda - fizzy not fussy!</title>
-  
+
   <!-- Scripts for the less fortunate browsers -->
   <!--[if lt IE 9]>
   	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" type="text/javascript"></script>
   	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/ie7-squish.js" type="text/javascript"></script>
   	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
-  
+
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Instasoda" />
   <meta property="og:type" content="website" />
@@ -19,20 +19,20 @@
   <meta property="og:image" content="" />
   <meta property="og:site_name" content="Instasoda" />
   <meta property="fb:admins" content="659710874" />
-  
+
   <!-- MISC TAGS -->
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" href="/favicon.ico">
-  
+
   <!-- STYLES START -->
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery-ui-1.8.18.custom.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox-thumbs.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/instasoda.css">
   <!-- STYLES END -->
-  
+
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="VERSION/js/lib/jquery.min.js"></script>
   <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
@@ -61,37 +61,37 @@
   <script type="text/javascript" src="VERSION/js/modules/util.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/welcome.js"></script>
 
-  
+
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
-  
-  
+
+
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Instasoda" />
   <meta property="og:type" content="blog" />
   <meta property="og:url" content="http://instasoda.com" />
   <meta property="og:image" content="" />
   <meta property="og:site_name" content="Instasoda" />
-  <meta property="fb:admins" content="659710874" /> 
-  
+  <meta property="fb:admins" content="659710874" />
+
 </head>
 <body>
-  
+
   <!-------------------------------------------------------------------------->
   <!-- FACEBOOK SDK -->
   <!-------------------------------------------------------------------------->
-    
+
     <div id="fb-root"></div>
     <script>
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '372501186096211', // ##appId##
           channelUrl : 'http://localhost:8081/is/channel.html', // ##channel##
-          status     : true, 
+          status     : true,
           cookie     : true,
           oauth      : true,
         });
-      
+
         $(document).ready(function() {
           IS.facebookAuth();
         });
@@ -104,24 +104,24 @@
         ref.parentNode.insertBefore(js, ref);
        }(document));
     </script>
-    
-    
+
+
   <!-------------------------------------------------------------------------->
   <!-- CONTENT -->
   <!-------------------------------------------------------------------------->
-  
+
     <nav></nav>
     <section id="content" role="main"></section>
     <section id="footer"></section>
-  
+
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
   <!-------------------------------------------------------------------------->
-    
+
     <!------------------------------------------------------------------------>
     <!-- NAVIGATION -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplNavigation" type="text/template">
         <ul>
           <li><a id="instasodaLogo" href="#"></a></li>
@@ -136,12 +136,12 @@
           </ul>
         </ul>
       </script>
-    
-    
+
+
     <!------------------------------------------------------------------------>
     <!-- CHAT -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplChat" type="text/template">
         {{#_id}}
           <div id="chatToggle" class="active online">
@@ -163,24 +163,24 @@
           </div>
         {{/_id}}
       </script>
-    
-    
+
+
     <!------------------------------------------------------------------------>
     <!-- CHAT SESSIONS (TABS) -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplChatSessions" type="text/template">
         <li class="chatSessionsTab" id="{{_id}}">
           <span class="user">{{u}}</span>
           <span class="unreadMessages">{{m}}</span>
         </li>
       </script>
-      
-    
+
+
     <!------------------------------------------------------------------------>
     <!-- CHAT SESSION -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplChatSession" type="text/template">
         <section class="chatSession" id="session_{{_id}}">
           <ul class="chatLikes">
@@ -204,12 +204,12 @@
           </div>
         </section>
       </script>
-    
-    
+
+
     <!------------------------------------------------------------------------>
     <!-- CHAT LOG -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplChatLog" type="text/template">
           <li class="chatLogLine">
             <span class="user">{{u}}:</span>
@@ -217,29 +217,29 @@
             <span class="message">{{m}}</span>
           </li>
       </script>
-    
-    
+
+
     <!------------------------------------------------------------------------>
     <!-- BETA MESSAGE -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplBeta" type="text/template">
         <div>
           <img src="img/betaMessage.png" width="1021" height="469" />
         </div>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- WELCOME -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplWelcome" type="text/template">
         <h2>Find & date people who share the things that you like*</h2>
         <h3>*it’s free, fun, super easy and totally anonymous</h3>
-        
+
         <button id="fb-auth">Login with Facebook</button>
-        
+
         <span class="feature instantProfiles">
           <span class="featureBubble">
           <span class="featureIcon"></span>
@@ -264,12 +264,12 @@
           </span>
           dating stories
         </span>
-        
+
         <span class="instasodaLogoCap"></span>
         <span class="faces"></span>
         <span class="bubbleTexture"></span>
         <span class="staticBubbles"></span>
-        
+
         <div id="animatedBubbles">
           <span class="bubble"></span>
           <span class="bubble"></span>
@@ -293,15 +293,15 @@
           <span class="bubble"></span>
         </div>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- ONLINE USERS VIEW -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplOnlineUsers" type="text/template">
          <div id="navOnlineUsers">
-           Online users: 
+           Online users:
            <span id="navOnlineUsersCount">
             {{count}}
             {{^count}}
@@ -310,22 +310,22 @@
            </span>
          </div>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- SEARCH VIEW -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplSearch" type="text/template">
         <div id="searchFilters"></div>
         <div id="searchResults"></div>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- SEARCH FILTERS VIEW -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplSearchFilters" type="text/template">
         <section>
           <h3>I’m interested in meeting...</h3>
@@ -369,12 +369,12 @@
           <button id="buttonAddLikes">+ Add likes</button>
         </section>-->
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- SEARCH RESULT -->
     <!------------------------------------------------------------------------>
-      
+
       <script id="tplSearchResult" type="text/template">
         <ul>
           {{#p}}
@@ -392,12 +392,12 @@
           <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
         </ul>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- USER PROFILE -->
     <!------------------------------------------------------------------------>
-      
+
       <script id="tplUsersProfile" type="text/template">
         <div id="basicInfo" class="padding3x">
           <div class="sidebar column paddingRight3x" style="width: 200px;">
@@ -405,23 +405,23 @@
               {{#p}}
                 {{#d}}
                   <img src="http://img.instasoda.com/u/{{f}}" />
-                {{/d}}      
+                {{/d}}
               {{/p}}
               {{^p}}
                 <img src="http://img.instasoda.com/i/noPhoto.png" />
               {{/p}}
             </div>
           </div>
-          
+
           <div class="column">
             <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
-            
+
             <div id="connectOptions">
               <button id="sendMessage" class="left">Send message / Chat</button>
               <!--<button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
               <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
             </div>
-            
+
             <div id="basicInfo">
               <ul class="fbInformation">
                 <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
@@ -430,20 +430,20 @@
                 <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
               </ul>
             </div>
-            
+
             <div>
               <h3>Interested in:</h3>
               <p>
                 women: {{w}} - men: {{m}}
               </p>
             </div>
-            
+
             <div>
               <h3>A little bit about {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}:</h3>
-              <p>       
+              <p>
                 {{#a}}
                   {{a}}
-                {{/a}}     
+                {{/a}}
                 {{^a}}
                    Nothing yet! :(
                 {{/a}}
@@ -451,23 +451,23 @@
             </div>
           </div>
         </div>
-        
+
         <div id="photoSection">
-          <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s best moments!</h2>
+          <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h2>
           <p>
             <ul id="userPhotos">
               <div id="userPhotosList" class="noControls">
-                <!-- USER PHOTOS -->                  
+                <!-- USER PHOTOS -->
               </div>
             </ul>
           </p>
         </div>
-        
+
         <div>
           <div style="padding:40px 40px 0">
             <h2>Likes</h2>
             <span class="tip">
-              {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}'s likes and interests.
+              {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s likes and interests.
             </span>
           </div>
           <div id="facebookLikes">
@@ -475,41 +475,41 @@
           </div>
         </div>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- MY PROFILE -->
     <!------------------------------------------------------------------------>
-    
+
       <script id="tplMyProfile" type="text/template">
-        
+
         <div id="basicInfo" class="padding3x">
-          
+
           <div class="sidebar column paddingRight3x" style="width: 200px;">
             <div class="photo">
               {{#p}}
                 {{#d}}
                   <img src="http://img.instasoda.com/u/{{f}}" />
-                {{/d}}      
+                {{/d}}
               {{/p}}
               {{^p}}
                 <img src="http://img.instasoda.com/i/noPhoto.png" />
               {{/p}}
             </div>
-            
+
             <button type="submit" id="saveProfileButton">Save profile</button>
             <button type="submit" id="working" style="display:none;" disabled>Saving...</button>
-            
+
             <p>
               <span class="tip">
-                Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced automatically every once in a while. No, we will not make <em>any</em> changes (we can't!) to your Facebook acount ;)
+                Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced automatically every once in a while. No, we will not make <em>any</em> changes (we can&#8217;t!) to your Facebook acount ;)
               </span>
             </p>
           </div>
-          
+
           <div class="column">
             <h2>My basic info</h2>
-            
+
             <ul class="fbInformation">
               <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
               <li><span class="fbTitle">Gender:</span><span class="fbData">{{fS}}</span></li>
@@ -517,14 +517,14 @@
               <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
               <li><span class="fbTitle">Email (only you can see it):</span><span class="fbData">{{fE}}</span></li>
             </ul>
-              
+
             <div class="column paddingRight3x">
               <h3>My dating name:</h3>
               <p>
                 <span class="tip">This is how other instasoda users will see you.</span>
                 <input name="username" value="{{u}}" required maxlength=50>
               </p>
-              
+
               <h3>I would like to meet:</h3>
               <p class="meetPrefs">
                 <label class="meetWomen">
@@ -537,18 +537,18 @@
                 </label>
               </p>
             </div>
-            
+
             <div class="column">
               <h3>A little bit about myself:</h3>
               <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
-              <p>            
+              <p>
                 <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 10em; width: 35em;">{{a}}</div>
               </p>
-            </div>    
-             
+            </div>
+
           </div>
         </div>
-        
+
         <div id="photoSection">
           <p>
             <h2>Me at my best! (photos)</h2>
@@ -559,13 +559,13 @@
                   <div id="uploadWidget"></div>
                 </li>
                 <div id="userPhotosList">
-                  <!-- MY PHOTOS -->                  
+                  <!-- MY PHOTOS -->
                 </div>
               </ul>
             </p>
           </p>
         </div>
-                
+
         <div>
           <div style="padding:40px 40px 0">
             <h2>Likes</h2>
@@ -576,12 +576,12 @@
           </div>
         </div>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- FACEBOOK LIKES -->
     <!------------------------------------------------------------------------>
-      
+
       <script id="tplFacebookLikes" type="text/template">
         <ul>
           {{#fL}}
@@ -601,12 +601,12 @@
           {{/fL}}
         </ul>
       </script>
-      
-      
+
+
     <!------------------------------------------------------------------------>
     <!-- MY PHOTOS -->
     <!------------------------------------------------------------------------>
-      
+
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
           <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com/u/{{f}}">
@@ -619,6 +619,6 @@
           </a>
         {{/p}}
       </script>
-      
+
 </body>
 </html>

@@ -18,7 +18,7 @@ $(document).ready(function(){
       // Deployment settings
       //_disqus_url = "http://instasoda.com/mosaic/",
       // Development settings
-      _disqus_url = "http://localhost/Instasoda/instalabs/mosaic/",
+      _disqus_url = "http://localhost:8083/Instasoda/apps/web/mosaic/",
       _disqus_story = "#!/story/",
       disqus_shortname = 'mosaictest';
 
@@ -76,7 +76,7 @@ $(document).ready(function(){
     },
 
     renderStoryWidgets: function(model) {
-      console.log(model.get('date'));
+      //console.log(model.get('date'));
       model.set({date: moment(model.get('date')).fromNow()});
       $.each(_DISQUSarr, function(){
         var myModelId = model.get('id');
@@ -271,7 +271,7 @@ $(document).ready(function(){
         data: { id: id },
         success: function() {
           storyDate = story.get('date').replace(' ', 'T') + 'Z';
-          story.set({date: humaneDate(storyDate)});
+          story.set({date: moment(storyDate).fromNow()});
           $("body").append(storyFullView.el);
           $("#articleFullView").show();
           $("body").css({'overflow':'hidden'});
@@ -306,7 +306,7 @@ $(document).ready(function(){
   function _DISQUS_get_comments(cb) {
     // Get a story's comments
     $.ajax({
-      url: 'https://disqus.com/api/3.0/threads/list.jsonp',
+      url: 'http://disqus.com/api/3.0/threads/list.jsonp',
       dataType: 'jsonp',
       //jsonpCallback: '_DISQUS_get_comments',
       data: {
