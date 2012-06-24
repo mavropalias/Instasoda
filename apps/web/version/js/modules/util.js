@@ -1,4 +1,40 @@
 /**
+ * Create a toast notification.
+ * @param {String} message
+ */
+IS.notify = function(sTitle, sSubtitle, sMessage) {
+  var oNotification = {
+    title: sTitle,
+    subtitle: sSubtitle,
+    message: sMessage
+  }
+
+  // render template
+  var template = $('#tplNotification').html();
+  var notification = Mustache.to_html(template, oNotification);
+
+  // show notification
+  $(notification).appendTo('body').fadeIn().delay(2000).fadeOut();
+}
+
+/**
+ * Add a person to the user's favourites.
+ * @param {String} userToFavId
+ */
+IS.addFavourite = function(userToFavId, userToFavName) {
+  socket.emit('addFavourite', {
+    userId: user.get('_id'),
+    userToFav: userToFavId,
+  }, function(err, result) {
+    if(!err) {
+      IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
+    } else {
+      IS.notify(err, null, userToFavName + ' could not be added to your favorites :(');
+    }
+  });
+}
+
+/**
  * Navigates to a page.
  * @param {String} path
  */
