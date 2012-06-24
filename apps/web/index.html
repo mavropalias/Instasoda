@@ -418,8 +418,8 @@
 
             <div id="connectOptions">
               <button id="sendMessage" class="left">Send message / Chat</button>
-              <!--<button class="left" onclick="IS.navigateTo('beta');">+ Favourite</button>
-              <button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
+              <button id="addFavourite" class="left">+ Favourite</button>
+              <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
             </div>
 
             <div id="basicInfo">
@@ -618,6 +618,19 @@
             </div>
           </a>
         {{/p}}
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- NOTIFICATION -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplNotification" type="text/template">
+        <div class="notification">
+          {{#title}}<span class="notificationTitle">{{title}}</span>{{/title}}
+          {{#subtitle}}<span class="notificationSubtitle">{{subtitle}}</span>{{/subtitle}}
+          {{#message}}<span class="notificationMessage">{{message}}</span>{{/message}}
+        </div>
       </script>
 
 </body>
