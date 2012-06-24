@@ -293,7 +293,8 @@ var UsersFullView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #sendMessage': 'sendMessage'
+    'click #sendMessage': 'sendMessage',
+    'click #addFavourite': 'addFavourite'
   },
   
   // initialize
@@ -347,10 +348,16 @@ var UsersFullView = Backbone.View.extend({
     }); // on
   },
   
-  // render
+  // sendMessage
   // -----------------------------------------------------------------------
   sendMessage: function() {
     chatView.chatSessionTabs.initiateSessionWith(this.model.get('_id'), this.model.get('u'));
+  },
+
+  // addFavourite
+  // -----------------------------------------------------------------------
+  addFavourite: function() {
+    IS.addFavourite(this.model.get('_id'), this.model.get('u'));
   }
 });
 
