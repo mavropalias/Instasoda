@@ -52,6 +52,8 @@ socket.on('connected', function (data) {
                 console.log(' - new chat session notification');
                 chatView.chatSessionTabs.fetchChatSessionFromServerById(newMessages[i].sId);
               }
+
+              if(!$('#chatWindow').is(':visible')) IS.notify('New message from ' + newMessages[i].u, null, newMessages[i].m);
             }
 
             
