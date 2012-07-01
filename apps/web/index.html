@@ -584,21 +584,26 @@
 
       <script id="tplFacebookLikes" type="text/template">
         <ul>
-          {{#fL}}
-            <li class="fbLike">
+          {{#fLbyCategory}}
+            <li class="fbLikeCategory">
+              <a id="{{c}}" class="fbLikeCategoryTitle">{{c}}</a>
               <ul>
-                {{^u}}
-                  <li class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></li>
-                {{/u}}
-                <li class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></li>
-                <li class="fbLikeName">{{n}}</li>
-                <li class="fbLikeNameFull">{{n}}</li>
+                {{#l}}
+                  <li class="fbLike">
+                    {{^u}}
+                      <span class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></span>
+                    {{/u}}
+                    <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                    <span class="fbLikeName">{{n}}</span>
+                    <span class="fbLikeNameFull">{{n}}</span>
+                  </li>
+                {{/l}}
               </ul>
             </li>
-          {{/fL}}
-          {{^fL}}
-            No likes.
-          {{/fL}}
+          {{/fLbyCategory}}
+          {{^fLbyCategory}}
+            <li>No likes.</li>
+          {{/fLbyCategory}}
         </ul>
       </script>
 
