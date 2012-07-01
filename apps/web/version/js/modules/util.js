@@ -20,12 +20,12 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
     setTimeout(function() {
         _notif.css({
           'opacity':0,
-          'filter':'opacity(0)'
+          'filter':'opacity(0)',
           '-webkit-transform':'scale(1.2)',
           '-moz-transform':'scale(1.2)',
           '-ms-transform':'scale(1.2)',
           '-o-transform':'scale(1.2)',
-          'transform':'scale(1.2)',
+          'transform':'scale(1.2)'
         });
     }, 5000);
   });
