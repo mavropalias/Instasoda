@@ -389,79 +389,29 @@ var FacebookLikesView = Backbone.View.extend({
     // pre-process likes and split them into categories
     // ================================================
 
-    // 1) get all likes
-    var aLikes = this.model.get('fL');
+      // 1) get all likes
+      var aLikes = this.model.get('fL');
 
-    // 2) extract category names (pluck), and remove duplicates (uniq)
-    var aCategories = _.uniq( _.pluck(aLikes, 'c') );
+      // 2) extract category names (pluck), and remove duplicates (uniq)
+      var aCategories = _.uniq( _.pluck(aLikes, 'c') );
 
-    // 3) create object with categories and their likes
-    var aCategoriesAndLikes = [];
-    _.each(aCategories, function(category) {
-      // get all likes for that category
-      var aCategoryLikes = _.filter(aLikes, function(like){
-        return like.c == category;
+      // 3) create object with categories and their likes
+      var aCategoriesAndLikes = [];
+      _.each(aCategories, function(category) {
+        // get all likes for that category
+        var aCategoryLikes = _.filter(aLikes, function(like){
+          return like.c == category;
+        });
+
+        // push category and its likes into aCategoriesAndLikes
+        aCategoriesAndLikes.push({
+          c: category,
+          l: aCategoryLikes
+        });
       });
 
-      // push category and its likes into aCategoriesAndLikes
-      aCategoriesAndLikes.push({
-        c: category,
-        l: aCategoryLikes
-      });
-    });
-
-    // 4) insert aCategoriesAndLikes into the model's fLbyCategory property
-    this.model.set({ fLbyCategory: aCategoriesAndLikes });
-
-
-
-    console.log(aCategoriesAndLikes);
-
-    /*async.map(fL, function(like) {
-      console.log(like);
-    }, function(err, results) {
-
-    });*/
-
-
-
-    /*var fbCategoriesDirty = {},
-        fbLikesArr = {},
-        userFbLikes = this.model.get('fL'),
-        uniquefbC = [],
-        newArr = [],
-        index = 0;
-
-    // Add all the categories from the model to an array
-    for (var key in userFbLikes) {
-      fbCategoriesDirty[index] = userFbLikes[key]['c'];
-      index++;
-    }
-
-    // Create a new array with just the _unique_ categories
-    $.each(fbCategoriesDirty, function(i, el){
-        if($.inArray(el, uniquefbC) === -1) uniquefbC.push(el);
-    });
-
-    // Create our object with the "c" name which includes all the unique categories
-    var likeCategories = { c: uniquefbC };
-
-
-    jQuery.each(uniquefbC, function(keyC, valueC) {
-      jQuery.each(userFbLikes, function(keyL, valueL) {
-          if (valueC == valueL.c) {
-            //console.log('Category = ' + valueC + ' = with Category = ' + valueL.c);
-            newArr = jQuery.map(uniquefbC, function(e, i) {
-              var obj = {};
-              obj[e] = {likes: ["_id", i]};
-              return obj;
-            });
-          }
-      });
-    });
-
-    console.log(newArr);
-    this.model.set({ fL2: newArr });*/
+      // 4) insert aCategoriesAndLikes into the model's fLbyCategory property
+      this.model.set({ fLbyCategory: aCategoriesAndLikes });
 
     // render likes
     // ============
