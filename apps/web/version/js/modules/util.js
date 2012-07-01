@@ -19,7 +19,8 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
     _notif.addClass('activez');
     setTimeout(function() {
         _notif.css({
-          'right':'-250px'
+          'opacity':0,
+          'filter':'opacity(0)'
         });
     }, 5000);
   });
