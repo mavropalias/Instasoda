@@ -14,7 +14,16 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
   var notification = Mustache.to_html(template, oNotification);
 
   // show notification
-  $(notification).appendTo('body').fadeIn().delay(2000).fadeOut();
+  $(notification).appendTo('body').fadeIn(200, 'easeInOutQuint', function() {
+    var _notif = $(this);
+    _notif.addClass('activez');
+    setTimeout(function() {
+        _notif.css({
+          'opacity':0,
+          '-webkit-transform':'scale(1.2)'
+        });
+    }, 5000);
+  });
 }
 
 /**

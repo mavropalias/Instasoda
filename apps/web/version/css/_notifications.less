@@ -1,20 +1,20 @@
 .notification {
-  .box-shadow(0, 15px);
   .linear-gradient();
   .border-radius();
   width: 200px;
   position: fixed;
-  top: 90px;
+  top: 20px;
   right: 20px;
-  padding: 5px 10px;
-  z-index: 999;
+  padding: 10px 15px 0;
   border: 1px solid @colorBlue4;
   font-size: 11px;
   line-height: 1.7em;
+  .transform( scale(0.7) skew(50deg, 0) );
+  .transition(all 0.6s ease-out);
   display: none;
 
   .notificationTitle {
-    display: block;
+    display: inline-block;
     font-size: 12px;
     color: @colorBlue1;
     font-weight: 700;
@@ -26,7 +26,7 @@
   }
 
   .notificationSubtitle {
-    display: block;
+    display: inline-block;
     color: @colorBlue2;
 
     &:first-letter {
@@ -35,7 +35,7 @@
   }
 
   .notificationMessage {
-    display: block;
+    display: inline-block;
     color: #333;
 
     &:first-letter {
@@ -43,4 +43,11 @@
     }
   }
 
+}
+
+.activez {
+  padding: 10px 15px;
+  top: 90px;
+  .box-shadow(0, 8px, 32px, #ccc);
+  .transform( scale(1) skew(0deg, 0) );
 }
