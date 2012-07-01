@@ -385,16 +385,51 @@ var FacebookLikesView = Backbone.View.extend({
     var _this = this;
     console.log('  ~ rendering FacebookLikesView');
     var template = $('#tplFacebookLikes').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    
+    // pre-process likes and split them into categories
+    // ================================================
+
+    // 1) get all likes
+    var aLikes = this.model.get('fL');
+
+    // 2) extract category names (pluck), and remove duplicates (uniq)
+    var aCategories = _.uniq( _.pluck(aLikes, 'c') );
+
+    // 3) create object with categories and their likes
+    var aCategoriesAndLikes = [];
+    _.each(aCategories, function(category) {
+      // get all likes for that category
+      var aCategoryLikes = _.filter(aLikes, function(like){
+        return like.c == category;
+      });
+
+      // push category and its likes into aCategoriesAndLikes
+      aCategoriesAndLikes.push({
+        c: category,
+        l: aCategoryLikes
+      });
+    });
+
+    // 4) insert aCategoriesAndLikes into the model's fLbyCategory property
+    this.model.set({ fLbyCategory: aCategoriesAndLikes });
 
 
 
+    console.log(aCategoriesAndLikes);
+
+    /*async.map(fL, function(like) {
+      console.log(like);
+    }, function(err, results) {
+
+    });*/
 
 
-    var fbCategoriesDirty = {},
+
+    /*var fbCategoriesDirty = {},
         fbLikesArr = {},
         userFbLikes = this.model.get('fL'),
         uniquefbC = [],
+        newArr = [],
         index = 0;
 
     // Add all the categories from the model to an array
@@ -426,13 +461,18 @@ var FacebookLikesView = Backbone.View.extend({
     });
 
     console.log(newArr);
+    this.model.set({ fL2: newArr });*/
+
+    // render likes
+    // ============
+    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
 
 
 
 
 
     // reload like images until they load, while the API moves them to S3
-    if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
+    /*if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
       console.log('- reloading like photos');
 
       this.$('.fbLikePic img').load(function(){
@@ -447,7 +487,7 @@ var FacebookLikesView = Backbone.View.extend({
           $(_this).attr('src', src + "?v=" + date.getTime());
         }, 10);
       });
-    }
+    }*/
   }
 });
 
