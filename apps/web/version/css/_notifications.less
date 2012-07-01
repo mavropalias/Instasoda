@@ -1,15 +1,15 @@
 .notification {
-  .linear-gradient();
   .border-radius();
   width: 200px;
   position: fixed;
   top: 20px;
   right: 20px;
-  padding: 10px 10px 0;
+  padding: 10px;
   border: 1px solid @colorBlue4;
   font-size: 11px;
   line-height: 1.7em;
-  .transform( scale(0.7) skew(50deg, 0) );
+   -webkit-transform: translate3d(0, 0, 0);
+  .transform( scale(0.6) skew(50deg, 0) );
   .transition(all 0.6s ease-in-out);
   display: none;
 
@@ -46,8 +46,7 @@
 }
 
 .activez {
-  padding: 10px 10px 10px;
   top: 90px;
-  .box-shadow(0, 3px, 17px, #ccc);
+  .box-shadow(0, 3px, 20px, #ccc);
   .transform( scale(1) skew(0deg, 0) );
 }
