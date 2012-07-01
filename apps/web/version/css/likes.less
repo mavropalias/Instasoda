@@ -5,7 +5,7 @@
   .fbLike {
     float: left;
     text-align: center;
-    margin: 0 20px 20px 0;
+    margin: 0 20px 20px 0px;
     border: 1px solid transparent;
     overflow: hidden;
     
@@ -55,4 +55,42 @@
     .fbLikePicLoading > img {
       margin: 15px;
     }
+  }
+
+  .fbLikeCategory {
+    font-size: 14px;
+    color: #444;
+    margin-right: 55px;
+    font-weight: bold;
+    box-shadow: 15px 0px 30px -32px #777;
+    -webkit-box-shadow: 15px 0px 30px -25px #777;
+    background-color: #FCFCFC;
+    li {
+      position: relative;
+      padding: 8px 30px 8px 10px;
+      cursor: pointer;
+      &:first-child {
+        margin-top: -8px;
+      }
+      &.active {
+        background-color: @colorBlue4;
+        &:before {
+          content: ' ';
+          position: absolute;
+          right:-8px;
+          top: 7px;
+          width: 0; 
+          height: 0; 
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;        
+          border-left: 8px solid @colorBlue4;
+        }
+      }
+    }
+  }
+
+  .fbCategoryLikes {
+    display: none;
+    position: absolute;
+    background-color: #FCFCFC;
   }

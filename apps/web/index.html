@@ -583,28 +583,32 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplFacebookLikes" type="text/template">
-        <ul>
+        <ul class="fbLikeCategory left">
           {{#fLbyCategory}}
-            <li class="fbLikeCategory">
-              <a id="{{c}}" class="fbLikeCategoryTitle">{{c}}</a>
-              <ul>
-                {{#l}}
-                  <li class="fbLike">
-                    {{^u}}
-                      <span class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></span>
-                    {{/u}}
-                    <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
-                    <span class="fbLikeName">{{n}}</span>
-                    <span class="fbLikeNameFull">{{n}}</span>
-                  </li>
-                {{/l}}
-              </ul>
+            <li data-cat="{{c}}">
+              <a>{{c}}</a>
             </li>
+          {{/fLbyCategory}}
+        </ul>
+        <div class="left">
+          {{#fLbyCategory}}
+            <ul class="fbCategoryLikes left" data-cat="{{c}}">
+                    {{#l}}
+                      <li class="fbLike">
+                        {{^u}}
+                          <span class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></span>
+                        {{/u}}
+                        <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                        <span class="fbLikeName">{{n}}</span>
+                        <span class="fbLikeNameFull">{{n}}</span>
+                      </li>
+                    {{/l}}
+            </ul>
           {{/fLbyCategory}}
           {{^fLbyCategory}}
             <li>No likes.</li>
           {{/fLbyCategory}}
-        </ul>
+        </div>
       </script>
 
 

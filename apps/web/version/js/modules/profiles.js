@@ -417,12 +417,27 @@ var FacebookLikesView = Backbone.View.extend({
     // ============
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
 
+    // Add active class to the first category
+    setTimeout(function() {
+      $(".fbLikeCategory").find('li:first-child').addClass('active');
+      $(".fbCategoryLikes").first().show();
+    }, 100);
 
-
-
+    // Categories tab functionality
+    $(".fbLikeCategory li").live('click', function() {
+      var _this = $(this);
+      var _thisData = _this.data('cat');
+      // Remove active class from tabs
+      $(".fbLikeCategory li").removeClass('active');
+      // Add active class to clicked tab
+      $('.fbCategoryLikes').hide();
+      $('.fbLike').removeClass('active8');
+      _this.addClass('active');
+      $(".fbCategoryLikes[data-cat='" + _thisData + "']").fadeIn(200);
+    });
 
     // reload like images until they load, while the API moves them to S3
-    /*if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
+    if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
       console.log('- reloading like photos');
 
       this.$('.fbLikePic img').load(function(){
@@ -437,7 +452,7 @@ var FacebookLikesView = Backbone.View.extend({
           $(_this).attr('src', src + "?v=" + date.getTime());
         }, 10);
       });
-    }*/
+    }
   }
 });
 

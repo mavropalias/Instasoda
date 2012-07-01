@@ -58,6 +58,13 @@
     -ms-animation: @keyframes @duration @delay @easing @repeat;
     animation: @keyframes @duration @delay @easing @repeat;
   }
+
+  .opacity(@opacity: 100) {
+    filter: e(%("alpha(opacity=%d)", @opacity));
+    -khtml-opacity: @opacity / 100;
+    -moz-opacity: @opacity / 100;
+    opacity: @opacity / 100;
+  }
   
   .photo() {
     .box-shadow(0, 1px, 1px, #888);
