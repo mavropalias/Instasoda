@@ -13,17 +13,31 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
   var template = $('#tplNotification').html();
   var notification = Mustache.to_html(template, oNotification);
 
+  if ($("body > .notification").length) {
+    $("body > .notification").each(function() {
+      $(this).css( 'top', '+=80px' );
+    });
+    showNotification(notification);
+  } else {
+    showNotification(notification);
+  }
+
   // show notification
-  $(notification).appendTo('body').fadeIn(200, 'easeInOutQuint', function() {
-    var _notif = $(this);
-    _notif.addClass('activez');
-    setTimeout(function() {
-        _notif.css({
-          'opacity':0,
-          'filter':'opacity(0)'
-        });
-    }, 5000);
-  });
+  function showNotification(notification) {
+    $(notification).appendTo('body').fadeIn(200, 'easeInOutQuint', function() {
+      var _notif = $(this);
+      _notif.addClass('active');
+      setTimeout(function() {
+          _notif.css({
+            'opacity':0,
+            'filter':'opacity(0)'
+          });
+          setTimeout(function() {
+            _notif.remove();
+          }, 800);
+      }, 5000);
+    });
+  }
 }
 
 /**

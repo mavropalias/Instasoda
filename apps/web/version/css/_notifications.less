@@ -13,6 +13,11 @@
   .transform( scale(0.6) skew(50deg, 0) );
   .transition(all 0.6s ease-in-out);
   display: none;
+  &.active {
+    top: 90px;
+    .box-shadow(0, 2px, 10px, #ccc);
+    .transform( scale(1) skew(0deg, 0) );
+  }
 
   .notificationTitle {
     display: inline-block;
@@ -44,10 +49,4 @@
     }
   }
 
-}
-
-.activez {
-  top: 90px;
-  .box-shadow(0, 3px, 20px, #ccc);
-  .transform( scale(1) skew(0deg, 0) );
 }
