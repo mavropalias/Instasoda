@@ -3,7 +3,7 @@
 <head>
 
   <!-- TITLE -->
-  <title>Instasoda - fizzy not fussy!</title>
+  <title>Import</title>
 
   <!-- Scripts for the less fortunate browsers -->
   <!--[if lt IE 9]>
@@ -27,70 +27,60 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   <!-- SCRIPTS START -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
   <script type="text/javascript">
+
+  $(document).ready(function() {
+
+    jQuery.support.cors = true;
+
+  });
 
   function facebookAuth() {
     var self = this;
     console.log('> Doing Facebook auth');
     
     FB.getLoginStatus(function(res) {
-      var button = document.getElementById('fb-auth');
-      if (!res.authResponse) {
-        //user is not connected to the app or logged out
-        //button.innerHTML = 'Login with Facebook';
-        
-          FB.login(function(response) { 
-            // FB.Event.subscribe('auth.statusChange') will take care of the rest
-            self.facebookAuth();
-          },
+
+      console.log(res);
+
+      // get facebook token data
+      var fbToken = res.authResponse.accessToken;
+      var fbTokenExpires = res.authResponse.expiresIn;
+
+      // Check if token is still valid
+      if(fbTokenExpires > 0) {
+        console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
+        console.log('>   -> ' + fbToken);
+        // get friends
+        FB.api(
           {
-            scope:'friends_relationships,friends_location,friends_hometown,friends_birthday,'
-            + 'friends_activities,friends_education_history,friends_interests,'
-            + 'friends_likes,friends_photos'
-          });    
-        
-      } else {
-        if (res.status === 'connected') {
-          console.log('> User is logged into Facebook and has authenticated the application');            
-          
-          // get facebook token data
-          var fbToken = res.authResponse.accessToken;
-          var fbTokenExpires = res.authResponse.expiresIn;
-                      
-          // Check if token is still valid
-          if(fbTokenExpires > 0) {
-            console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
-            console.log('>   -> ' + fbToken);
-            // get third_party_id from Facebook and login the user
-            FB.api(
-              {
-                method: 'fql.query',
-                query: 'SELECT third_party_id FROM user WHERE uid=me()'
+            method: 'fql.query',
+            query: 'SELECT uid2 FROM friend WHERE uid1 = me()'
+          },
+          function(res) {
+            console.log('> Done thanks!');
+
+            var friends = res;
+
+            // make POST request to API
+            $.ajax({
+              type: 'POST',
+              url: "http://localhost:8080/api/test/user/friends",
+              data: { 
+                fTkn: fbToken,
+                fFriends: friends
               },
-              function(res) {
-                console.log('> Attempting to login the user');
-                IS.login(fbToken, res[0].third_party_id, function(err) {
-                  if(!err) {
-                    console.log('> SUCCESS! User is logged in');
-                  } else {
-                    console.log('> FAIL: Need to create new account');
-                  }
-                });
+              dataType: "json",
+              success: function(data) {
+                console.log(data);
+                //alert("Thanks! You may close this window now.");
               }
-            );
-          } else {
-            console.log('- Facebook token has expired');
-            FB.logout();
+            });
           }
-        } else if (res.status === 'not_authorized') {
-          console.log('> User is logged into Facebook but has not authenticated the application');
-          //IS.navigateTo('');
-        } else {
-          console.log('> User is not logged into Facebook at this time');
-          //IS.navigateTo('');
-        }
+        );
       }
-    });  
+    });
   }
 
   </script>
@@ -123,8 +113,18 @@
           oauth      : true,
         });
 
-        // ask for user permissions
-        facebookAuth();
+        // ask for extended permissions
+        FB.login(function(response) { 
+          // FB.Event.subscribe('auth.statusChange') will take care of the rest
+          facebookAuth();
+        },
+        {
+          scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+            + 'user_activities,user_education_history,read_stream,user_interests,'
+            + 'user_likes,user_photos,friends_relationships,friends_location,friends_hometown,friends_birthday,'
+          + 'friends_activities,friends_education_history,friends_interests,'
+          + 'friends_likes,friends_photos'
+        }); 
       };
       (function(d){
         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
