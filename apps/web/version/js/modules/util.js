@@ -15,7 +15,7 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
 
   if ($("body > .notification").length) {
     $("body > .notification").each(function() {
-      $(this).css( 'top', '+=80px' );
+      $(this).stop(true,true).animate({'top':'+=80px'}, 500);
     });
     showNotification(notification);
   } else {
