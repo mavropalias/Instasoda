@@ -43,20 +43,42 @@
     transform: scale(@arg);
   }
   
-  .transition(@duration) {
-    -webkit-transition: all @duration ease-in-out;
-    -moz-transition: all @duration ease-in-out;
-    -o-transition: all @duration ease-in-out;
-    -ms-transition: all @duration ease-in-out;
-    transition: all @duration ease-in-out;
+  .transition(@transition) {
+    -webkit-transition: @transition;
+    -moz-transition: @transition;
+    -ms-transition: @transition;
+    -o-transition: @transition;
+    transition: @transition;
+  }
+
+  .skew(@deg, @deg2) {
+    -webkit-transform: skew(@deg, @deg2);
+    -moz-transform: skew(@deg, @deg2);
+    -ms-transform: skew(@deg, @deg2);
+    -o-transform: skew(@deg, @deg2);
+    transform: skew(@deg, @deg2);
   }
   
+  .transform(@transform: scale(1.2)) {
+    -webkit-transform: @transform;
+    -moz-transform: @transform;
+    -o-transform: @transform;
+    transform: @transform;
+  }
+
   .animation(@keyframes: slide, @duration: 10s, @delay: 1s, @easing: ease-in, @repeat: infinite) {
     -webkit-animation: @keyframes @duration @delay @easing @repeat;
     -moz-animation: @keyframes @duration @delay @easing @repeat;
     -o-animation: @keyframes @duration @delay @easing @repeat;
     -ms-animation: @keyframes @duration @delay @easing @repeat;
     animation: @keyframes @duration @delay @easing @repeat;
+  }
+
+  .opacity(@opacity: 100) {
+    filter: e(%("alpha(opacity=%d)", @opacity));
+    -khtml-opacity: @opacity / 100;
+    -moz-opacity: @opacity / 100;
+    opacity: @opacity / 100;
   }
   
   .photo() {

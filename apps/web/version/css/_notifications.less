@@ -1,20 +1,26 @@
 .notification {
-  .box-shadow(0, 15px);
   .linear-gradient();
   .border-radius();
   width: 200px;
   position: fixed;
-  top: 90px;
+  top: 20px;
   right: 20px;
-  padding: 5px 10px;
-  z-index: 999;
+  padding: 10px;
   border: 1px solid @colorBlue4;
   font-size: 11px;
   line-height: 1.7em;
+  -webkit-transform: translate3d(0, 0, 0);
+  .transform( scale(0.6) skew(50deg, 0) );
+  .transition(all 0.6s ease-in-out);
   display: none;
+  &.active {
+    top: 90px;
+    .box-shadow(0, 2px, 10px, #ccc);
+    .transform( scale(1) skew(0deg, 0) );
+  }
 
   .notificationTitle {
-    display: block;
+    display: inline-block;
     font-size: 12px;
     color: @colorBlue1;
     font-weight: 700;
@@ -26,7 +32,7 @@
   }
 
   .notificationSubtitle {
-    display: block;
+    display: inline-block;
     color: @colorBlue2;
 
     &:first-letter {
@@ -35,7 +41,7 @@
   }
 
   .notificationMessage {
-    display: block;
+    display: inline-block;
     color: #333;
 
     &:first-letter {
