@@ -48,6 +48,10 @@
     url: sApi + 'user/search'
   });
 
+  // FavouritesCollection - user's favourite people
+  // =========================================================================
+  var FavouritesCollection = Backbone.Collection.extend();
+
   // ChatSession
   // =========================================================================
   var ChatSession = Backbone.Model.extend({
@@ -90,6 +94,7 @@
   var betaView;
   var myProfileView;
   var searchView;
+  var favouritesView;
   var usersFullView;
 
 
@@ -115,6 +120,9 @@
     });
     searchView = new SearchView({
       collection: usersCollection,
+      model: user
+    });
+    favouritesView = new FavouritesView({
       model: user
     });
      usersFullView = new UsersFullView({
