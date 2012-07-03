@@ -60,9 +60,10 @@
   <script type="text/javascript" src="VERSION/js/modules/socketio.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/util.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/welcome.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/favourites.js"></script>
 
 
-  <!--<script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
 
 
@@ -319,6 +320,29 @@
 
       <script id="tplFavourites" type="text/template">
         <div id="favouriteUsers"></div>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- FAVOURITE USER VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplFavouritesUser" type="text/template">
+        <ul>
+          {{#p}}
+            {{#d}}
+              <li>
+                <img src="http://img.instasoda.com/u/{{f}}" height="150" />
+              </li>
+            {{/d}}
+          {{/p}}
+          {{^p}}
+          <li>
+            <img src="http://img.instasoda.com/i/noPhoto.png" height="150" />
+          </li>
+          {{/p}}
+          <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
+        </ul>
       </script>
 
 

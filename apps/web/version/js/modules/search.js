@@ -105,49 +105,6 @@ var SearchFiltersView = Backbone.View.extend({
 });
 
 // =========================================================================
-// FavouritesView
-// =========================================================================
-var FavouritesView = Backbone.View.extend({
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing FavouritesView');
-    
-    // bindings
-    _.bindAll(this);
-
-    // create collection for the view
-    this.favsCollection = new FavouritesCollection();
-    
-    // initialize sub-views
-    this.usersView = new SearchResultsView({ collection: this.favsCollection });
-  },
-  
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    console.log('  ~ rendering FavouritesView');
-
-    var _this = this;
-
-    // populate collection from user's 'favs'
-    _.each(this.model.get('favs'), function(user){
-      _this.favsCollection.add({
-        u: 'test'
-      });
-    });  
-    
-    // render template
-    var template = $('#tplFavourites').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-    
-    // render sub views
-    this.usersView.render();
-    this.usersView.setElement(this.$('#favouriteUsers'));
-  }
-});
-
-// =========================================================================
 // SearchResultsView - contains a list of UsersView items,
 // used for search results / matches
 // =========================================================================
@@ -165,7 +122,7 @@ var SearchResultsView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   renderItem: function(model) {
     var usersView = new UsersView({
-        model: model
+      model: model
     });
     usersView.render();
     this.$el.append(usersView.el);

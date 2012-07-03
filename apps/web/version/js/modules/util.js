@@ -62,10 +62,8 @@ IS.addFavourite = function(userToFavId, userToFavName) {
 
           user.set({
             favs: userFavs
-          },
-          {
-            silent: true
           });
+          store.set("user", user);
 
           console.log('- added new user to favourites');
         } else {
@@ -75,10 +73,8 @@ IS.addFavourite = function(userToFavId, userToFavName) {
       } else { // user has not set any favs yet
         user.set({
           favs: [userToFavId]
-        },
-        {
-          silent: true
         });
+        store.set("user", user);
 
         console.log('- added new user to favourites (first fav)');
       }
