@@ -50,10 +50,7 @@ IS.addFavourite = function(userToFavId, userToFavName) {
     userToFav: userToFavId,
   }, function(err, result) {
     if(!err) {
-      // success - show notification to the user
-      IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
-
-      // and update the user model's favs array
+      // update the user model's favs array
       if(!!user.get('favs')) { // favs property exists
         var userFavs = user.get('favs');
         // check if the userToFavId already exists
@@ -63,7 +60,12 @@ IS.addFavourite = function(userToFavId, userToFavName) {
           user.set({
             favs: userFavs
           });
+          
+          // save user locally
           store.set("user", user);
+
+          // success - show notification to the user
+          IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
 
           console.log('- added new user to favourites');
         } else {
