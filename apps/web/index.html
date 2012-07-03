@@ -174,7 +174,18 @@
 
       <script id="tplChatSessions" type="text/template">
         <li class="chatSessionsTab" id="{{_id}}">
+          <span class="photoThumbnail">
+            {{#p}}
+              {{#d}}
+                <img src="http://img.instasoda.com/u/{{f}}" width="40" />
+              {{/d}}
+            {{/p}}
+            {{^p}}
+              <img src="http://img.instasoda.com/i/noPhoto.png" width="40" />
+            {{/p}}
+          </span>
           <span class="user">{{u}}</span>
+          <span class="meta">({{ag}} y.o.)</span>
           <span class="unreadMessages">{{m}}</span>
         </li>
       </script>

@@ -128,18 +128,37 @@
           .text-shadow;
           background: #fafafa;
           width: 128px;
-          padding: 10px;
+          padding: 5px 10px;
+          height: 40px;
           border-bottom: 1px solid #ddd;
           //border-top: 1px solid #fff;
           cursor: pointer;
           position: relative;
           
           &:hover {
-            text-decoration: underline;
+            .user {
+              text-decoration: underline;
+            }
           }
           
+          .photoThumbnail {
+            float: left;
+            margin-right: 10px;
+            display: block;
+            height: 40px;
+            overflow: hidden;
+            background: #fff;
+          }
+
           .user {
             font-size: 1.1em;
+          }
+
+          .meta {
+            color: #777;
+            font-size: 0.9em;
+            display: block;
+            margin-top: 5px;
           }
           
           .unreadMessages {
@@ -164,6 +183,10 @@
           
           &:hover {
             text-decoration: none;
+          }
+
+          .photoThumbnail {
+            background: @color1;
           }
         }
       }

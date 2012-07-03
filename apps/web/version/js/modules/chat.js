@@ -119,13 +119,14 @@ var ChatSessionTabs = Backbone.View.extend({
       // now find the other person's username, using his id
       if(!IS.nullOrEmpty(otherPersonsId)) {
         console.log(' - (chat) looking up username for id #' + otherPersonsId);          
-        socket.emit('getUsernameFromId', {
+        socket.emit('getBasicUserInfoFromId', {
           userId: otherPersonsId
-        }, function(err, username) {
+        }, function(err, user) {
           if(!err) {
-            console.log(' - got username: ' + username)
             model.set({
-              u: username
+              u: user.u,
+              ag: user.ag,
+              p: user.p
             })
             
             // render the template
@@ -177,7 +178,7 @@ var ChatSessionTabs = Backbone.View.extend({
   
   // initiateSessionWith
   // -----------------------------------------------------------------------
-  initiateSessionWith: function(userId, username) {
+  initiateSessionWith: function(userId, username, age, photos) {
     var _this = this;
     
     chatView.showChatWindow();
@@ -197,7 +198,14 @@ var ChatSessionTabs = Backbone.View.extend({
         
         if(!sessionExistsLocally) {
           _this.collection.add([
-            { _id: sessionId, u: username, m: 0, active: true, log: result.log }
+            { 
+              _id: sessionId, 
+              u: username, 
+              ag: age,
+              p: photos,
+              m: 0, 
+              active: true, 
+              log: result.log }
           ]);
         }
       
