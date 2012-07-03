@@ -23,6 +23,9 @@ var Router = Backbone.Router.extend({
 
     // Favourites
     "favourites": "favourites",
+
+    // Mosaic
+    "mosaic": "mosaic",
     
     // Beta message
     "beta": "beta",
@@ -107,6 +110,22 @@ var Router = Backbone.Router.extend({
     favouritesView.render();
     $('#content > div').detach();
     $('#content').append(favouritesView.el);
+  },
+
+  // mosaic
+  // -----------------------------------------------------------------------
+  mosaic: function() {
+    console.log('> routing mosaic page');
+    
+    $('#content > div').detach();
+    
+    // create div & iframe for mosaic
+    $('<div id="mosaic"/>').appendTo('#content');
+    $('<iframe id="mosaicFrame"/>').appendTo('#mosaic');
+    $('#mosaicFrame').attr('src', 'mosaic/index.html').css({
+      height: '100%',
+      width: '100%'
+    });
   },
   
   // beta

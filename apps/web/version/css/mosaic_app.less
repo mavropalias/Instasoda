@@ -14,13 +14,7 @@
  ********************************/
 
   body{
-    /*background:url("img/bg.png") repeat;
-    */
-    background: -webkit-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
-    background: -moz-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
-    background: -o-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
-    background: -ms-linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
-    background: linear-gradient(#55BEE5 0%, #007CA5 90%) no-repeat;
+    .linear-gradient(#55BEE5, #007CA5);
     font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
     font-weight:300;
     font-size:62.5%;
@@ -28,121 +22,39 @@
     background-attachment: fixed;
   }
 
+  .bubbleTexture {
+    background: url(../img/texture.png) top left repeat transparent;
+    z-index: 2;
+  }
+  
+  .staticBubbles {
+    background: url(../img/bubbles.png) left bottom no-repeat transparent;
+    z-index: 1;
+  }
+
+  .bubbleTexture,
+  .staticBubbles {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
   #wrapper{
     margin:0 auto;
     position:relative;
+    z-index: 3;
   }
+
   #container{
     margin:0 auto;
     padding:20px;
     padding-left:30px;
     overflow:hidden;
-    background: url(../../version/img/bubbles.png) no-repeat top center;
   }
 
-/********************************
- * BUTTONS
- ********************************/
-
-  .button, input[type=button], input[type=submit], button{
-    text-decoration: none;
-    margin: 5px 10px;
-    cursor:pointer;
-    outline:none;
-    color:#FFF;
-    font-family:"Lucida Grande","Lucida Sans","Lucida Sans Unicode","Segoe UI",Verdana,sans-serif;
-    display:inline-block;
-    vertical-align:top;
-    position:relative;
-    font-size:16px;
-    font-weight:bold;
-    text-align:center;
-    background:#BE1D2C;
-    border:none;
-    height:40px;
-    padding: 0px 20px;
-    /** Make the text unselectable **/
-    -moz-user-select:none;
-    -webkit-user-select:none;
-  }
-
-
-/********************************
- * HEADER
- ********************************/
-
-nav{
-    background:#FFFFFF;
-    /*box-shadow:0 0 20px #888;*/
-    box-shadow:0 0 40px rgba(0, 52, 76, 0.7);
-    font-size:2em;
-    font-weight:700;
-    height:70px;
-    line-height:70px;
-    position:relative;
-    width:100%;
-    z-index:4;
-    font-weight:500;
-}
-nav > ul{
-    display:block;
-    height:100%;
-    margin-left:10px;
-    position:relative;
-}
-nav > ul > li{
-    float: left;
-}
-nav > ul > ul{
-    float:left;
-    height:70px;
-    margin-left:20px;
-    overflow:hidden;
-}
-nav > ul > ul > li{
-    display:inline-block;
-}
-nav > ul > ul > li > a{
-    color:#033349;
-    cursor:pointer;
-    padding:2px 10px 3px;
-    text-decoration:none;
-    border-radius:3px;
-    border:1px solid #fff;
-    margin-right:10px;
-}
-nav > ul > ul > li > a.current , nav > ul > ul > li > a:hover{
-    background:#033349;
-    border:1px solid #333;
-    color:#ffffff;
-}
-nav aside{
-    position:absolute;
-    right:20px;
-    top:6px;
-}
-nav .shareFB, nav .shareTW, nav .shareGP{
-    position:absolute;
-    top:0;
-}
-nav .shareFB{
-    right:165px;
-}
-nav .shareTW{
-    right:70px;
-    width:90px;
-}
-nav .shareGP{
-    right:10px;
-    width:60px;
-}
-nav #instasodaLogo {
-    background:url("http://instasoda.com/area51/productdemo3/images/instasoda_logo.png") no-repeat left top;
-    display:block;
-    height:29px;
-    margin:21px 0 0 15px;
-    width:166px;
-}
 
 /********************************
  * ARTICLES
