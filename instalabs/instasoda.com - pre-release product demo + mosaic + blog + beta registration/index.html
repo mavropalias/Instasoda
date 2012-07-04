@@ -1,16 +1,17 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" lang="en">
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
-  <!-- Scripts for IE7/8 -->
-  <!--[if lt IE 9]>
-    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" type="text/javascript"></script>
-    <script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/ie7-squish.js" type="text/javascript"></script>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
-  
+
   <!-- TITLE -->
-  <title>Instasoda - fizzy not fussy!</title>
-  
+  <title>Instasoda, it's instant social dating!</title>
+
+  <!-- Scripts for the less fortunate browsers -->
+  <!--[if lt IE 9]>
+  	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/IE9.js" type="text/javascript"></script>
+  	<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta4)/ie7-squish.js" type="text/javascript"></script>
+  	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Instasoda" />
   <meta property="og:type" content="website" />
@@ -18,88 +19,107 @@
   <meta property="og:image" content="" />
   <meta property="og:site_name" content="Instasoda" />
   <meta property="fb:admins" content="659710874" />
-  
+
   <!-- MISC TAGS -->
+  <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" href="/favicon.ico">
+
+  <!-- STYLES START -->
+  <link rel="stylesheet" type="text/css" href="css/instasoda.css">
+  <!-- STYLES END -->
+
+  <!-- SCRIPTS START -->
+  <script type="text/javascript" src="js/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
   
-  <!-- SCRIPTS -->
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="style.css" />
-    
-  </style>
+  <!-- <script type="text/javascript" src="js/_app.js"></script> -->
+
+  <script defer type="text/javascript" src="js/lib/cssrefresh.js"></script>
+  <!-- SCRIPTS END -->
 
 </head>
 <body>
 
-  <!-- FACEBOOK -->
-  <div id="fb-root"></div>
-  <script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) {return;}
-  js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=159444727449256";
-    fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script>
+  <!-------------------------------------------------------------------------->
+  <!-- FACEBOOK SDK -->
+  <!-------------------------------------------------------------------------->
 
-  <!-- NAVIGATION -->
-  <nav>
-    <ul>
-      <li><a id="instasodaLogo" href="#"></a></li>
-      <ul>
-        <li><a class="current">Welcome</a></li>
-        <li><a>Mosaic</a></li>
-        <li><a>Join our beta!</a></li>
-      </ul>
-      <aside id="shareInstasoda">
-        <span class="shareFB"><iframe src="//www.facebook.com/plugins/like.php?href=www.facebook.com/apps/application.php?id=159444727449256&amp;send=false&amp;layout=button_count&amp;width=80&amp;show_faces=false&amp;action=like&amp;colorscheme=light&amp;font&amp;height=21&amp;appId=199032880141933" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:80px; height:21px;" allowTransparency="true"></iframe></span>
-        <span class="shareTW"><iframe allowtransparency="true" frameborder="0" scrolling="no" src="//platform.twitter.com/widgets/tweet_button.html?url=http://instasoda.com&text=Instasoda, refreshing dating!" style="width:130px; height:20px;"></iframe></span>
-        <span class="shareGP"><g:plusone size="medium" href="http://instasoda.com"></g:plusone></span>
-      </aside>
-    </ul>
-  </nav>
+    <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '372501186096211', // ##appId## 159444727449256
+          channelUrl : 'http://localhost:8081/is/channel.html', // ##channel##
+          status     : true,
+          cookie     : true,
+          oauth      : true,
+        });
 
+        $(document).ready(function() {
+          IS.facebookAuth();
+        });
+      };
+      (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+       }(document));
+    </script>
+
+
+  <!-------------------------------------------------------------------------->
   <!-- CONTENT -->
-  <section id="mainContent">
-    <img class="instasodaLogo" src="images/temp/main.png" width="628" height="625">
-    <img class="instasodaBubbles" src="images/bubbles.png" width="899" height="677">
-    <img class="instasodaSocialDating" src="images/instant_social_dating.png" width="342" height="91">
-    
-    <!-- BUBBLES -->
-    <div id="bubbles">
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-      <span class="bubble"></span>
-    </div>
-  </section>
-  
-  <!-- GOOGLE PLUS -->
-  <script type="text/javascript">
-    (function() {
-      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-      po.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-    })();
-  </script>
+  <!-------------------------------------------------------------------------->
+
+    <section id="content" role="main">
+      <div id="welcome">
+        <h2>Find & date people who share the things that you like*</h2>
+        <h3>*it’s free, fun, super easy and totally anonymous</h3>
+
+          <p>Instasoda gives you the best chance of finding awesome, real people that are matched to your own personality and interests. The best part is that you don't have to do anything! Just connect with your Facebook account and we'll do the magic.</p>
+          <p>Instasoda is coming up soon! Be one of the select members to experience the fun early by signing-up for the upcoming beta.</p>
+
+
+        <button id="fb-auth">Beta sign-up with Facebook</button>
+        <span class="priv">We will <em>never</em> post anything on your Facebook page. Seriously. Nothing.</span>
+
+        <span class="instasodaLogoCap"></span>
+        <span class="bubbleTexture"></span>
+        <span class="staticBubbles"></span>
+
+        <div class="social">
+          <div class="socialSite">
+            <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=250&amp;height=395&amp;colorscheme=light&amp;show_faces=false&amp;border_color=%23ffffff&amp;stream=true&amp;header=false&amp;appId=254623907964581" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:250px; height:395px;" allowTransparency="true"></iframe>
+          </div>
+        </div>
+
+        <div id="animatedBubbles">
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+          <span class="bubble"></span>
+        </div>
+      </div>
+    </section>
 </body>
 </html>

@@ -1,0 +1,93 @@
+// =============================================================================
+// FORMS
+// =============================================================================
+
+  button,
+  .button {
+    background: #BE1E2D;
+    padding: 0.5em 1em;
+    border: 0 none;
+    color: white;
+    font-size: 1.3em;
+    line-height: 1.5em;
+    cursor: pointer;
+    display: block;
+    opacity: 1;
+    text-align: center;
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  label {
+    //.linear-gradient(@colorBlue5, @colorBlue6);
+    //.border-radius(2px);
+    //.box-shadow(0, 2px, 5px, rgba(0,0,0,.2) inset);
+    text-shadow: 1px 1px #fff;
+    color: @color1;
+    font-weight: 700;
+    font-size: 1.2em;
+    padding-top: 5px;
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  /* Checkbox */
+
+  input[type="checkbox"] {
+    background-image: -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
+                      -webkit-linear-gradient(left, @colorRed2 50%, @colorGreen 50%);
+    background-size: 100% 100%, 200% 100%;
+    background-position: 0 0, 5px 0;
+    border-radius: 20px;
+    box-shadow: inset 0 2px 4px hsla(0,0%,0%,.5),
+                inset 0 0 10px hsla(0,0%,0%,.5);
+    cursor: pointer;
+    height: 14px;
+    padding-right: 10px;
+    position: relative;
+    width: 30px;
+    -webkit-appearance: none;
+    -webkit-transition: .15s;
+  }
+  input[type="checkbox"]:after {
+    background-color: #fefefe;
+    background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
+    border-radius: 25px;
+    box-shadow: 0 1px 2px 1px hsla(0,0%,0%,.3);
+    content: '';
+    display: block;
+    height: 16px;
+    left: 0;
+    position: relative;
+    top: -1px;
+    width: 16px;
+  }
+  input[type="checkbox"]:checked {
+    background-position: 0 0, 30px 0;
+    padding-left: 15px;
+    padding-right: 0;
+  }
+  input[type="checkbox"]:hover:before {
+    background: @colorRed2;
+    border-radius: 10px;
+    color: #fff;
+    content: '✘';
+    font: 10px/20px sans-serif;
+    height: 16px;
+    left: -20px;
+    bottom: -1px;
+    letter-spacing: 0px;
+    line-height: 1.7;
+    position: absolute;
+    text-align: center;
+    text-transform: uppercase;
+    width: 16px;
+    z-index: 100;
+  }
+  input[type="checkbox"]:checked:hover:before {
+    background: @colorGreen;
+    content: '✔';
+  }
