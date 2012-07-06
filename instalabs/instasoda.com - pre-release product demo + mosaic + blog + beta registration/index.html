@@ -32,11 +32,21 @@
 
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="js/lib/jquery.min.js"></script>
-  <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
-  
-  <!-- <script type="text/javascript" src="js/_app.js"></script> -->
-
+  <script type="text/javascript" src="js/_app.js"></script>
   <script defer type="text/javascript" src="js/lib/cssrefresh.js"></script>
+  
+
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-749229-25']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
   <!-- SCRIPTS END -->
 
 </head>
@@ -58,7 +68,10 @@
         });
 
         $(document).ready(function() {
-          IS.facebookAuth();
+          $('#fb-auth').on('click', function() {
+            $('#signupStatus').show();
+            IS.facebookAuth();
+          })
         });
       };
       (function(d){
@@ -86,7 +99,7 @@
 
 
         <button id="fb-auth">Beta sign-up with Facebook</button>
-        <button id="survey">Take our dating survey</button>
+        <a id="survey" class="button" href="https://docs.google.com/spreadsheet/embeddedform?formkey=dFk2Qk5laE5pcXBZeWQ1eHJ3RG5lU0E6MQ" target="_blank">Take our dating survey</a>
         <span class="priv">We will <em>never</em> post anything on your Facebook page. Seriously. Nothing.</span>
 
         <span class="instasodaLogoCap"></span>
@@ -97,6 +110,21 @@
           <div class="socialSite">
             <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=300&amp;height=395&amp;colorscheme=light&amp;show_faces=false&amp;border_color=%23ffffff&amp;stream=true&amp;header=false&amp;appId=254623907964581" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:395px;" allowTransparency="true"></iframe>
           </div>
+        </div>
+
+        <div id="signupStatus">
+          <span class="message">
+            Fantastic! We're now signing you up for the upcoming beta.
+            <br><br>
+            <span class="status"><img src="img/loading.gif"></span>
+            <br><br>
+            Like us on Facebook to stay tuned with Instasoda:
+            
+          </span>
+          <span class="likeIS">
+            <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=230&amp;height=163&amp;colorscheme=light&amp;show_faces=false&amp;border_color=%23ffffff&amp;stream=true&amp;header=false&amp;appId=254623907964581" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:230px; height:163px;" allowTransparency="true"></iframe>
+          </span>
+
         </div>
 
         <div id="animatedBubbles">

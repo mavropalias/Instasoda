@@ -10,6 +10,38 @@
     left: 0;
     right: 0;
     bottom: 0;
+
+    #signupStatus {
+      .box-shadow(-2px, 2px, 2px, @color1);
+      position: fixed;
+      width: 600px;
+      height: 180px;
+      top: 50%;
+      left: 50%;
+      margin-left: -300px;
+      margin-top: -90px;
+      background: #fff;
+      z-index: 999;
+      padding: 40px;
+      text-align: center;
+      display: none;
+
+      .message {
+        font-size: 20px;
+        font-weight: 700;
+      }
+
+      .status {
+        text-shadow: -1px 1px #000;
+        color: @colorGreen;
+      }
+
+      .likeIS {
+        display: block;
+        height: 63px;
+        overflow: hidden;
+      }
+    }
     
     h2,
     h3,
@@ -32,14 +64,14 @@
 
     p {
       //text-shadow: 0 0 transparent;
-      font-size: 2.0em;
+      font-size: 1.8em;
       line-height: 1.2em;
       font-weight: 300;
       width: 30em;
       //color: @colorBlue1;
       margin: 0.5em 0 1em;
       color: @colorBlue1;
-      text-shadow: -1px 1px @colorBlue2;
+      text-shadow: -1px 1px @colorBlue3;
     }
 
     .priv {
@@ -52,14 +84,20 @@
     }
 
     .social {
+      .box-shadow(-2px, 2px, 2px, @color1);
       position: fixed;
-      bottom: 60px;
+      top: 80px;
       right: 80px;
+      height: 63px;
+      overflow: hidden;
       z-index: 20;
+
+      &:hover {
+        height: auto;
+      }
 
       .socialSite {
         background: #fff;
-        .box-shadow(-2px, 2px, 2px, @color1);
       }
     }
     

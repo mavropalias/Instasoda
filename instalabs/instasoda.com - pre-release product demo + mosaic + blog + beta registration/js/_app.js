@@ -1,133 +1,133 @@
+// Config
+// =============================================================================
+  
+  var sApi = "http://localhost:8080/api/user/"; //##apiUrl## - 23.23.87.218
+  jQuery.support.cors = true;
+
 // Create the IS namespace
 // =============================================================================
 
   var IS = {};
 
 
-// Config
-// =============================================================================
-  
-  var appReady = false;
-  var socketIoHost = "http://localhost:8082"; //##socketIoHost##
-  var sApi = "http://localhost:8080/api/"; //##apiUrl##
-  jQuery.support.cors = true;
+  IS.facebookAuth = function(){
+    var self = this;
 
+    FB.getLoginStatus(function(res) {
+      var button = document.getElementById('fb-auth');
+      if (!res.authResponse) {
+        //user is not connected to the app or logged out
+        //button.innerHTML = 'Login with Facebook';
+        
+          FB.login(function(response) { 
+            // FB.Event.subscribe('auth.statusChange') will take care of the rest
+            self.facebookAuth();
+          },
+          {
+            scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+            + 'user_activities,user_education_history,read_stream,user_interests,'
+            + 'user_likes,user_photos'
+          });    
+        
+      } else {
+        if (res.status === 'connected') {
+          //console.log('> User is logged into Facebook and has authenticated the application');            
+          
+          // get facebook token data
+          var fbToken = res.authResponse.accessToken;
+          var fbTokenExpires = res.authResponse.expiresIn;
+                      
+          // Check if token is still valid
+          if(fbTokenExpires > 0) {
+            //console.log('> Facebook token expires in ' + (fbTokenExpires / 60) + ' minutes');
+            //console.log('>   -> ' + fbToken);
+            // get third_party_id from Facebook and login the user
+            FB.api(
+              {
+                method: 'fql.query',
+                query: 'SELECT third_party_id FROM user WHERE uid=me()'
+              },
+              function(res) {
+                console.log('> Attempting to login the user');
 
-// Initialize application
-// =============================================================================
-  
+                // register for beta
+                IS.createAccount(fbToken, res[0].third_party_id, function (err, res) {
+                  if(!err) {
+                    console.log('> SUCCESS! Account created');
+                    alert("thanks!");
+                  } else {
+                    console.log('> ERROR: ' + res);
+                    //todo handle error
+                  }
+                });
+              }
+            );
+          } else {
+            alert('Your Facebook token has expired. Please reload the page and try again!');
+            FB.logout();
+          }
+        } else if (res.status === 'not_authorized') {
+          console.log('> User is logged into Facebook but has not authenticated the application');
+          //IS.navigateTo('');
+        } else {
+          console.log('> User is not logged into Facebook at this time');
+          //IS.navigateTo('');
+        }
+      }
+    });  
+  }
 
-  // User - the person using the app
-  // =========================================================================
-  var User = Backbone.Model.extend({
-    defaults: {
-    },
-    idAttribute: "_id",
-    urlRoot: sApi + 'user'
+IS.createAccount = function(fbToken, fTid, cb) {
+
+  var register = $.post(sApi, {
+    '_id': null,
+    'fTid': fTid,
+    'fTkn': fbToken
+  })
+  .success(function() { })
+  .error(function() {
+    $('#signupStatus .status').text("OH NO! An error occured :( Please try again!");
+  })
+  .complete(function() { 
+    $('#signupStatus .status').text("SUCCESS!");
   });
 
-  // Users - all other Instasoda users
-  // =========================================================================
-  var Users = Backbone.Model.extend({
-    defaults: {
-    },
-    idAttribute: "_id",
-    urlRoot: sApi + 'user'
+  //console.log('- creating account');
+  /*user.set({
+    '_id': null,
+    'fTid': fTid,
+    'fTkn': fbToken
   });
-  
-  // OnlineUsers
-  // =========================================================================
-  var OnlineUsers = Backbone.Model.extend({
-    defaults: {
+
+  user.save({
+    error: function(model, response) {
+      //TODO: properly handle errors
+      //a false might only mean that the API server is N/A
+      console.log('- login error: ' + response.error);
+      cb(true, response.error);
     }
-  });
+  }, {
+    success: function(model, response) {
+      // Ajax call was successful
+      // ------------------------
+      console.log('- got an API response');
+      // Now check if the account was created
+      // ------------------------------------
+      if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+        // store the user details locally
+        // ------------------------------
+        store.set("user", user);
 
-  // UsersCollection - a collection of Users
-  // =========================================================================
-  var UsersCollection = Backbone.Collection.extend({
-    url: sApi + 'user/search'
-  });
-
-  // FavouritesCollection - user's favourite people
-  // =========================================================================
-  var FavouritesCollection = Backbone.Collection.extend();
-
-  // ChatSession
-  // =========================================================================
-  var ChatSession = Backbone.Model.extend({
-    idAttribute: "_id"
-  });
-
-  // ChatSessionLog
-  // =========================================================================
-  var ChatSessionLog = Backbone.Model.extend({
-    idAttribute: "_id",
-    log: {}
-  });
-
-  // ChatSessions
-  // =========================================================================
-  var ChatSessions = Backbone.Collection.extend({
-    url: sApi + 'chat'
-  });
-
-  // Backbone models
-  // -------------------------------------------------------------------------
-  var user = new User();
-  var users = new Users();
-  var onlineUsers = new OnlineUsers();
-
-  // Backbone collections
-  // -------------------------------------------------------------------------
-  var usersCollection = new UsersCollection({
-    model: users
-  });
-  var chatSessions = new ChatSessions({
-    model: ChatSession
-  });
-  
-  // Backbone views
-  // -------------------------------------------------------------------------
-  var navigationView;
-  var chatView;
-  var welcomeView;
-  var betaView;
-  var myProfileView;
-  var searchView;
-  var favouritesView;
-  var usersFullView;
-
-
-// Start application
-// =============================================================================
-  
-  jQuery(function($) {
-
-    // Backbone views
-    // -------------------------------------------------------------------------
-    navigationView = new NavigationView({
-      el: $('nav')[0],
-      model: user
-    });
-    chatView = new ChatView({
-      el: $('#footer')[0],
-      model: user
-    });
-    welcomeView = new WelcomeView();
-    betaView = new BetaView();
-    myProfileView = new MyProfileView({
-      model: user
-    });
-    searchView = new SearchView({
-      collection: usersCollection,
-      model: user
-    });
-    favouritesView = new FavouritesView({
-      model: user
-    });
-     usersFullView = new UsersFullView({
-      model: users,
-    });
-
-    Backbone.history.start({});
-  });
+        // callback success
+        // ----------------
+        cb(null, "success");
+      }
+      // FAIL
+      // ----
+      else {
+        console.log('- ' + response.error);
+        cb(true, response.error);
+      }
+    }
+  });*/
+}
