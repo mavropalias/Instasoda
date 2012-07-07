@@ -43,10 +43,10 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
           _notif.css({
             'opacity':0,
             'filter':'opacity(0)'
-          });
-          setTimeout(function() {
+          }).delay(600).queue(function() {
             _notif.remove();
-          }, 800);
+            $(this).dequeue();
+          });
       }, 5000);
     });
   }
@@ -62,7 +62,7 @@ IS.addFavourite = function(userToFavId, userToFavName) {
     userToFav: userToFavId,
   }, function(err, result) {
     if(!err) {
-
+      
       // update the user model's favs array
       if(!!user.get('favs')) { // favs property exists
         var userFavs = user.get('favs');
