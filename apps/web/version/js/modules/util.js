@@ -3,27 +3,39 @@
  * @param {String} message
  */
 IS.notify = function(sTitle, sSubtitle, sMessage) {
+
   var oNotification = {
     title: sTitle,
     subtitle: sSubtitle,
     message: sMessage
   }
 
-  // render template
-  var template = $('#tplNotification').html();
-  var notification = Mustache.to_html(template, oNotification);
+  // push the notification into the array
+  IS.notificationsArray.push(oNotification);
+  console.log('Pushed new notification');
 
-  if ($("body > .notification").length) {
-    $("body > .notification").each(function() {
-      $(this).stop(true,true).animate({'top':'+=80px'}, 500);
-    });
-    showNotification(notification);
-  } else {
-    showNotification(notification);
+  setTimeout(function() {
+    // render template
+    var template = $('#tplNotification').html();
+    var notification = Mustache.to_html(template, IS.notificationsArray.shift());
+    processNotifications(notification)
+  }, 3000*IS.notificationsArray.length);
+
+  // Process the notification
+  function processNotifications(notification) {
+    if (!$('.notification').length) {
+      displayNotification(notification);
+    } else {
+      $("body > .notification").each(function() {
+        $(this).animate({'top':'+=80px'}, 500, function() {
+          displayNotification(notification);
+        });
+      });   
+    }
   }
 
   // show notification
-  function showNotification(notification) {
+  function displayNotification(notification) {
     $(notification).appendTo('body').fadeIn(200, 'easeInOutQuint', function() {
       var _notif = $(this);
       _notif.addClass('active');
@@ -50,6 +62,7 @@ IS.addFavourite = function(userToFavId, userToFavName) {
     userToFav: userToFavId,
   }, function(err, result) {
     if(!err) {
+
       // update the user model's favs array
       if(!!user.get('favs')) { // favs property exists
         var userFavs = user.get('favs');
