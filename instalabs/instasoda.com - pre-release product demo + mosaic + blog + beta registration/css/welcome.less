@@ -12,34 +12,57 @@
     bottom: 0;
 
     #signupStatus {
-      .box-shadow(-2px, 2px, 2px, @color1);
+      .box-shadow(-2px, 2px, 80px, @color1);
       position: fixed;
       width: 600px;
-      height: 180px;
+      //height: 180px;
       top: 50%;
       left: 50%;
       margin-left: -300px;
-      margin-top: -90px;
+      margin-top: -140px;
       background: #fff;
       z-index: 999;
-      padding: 40px;
+      padding: 40px 40px 0;
       text-align: center;
       display: none;
 
       .message {
         font-size: 20px;
         font-weight: 700;
-      }
+        padding-bottom: 10px;
 
-      .status {
-        text-shadow: -1px 1px #000;
-        color: @colorGreen;
+        .working {
+          display: block;
+          margin-bottom: 10px;
+        }
+
+        .status {
+          font-size: 32px;
+          color: @colorGreen;
+          display: block;
+          padding-bottom: 10px;
+        }
+
+        .success {
+          display: none;
+          margin-top: 10px;
+        }
       }
 
       .likeIS {
         display: block;
+        margin: 40px -40px 0;
+        padding: 20px 0 50px;
         height: 63px;
+        position: relative;
         overflow: hidden;
+        background: #f3f3f3;
+        border-top: 1px solid #ccc;
+
+        .iframe {
+          height: 63px;
+          overflow: hidden;
+        }
       }
     }
     
@@ -93,7 +116,7 @@
       z-index: 20;
 
       &:hover {
-        height: auto;
+        height: 395px;
       }
 
       .socialSite {
@@ -124,7 +147,7 @@
       z-index: 6;
       float: left;
       margin-left: 20px;
-      margin-bottom: 10px;
+      margin-bottom: 13px;
     }
     
     .feature {

@@ -14,9 +14,10 @@
 
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Instasoda" />
+  <meta property="og:description" content="Find & date people who share the things that you like." />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="http://instasoda.com" />
-  <meta property="og:image" content="" />
+  <meta property="og:url" content="http://www.instasoda.com" />
+  <meta property="og:image" content="http://img.instasoda.com/i/instasoda.png" />
   <meta property="og:site_name" content="Instasoda" />
   <meta property="fb:admins" content="659710874" />
 
@@ -33,7 +34,7 @@
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="js/lib/jquery.min.js"></script>
   <script type="text/javascript" src="js/_app.js"></script>
-  <script defer type="text/javascript" src="js/lib/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="js/lib/cssrefresh.js"></script>-->
   
 
   <script type="text/javascript">
@@ -60,8 +61,8 @@
     <script>
       window.fbAsyncInit = function() {
         FB.init({
-          appId      : '372501186096211', // ##appId## 159444727449256
-          channelUrl : 'http://localhost:8081/is/channel.html', // ##channel##
+          appId      : '159444727449256', // ##appId## 159444727449256
+          channelUrl : 'channel.html', // ##channel##
           status     : true,
           cookie     : true,
           oauth      : true,
@@ -106,7 +107,7 @@
         <span class="bubbleTexture"></span>
         <span class="staticBubbles"></span>
 
-        <div class="social">
+        <div class="animated social">
           <div class="socialSite">
             <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=300&amp;height=395&amp;colorscheme=light&amp;show_faces=false&amp;border_color=%23ffffff&amp;stream=true&amp;header=false&amp;appId=254623907964581" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:395px;" allowTransparency="true"></iframe>
           </div>
@@ -114,15 +115,15 @@
 
         <div id="signupStatus">
           <span class="message">
-            Fantastic! We're now signing you up for the upcoming beta.
-            <br><br>
-            <span class="status"><img src="img/loading.gif"></span>
-            <br><br>
-            Like us on Facebook to stay tuned with Instasoda:
-            
+            <span class="working">Fantastic! We're now signing you up for the upcoming beta.</span>
+            <span class="status"><img src="img/loading.gif"></span>   
+            <span class="success">We'll let you know when the beta becomes available to you.</span>
           </span>
           <span class="likeIS">
-            <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=230&amp;height=163&amp;colorscheme=light&amp;show_faces=false&amp;border_color=%23ffffff&amp;stream=true&amp;header=false&amp;appId=254623907964581" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:230px; height:163px;" allowTransparency="true"></iframe>
+            <div class="message">Like us on Facebook to stay tuned with Instasoda:</div>
+            <div class="iframe">
+              <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=230&amp;height=163&amp;colorscheme=light&amp;show_faces=false&amp;border_color=%23f3f3f3&amp;stream=true&amp;header=false&amp;appId=254623907964581" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:230px; height:163px;" allowTransparency="true"></iframe>
+            </div>
           </span>
 
         </div>
