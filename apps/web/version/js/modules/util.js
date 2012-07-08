@@ -56,10 +56,11 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
  * Add a person to the user's favourites.
  * @param {String} userToFavId
  */
-IS.addFavourite = function(userToFavId, userToFavName) {
-  socket.emit('addFavourite', {
+IS.handleFavourite = function(userToFavId, userToFavName, favType) {
+  socket.emit('handleFavourite', {
     userId: user.get('_id'),
     userToFav: userToFavId,
+    favType: favType,
   }, function(err, result) {
     if(!err) {
       
@@ -67,7 +68,10 @@ IS.addFavourite = function(userToFavId, userToFavName) {
       if(!!user.get('favs')) { // favs property exists
         var userFavs = user.get('favs');
         // check if the userToFavId already exists
-        if(userFavs.indexOf(userToFavId) === -1) {
+
+        var indexOfFav = userFavs.indexOf(userToFavId);
+        
+        if(favType == 'add') {
           userFavs.push(userToFavId);
 
           user.set({
@@ -77,12 +81,27 @@ IS.addFavourite = function(userToFavId, userToFavName) {
           // save user locally
           store.set("user", user);
 
+          $('#handleFavourite').text('- Favourite');
+
           // success - show notification to the user
           IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
 
           console.log('- added new user to favourites');
         } else {
-          console.log('- user was already in the fav list');
+          userFavs.splice(indexOfFav,1); 
+
+          user.set({
+            favs: userFavs
+          });
+
+          store.set("user", user);
+
+          // Change favourite button text
+          $('#handleFavourite').text('+ Favourite');
+
+          // success - show notification to the user
+          IS.notify('Removed favourite!', null, userToFavName + ' removed from your favourites.');
+          console.log('- removed user from favourites');
         }
         
       } else { // user has not set any favs yet

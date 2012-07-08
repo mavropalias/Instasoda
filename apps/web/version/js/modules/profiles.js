@@ -294,7 +294,7 @@ var UsersFullView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   events: {
     'click #sendMessage': 'sendMessage',
-    'click #addFavourite': 'addFavourite'
+    'click #handleFavourite': 'handleFavourite'
   },
 
   // initialize
@@ -315,10 +315,21 @@ var UsersFullView = Backbone.View.extend({
     console.log('  ~ rendering UsersFullView for: ' + this.model.get('_id'));
     var _this = this;
 
+    // If the user exists already, pass a new attr to the model
+    this.model.set({isFaved: false});
+    if (_.indexOf(user.get('favs'), this.model.get('_id')) != -1) {
+      console.log(this.model.get('isFaved'));
+      this.model.set({
+        isFaved: true
+      });
+      console.log(this.model.get('isFaved'));
+      console.log(user.get('isFaved'));
+    }
+
     // Update template
     var template = $('#tplUsersProfile').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
+    
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
     this.facebookLikesView.setElement(this.$('#facebookLikes')).render();
@@ -354,10 +365,15 @@ var UsersFullView = Backbone.View.extend({
     chatView.chatSessionTabs.initiateSessionWith(this.model.get('_id'), this.model.get('u'), this.model.get('ag'), this.model.get('p'));
   },
 
-  // addFavourite
+  // handleFavourite
   // -----------------------------------------------------------------------
-  addFavourite: function() {
-    IS.addFavourite(this.model.get('_id'), this.model.get('u'));
+  handleFavourite: function() {
+    if (_.indexOf(user.get('favs'), this.model.get('_id')) === -1) {
+      var favType = 'add'
+    } else {
+      var favType = 'remove'
+    }
+    IS.handleFavourite(this.model.get('_id'), this.model.get('u'), favType);
   }
 });
 
