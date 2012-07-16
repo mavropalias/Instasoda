@@ -400,7 +400,7 @@ var FacebookLikesView = Backbone.View.extend({
   render: function() {
     var _this = this;
     console.log('  ~ rendering FacebookLikesView');
-    var template = $('#tplFacebookLikes').html();
+    var template = $('#tplLikesResults').html();
     
     // pre-process likes and split them into categories
     // ================================================

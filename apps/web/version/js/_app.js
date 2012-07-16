@@ -96,6 +96,7 @@
   var searchView;
   var favouritesView;
   var usersFullView;
+  var likesView;
 
 
 // Start application
@@ -125,8 +126,11 @@
     favouritesView = new FavouritesView({
       model: user
     });
-     usersFullView = new UsersFullView({
+    usersFullView = new UsersFullView({
       model: users,
+    });
+    likesView = new LikesView({
+      model: user,
     });
 
     Backbone.history.start({});

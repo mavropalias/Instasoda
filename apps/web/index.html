@@ -61,6 +61,7 @@
   <script type="text/javascript" src="VERSION/js/modules/util.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/welcome.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/favourites.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/likes.js"></script>
 
 
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
@@ -131,6 +132,7 @@
             {{#_id}}<li><div id="navNotifications">0</div></li>{{/_id}}
             {{#_id}}<li><a id="navHome" href="#">Home</a></li>{{/_id}}
             {{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
+            {{#_id}}<li><a id="navLikes" href="#likes">Likes</a></li>{{/_id}}
             {{#_id}}<li><a id="navFavourites" href="#favourites">Favourites</a></li>{{/_id}}
             <li><a id="navMosaic" href="#mosaic">Mosaic</a></li>
             {{#_id}}<li><a id="navProfile" href="#me">Profile</a></li>{{/_id}}
@@ -359,6 +361,70 @@
 
 
     <!------------------------------------------------------------------------>
+    <!-- LIKES VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplLikes" type="text/template">
+        <div id="likesFilters"></div>
+        <div id="likesResults"></div>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- LIKES FILTERS VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplLikesFilters" type="text/template">
+        <section>
+          <ul>
+            {{#so.l}}
+              <li class="fbLike" data-id="{{id}}">
+                <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{id}}.jpg" width=50 height=50></span>
+              </li>
+            {{/so.l}}
+          </ul>
+          <p>
+            <button id="doSearch">Search for matches!</button>
+          </p>
+        </section>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- LIKES RESULTS VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplLikesResults" type="text/template">
+        <ul class="fbLikeCategories">
+          {{#fLbyCategory}}
+            <li data-cat="{{c}}" class="fbLikeCategoryTitle">
+              <a>{{c}}</a>
+            </li>
+          {{/fLbyCategory}}
+        </ul>
+        <div class="left">
+          {{#fLbyCategory}}
+            <ul class="fbCategoryLikes left" data-cat="{{c}}">
+              {{#l}}
+                <li class="fbLike" data-id="{{_id}}">
+                  {{^u}}
+                    <span class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></span>
+                  {{/u}}
+                  <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                  <span class="fbLikeName">{{n}}</span>
+                  <span class="fbLikeNameFull">{{n}}</span>
+                </li>
+              {{/l}}
+            </ul>
+          {{/fLbyCategory}}
+          {{^fLbyCategory}}
+            <li>No likes.</li>
+          {{/fLbyCategory}}
+        </div>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
     <!-- SEARCH VIEW -->
     <!------------------------------------------------------------------------>
 
@@ -403,17 +469,17 @@
           </p>
         </section>-->
         <section>
-          <p>
-            <button id="doSearch">Search for matches!</button>
-          </p>
-        </section>
-        <!--<section>
           <h3>My favourite things are...</h3>
           <span class="tip">Which of your Facebook likes are the most important to you.</span>
         </section>
         <section>
           <button id="buttonAddLikes">+ Add likes</button>
-        </section>-->
+        </section>
+        <section>
+          <p>
+            <button id="doSearch">Search for matches!</button>
+          </p>
+        </section>
       </script>
 
 
@@ -620,40 +686,6 @@
           <div id="facebookLikes">
             <!-- FACEBOOK LIKES -->
           </div>
-        </div>
-      </script>
-
-
-    <!------------------------------------------------------------------------>
-    <!-- FACEBOOK LIKES -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplFacebookLikes" type="text/template">
-        <ul class="fbLikeCategory left">
-          {{#fLbyCategory}}
-            <li data-cat="{{c}}">
-              <a>{{c}}</a>
-            </li>
-          {{/fLbyCategory}}
-        </ul>
-        <div class="left">
-          {{#fLbyCategory}}
-            <ul class="fbCategoryLikes left" data-cat="{{c}}">
-                    {{#l}}
-                      <li class="fbLike">
-                        {{^u}}
-                          <span class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></span>
-                        {{/u}}
-                        <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
-                        <span class="fbLikeName">{{n}}</span>
-                        <span class="fbLikeNameFull">{{n}}</span>
-                      </li>
-                    {{/l}}
-            </ul>
-          {{/fLbyCategory}}
-          {{^fLbyCategory}}
-            <li>No likes.</li>
-          {{/fLbyCategory}}
         </div>
       </script>
 

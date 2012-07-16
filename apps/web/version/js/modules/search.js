@@ -86,7 +86,8 @@ var SearchFiltersView = Backbone.View.extend({
       'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : 0),
       'nearMe': 0,
       'ageMin': this.$("#ageRange").slider("values", 0),
-      'ageMax': this.$("#ageRange").slider("values", 1)
+      'ageMax': this.$("#ageRange").slider("values", 1),
+      'l': this.model.get('so.l')
     });
     
     // save these preferences into the user model

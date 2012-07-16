@@ -21,6 +21,9 @@ var Router = Backbone.Router.extend({
     // Search results
     "search/:m/:w/:nearMe/:ageMin/:ageMax": "search",
 
+    // Likes
+    "likes": "likes",
+
     // Favourites
     "favourites": "favourites",
 
@@ -97,6 +100,19 @@ var Router = Backbone.Router.extend({
     searchView.render();
     $('#content > div').detach();
     $('#content').append(searchView.el);
+  },
+
+  // likes
+  // -----------------------------------------------------------------------
+  likes: function() {
+    if(!appReady) {
+      router.navigate('', {trigger: true});
+      return;
+    }
+    console.log('> routing likes page');
+    likesView.render();
+    $('#content > div').detach();
+    $('#content').append(likesView.el);
   },
 
   // favourites

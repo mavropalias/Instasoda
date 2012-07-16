@@ -1,96 +1,123 @@
 // =============================================================================
 // LIKES
 // =============================================================================
+
+// =============================================================================
+// SEARCH PAGE
+// =============================================================================
   
+  // Single like
   .fbLike {
-    float: left;
-    text-align: center;
-    margin: 0 20px 20px 0px;
-    border: 1px solid transparent;
+    .box-shadow(0, 1px, 1px, #888);
+    border: 1px solid #ddd;
+    position: relative;
+    padding: 1em; 
+    margin: 0 0.5em 1em; 
+    background: #fff;
+    float:left;
     overflow: hidden;
+    display: block;
+    cursor: pointer;
     
     &:hover {
-      .scale(2);
-      .box-shadow();
-      background: #fff;
-      
-      .fbLikePic{
-        .scale(0.5);
-        display: block;
-      }
-      
-      .fbLikeName{
-        color: #fff;
-      }
-      
-      .fbLikeNameFull {
-        display: block;
-        position: absolute;
-        left:-30px;
-        bottom: -5px;
-        right: -30px;
-        font-size: 1.3em;
-        height: 53px;
-        overflow: hidden;
-        .scale(0.5);
-        cursor: default;
-      }
+      background: #eee;
     }
     
     .fbLikeName {
       display: block;
       font-size: 11px;
-      width: 80px;
-      height: 20px;
+      max-width: 6em;
+      height: 2.1em;
       overflow: hidden;
       margin-top: 5px;
-      white-space: nowrap;
       text-overflow: ellipsis;
+      text-align: center;
     }
     
     .fbLikeNameFull {
       display: none;
+    }
+
+    .fbLikePic {
+      margin: 0 1em;
     }
     
     .fbLikePicLoading > img {
       margin: 15px;
     }
   }
-
-  .fbLikeCategory {
-    font-size: 14px;
-    color: #444;
-    margin-right: 55px;
-    font-weight: bold;
-    box-shadow: 15px 0px 30px -32px #777;
-    -webkit-box-shadow: 15px 0px 30px -25px #777;
-    background-color: #FCFCFC;
-    li {
-      position: relative;
-      padding: 8px 30px 8px 10px;
-      cursor: pointer;
-      &:first-child {
-        margin-top: -8px;
-      }
-      &.active {
-        background-color: @colorBlue4;
-        &:before {
-          content: ' ';
-          position: absolute;
-          right:-8px;
-          top: 7px;
-          width: 0; 
-          height: 0; 
-          border-top: 8px solid transparent;
-          border-bottom: 8px solid transparent;        
-          border-left: 8px solid @colorBlue4;
-        }
+  
+  // Likes filters
+  #likesFilters {
+    .box-shadow(0, 0, 10px, rgba(0,0,0,.2));
+    position: fixed;
+    left: 0;
+    top: 70px;
+    bottom: 30px;
+    width: 300px;
+    z-index: 2;
+    color: @color1;
+    overflow: auto;
+    
+    section {
+      clear: both;
+      overflow: hidden;
+      padding: 20px 20px 0;
+      
+      .tip {
+        color: @colorBlue2;
+        font-size: 1.2em;
       }
     }
   }
 
-  .fbCategoryLikes {
-    display: none;
-    position: absolute;
-    background-color: #FCFCFC;
+  // Likes results
+  #likesResults {
+    position: fixed;
+    left: 300px;
+    top: 70px;
+    bottom: 30px;
+    right: 0;
+    padding: 20px;
+    overflow: auto;
+
+    .fbLikeCategories {
+      font-size: 14px;
+      color: #444;
+      font-weight: bold;    
+      width: 100%;
+      height: 40px;
+      overflow: hidden;
+
+      .fbLikeCategoryTitle {
+        position: relative;
+        padding: 8px 30px 8px 10px;
+        cursor: pointer;
+        float: left;
+
+        &.active {
+          background-color: @colorBlue4;
+          
+          &:before {
+            content: ' ';
+            position: absolute;
+            right: 50%;
+            top: 30px;
+            width: 0; 
+            height: 0; 
+            margin-left: 40px;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;        
+            border-top: 8px solid @colorBlue4;
+          }
+        }
+      }
+    }
+
+    .fbCategoryLikes {
+      display: none;
+      position: absolute;
+      top: 80px;
+      background-color: #FCFCFC;
+    }
   }
