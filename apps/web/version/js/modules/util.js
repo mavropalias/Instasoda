@@ -282,6 +282,20 @@ IS.nullOrEmpty = function(property) {
   else return false;
 }
 
+/**
+ * Saves the user model to the API.
+ */
+IS.saveUser = function() {
+  user.save();
+  store.set('user', user);
+}
+
+
+
+
+
+
+
 // =========================================================================
 // Beta message view
 // =========================================================================
