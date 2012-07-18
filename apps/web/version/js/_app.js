@@ -48,6 +48,12 @@
     url: sApi + 'user/search'
   });
 
+  // MatchesCollection - a collection of matches
+  // =========================================================================
+  var MatchesCollection = Backbone.Collection.extend({
+    url: sApi + 'user/matches'
+  });
+
   // FavouritesCollection - user's favourite people
   // =========================================================================
   var FavouritesCollection = Backbone.Collection.extend();
@@ -82,6 +88,9 @@
   var usersCollection = new UsersCollection({
     model: users
   });
+  var matchesCollection = new MatchesCollection({
+    model: users
+  });
   var chatSessions = new ChatSessions({
     model: ChatSession
   });
@@ -95,6 +104,7 @@
   var myProfileView;
   var searchView;
   var favouritesView;
+  var matchesView;
   var usersFullView;
   var likesView;
 
@@ -121,6 +131,10 @@
     });
     searchView = new SearchView({
       collection: usersCollection,
+      model: user
+    });
+    matchesView = new MatchesView({
+      collection: matchesCollection,
       model: user
     });
     favouritesView = new FavouritesView({
