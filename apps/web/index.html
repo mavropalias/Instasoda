@@ -62,6 +62,7 @@
   <script type="text/javascript" src="VERSION/js/modules/welcome.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/favourites.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/likes.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/matches.js"></script>
 
 
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
@@ -131,6 +132,7 @@
             {{^_id}}<li><a id="navWelcome" href="#">Instasoda</a></li>{{/_id}}
             {{#_id}}<li><div id="navNotifications">0</div></li>{{/_id}}
             {{#_id}}<li><a id="navHome" href="#">Home</a></li>{{/_id}}
+            {{#_id}}<li><a id="navMatches" href="#matches">Matches</a></li>{{/_id}}
             {{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
             {{#_id}}<li><a id="navLikes" href="#likes">Likes</a></li>{{/_id}}
             {{#_id}}<li><a id="navFavourites" href="#favourites">Favourites</a></li>{{/_id}}
@@ -376,15 +378,25 @@
 
       <script id="tplLikesFilters" type="text/template">
         <section>
-          <ul>
-            {{#so.l}}
-              <li class="fbLike" data-id="{{id}}">
-                <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{id}}.jpg" width=50 height=50></span>
-              </li>
-            {{/so.l}}
-          </ul>
+          <h3>My favourite likes</h3>
+          <span class="tip">Which of your Facebook likes are the most important to you.</span>
           <p>
-            <button id="doSearch">Search for matches!</button>
+            no favourites yet
+          </p>
+        </section>
+        <section>
+          <h3>Search using likes</h3>
+          <span class="tip">Add up to 20 likes here and click search to see who likes them.</span>
+          <p>
+            <ul class="searchLikes">
+              {{#so.l}}
+                <li class="fbLike" data-id="{{_id}}">
+                  <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                </li>
+              {{/so.l}}
+            </ul>
+            
+            <a id="doSearch" class="button" href="#search">Search for people!</a>
           </p>
         </section>
       </script>
@@ -421,6 +433,30 @@
             <li>No likes.</li>
           {{/fLbyCategory}}
         </div>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- MATCHES VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplMatches" type="text/template">
+        <div id="matchesFilters"></div>
+        <div id="matchesResults"></div>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- MATCHES FILTERS VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplMatchesFilters" type="text/template">
+        <section>
+          <h3>Filter your matches</h3>
+          <p>
+            no options yet
+          </p>
+        </section>
       </script>
 
 
@@ -470,10 +506,17 @@
         </section>-->
         <section>
           <h3>My favourite things are...</h3>
-          <span class="tip">Which of your Facebook likes are the most important to you.</span>
+          <span class="tip">Add up to 20 likes here and click search to see who likes them.</span>
+          <ul class="searchLikes">
+            {{#so.l}}
+              <li class="fbLike" data-id="{{_id}}">
+                <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+              </li>
+            {{/so.l}}
+          </ul>
         </section>
         <section>
-          <button id="buttonAddLikes">+ Add likes</button>
+          <a id="buttonAddLikes" class="button" href="#likes">+ Add likes</a>
         </section>
         <section>
           <p>
