@@ -13,8 +13,11 @@ var Router = Backbone.Router.extend({
     "": "welcome",
     
     // My profile
-    "me": "myProfile"
-    ,
+    "me": "myProfile",
+    
+    // Matches
+    "matches": "matches",
+
     // Search filters
     "search": "search",
     
@@ -61,6 +64,27 @@ var Router = Backbone.Router.extend({
     $('#content > div').detach();
     $('#content').append(myProfileView.el);
   },
+
+  // matches
+  // -----------------------------------------------------------------------
+  matches: function() {
+    if(!appReady) {
+      router.navigate('', {trigger: true});
+      return;
+    }
+    console.log('> routing matches page');
+
+    matchesCollection.fetch({
+      data: {
+        '_id': user.get('_id'),
+        'fTkn': user.get('fTkn')
+      }
+    });
+
+    matchesView.render();
+    $('#content > div').detach();
+    $('#content').append(matchesView.el);
+  },
        
   // search
   // -----------------------------------------------------------------------
@@ -70,7 +94,10 @@ var Router = Backbone.Router.extend({
       return;
     }
     console.log('> routing search page');
-    
+
+    // search by like - array with like id's
+    var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
+
     // fetch options - if null then load user defaults
     if(ageMin > 0) {
       usersCollection.fetch({
@@ -80,6 +107,7 @@ var Router = Backbone.Router.extend({
           'nearMe': nearMe,
           'ageMin': ageMin,
           'ageMax': ageMax,
+          'l': searchByLike,
           '_id': user.get('_id'),
           'fTkn': user.get('fTkn')
         }
@@ -92,6 +120,7 @@ var Router = Backbone.Router.extend({
           'nearMe': user.get('so').nearMe,
           'ageMin': user.get('so').ageMin,
           'ageMax': user.get('so').ageMax,
+          'l': searchByLike,
           '_id': user.get('_id'),
           'fTkn': user.get('fTkn')
         }
