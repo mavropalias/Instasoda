@@ -37,7 +37,8 @@ var LikesFiltersView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #doSearch': 'doSearch'
+    'click #doSearch': 'doSearch',
+    'click .fbLike': 'addOrRemoveLikeFromSearchOptions'
   },
 
   // initialize
@@ -48,6 +49,7 @@ var LikesFiltersView = Backbone.View.extend({
     _.bindAll(this);
 
     this.model.bind('newSearchLike', this.render);
+    this.model.bind('removedSearchLike', this.render);
   },
 
   // render
@@ -59,6 +61,13 @@ var LikesFiltersView = Backbone.View.extend({
     // render template
     var template = $('#tplLikesFilters').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+  },
+
+  // addOrRemoveLikeFromSearchOptions
+  // -----------------------------------------------------------------------
+  addOrRemoveLikeFromSearchOptions: function(e) {
+    var likeId = $(e.currentTarget).data('id');    
+    IS.addOrRemoveLikeFromSearchOptions(likeId);
   },
 
   // newSearchLike
@@ -102,7 +111,7 @@ var LikesResultsView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .fbLike': 'addLike'
+    'click .fbLike': 'addOrRemoveLikeFromSearchOptions'
   },
 
   // initialize
@@ -175,23 +184,10 @@ var LikesResultsView = Backbone.View.extend({
     });
   },
 
-  // addLike
+  // addOrRemoveLikeFromSearchOptions
   // -----------------------------------------------------------------------
-  addLike: function(e) {
-    var _this = this;
-    var likeId = $(e.currentTarget).data('id');
-    var userSearchLikes = (!!user.get('so').l) ? user.get('so').l : [];
-
-    // search if the like is already in the user's search options
-    // AND is the total likes are no more than 10
-    if(!_.any(userSearchLikes, function(like) { return like.id == likeId; }) && userSearchLikes.length < 10) {
-      userSearchLikes.push({id: likeId});
-
-      // save these preferences into the user model
-      user.get('so').l = userSearchLikes;
-
-      // trigger a newSearchLike event to notify other views
-      user.trigger('newSearchLike', likeId);
-    }
+  addOrRemoveLikeFromSearchOptions: function(e) {
+    var likeId = $(e.currentTarget).data('id');    
+    IS.addOrRemoveLikeFromSearchOptions(likeId);
   }
 });
