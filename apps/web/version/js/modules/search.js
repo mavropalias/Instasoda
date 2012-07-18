@@ -87,13 +87,12 @@ var SearchFiltersView = Backbone.View.extend({
       'nearMe': 0,
       'ageMin': this.$("#ageRange").slider("values", 0),
       'ageMax': this.$("#ageRange").slider("values", 1),
-      'l': this.model.get('so.l')
+      'l': this.model.get('so').l
     });
     
     // save these preferences into the user model
     this.model.set({ so: options });
-    this.model.save();
-    store.set('user', user);
+    IS.saveUser();
     
     IS.navigateTo('search/'
                   + options.m + '/'
