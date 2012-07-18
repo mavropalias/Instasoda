@@ -119,6 +119,44 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
 }
 
 /**
+ * Adds or removes a like from the user's search options
+ * @param {String} likeId
+ */
+IS.addOrRemoveLikeFromSearchOptions = function(likeId) {
+  var userSearchLikes = (!!user.get('so').l) ? user.get('so').l : [];
+
+  // search if the like is already in the user's search options
+  // AND is the total likes are no more than 10
+  // if so, then add it to the user model
+  // ==========================================================
+  if(!_.any(userSearchLikes, function(like) { return like._id == likeId; }) && userSearchLikes.length < 10) 
+  {
+    console.log(' - adding search like');
+
+    userSearchLikes.push({
+      _id: likeId
+    });
+
+    // save these preferences into the user model
+    user.get('so').l = userSearchLikes;
+
+    // trigger a newSearchLike event to notify other views
+    user.trigger('newSearchLike', likeId);
+  }
+  // else remove it
+  // ==========================================================
+  else if(!!user.get('so').l)
+  {
+    console.log(' - removing search like');
+
+    user.get('so').l = _.reject(user.get('so').l, function(like) { return like._id == likeId; });
+
+    // trigger a removedSearchLike event to notify other views
+    user.trigger('removedSearchLike', likeId);
+  }
+}
+
+/**
  * Navigates to a page.
  * @param {String} path
  */
