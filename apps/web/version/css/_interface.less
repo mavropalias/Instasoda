@@ -1,0 +1,110 @@
+// =============================================================================
+// OO STYLES
+// =============================================================================
+  
+  .left { float: left; }
+  .right { float: right; }
+  
+  .margin1x { margin: 10px; }
+  .margin2x { margin: 20px; }
+  
+  .padding1x { padding: 10px; }
+  .padding2x { padding: 20px; }
+  .padding3x { padding: 40px; }
+    .paddingRight2x { padding-right: 20px; }
+    .paddingRight3x { padding-right: 40px; }
+  
+  .text-shadow { text-shadow: 1px 1px #fff; }
+  .round { .border-radius; }
+  .animated { .transition(0.4s); }
+  .hidden { display: none; }
+  .transparent { opacity: 0 !important; }
+  .clearBoth { clear: both; }
+
+// =============================================================================
+// REUSABLE UI ELEMENTS
+// =============================================================================
+
+  .tip {
+    color: #444;
+    display: block;
+    font-size: 1.4em;
+    line-height: 1.2em;
+  }
+  
+  .protected {
+    color: #BE1E2D;
+    font-style: italic;
+  }
+  
+  .fbData {
+    background: url(../img/fb_icon.png) center left no-repeat;
+    padding-left: 14px;
+  }
+
+
+// =============================================================================
+// LAYOUT
+// =============================================================================
+
+  .sidebar {
+    background: #eee;
+    position: fixed;
+    left: 0;
+    top: 70px;
+    bottom: 30px;
+    width: 300px;
+    z-index: 2;
+    color: @color1;
+    overflow: auto;
+    
+    section {
+      clear: both;
+      overflow: hidden;
+      padding: 20px 20px 0;
+      
+      .tip {
+        color: @colorBlue2;
+        font-size: 1.2em;
+      }
+    }
+  }
+
+  .mainContent {
+    position: fixed;
+    left: 300px;
+    top: 70px;
+    bottom: 30px;
+    right: 0;
+    padding-left: 20px;
+    overflow: auto;
+  }
+
+  .column {
+    max-width: 360px;
+    vertical-align: top;
+    text-align: left;
+    height: 100%;
+    overflow: hidden;
+    float: left;
+    padding: 0 40px 0 40px;
+  }
+
+
+// =============================================================================
+// MISC
+// =============================================================================
+
+  .userPreview {
+    .photo;
+    position: relative;
+    float: left;
+    text-align: center;
+    margin: 0 10px 8px 0;
+  }
+  
+  .userPreviewNickname {
+    font-size: 12px;
+    margin-top: 5px;
+    color: #00364D;
+  } 

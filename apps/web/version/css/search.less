@@ -3,28 +3,7 @@
 // =============================================================================
   
   // Search filters
-  #searchFilters {
-    background: #eee;
-    position: fixed;
-    left: 0;
-    top: 70px;
-    bottom: 30px;
-    width: 300px;
-    z-index: 2;
-    color: @color1;
-    overflow: auto;
-    
-    section {
-      clear: both;
-      overflow: hidden;
-      padding: 20px 20px 0;
-      
-      .tip {
-        color: @colorBlue2;
-        font-size: 1.2em;
-      }
-    }
-    
+  #searchFilters {    
     #ageNum {
       background: none transparent;
       border: 0 none;
@@ -79,29 +58,4 @@
       border: none;
       font-size:10pt;
     }
-  }
-
-  // Search results
-  #searchResults {
-    position: fixed;
-    left: 300px;
-    top: 70px;
-    bottom: 30px;
-    right: 0;
-    padding: 20px;
-    overflow: auto;
-    
-    .userPreview {
-      .photo;
-      position: relative;
-      float: left;
-      text-align: center;
-      margin: 0 10px 8px 0;
-    }
-    
-    .userPreviewNickname {
-      font-size: 12px;
-      margin-top: 5px;
-      color: #00364D;
-    } 
   }

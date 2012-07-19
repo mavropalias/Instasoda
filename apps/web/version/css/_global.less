@@ -7,17 +7,21 @@
   }
   
   body {
+    .linear-gradient(#ddd, #fff, 0%, 10px);
+    background-repeat: repeat-x;
     font-family: helvetica, arial,sans-serif;
     font-weight: 300;
     font-size: 62.5%;
-    overflow: auto;
-    background:#fcfcfc;
+    overflow: hidden;
+    height: 100%;
   
     section[role=main] {
+      background: url(../img/bubbleHeaderBg.png) right -0px no-repeat;
       position: relative;
-      margin-top: 70px;
+      padding-top: 110px;
       overflow: hidden;
       display: none;
+      height: 100%;
     }
     
     #content {
@@ -25,53 +29,28 @@
     }
   }
   
-  body > header {
-    .linear-gradient;
-    .padding1x;
-    position: fixed;
-    top: 70px;
-    left: 0;
-    right: 0;
-    z-index: 998;
-    height: 30px;
-    display: none;
-  }
-  
   a {
     text-decoration: none;
   }
   
   p {
-    margin:0em 0 1em;
+    margin: 0em 0 1em;
   }
   
   h1 {
-    .text-shadow;
-    font-size:2.0em;
-    border-bottom:1px solid #999;
-    margin:0 0 1em;
-    padding-bottom:0.5em;
-    color:#666;
+    font-size: 2.4em;
+    font-weight: 300;
+    padding-bottom: 0.5em;
+    color: @color1;
   }
   
   h2 {
-    font-size:2.4em;
-    color: #00364D;
+    font-size:2.0em;
+    color: @color2;
   }
   
   h3 {
     font-size:1.4em;
-  }
-  
-  .column {
-    display: table-cell;
-    width: auto;
-    vertical-align: top;
-    text-align: left;
-  }
-  
-  textarea {
-    font-family: helvetica,arial,sans-serif;
   }
 
 

@@ -367,8 +367,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikes" type="text/template">
-        <div id="likesFilters"></div>
-        <div id="likesResults"></div>
+        <div id="likesFilters" class="sidebar"></div>
+        <div id="likesResults" class="mainContent"></div>
       </script>
 
 
@@ -441,8 +441,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplMatches" type="text/template">
-        <div id="matchesFilters"></div>
-        <div id="matchesResults"></div>
+        <div id="matchesFilters" class="sidebar"></div>
+        <div id="matchesResults" class="mainContent"></div>
       </script>
 
 
@@ -465,8 +465,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearch" type="text/template">
-        <div id="searchFilters"></div>
-        <div id="searchResults"></div>
+        <div id="searchFilters" class="sidebar"></div>
+        <div id="searchResults" class="mainContent"></div>
       </script>
 
 
@@ -554,22 +554,21 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplUsersProfile" type="text/template">
-        <div id="basicInfo" class="padding3x">
-          <div class="sidebar column paddingRight3x" style="width: 200px;">
-            <div class="photo">
-              {{#p}}
-                {{#d}}
-                  <img src="http://img.instasoda.com/u/{{f}}" />
-                {{/d}}
-              {{/p}}
-              {{^p}}
-                <img src="http://img.instasoda.com/i/noPhoto.png" />
-              {{/p}}
-            </div>
+        <div id="basicInfo" class="column">
+          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
+          <div class="photo defaultPhoto">
+            {{#p}}
+              {{#d}}
+                <img src="http://img.instasoda.com/u/{{f}}" />
+              {{/d}}
+            {{/p}}
+            {{^p}}
+              <img src="http://img.instasoda.com/i/noPhoto.png" />
+            {{/p}}
           </div>
 
-          <div class="column">
-            <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
+          <div class="">
+            
 
             <div id="connectOptions">
               <button id="sendMessage" class="left">Send message / Chat</button>
@@ -582,7 +581,7 @@
                 <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
                 <li><span class="fbTitle">Gender:</span><span class="fbData">{{fS}}</span></li>
                 <li><span class="fbTitle">Relationship:</span><span class="fbData">{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</span></li>
-                <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
+                <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
               </ul>
             </div>
 
@@ -592,23 +591,23 @@
                 women: {{w}} - men: {{m}}
               </p>
             </div>
-
-            <div>
-              <h3>A little bit about {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}:</h3>
-              <p>
-                {{#a}}
-                  {{a}}
-                {{/a}}
-                {{^a}}
-                   Nothing yet! :(
-                {{/a}}
-              </p>
-            </div>
           </div>
         </div>
 
-        <div id="photoSection">
-          <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h2>
+        <div id="aboutSection" class="column">
+          <h1>A little bit about {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}:</h1>
+          <p>
+            {{#a}}
+              {{a}}
+            {{/a}}
+            {{^a}}
+               Nothing yet! :(
+            {{/a}}
+          </p>
+        </div>
+
+        <div id="photoSection" class="column">
+          <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h1>
           <p>
             <ul id="userPhotos">
               <div id="userPhotosList" class="noControls">
@@ -618,13 +617,8 @@
           </p>
         </div>
 
-        <div>
-          <div style="padding:40px 40px 0">
-            <h2>Likes</h2>
-            <span class="tip">
-              {{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s likes and interests.
-            </span>
-          </div>
+        <div class="column">
+          <h1>Likes & interests</h1>
           <div id="facebookLikes">
             <!-- FACEBOOK LIKES -->
           </div>
@@ -638,9 +632,9 @@
 
       <script id="tplMyProfile" type="text/template">
 
-        <div id="basicInfo" class="padding3x">
+        <div id="basicInfo" class="column">
 
-          <div class="sidebar column paddingRight3x" style="width: 200px;">
+          <div class="paddingRight3x" style="width: 200px;">
             <div class="photo">
               {{#p}}
                 {{#d}}
@@ -662,7 +656,7 @@
             </p>
           </div>
 
-          <div class="column">
+          <div class="">
             <h2>My basic info</h2>
 
             <ul class="fbInformation">
@@ -673,7 +667,7 @@
               <li><span class="fbTitle">Email (only you can see it):</span><span class="fbData">{{fE}}</span></li>
             </ul>
 
-            <div class="column paddingRight3x">
+            <div class="paddingRight3x">
               <h3>My dating name:</h3>
               <p>
                 <span class="tip">This is how other instasoda users will see you.</span>
@@ -693,7 +687,7 @@
               </p>
             </div>
 
-            <div class="column">
+            <div class="">
               <h3>A little bit about myself:</h3>
               <span class="tip">What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</span>
               <p>
@@ -704,7 +698,7 @@
           </div>
         </div>
 
-        <div id="photoSection">
+        <div id="photoSection" class="column">
           <p>
             <h2>Me at my best! (photos)</h2>
             <span class="tip">Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos.</span>
@@ -721,11 +715,9 @@
           </p>
         </div>
 
-        <div>
-          <div style="padding:40px 40px 0">
-            <h2>Likes</h2>
-            <span class="tip">Likes and interests imported from your Facebook profile.</span>
-          </div>
+        <div class="column">
+          <h2>Likes</h2>
+          <span class="tip">Likes and interests imported from your Facebook profile.</span>
           <div id="facebookLikes">
             <!-- FACEBOOK LIKES -->
           </div>
