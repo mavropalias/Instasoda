@@ -47,6 +47,35 @@
 // LAYOUT
 // =============================================================================
 
+  #content {
+    background: url(../img/bubbleHeaderBg.png) right -0px no-repeat;
+    position: relative;
+    padding-top: 110px;
+    overflow-y: hidden;
+    overflow-x: auto;
+    display: block;
+    height: 100%;
+    width: 100%;
+
+    &>div:first-child {
+      position: relative;
+      overflow: auto;
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  .column {
+    max-width: 360px;
+    vertical-align: top;
+    text-align: left;
+    height: 900px;
+    overflow: hidden;
+    padding: 0 100px 0 40px;
+    position: absolute;
+    top: 0;
+  }
+
   .sidebar {
     background: #eee;
     position: fixed;
@@ -80,16 +109,6 @@
     overflow: auto;
   }
 
-  .column {
-    max-width: 360px;
-    vertical-align: top;
-    text-align: left;
-    height: 100%;
-    overflow: hidden;
-    float: left;
-    padding: 0 40px 0 40px;
-  }
-
 
 // =============================================================================
 // MISC
@@ -108,3 +127,20 @@
     margin-top: 5px;
     color: #00364D;
   } 
+
+  .scrollbarH {
+    position: absolute;
+    z-index: 100;
+    height: 5px;
+    bottom: 1px;
+    left: 0px;
+    right: 0px;
+    background: #ddd;
+
+    &> div {
+      position: absolute;
+      z-index: 100;
+      height: 100%;
+      background: #666;
+    }
+  }

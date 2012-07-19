@@ -53,6 +53,7 @@ var ChatView = Backbone.View.extend({
       alwaysVisible: false,
       railVisible: true,
       position: 'left',
+      start: 'bottom'
     });
   },
   

@@ -49,6 +49,7 @@
   <script type="text/javascript" src="VERSION/js/lib/async.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.timeago.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/slimScroll.min.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/iscroll.js"></script>
 
   <script type="text/javascript" src="VERSION/js/_app.js"></script>
   <script type="text/javascript" src="VERSION/js/router.js"></script>
@@ -567,7 +568,7 @@
             {{/p}}
           </div>
 
-          <div class="">
+          <div class="left">
             
 
             <div id="connectOptions">
@@ -608,19 +609,23 @@
 
         <div id="photoSection" class="column">
           <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h1>
-          <p>
-            <ul id="userPhotos">
-              <div id="userPhotosList" class="noControls">
-                <!-- USER PHOTOS -->
-              </div>
-            </ul>
-          </p>
+          <ul id="userPhotos">
+            <div id="userPhotosList" class="noControls">
+              <!-- USER PHOTOS -->
+            </div>
+          </ul>
         </div>
 
-        <div class="column">
+        <div id="likesSection" class="column">
           <h1>Likes & interests</h1>
           <div id="facebookLikes">
-            <!-- FACEBOOK LIKES -->
+            {{#fL}}
+              <li class="fbLike" data-id="{{_id}}">
+                <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                <span class="fbLikeName">{{n}}</span>
+                <span class="fbLikeNameFull">{{n}}</span>
+              </li>
+            {{/fL}}
           </div>
         </div>
       </script>

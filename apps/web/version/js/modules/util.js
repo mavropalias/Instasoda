@@ -328,6 +328,42 @@ IS.saveUser = function() {
   store.set('user', user);
 }
 
+/**
+ * Calculate & set dimensions for the likes container
+ */
+IS.resizeUI = function (iLikesCount) {
+  // calculate & set 'height' css property
+  $('#content').height('100%');
+  var availableHeight = $('#content').height() - $('#footer').height() - 110;
+  $('#content').height(availableHeight);
+  $('.column').height(availableHeight - 40); // 40 is the bottom margin
+
+  // calculate & set 'left' css property for all .column divs
+  var sections = ['basicInfo', 'aboutSection', 'photoSection', 'likesSection'];
+  var offset = 0;
+  sections.forEach(function(section) {
+    $('#' + section).css({
+      left: offset + 'px'
+    })
+
+    offset += $('#' + section).outerWidth(true);
+  });
+
+  // calculate & set width for the likes container
+  console.log(iLikesCount);
+  availableHeight = $('#content').height() - $('#likesSection > h1').outerHeight() - 40;
+  var iMaxLikesRows = availableHeight / 115;
+  var iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 104;  
+  $("#likesSection").css({ 'width': iLikesWrapperWidth + 'px' });
+
+  // set width for scroll container
+  var totalWidth = 0;
+  sections.forEach(function(section) {
+    totalWidth += $('#' + section).outerWidth(true);
+  });
+  $('#content > div').width(totalWidth);
+}
+
 
 
 

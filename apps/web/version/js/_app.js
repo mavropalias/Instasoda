@@ -147,5 +147,17 @@
       model: user,
     });
 
+    // enable custom scrollbars
+    // -------------------------------------------------------------------------
+    /*var myScroll = new iScroll('content', {
+      vScroll: false,
+      hScrollbar: true, 
+      vScrollbar: false 
+    });
+
+    setInterval(function () {
+        myScroll.refresh();
+      }, 200);*/
+
     Backbone.history.start({});
   });

@@ -305,7 +305,6 @@ var UsersFullView = Backbone.View.extend({
     //this.model.bind('change', this.render);
 
     // initialize sub-views
-    this.facebookLikesView = new FacebookLikesView({ model: this.model });
     this.myPhotosView = new MyPhotosView({ model: this.model });
   },
 
@@ -318,12 +317,9 @@ var UsersFullView = Backbone.View.extend({
     // If the user exists already, pass a new attr to the model
     this.model.set({isFaved: false});
     if (_.indexOf(user.get('favs'), this.model.get('_id')) != -1) {
-      console.log(this.model.get('isFaved'));
       this.model.set({
         isFaved: true
       });
-      console.log(this.model.get('isFaved'));
-      console.log(user.get('isFaved'));
     }
 
     // Update template
@@ -332,7 +328,6 @@ var UsersFullView = Backbone.View.extend({
     
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-    this.facebookLikesView.setElement(this.$('#facebookLikes')).render();
 
     // activate fancybox for all photos - including the newly uploaded
     this.$("#userPhotos").on("focusin", function(){
@@ -357,6 +352,32 @@ var UsersFullView = Backbone.View.extend({
         }
       }); // fancybox
     }); // on
+
+    setTimeout(function() {
+      _this.onView();
+    }, 0);
+  },
+
+  // onView
+  // -----------------------------------------------------------------------
+  onView: function() {
+    // resize columns
+    var iLikesCount = this.model.get('fLc');
+    IS.resizeUI(iLikesCount);
+
+    // enable custom scrollbars
+    var myScroll = new iScroll('content', {
+      hScroll: true,
+      hScrollbar: true,
+      vScroll: false,
+      vScrollbar: false,
+      scrollbarClass: 'scrollbar'
+    });
+
+    setInterval(function () {
+        myScroll.refresh();
+      }, 200);
+
   },
 
   // sendMessage
