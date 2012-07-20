@@ -342,7 +342,7 @@ var UsersFullView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   onView: function() {
     // resize columns
-    var iLikesCount = this.model.get('fLc');
+    var iLikesCount = this.model.get('fL').length;
     var iCommonLikesCount = this.model.get('commonLikes').length;
     IS.resizeProfilePage(iLikesCount, iCommonLikesCount);
 

@@ -442,8 +442,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplMatches" type="text/template">
-        <div id="matchesFilters" class="sidebar"></div>
-        <div id="matchesResults" class="mainContent"></div>
+        <div id="matchesFilters" class="column sidebar"></div>
+        <div id="matchesResults" class="column mainContent"></div>
       </script>
 
 
@@ -466,8 +466,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearch" type="text/template">
-        <div id="searchFilters" class="sidebar"></div>
-        <div id="searchResults" class="mainContent"></div>
+        <div id="searchFilters" class="column sidebar"></div>
+        <div id="searchResults" class="column mainContent"></div>
       </script>
 
 
@@ -557,7 +557,7 @@
       <script id="tplUsersProfile" type="text/template">
         <div id="basicInfo" class="column">
           <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
-          <div class="photo defaultPhoto">
+          <div class="defaultPhoto">
             {{#p}}
               {{#d}}
                 <img src="http://img.instasoda.com/u/{{f}}" />
@@ -568,44 +568,55 @@
             {{/p}}
           </div>
 
+            <div id="basicInfo">
+              <ul class="fbInformation">
+                <li class="marginTop1x">
+                  <span class="fbTitle">Age:</span>
+                  <span class="fbData">{{ag}}</span>
+                </li>
+                <li class="marginTop1x">
+                  <span class="fbTitle">Relationship:</span>
+                  <span class="fbData">
+                    {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
+                  </span>
+                </li>
+                <li class="marginTop1x">
+                  <span class="fbTitle">Location:</span>
+                  <span class="fbData">
+                    {{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+                  </span>
+                </li>
+                <li class="marginTop1x">
+                  <span class="fbTitle">Wants to meet:</span>
+                  <span class="fbData">
+                    {{#w}}{{^m}}women{{/m}}{{/w}}
+                    {{#w}}{{#m}}women & men{{/m}}{{/w}}
+                    {{#m}}{{^w}}men{{/w}}{{/m}}
+                  </span>
+                </li>
+              </ul>
+            </div>
+
           <div id="connectOptions">
             <button id="sendMessage" class="left">Send message / Chat</button>
             <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
             <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
           </div>
 
-          <div id="basicInfo">
-            <ul class="fbInformation">
-              <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
-              <li><span class="fbTitle">Gender:</span><span class="fbData">{{fS}}</span></li>
-              <li><span class="fbTitle">Relationship:</span><span class="fbData">{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</span></li>
-              <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
-            </ul>
-          </div>
-
-          <div>
-            <h3>Interested in:</h3>
-            <p>
-              women: {{w}} - men: {{m}}
-            </p>
-          </div>
-
         </div>
 
         <div id="matchingSection" class="column">
           <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}!</h1>
-          <p>
-            {{#commonLikes}}
-              <li class="fbLike" data-id="{{_id}}">
-                <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
-                <span class="fbLikeName">{{n}}</span>
-                <span class="fbLikeNameFull">{{n}}</span>
-              </li>
-            {{/commonLikes}}
-            {{^commonLikes}}
-              You do not seem to have anything in common :(
-            {{/commonLikes}}
-          </p>
+          {{#commonLikes}}
+            <li class="fbLike" data-id="{{_id}}">
+              <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+              <span class="fbLikeName">{{n}}</span>
+              <span class="fbLikeNameFull">{{n}}</span>
+            </li>
+          {{/commonLikes}}
+          {{^commonLikes}}
+            You do not seem to have anything in common :(
+          {{/commonLikes}}
         </div>
 
         <div id="aboutSection" class="column">
@@ -647,7 +658,7 @@
         </div>
 
         <div id="likesSection" class="column">
-          <h1>Likes & interests</h1>
+          <h1>Likes & interests ({{fLc}})</h1>
           <div id="facebookLikes">
             {{#fL}}
               <li class="fbLike" data-id="{{_id}}">

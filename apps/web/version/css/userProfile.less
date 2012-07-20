@@ -2,6 +2,27 @@
 // USER PROFILES
 // =============================================================================
 
+  .profile,
+  .myProfile {
+    .column {
+      max-width: 360px;
+      display: none;
+    }
+  }
+
+  .defaultPhoto {
+    .box-shadow(0, 5px, 20px, #888);
+    float: none;
+    margin-bottom: 20px;
+    max-height: 320px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      border: 0 none;
+    }
+  }
+
   #connectOptions {
     overflow: hidden;
     clear: both;
@@ -79,7 +100,6 @@
   
   .fbInformation {
     
-    padding: 1em 0 3em;
     line-height: 1.3em;
     overflow: hidden;
     

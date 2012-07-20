@@ -336,14 +336,14 @@ IS.saveUser = function() {
 IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
   // calculate & set 'height' css property
   $('#content').height('100%');
-  var availableHeight = $('#content').height() - $('#footer').height() - 110;
+  var availableHeight = $('#content').height() - $('#footer').height() - 90;
   $('#content').height(availableHeight);
   $('.column').height(availableHeight - 40); // 40 is the bottom margin
 
   // calculate & set width for the #matchingSection container
-  availableHeight = $('#content').height() - $('#matchingSection > h1').outerHeight() - 190;
-  var iMaxLikesRows = availableHeight / 115;
-  var iLikesWrapperWidth = (iCommonLikesCount / iMaxLikesRows) * 106;  
+  availableHeight = $('#content').height() - $('#matchingSection > h1').outerHeight() - 40;
+  var iMaxLikesRows = Math.floor(availableHeight / 115);
+  var iLikesWrapperWidth = Math.ceil(iCommonLikesCount / iMaxLikesRows) * 102;
   if(iLikesWrapperWidth < 210) iLikesWrapperWidth = 210;
   $("#matchingSection").css({ 'width': iLikesWrapperWidth + 'px' });
 
@@ -353,15 +353,14 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
   sections.forEach(function(section) {
     $('#' + section).css({
       left: offset + 'px'
-    })
-
+    });
     offset += $('#' + section).outerWidth(true);
   });
 
   // calculate & set width for the likes container
   availableHeight = $('#content').height() - $('#likesSection > h1').outerHeight() - 40;
-  iMaxLikesRows = availableHeight / 115;
-  iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 104;  
+  iMaxLikesRows = Math.floor(availableHeight / 115);
+  iLikesWrapperWidth = Math.ceil(iLikesCount / iMaxLikesRows) * 102;
   $("#likesSection").css({ 'width': iLikesWrapperWidth + 'px' });
 
   // set width for scroll container
@@ -375,7 +374,7 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
   var delay = 0;
   sections.forEach(function(section) {
     setTimeout(function() {
-      $('#' + section).fadeIn(200);
+      $('#' + section).fadeIn(300);
     }, delay);
     delay += 200;
   });
@@ -398,6 +397,38 @@ IS.getCommonLikes = function(otherUserLikes) {
     });
     return fullLike;
   });
+}
+
+/**
+ * Calculate & set dimensions for a page, etc
+ * @param {String} page
+ */
+IS.setupPage = function (page) {
+  // set page title as a class name to do targeted styling
+  $('#content').attr('class', page);
+
+  if(page == 'myProfile') {
+    var columns = $('.column');
+
+    // calculate & set 'left' css property for all .column divs
+    var offset = 0;
+    columns.each(function(column) {
+      $(this).css({
+        left: offset + 'px'
+      });
+      offset += $(this).outerWidth(true);
+    });
+
+    // animate & show each column
+    var delay = 0;
+    columns.each(function(column) {
+      var _this = this;
+      setTimeout(function() {
+        $(_this).fadeIn(300);
+      }, delay);
+      delay += 200;
+    });
+  }
 }
 
 

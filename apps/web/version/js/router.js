@@ -50,6 +50,7 @@ var Router = Backbone.Router.extend({
     welcomeView.render();
     $('#content > div').detach();
     $('#content').append(welcomeView.el);
+    IS.setupPage('welcome');
   },
   
   // myProfile
@@ -63,6 +64,7 @@ var Router = Backbone.Router.extend({
     myProfileView.render();
     $('#content > div').detach();
     $('#content').append(myProfileView.el);
+    IS.setupPage('myProfile');
   },
 
   // matches
@@ -84,6 +86,7 @@ var Router = Backbone.Router.extend({
     matchesView.render();
     $('#content > div').detach();
     $('#content').append(matchesView.el);
+    IS.setupPage('matches');
   },
        
   // search
@@ -129,6 +132,7 @@ var Router = Backbone.Router.extend({
     searchView.render();
     $('#content > div').detach();
     $('#content').append(searchView.el);
+    IS.setupPage('search');
   },
 
   // likes
@@ -142,6 +146,7 @@ var Router = Backbone.Router.extend({
     likesView.render();
     $('#content > div').detach();
     $('#content').append(likesView.el);
+    IS.setupPage('likes');
   },
 
   // favourites
@@ -155,6 +160,7 @@ var Router = Backbone.Router.extend({
     favouritesView.render();
     $('#content > div').detach();
     $('#content').append(favouritesView.el);
+    IS.setupPage('favourites');
   },
 
   // mosaic
@@ -208,6 +214,7 @@ var Router = Backbone.Router.extend({
         usersFullView.render();
         $('#content > div').detach();
         $('#content').append(usersFullView.el);
+        IS.setupPage('profile');
       }
     });
   }  
