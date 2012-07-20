@@ -314,6 +314,7 @@ IS.logout = function() {
 
 /**
  * Checks if a property is null or empty "". If so, returns true.
+ * @param {any} property
  */
 IS.nullOrEmpty = function(property) {
   if(property == '' || property == null || typeof property == 'undefined' ) return true;
@@ -329,17 +330,25 @@ IS.saveUser = function() {
 }
 
 /**
- * Calculate & set dimensions for the likes container
+ * Calculate & set dimensions for the profile page columns
+ * @param {Integer} iLikesCount
  */
-IS.resizeUI = function (iLikesCount) {
+IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
   // calculate & set 'height' css property
   $('#content').height('100%');
   var availableHeight = $('#content').height() - $('#footer').height() - 110;
   $('#content').height(availableHeight);
   $('.column').height(availableHeight - 40); // 40 is the bottom margin
 
+  // calculate & set width for the #matchingSection container
+  availableHeight = $('#content').height() - $('#matchingSection > h1').outerHeight() - 190;
+  var iMaxLikesRows = availableHeight / 115;
+  var iLikesWrapperWidth = (iCommonLikesCount / iMaxLikesRows) * 106;  
+  if(iLikesWrapperWidth < 210) iLikesWrapperWidth = 210;
+  $("#matchingSection").css({ 'width': iLikesWrapperWidth + 'px' });
+
   // calculate & set 'left' css property for all .column divs
-  var sections = ['basicInfo', 'aboutSection', 'photoSection', 'likesSection'];
+  var sections = ['basicInfo', 'matchingSection', 'aboutSection', 'photoSection', 'likesSection'];
   var offset = 0;
   sections.forEach(function(section) {
     $('#' + section).css({
@@ -350,10 +359,9 @@ IS.resizeUI = function (iLikesCount) {
   });
 
   // calculate & set width for the likes container
-  console.log(iLikesCount);
   availableHeight = $('#content').height() - $('#likesSection > h1').outerHeight() - 40;
-  var iMaxLikesRows = availableHeight / 115;
-  var iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 104;  
+  iMaxLikesRows = availableHeight / 115;
+  iLikesWrapperWidth = (iLikesCount / iMaxLikesRows) * 104;  
   $("#likesSection").css({ 'width': iLikesWrapperWidth + 'px' });
 
   // set width for scroll container
@@ -362,8 +370,35 @@ IS.resizeUI = function (iLikesCount) {
     totalWidth += $('#' + section).outerWidth(true);
   });
   $('#content > div').width(totalWidth);
+
+  // animate & show each column
+  var delay = 0;
+  sections.forEach(function(section) {
+    setTimeout(function() {
+      $('#' + section).fadeIn(200);
+    }, delay);
+    delay += 200;
+  });
 }
 
+/**
+ * Returns common likes between two users
+ = @param {Array} otherUserLikes
+ */
+IS.getCommonLikes = function(otherUserLikes) {
+  var myLikes = _.pluck(user.get('fL'), '_id');
+  otherUserLikes = _.pluck(otherUserLikes, '_id');
+
+  var commonLikes = _.intersection(myLikes, otherUserLikes);
+
+  // rebuild commonLikes to add all like properties and return it
+  return _.map(commonLikes, function(like) {
+    var fullLike = _.find(user.get('fL'), function(myLike) {
+      return myLike._id == like;
+    });
+    return fullLike;
+  });
+}
 
 
 

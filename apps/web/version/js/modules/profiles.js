@@ -314,7 +314,7 @@ var UsersFullView = Backbone.View.extend({
     console.log('  ~ rendering UsersFullView for: ' + this.model.get('_id'));
     var _this = this;
 
-    // If the user exists already, pass a new attr to the model
+    // check if this person is in the user's favourites
     this.model.set({isFaved: false});
     if (_.indexOf(user.get('favs'), this.model.get('_id')) != -1) {
       this.model.set({
@@ -322,12 +322,38 @@ var UsersFullView = Backbone.View.extend({
       });
     }
 
-    // Update template
+    // find commong likes and insert them into the model of the displayed user
+    var commonLikes = IS.getCommonLikes(this.model.get('fL'));
+    this.model.set('commonLikes', commonLikes);
+
+    // render template
     var template = $('#tplUsersProfile').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
     
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
+
+    setTimeout(function() {
+      _this.onView();
+    }, 0);
+  },
+
+  // onView
+  // -----------------------------------------------------------------------
+  onView: function() {
+    // resize columns
+    var iLikesCount = this.model.get('fLc');
+    var iCommonLikesCount = this.model.get('commonLikes').length;
+    IS.resizeProfilePage(iLikesCount, iCommonLikesCount);
+
+    // enable custom scrollbars
+    var myScroll = new iScroll('content', {
+      hScroll: true,
+      hScrollbar: true,
+      vScroll: false,
+      vScrollbar: false,
+      scrollbarClass: 'scrollbar'
+    });
 
     // activate fancybox for all photos - including the newly uploaded
     this.$("#userPhotos").on("focusin", function(){
@@ -350,34 +376,8 @@ var UsersFullView = Backbone.View.extend({
             height: 50
           }
         }
-      }); // fancybox
-    }); // on
-
-    setTimeout(function() {
-      _this.onView();
-    }, 0);
-  },
-
-  // onView
-  // -----------------------------------------------------------------------
-  onView: function() {
-    // resize columns
-    var iLikesCount = this.model.get('fLc');
-    IS.resizeUI(iLikesCount);
-
-    // enable custom scrollbars
-    var myScroll = new iScroll('content', {
-      hScroll: true,
-      hScrollbar: true,
-      vScroll: false,
-      vScrollbar: false,
-      scrollbarClass: 'scrollbar'
+      });
     });
-
-    setInterval(function () {
-        myScroll.refresh();
-      }, 200);
-
   },
 
   // sendMessage

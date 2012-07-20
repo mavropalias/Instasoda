@@ -568,31 +568,44 @@
             {{/p}}
           </div>
 
-          <div class="left">
-            
-
-            <div id="connectOptions">
-              <button id="sendMessage" class="left">Send message / Chat</button>
-              <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
-              <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
-            </div>
-
-            <div id="basicInfo">
-              <ul class="fbInformation">
-                <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
-                <li><span class="fbTitle">Gender:</span><span class="fbData">{{fS}}</span></li>
-                <li><span class="fbTitle">Relationship:</span><span class="fbData">{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</span></li>
-                <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
-              </ul>
-            </div>
-
-            <div>
-              <h3>Interested in:</h3>
-              <p>
-                women: {{w}} - men: {{m}}
-              </p>
-            </div>
+          <div id="connectOptions">
+            <button id="sendMessage" class="left">Send message / Chat</button>
+            <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
+            <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
           </div>
+
+          <div id="basicInfo">
+            <ul class="fbInformation">
+              <li><span class="fbTitle">Age:</span><span class="fbData">{{ag}}</span></li>
+              <li><span class="fbTitle">Gender:</span><span class="fbData">{{fS}}</span></li>
+              <li><span class="fbTitle">Relationship:</span><span class="fbData">{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</span></li>
+              <li><span class="fbTitle">Location:</span><span class="fbData">{{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}</span></li>
+            </ul>
+          </div>
+
+          <div>
+            <h3>Interested in:</h3>
+            <p>
+              women: {{w}} - men: {{m}}
+            </p>
+          </div>
+
+        </div>
+
+        <div id="matchingSection" class="column">
+          <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}!</h1>
+          <p>
+            {{#commonLikes}}
+              <li class="fbLike" data-id="{{_id}}">
+                <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                <span class="fbLikeName">{{n}}</span>
+                <span class="fbLikeNameFull">{{n}}</span>
+              </li>
+            {{/commonLikes}}
+            {{^commonLikes}}
+              You do not seem to have anything in common :(
+            {{/commonLikes}}
+          </p>
         </div>
 
         <div id="aboutSection" class="column">
@@ -600,9 +613,26 @@
           <p>
             {{#a}}
               {{a}}
+              <p>Lorem ipsum dolor sit amet, nec ad sint legendos, te odio sanctus per. Eum cu solum dissentias, vim in latine postulant dignissim, fastidii ponderum sit ut. Has iusto prompta. </p>
+
+              <p>Interesset in, ex autem argumentum nam. An clita vivendo vix, eam ceteros perpetua id. Ut petentium voluptatum sit, eu est dictas salutatus.</p>
+
+              <p>Qui id dolorum splendide intellegebat, soluta option theophrastus at ius, ei vix case porro. Ex per vidit hendrerit scribentur, vix eu qualisque prodesset. His an phaedrum adversarium. </p>
+
+              <p>At sed detracto senserit, sea in atqui placerat, vim cu aliquid copiosae similique.</p>
+
+              <p>Id sed augue melius consequuntur, at reprimique disputando conclusionemque mea, an salutandi ullamcorper eum. Quando aperiri iudicabit nam eu, te nam fierent honestatis.</p>
             {{/a}}
             {{^a}}
-               Nothing yet! :(
+              Lorem ipsum dolor sit amet, nec ad sint legendos, te odio sanctus per. Eum cu solum dissentias, vim in latine postulant dignissim, fastidii ponderum sit ut. Has iusto prompta. 
+
+              Interesset in, ex autem argumentum nam. An clita vivendo vix, eam ceteros perpetua id. Ut petentium voluptatum sit, eu est dictas salutatus.
+
+              Qui id dolorum splendide intellegebat, soluta option theophrastus at ius, ei vix case porro. Ex per vidit hendrerit scribentur, vix eu qualisque prodesset. His an phaedrum adversarium. 
+
+              At sed detracto senserit, sea in atqui placerat, vim cu aliquid copiosae similique.
+
+              Id sed augue melius consequuntur, at reprimique disputando conclusionemque mea, an salutandi ullamcorper eum. Quando aperiri iudicabit nam eu, te nam fierent honestatis.
             {{/a}}
           </p>
         </div>
