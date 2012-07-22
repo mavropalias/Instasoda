@@ -4,7 +4,7 @@
   
   // Single like
   // ---------------------------------------------------------------------------
-  .fbLike {
+  .like {
     .box-shadow(0, 1px, 1px, #888);
     border: 1px solid #ddd;
     position: relative;
@@ -12,35 +12,54 @@
     margin: 0 10px 10px 0; 
     background: #fff;
     float:left;
-    overflow: hidden;
     display: block;
-    cursor: pointer;
     
     &:hover {
       background: #eee;
     }
     
-    .fbLikeName {
+    .likeName {
       display: block;
       font-size: 11px;
       max-width: 6em;
       height: 2.1em;
       overflow: hidden;
-      margin-top: 5px;
+      margin-top: 0.5em;
       text-overflow: ellipsis;
       text-align: center;
-    }
-    
-    .fbLikeNameFull {
-      display: none;
+      cursor: default;
     }
 
-    .fbLikePic {
+    .likePic {
       margin: 0 1em;
     }
-    
-    .fbLikePicLoading > img {
-      margin: 15px;
+
+    .likePanel {
+      .box-shadow(0, 5px, 40px, #888);
+      position: absolute;
+      width: 154px;
+      top: -1px;
+      left: -1px;
+      background: #fff;
+      padding: 20px;
+      z-index: 9;
+
+      .likePic {
+        margin: 0;
+      }
+
+      .likeName {
+        max-width: 300em;
+        text-align: left;
+        height: auto;
+        margin-bottom: 1em;
+        line-height: 1.2em;
+        overflow: visible;
+      }
+
+      .likeFacebookUrl {
+        text-decoration: underline;
+      }
     }
   }
   

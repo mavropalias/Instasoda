@@ -19,7 +19,6 @@ var MyProfileView = Backbone.View.extend({
     _.bindAll(this);
 
     // initialize sub-views
-    this.facebookLikesView = new FacebookLikesView({ model: this.model });
     this.myPhotosView = new MyPhotosView({ model: this.model });
   },
 
@@ -35,11 +34,26 @@ var MyProfileView = Backbone.View.extend({
 
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-    this.facebookLikesView.setElement(this.$('#facebookLikes')).render();
+
+    // render all likes
+    this.model.get('fL').forEach(function(like) {
+      _this.renderLike(like, _this.$('#facebookLikes'));
+    });
 
     setTimeout(function() {
       _this.onView();
     }, 0);
+  },
+
+  // renderLike
+  // -----------------------------------------------------------------------
+  renderLike: function(like, container) {
+    var likeModel = new Like(like);
+    var facebookLikeView = new FacebookLikeView({
+      model: likeModel
+    });
+    facebookLikeView.render();
+    container.append(facebookLikeView.el);
   },
 
   // onView
@@ -325,6 +339,7 @@ var UsersFullView = Backbone.View.extend({
     // find commong likes and insert them into the model of the displayed user
     var commonLikes = IS.getCommonLikes(this.model.get('fL'));
     this.model.set('commonLikes', commonLikes);
+    this.model.set('commonLikesCount', commonLikes.length);
 
     // render template
     var template = $('#tplUsersProfile').html();
@@ -333,9 +348,32 @@ var UsersFullView = Backbone.View.extend({
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
 
+    // render common likes
+    var cLContainer = _this.$('#commonLikes');
+    if(commonLikes.length > 0) cLContainer.html('');
+    this.model.get('commonLikes').forEach(function(like) {
+      _this.renderLike(like, cLContainer);
+    });
+
+    // render all likes
+    this.model.get('fL').forEach(function(like) {
+      _this.renderLike(like, _this.$('#facebookLikes'));
+    });
+
     setTimeout(function() {
       _this.onView();
     }, 0);
+  },
+
+  // renderLike
+  // -----------------------------------------------------------------------
+  renderLike: function(like, container) {
+    var likeModel = new Like(like);
+    var facebookLikeView = new FacebookLikeView({
+      model: likeModel
+    });
+    facebookLikeView.render();
+    container.append(facebookLikeView.el);
   },
 
   // onView
@@ -399,7 +437,7 @@ var UsersFullView = Backbone.View.extend({
 });
 
 // =========================================================================
-// FacebookLikesView
+// FacebookLikesView - multiple likes
 // =========================================================================
 var FacebookLikesView = Backbone.View.extend({
   // events
@@ -490,6 +528,87 @@ var FacebookLikesView = Backbone.View.extend({
         }, 10);
       });
     }
+  }
+});
+
+// =========================================================================
+// FacebookLikeView - single like
+// =========================================================================
+var FacebookLikeView = Backbone.View.extend({
+  // properties
+  tagName: 'li',
+  className: 'like',
+
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'mouseover': 'showLikePanel',
+    'mouseout': 'hideLikePanel'
+  },
+
+  // initialize
+  // -----------------------------------------------------------------------
+  initialize: function() {
+    _.bindAll(this);
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function() {
+    var template = $('#tplLike').html();
+    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+
+    // load like's image when it appears on the screen
+    this.$('.likePic > img').appear(function() {
+      $(this).attr('src', $(this).data('src'));
+    });
+  },
+
+  // showLikePanel
+  // -----------------------------------------------------------------------
+  showLikePanel: function() {
+    if(this.$('.likePanel').length > 0) this.$('.likePanel').show();
+    else {
+      var facebookLikePanelView = new FacebookLikePanelView({
+        model: this.model
+      });
+      facebookLikePanelView.render();
+      this.$el.append(facebookLikePanelView.el);
+    }
+  },
+
+  // hideLikePanel
+  // -----------------------------------------------------------------------
+  hideLikePanel: function() {
+    this.$('.likePanel').hide();
+  }
+});
+
+// =========================================================================
+// FacebookLikePanelView - info panel for a like
+// =========================================================================
+var FacebookLikePanelView = Backbone.View.extend({
+  // properties
+  className: 'likePanel',
+
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    
+  },
+
+  // initialize
+  // -----------------------------------------------------------------------
+  initialize: function() {
+    _.bindAll(this);
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function() {
+    var _this = this;
+    var template = $('#tplLikePanel').html();
+    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
   }
 });
 

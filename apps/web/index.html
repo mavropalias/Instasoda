@@ -50,6 +50,7 @@
   <script type="text/javascript" src="VERSION/js/lib/jquery.timeago.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/slimScroll.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/iscroll.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/jquery.appear-1.1.1.min.js"></script>
 
   <script type="text/javascript" src="VERSION/js/_app.js"></script>
   <script type="text/javascript" src="VERSION/js/router.js"></script>
@@ -420,12 +421,8 @@
             <ul class="fbCategoryLikes left" data-cat="{{c}}">
               {{#l}}
                 <li class="fbLike" data-id="{{_id}}">
-                  {{^u}}
-                    <span class="fbLikePicLoading"><img src="http://img.instasoda.com/i/loading.gif" width=20 height=20></span>
-                  {{/u}}
-                  <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                  <span class="fbLikePic"><img data-src="http://img.instasoda.com/l/{{_id}}.jpg" src="http://img.instasoda.com/i/loading.gif" width=50 height=50></span>
                   <span class="fbLikeName">{{n}}</span>
-                  <span class="fbLikeNameFull">{{n}}</span>
                 </li>
               {{/l}}
             </ul>
@@ -434,6 +431,31 @@
             <li>No likes.</li>
           {{/fLbyCategory}}
         </div>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- SINGLE LIKE VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplLike" type="text/template">
+        <span class="likePic">
+          <img data-src="http://img.instasoda.com/l/{{_id}}.jpg" src="http://img.instasoda.com/i/loading.gif" width=50 height=50>
+        </span>
+        <span class="likeName">{{n}}</span>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- SINGLE LIKE INFO PANEL VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplLikePanel" type="text/template">
+        <span class="likePic">
+          <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50>
+        </span>
+        <span class="likeName">{{n}}</span>
+        <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank">View this on Facebook</a>
       </script>
 
 
@@ -568,34 +590,34 @@
             {{/p}}
           </div>
 
-            <div id="basicInfo">
-              <ul class="fbInformation">
-                <li class="marginTop1x">
-                  <span class="fbTitle">Age:</span>
-                  <span class="fbData">{{ag}}</span>
-                </li>
-                <li class="marginTop1x">
-                  <span class="fbTitle">Relationship:</span>
-                  <span class="fbData">
-                    {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
-                  </span>
-                </li>
-                <li class="marginTop1x">
-                  <span class="fbTitle">Location:</span>
-                  <span class="fbData">
-                    {{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
-                  </span>
-                </li>
-                <li class="marginTop1x">
-                  <span class="fbTitle">Wants to meet:</span>
-                  <span class="fbData">
-                    {{#w}}{{^m}}women{{/m}}{{/w}}
-                    {{#w}}{{#m}}women & men{{/m}}{{/w}}
-                    {{#m}}{{^w}}men{{/w}}{{/m}}
-                  </span>
-                </li>
-              </ul>
-            </div>
+          <div id="basicInfo">
+            <ul class="fbInformation">
+              <li class="marginTop1x">
+                <span class="fbTitle">Age:</span>
+                <span class="fbData">{{ag}}</span>
+              </li>
+              <li class="marginTop1x">
+                <span class="fbTitle">Relationship:</span>
+                <span class="fbData">
+                  {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
+                </span>
+              </li>
+              <li class="marginTop1x">
+                <span class="fbTitle">Location:</span>
+                <span class="fbData">
+                  {{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+                </span>
+              </li>
+              <li class="marginTop1x">
+                <span class="fbTitle">Wants to meet:</span>
+                <span class="fbData">
+                  {{#w}}{{^m}}women{{/m}}{{/w}}
+                  {{#w}}{{#m}}women & men{{/m}}{{/w}}
+                  {{#m}}{{^w}}men{{/w}}{{/m}}
+                </span>
+              </li>
+            </ul>
+          </div>
 
           <div id="connectOptions">
             <button id="sendMessage" class="left">Send message / Chat</button>
@@ -606,17 +628,10 @@
         </div>
 
         <div id="matchingSection" class="column">
-          <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}!</h1>
-          {{#commonLikes}}
-            <li class="fbLike" data-id="{{_id}}">
-              <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
-              <span class="fbLikeName">{{n}}</span>
-              <span class="fbLikeNameFull">{{n}}</span>
-            </li>
-          {{/commonLikes}}
-          {{^commonLikes}}
+          <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;({{commonLikesCount}})</h1>
+          <div id="commonLikes">
             You do not seem to have anything in common :(
-          {{/commonLikes}}
+            </div>
         </div>
 
         <div id="aboutSection" class="column">
@@ -660,13 +675,7 @@
         <div id="likesSection" class="column">
           <h1>Likes & interests ({{fLc}})</h1>
           <div id="facebookLikes">
-            {{#fL}}
-              <li class="fbLike" data-id="{{_id}}">
-                <span class="fbLikePic {{^u}}hidden{{/u}}"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
-                <span class="fbLikeName">{{n}}</span>
-                <span class="fbLikeNameFull">{{n}}</span>
-              </li>
-            {{/fL}}
+
           </div>
         </div>
       </script>

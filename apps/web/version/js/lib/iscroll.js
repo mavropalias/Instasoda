@@ -132,12 +132,18 @@ var m = Math,
 			onBeforeScrollMove: null,
 			onScrollMove: null,
 			onBeforeScrollEnd: null,
-			onScrollEnd: null,
-			onTouchEnd: null,
+			onScrollEnd: function() { //INSTASODA
+	        	$(window).scroll();
+	        },
+			onTouchEnd: function() {
+	        	$(window).scroll();
+	        },
 			onDestroy: null,
 			onZoomStart: null,
 			onZoom: null,
-			onZoomEnd: null
+			onZoomEnd: function() {
+	        	$(window).scroll();
+	        }
 		};
 
 		// User defined options
