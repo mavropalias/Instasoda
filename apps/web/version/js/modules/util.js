@@ -332,8 +332,10 @@ IS.saveUser = function() {
 /**
  * Calculate & set dimensions for the profile page columns
  * @param {Integer} iLikesCount
+ * @param {Integer} iCommonLikesCount
+ * @param {Bool} bIsMyProfilePage
  */
-IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
+IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePage) {
   // calculate & set 'height' css property
   $('#content').height('100%');
   var availableHeight = $('#content').height() - $('#footer').height() - 90;
@@ -341,14 +343,20 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
   $('.column').height(availableHeight - 40); // 40 is the bottom margin
 
   // calculate & set width for the #matchingSection container
-  availableHeight = $('#content').height() - $('#matchingSection > h1').outerHeight() - 40;
-  var iMaxLikesRows = Math.floor(availableHeight / 115);
-  var iLikesWrapperWidth = Math.ceil(iCommonLikesCount / iMaxLikesRows) * 102;
-  if(iLikesWrapperWidth < 210) iLikesWrapperWidth = 210;
-  $("#matchingSection").css({ 'width': iLikesWrapperWidth + 'px' });
+  if(!bIsMyProfilePage) {
+    availableHeight = $('#content').height() - $('#matchingSection > h1').outerHeight() - 40;
+    var iMaxLikesRows = Math.floor(availableHeight / 115);
+    var iLikesWrapperWidth = Math.ceil(iCommonLikesCount / iMaxLikesRows) * 102;
+    if(iLikesWrapperWidth < 210) iLikesWrapperWidth = 210;
+    $("#matchingSection").css({ 'width': iLikesWrapperWidth + 'px' });
+  }
 
   // calculate & set 'left' css property for all .column divs
-  var sections = ['basicInfo', 'matchingSection', 'aboutSection', 'photoSection', 'likesSection'];
+  if(bIsMyProfilePage) {
+    var sections = ['basicInfo', 'aboutSection', 'photoSection', 'likesSection'];
+  } else {
+    var sections = ['basicInfo', 'matchingSection', 'aboutSection', 'photoSection', 'likesSection'];
+  }
   var offset = 0;
   sections.forEach(function(section) {
     $('#' + section).css({
@@ -382,7 +390,7 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount) {
 
 /**
  * Returns common likes between two users
- = @param {Array} otherUserLikes
+ * @param {Array} otherUserLikes
  */
 IS.getCommonLikes = function(otherUserLikes) {
   var myLikes = _.pluck(user.get('fL'), '_id');
@@ -397,6 +405,31 @@ IS.getCommonLikes = function(otherUserLikes) {
     });
     return fullLike;
   });
+}
+
+/**
+ * Renders a list of likes into the specified container
+ * @param {Array} likes
+ * @param {Object} container
+ */
+IS.renderLikes = function(likes, container) {
+
+    // clear container
+    container.html('');
+
+    // create model for common likes
+    var likes = new Likes({
+      likes: likes
+    });
+
+    // create new view & render
+    var facebookLikesView = new FacebookLikesView({
+      model: likes
+    });
+
+    facebookLikesView.render();
+    container.append(facebookLikesView.el);
+    
 }
 
 /**

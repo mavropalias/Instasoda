@@ -36,24 +36,11 @@ var MyProfileView = Backbone.View.extend({
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
 
     // render all likes
-    this.model.get('fL').forEach(function(like) {
-      _this.renderLike(like, _this.$('#facebookLikes'));
-    });
+    IS.renderLikes(this.model.get('fL'), this.$('#facebookLikes'));
 
     setTimeout(function() {
       _this.onView();
     }, 0);
-  },
-
-  // renderLike
-  // -----------------------------------------------------------------------
-  renderLike: function(like, container) {
-    var likeModel = new Like(like);
-    var facebookLikeView = new FacebookLikeView({
-      model: likeModel
-    });
-    facebookLikeView.render();
-    container.append(facebookLikeView.el);
   },
 
   // onView
@@ -120,6 +107,19 @@ var MyProfileView = Backbone.View.extend({
           }
         }
       });
+
+    // resize columns
+    var iLikesCount = this.model.get('fL').length;
+    IS.resizeProfilePage(iLikesCount, 0, true);
+
+    // enable custom scrollbars
+    var myScroll = new iScroll('content', {
+      hScroll: true,
+      hScrollbar: true,
+      vScroll: false,
+      vScrollbar: false,
+      scrollbarClass: 'scrollbar'
+    });
 
     // activate fancybox for all photos - including the newly uploaded
     this.$("#userPhotos").on("focusin", function(){
@@ -235,8 +235,8 @@ var MyProfileView = Backbone.View.extend({
         $('#userPhotos #' + photoId + ' .photoIsDefault').removeClass('hidden');
         $('#userPhotos #' + photoId + ' .photoMakeDefault').html('make default');
 
-        // update default photo in the top sidebar
-        _this.$('#basicInfo .photo img').attr('src', photoSrc);
+        // update default photo in the left column
+        _this.$('#basicInfo .defaultPhoto img').attr('src', photoSrc);
       }
     });
   },
@@ -336,9 +336,8 @@ var UsersFullView = Backbone.View.extend({
       });
     }
 
-    // find commong likes and insert them into the model of the displayed user
+    // find common likes and the user model
     var commonLikes = IS.getCommonLikes(this.model.get('fL'));
-    this.model.set('commonLikes', commonLikes);
     this.model.set('commonLikesCount', commonLikes.length);
 
     // render template
@@ -349,31 +348,17 @@ var UsersFullView = Backbone.View.extend({
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
 
     // render common likes
-    var cLContainer = _this.$('#commonLikes');
-    if(commonLikes.length > 0) cLContainer.html('');
-    this.model.get('commonLikes').forEach(function(like) {
-      _this.renderLike(like, cLContainer);
-    });
+    if(commonLikes.length > 0) {
+      var cLContainer = _this.$('#commonLikes');
+      IS.renderLikes(commonLikes, cLContainer);
+    }
 
     // render all likes
-    this.model.get('fL').forEach(function(like) {
-      _this.renderLike(like, _this.$('#facebookLikes'));
-    });
+    IS.renderLikes(this.model.get('fL'), this.$('#facebookLikes'));
 
     setTimeout(function() {
       _this.onView();
     }, 0);
-  },
-
-  // renderLike
-  // -----------------------------------------------------------------------
-  renderLike: function(like, container) {
-    var likeModel = new Like(like);
-    var facebookLikeView = new FacebookLikeView({
-      model: likeModel
-    });
-    facebookLikeView.render();
-    container.append(facebookLikeView.el);
   },
 
   // onView
@@ -381,7 +366,7 @@ var UsersFullView = Backbone.View.extend({
   onView: function() {
     // resize columns
     var iLikesCount = this.model.get('fL').length;
-    var iCommonLikesCount = this.model.get('commonLikes').length;
+    var iCommonLikesCount = this.model.get('commonLikesCount');
     IS.resizeProfilePage(iLikesCount, iCommonLikesCount);
 
     // enable custom scrollbars
@@ -436,181 +421,6 @@ var UsersFullView = Backbone.View.extend({
   }
 });
 
-// =========================================================================
-// FacebookLikesView - multiple likes
-// =========================================================================
-var FacebookLikesView = Backbone.View.extend({
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    //TODO: enable clicking on a like to view users with similar likes
-  },
-
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing FacebookLikesView');
-    _.bindAll(this);
-    this.model.bind('change:fL', this.render);
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    var _this = this;
-    console.log('  ~ rendering FacebookLikesView');
-    var template = $('#tplLikesResults').html();
-    
-    // pre-process likes and split them into categories
-    // ================================================
-
-      // 1) get all likes
-      var aLikes = this.model.get('fL');
-
-      // 2) extract category names (pluck), and remove duplicates (uniq)
-      var aCategories = _.uniq( _.pluck(aLikes, 'c') );
-
-      // 3) create object with categories and their likes
-      var aCategoriesAndLikes = [];
-      _.each(aCategories, function(category) {
-        // get all likes for that category
-        var aCategoryLikes = _.filter(aLikes, function(like){
-          return like.c == category;
-        });
-
-        // push category and its likes into aCategoriesAndLikes
-        aCategoriesAndLikes.push({
-          c: category,
-          l: aCategoryLikes
-        });
-      });
-
-      // 4) insert aCategoriesAndLikes into the model's fLbyCategory property
-      this.model.set({ fLbyCategory: aCategoriesAndLikes });
-
-    // render likes
-    // ============
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    // Add active class to the first category
-    setTimeout(function() {
-      $(".fbLikeCategory").find('li:first-child').addClass('active');
-      $(".fbCategoryLikes").first().show();
-    }, 100);
-
-    // Categories tab functionality
-    $(".fbLikeCategory li").live('click', function() {
-      var _this = $(this);
-      var _thisData = _this.data('cat');
-      // Remove active class from tabs
-      $(".fbLikeCategory li").removeClass('active');
-      // Add active class to clicked tab
-      $('.fbCategoryLikes').hide();
-      $('.fbLike').removeClass('active8');
-      _this.addClass('active');
-      $(".fbCategoryLikes[data-cat='" + _thisData + "']").fadeIn(200);
-    });
-
-    // reload like images until they load, while the API moves them to S3
-    if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
-      console.log('- reloading like photos');
-
-      this.$('.fbLikePic img').load(function(){
-        $(this).parent().show().parent().find('.fbLikePicLoading').remove();
-      });
-
-      this.$('.fbLikePic img').error(function(){
-        var _this = this;
-        setTimeout(function() {
-          var src = $(_this).attr('src');
-          var date = new Date();
-          $(_this).attr('src', src + "?v=" + date.getTime());
-        }, 10);
-      });
-    }
-  }
-});
-
-// =========================================================================
-// FacebookLikeView - single like
-// =========================================================================
-var FacebookLikeView = Backbone.View.extend({
-  // properties
-  tagName: 'li',
-  className: 'like',
-
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    'mouseover': 'showLikePanel',
-    'mouseout': 'hideLikePanel'
-  },
-
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    _.bindAll(this);
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    var template = $('#tplLike').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    // load like's image when it appears on the screen
-    this.$('.likePic > img').appear(function() {
-      $(this).attr('src', $(this).data('src'));
-    });
-  },
-
-  // showLikePanel
-  // -----------------------------------------------------------------------
-  showLikePanel: function() {
-    if(this.$('.likePanel').length > 0) this.$('.likePanel').show();
-    else {
-      var facebookLikePanelView = new FacebookLikePanelView({
-        model: this.model
-      });
-      facebookLikePanelView.render();
-      this.$el.append(facebookLikePanelView.el);
-    }
-  },
-
-  // hideLikePanel
-  // -----------------------------------------------------------------------
-  hideLikePanel: function() {
-    this.$('.likePanel').hide();
-  }
-});
-
-// =========================================================================
-// FacebookLikePanelView - info panel for a like
-// =========================================================================
-var FacebookLikePanelView = Backbone.View.extend({
-  // properties
-  className: 'likePanel',
-
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    
-  },
-
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    _.bindAll(this);
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    var _this = this;
-    var template = $('#tplLikePanel').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-  }
-});
 
 // =========================================================================
 // MyPhotosView

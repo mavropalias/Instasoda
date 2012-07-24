@@ -2,15 +2,10 @@
 // PHOTOS
 // =============================================================================
   
-  #photoSection {    
-    h2 {
-      margin-bottom: 0.2em;
-    }
-    
-    .tip {
-      margin-bottom: 2em;
-    }
-    
+  #photoSection {  
+
+    width: 488px;
+
     #userPhotos {
       display: block;
       overflow: hidden;
@@ -26,7 +21,7 @@
       
       .photo {
         .box-shadow(0, 4px, 8px -3px, #888);
-        margin-bottom: 20px;
+        margin: 0 20px 20px 0;
       }
     }
   }
@@ -128,8 +123,8 @@
   #uploadPhoto {
 
     #uploadWidget {
-    width: 150px;
-    height: 152px;
+    width: 140px;
+    height: 153px;
       
       .qq-uploader {
         position:relative;
@@ -138,13 +133,13 @@
       
       .qq-upload-drop-area {
         .border-radius(8px);
-        background: url(../img/uploadPhotoBg.png) center top no-repeat #fff;
+        background: url(../img/uploadPhotoBg.png) center 30px no-repeat #fff;
         display: block !important;
         position: absolute;
-        top: 72px;
+        top: 40px;
         left: 0px;
         right: 0px;
-        height: 72px;
+        height: 112px;
         z-index: 2;
         text-align:center;
         border: 1px dashed #ccc;
@@ -170,6 +165,10 @@
           line-height: 15px;
           font-size: 12px;
         }
+      }
+
+      .qq-upload-button {
+        width: 114px;
       }
       
       .qq-upload-file,
