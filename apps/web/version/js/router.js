@@ -50,7 +50,7 @@ var Router = Backbone.Router.extend({
     welcomeView.render();
     $('#content > div').detach();
     $('#content').append(welcomeView.el);
-    IS.setupPage('welcome');
+    IS.setupPage('home');
   },
   
   // myProfile
@@ -64,7 +64,7 @@ var Router = Backbone.Router.extend({
     myProfileView.render();
     $('#content > div').detach();
     $('#content').append(myProfileView.el);
-    IS.setupPage('myProfile');
+    IS.setupPage('profile');
   },
 
   // matches
@@ -177,6 +177,8 @@ var Router = Backbone.Router.extend({
       height: '100%',
       width: '100%'
     });
+
+    IS.setupPage('mosaic');
   },
   
   // beta
@@ -214,7 +216,7 @@ var Router = Backbone.Router.extend({
         usersFullView.render();
         $('#content > div').detach();
         $('#content').append(usersFullView.el);
-        IS.setupPage('profile');
+        IS.setupPage('viewprofile');
       }
     });
   }  

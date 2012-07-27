@@ -11,7 +11,6 @@ var LikesView = Backbone.View.extend({
     _.bindAll(this);
     
     // initialize sub-views
-    this.likesResultsView = new LikesResultsView({ model: this.model });
     this.likesFiltersView = new LikesFiltersView({ model: this.model });
   },
   
@@ -26,7 +25,9 @@ var LikesView = Backbone.View.extend({
     
     // render sub views
     this.likesFiltersView.setElement(this.$('#likesFilters')).render();
-    this.likesResultsView.setElement(this.$('#likesResults')).render();
+
+    // render likes
+    IS.renderLikes(this.model.get('fL'), this.$('#likesResults'), true);
   }
 });
 
@@ -37,8 +38,8 @@ var LikesFiltersView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #doSearch': 'doSearch',
-    'click .fbLike': 'addOrRemoveLikeFromSearchOptions'
+    'mouseover .like': 'showLikePanel',
+    'mouseout .like': 'hideLikePanel',
   },
 
   // initialize
@@ -76,137 +77,53 @@ var LikesFiltersView = Backbone.View.extend({
   newSearchLike: function() {
 
   },
-  
-  // doSearch
+
+  // showLikePanel
   // -----------------------------------------------------------------------
-  doSearch: function() {
-    // fetch search options
-    /*var options = new Object({
-      'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : 0),
-      'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : 0),
-      'nearMe': 0,
-      'ageMin': this.$("#ageRange").slider("values", 0),
-      'ageMax': this.$("#ageRange").slider("values", 1)
-    });
-    
-    // save these preferences into the user model
-    this.model.set({ so: options });
-    this.model.save();
-    store.set('user', user);
-    
-    IS.navigateTo('search/'
-                  + options.m + '/'
-                  + options.w + '/'
-                  + options.nearMe + '/'
-                  + options.ageMin + '/'
-                  + options.ageMax
-    );*/
-  }
-});
+  showLikePanel: function(e) {
+    var target = $(e.currentTarget);
 
-// =========================================================================
-// LikesResultsView - contains a list of LikeView items
-// =========================================================================
-var LikesResultsView = Backbone.View.extend({
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    'click .fbLike': 'addOrRemoveLikeFromSearchOptions'
-  },
+    if(target.find('.likePanel').length > 0) target.find('.likePanel').show();
+    else {
+      // construct a new like model, based on the event's target
+      var likeAttrs = {
+        _id: target.data('id'),
+        n: target.data('name')
+      };
+      var like = new Like(likeAttrs);
 
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing LikesResultsView');
-    
-    _.bindAll(this);
-    this.model.bind('reset', this.render);
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    var _this = this;
-    console.log('  ~ rendering LikesResultsView');
-    
-    // template
-    // ========
-    var template = $('#tplLikesResults').html();
-    
-    // pre-process likes and split them into categories
-    // ================================================
-
-      // 1) get all likes
-      var aLikes = this.model.get('fL');
-
-      // 2) extract category names (pluck), and remove duplicates (uniq)
-      var aCategories = _.uniq( _.pluck(aLikes, 'c') );
-
-      // 3) create object with categories and their likes
-      var aCategoriesAndLikes = [];
-      _.each(aCategories, function(category) {
-        // get all likes for that category
-        var aCategoryLikes = _.filter(aLikes, function(like){
-          return like.c == category;
-        });
-
-        // push category and its likes into aCategoriesAndLikes
-        aCategoriesAndLikes.push({
-          c: category,
-          l: aCategoryLikes
-        });
+      // create the panel view & render it
+      var facebookLikePanelView = new FacebookLikePanelView({
+        model: like
       });
-
-      // 4) insert aCategoriesAndLikes into the model's fLbyCategory property
-      this.model.set({ fLbyCategory: aCategoriesAndLikes });
-
-    // render likes
-    // ============
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    // Add active class to the first category
-    setTimeout(function() {
-      $(".fbLikeCategories").find('li:first-child').addClass('active');
-      $(".fbCategoryLikes").first().show();
-    }, 100);
-
-    // Categories tab functionality
-    $(".fbLikeCategoryTitle").live('click', function() {
-      var _this = $(this);
-      var _thisData = _this.data('cat');
-      // Remove active class from tabs
-      $(".fbLikeCategoryTitle").removeClass('active');
-      // Add active class to clicked tab
-      $('.fbCategoryLikes').hide();
-      $('.fbLike').removeClass('active');
-      _this.addClass('active');
-      $(".fbCategoryLikes[data-cat='" + _thisData + "']").fadeIn(200);
-    });
+      facebookLikePanelView.render();
+      $(e.currentTarget).append(facebookLikePanelView.el);
+    }
   },
 
-  // addOrRemoveLikeFromSearchOptions
+  // hideLikePanel
   // -----------------------------------------------------------------------
-  addOrRemoveLikeFromSearchOptions: function(e) {
-    var likeId = $(e.currentTarget).data('id');    
-    IS.addOrRemoveLikeFromSearchOptions(likeId);
+  hideLikePanel: function() {
+    this.$('.likePanel').hide();
   }
 });
 
 // =========================================================================
-// FacebookLikesView - multiple likes
+// LikesListView - multiple likes
 // =========================================================================
-var FacebookLikesView = Backbone.View.extend({
+var LikesListView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
     'mouseover .like': 'showLikePanel',
-    'mouseout .like': 'hideLikePanel'
+    'mouseout .like': 'hideLikePanel',
+    'click .fbLikeCategoryTitle': 'showCategoryLikes'
   },
 
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-    console.log('  ~ initializing FacebookLikesView');
+    console.log('  ~ initializing LikesListView');
     _.bindAll(this);
   },
 
@@ -227,7 +144,7 @@ var FacebookLikesView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   renderWithCategories: function() {
     var _this = this;
-    console.log('  ~ rendering FacebookLikesView');
+    console.log('  ~ rendering LikesListView');
     var template = $('#tplLikesWithCategories').html();
     
     // pre-process likes and split them into categories
@@ -263,25 +180,12 @@ var FacebookLikesView = Backbone.View.extend({
 
     // Add active class to the first category
     setTimeout(function() {
-      $(".fbLikeCategory").find('li:first-child').addClass('active');
+      $(".fbLikeCategoryTitle:first-child").addClass('active');
       $(".fbCategoryLikes").first().show();
-    }, 100);
-
-    // Categories tab functionality
-    $(".fbLikeCategory li").live('click', function() {
-      var _this = $(this);
-      var _thisData = _this.data('cat');
-      // Remove active class from tabs
-      $(".fbLikeCategory li").removeClass('active');
-      // Add active class to clicked tab
-      $('.fbCategoryLikes').hide();
-      $('.fbLike').removeClass('active8');
-      _this.addClass('active');
-      $(".fbCategoryLikes[data-cat='" + _thisData + "']").fadeIn(200);
-    });
+    }, 0);
 
     // reload like images until they load, while the API moves them to S3
-    if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
+    /*if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
       console.log('- reloading like photos');
 
       this.$('.fbLikePic img').load(function(){
@@ -296,7 +200,7 @@ var FacebookLikesView = Backbone.View.extend({
           $(_this).attr('src', src + "?v=" + date.getTime());
         }, 10);
       });
-    }
+    }*/
 
     setTimeout(function() {
       _this.onView();
@@ -310,6 +214,22 @@ var FacebookLikesView = Backbone.View.extend({
     this.$('.likeImg').appear(function() {
       $(this).attr('src', $(this).data('src'));
     });
+  },
+
+  // showCategoryLikes
+  // -----------------------------------------------------------------------
+  showCategoryLikes: function(e) {
+    var target = $(e.currentTarget);
+    var category = target.data('cat');
+
+    // Remove active class from tabs
+    $(".fbLikeCategoryTitle").removeClass('active');
+
+    // Add active class to clicked tab
+    $('.fbCategoryLikes').hide();
+    $('.like').removeClass('active');
+    target.addClass('active');
+    $(".fbCategoryLikes[data-cat='" + category + "']").fadeIn(200);
   },
 
   // showLikePanel
@@ -389,6 +309,6 @@ var FacebookLikePanelView = Backbone.View.extend({
   // addOrRemoveLikeFromSearchOptions
   // -----------------------------------------------------------------------
   addOrRemoveLikeFromSearchOptions: function(e) {
-    IS.addOrRemoveLikeFromSearchOptions(this.model.get('_id'));
+    IS.addOrRemoveLikeFromSearchOptions(this.model.get('_id'), this.model.get('n'));
   }
 });

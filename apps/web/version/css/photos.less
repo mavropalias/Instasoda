@@ -4,47 +4,36 @@
   
   #photoSection {  
 
-    width: 488px;
-
     #userPhotos {
       display: block;
       overflow: hidden;
       width: 100%;
       
-      .default {
-        background: #ddd;
-        
+      .default {        
         .photoControls {
-          background: #ddd !important;
+          background: #eee !important;
         }
-      }
-      
-      .photo {
-        .box-shadow(0, 4px, 8px -3px, #888);
-        margin: 0 20px 20px 0;
       }
     }
   }
   
   .photo {
-    .box-shadow(0, 1px, 1px, #888);
-    border: 1px solid #ddd;
-    position: relative;
-    padding: 1em; 
-    margin: 0 0.5em 0.5em 0; 
+    .box-shadow(0, 4px, 8px -3px, #888);
     background: #fff;
-    float:left;
+    float: left;
     overflow: hidden;
     display: block;
     display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin: 0 20px 20px 0;
+    cursor: pointer;
+    position: relative;
     
-    img {
-      cursor:pointer;
-      background: #fff;
-      border-top: 1px solid #ccc;
-      border-right: 1px solid #ddd;
-      border-left: 1px solid #ddd;
-      border-bottom: 1px solid #fff;
+    .photoSrc {
+      min-height: 150px;
+      min-width: 150px;
+      max-width: 300px;
     }
     
     .photoControls {
@@ -87,9 +76,7 @@
       }
     }
     
-    &:hover {
-      border: 1px solid #bbb;
-      
+    &:hover {      
       .photoControls {
         display: block;
         position: absolute;
@@ -121,10 +108,14 @@
 // =============================================================================  
   
   #uploadPhoto {
+    float:left;
+    margin: 0 20px 20px 0;
+    width: 150px;
+    height: 150px;
 
     #uploadWidget {
-    width: 140px;
-    height: 153px;
+      width: 150px;
+      height: 153px;
       
       .qq-uploader {
         position:relative;
@@ -168,7 +159,7 @@
       }
 
       .qq-upload-button {
-        width: 114px;
+        width: 124px;
       }
       
       .qq-upload-file,

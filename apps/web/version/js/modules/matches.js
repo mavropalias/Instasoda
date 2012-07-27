@@ -23,8 +23,6 @@ var MatchesView = Backbone.View.extend({
     // render template
     var template = $('#tplMatches').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    console.log(this.collection);
     
     // render sub views
     this.matchesFiltersView.setElement(this.$('#matchesFilters')).render();

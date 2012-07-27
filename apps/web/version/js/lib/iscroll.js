@@ -127,7 +127,9 @@ var m = Math,
 
 			// Events
 			onRefresh: null,
-			onBeforeScrollStart: function (e) { e.preventDefault(); },
+			//INSTASODA
+			//onBeforeScrollStart: function (e) { e.preventDefault(); },
+			onBeforeScrollStart: null,
 			onScrollStart: null,
 			onBeforeScrollMove: null,
 			onScrollMove: null,
@@ -135,7 +137,7 @@ var m = Math,
 			onScrollEnd: function() { //INSTASODA
 	        	$(window).scroll();
 	        },
-			onTouchEnd: function() {
+			onTouchEnd: function() { //INSTASODA
 	        	$(window).scroll();
 	        },
 			onDestroy: null,

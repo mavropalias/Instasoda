@@ -80,6 +80,34 @@
     -moz-opacity: @opacity / 100;
     opacity: @opacity / 100;
   }
+
+  .perspective(@value) {
+    -webkit-perspective: @value;
+    -moz-perspective: @value;
+    -ms-perspective: @value;
+    perspective: @value;
+  }
+
+  .transform-style(@value) {
+    -webkit-transform-style: @value;
+    -moz-transform-style: @value;
+    -ms-transform-style: @value;
+    transform-style: @value;
+  }
+
+  .backface-visibility(@value) {
+    -webkit-backface-visibility: @value;
+    -moz-backface-visibility: @value;
+    -ms-backface-visibility: @value;
+    backface-visibility: @value;
+  }
+
+  .box-sizing(@value) {
+    -webkit-box-sizing: @value;
+    -moz-box-sizing: @value;
+    -ms-box-sizing: @value;
+    box-sizing: @value;
+  }
   
   .photo() {
     .box-shadow(0, 1px, 1px, #888);

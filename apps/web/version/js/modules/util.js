@@ -121,8 +121,9 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
 /**
  * Adds or removes a like from the user's search options
  * @param {String} likeId
+ * @param {String} likeName
  */
-IS.addOrRemoveLikeFromSearchOptions = function(likeId) {
+IS.addOrRemoveLikeFromSearchOptions = function(likeId, likeName) {
   var userSearchLikes = (!!user.get('so').l) ? user.get('so').l : [];
 
   // search if the like is already in the user's search options
@@ -134,7 +135,8 @@ IS.addOrRemoveLikeFromSearchOptions = function(likeId) {
     console.log(' - adding search like');
 
     userSearchLikes.push({
-      _id: likeId
+      _id: likeId,
+      n: likeName
     });
 
     // save these preferences into the user model
@@ -334,13 +336,14 @@ IS.saveUser = function() {
  * @param {Integer} iLikesCount
  * @param {Integer} iCommonLikesCount
  * @param {Bool} bIsMyProfilePage
+ * @param {Integer} iPhotosCount
  */
-IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePage) {
+IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePage, iPhotosCount) {
   // calculate & set 'height' css property
   $('#content').height('100%');
   var availableHeight = $('#content').height() - $('#footer').height() - 90;
   $('#content').height(availableHeight);
-  $('.column').height(availableHeight - 40); // 40 is the bottom margin
+  $('.column').css('height', (availableHeight - 40) + 'px'); // 40 is the bottom margin
 
   // calculate & set width for the #matchingSection container
   if(!bIsMyProfilePage) {
@@ -351,11 +354,20 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePag
     $("#matchingSection").css({ 'width': iLikesWrapperWidth + 'px' });
   }
 
+  // calculate & set width for the photos container
+  if(bIsMyProfilePage) iPhotosCount++; // increase the count by 1 to include the add photo box
+  availableHeight = $('#content').height() - $('#photoSection > h1').outerHeight() - 40;
+  var iMaxRows = Math.floor(availableHeight / 170);
+  var iWrapperWidth = Math.ceil(iPhotosCount / iMaxRows) * 170;
+  if(iWrapperWidth < 340) iWrapperWidth = 340;
+  $("#photoSection").css({ 'width': iWrapperWidth + 'px' });
+
+
   // calculate & set 'left' css property for all .column divs
   if(bIsMyProfilePage) {
-    var sections = ['basicInfo', 'aboutSection', 'photoSection', 'likesSection'];
+    var sections = ['basicInfo', 'photoSection', 'likesSection'];
   } else {
-    var sections = ['basicInfo', 'matchingSection', 'aboutSection', 'photoSection', 'likesSection'];
+    var sections = ['basicInfo', 'matchingSection', 'photoSection', 'likesSection'];
   }
   var offset = 0;
   sections.forEach(function(section) {
@@ -411,24 +423,26 @@ IS.getCommonLikes = function(otherUserLikes) {
  * Renders a list of likes into the specified container
  * @param {Array} likes
  * @param {Object} container
+ * @param {Boolean} bShowCategories
  */
-IS.renderLikes = function(likes, container) {
+IS.renderLikes = function(likes, container, bShowCategories) {
 
     // clear container
     container.html('');
 
-    // create model for common likes
+    // create model
     var likes = new Likes({
       likes: likes
     });
 
     // create new view & render
-    var facebookLikesView = new FacebookLikesView({
+    var likesListView = new LikesListView({
       model: likes
     });
 
-    facebookLikesView.render();
-    container.append(facebookLikesView.el);
+    if(!bShowCategories) likesListView.render();
+    else likesListView.renderWithCategories();
+    container.append(likesListView.el);
     
 }
 
@@ -440,27 +454,10 @@ IS.setupPage = function (page) {
   // set page title as a class name to do targeted styling
   $('#content').attr('class', page);
 
-  if(page == 'myProfile') {
-    var columns = $('.column');
-
-    // calculate & set 'left' css property for all .column divs
-    var offset = 0;
-    columns.each(function(column) {
-      $(this).css({
-        left: offset + 'px'
-      });
-      offset += $(this).outerWidth(true);
-    });
-
-    // animate & show each column
-    var delay = 0;
-    columns.each(function(column) {
-      var _this = this;
-      setTimeout(function() {
-        $(_this).fadeIn(300);
-      }, delay);
-      delay += 200;
-    });
+  // highligh the current page in the navigation menu
+  if(page !== "viewprofile") {
+    $('nav a').removeClass('current');
+    $('#nav_' + page).addClass('current');
   }
 }
 

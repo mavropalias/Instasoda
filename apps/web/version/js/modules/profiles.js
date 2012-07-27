@@ -6,6 +6,8 @@ var MyProfileView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   events: {
     'click #saveProfileButton': 'save',
+    'click #editProfileButton': 'toggleProfileOptions',
+    'click #cancelProfileButton': 'toggleProfileOptions',
     'click .photoMakeDefault': 'photoMakeDefault',
     'click .photoDelete': 'photoDelete'
   },
@@ -27,6 +29,9 @@ var MyProfileView = Backbone.View.extend({
   render: function(cb) {
     var _this = this;
     console.log('  ~ rendering MyProfileView');
+
+    // set variables
+    this.model.set('fLc', this.model.get('fL').length);
 
     // render template
     var template = $('#tplMyProfile').html();
@@ -110,16 +115,33 @@ var MyProfileView = Backbone.View.extend({
 
     // resize columns
     var iLikesCount = this.model.get('fL').length;
-    IS.resizeProfilePage(iLikesCount, 0, true);
+    var iPhotosCount = this.model.get('p').length;
+    IS.resizeProfilePage(iLikesCount, 0, true, iPhotosCount);
 
-    // enable custom scrollbars
-    var myScroll = new iScroll('content', {
+    // enable custom scrollbars for the full page
+    /*IS.myScroll.destroy();
+    console.log(IS.myScroll);
+    if(!!IS.myScroll) {
+      IS.myScroll.destroy();
+      IS.myScroll = null;
+      console.log(IS.myScroll);
+    }*/
+    IS.myScroll = new iScroll('content', {
       hScroll: true,
       hScrollbar: true,
       vScroll: false,
       vScrollbar: false,
       scrollbarClass: 'scrollbar'
     });
+
+    // add custom scrollbar in the #instasodaOptions div
+    /*var myScroll2 = new iScroll('instasodaOptions', {
+      hScroll: false,
+      hScrollbar: false,
+      vScroll: true,
+      vScrollbar: true,
+      scrollbarClass: 'scrollbar'
+    });*/
 
     // activate fancybox for all photos - including the newly uploaded
     this.$("#userPhotos").on("focusin", function(){
@@ -150,10 +172,10 @@ var MyProfileView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   save: function() {
     console.log('- saving user');
-    _this = this.model;
+    _this = this;
 
-    $('#saveProfileButton').fadeOut();
-    $('#working').fadeIn();
+    $('#saveProfileButton').addClass('transparent');
+    $('#working').removeClass('transparent');
 
     this.model.save(
       {
@@ -166,22 +188,26 @@ var MyProfileView = Backbone.View.extend({
         error: function(model, response) {
           //TODO: properly handle errors
           alert('User save failed!');
-          $('#saveProfileButton').fadeIn();
-          $('#working').fadeOut();
+          $('#saveProfileButton').removeClass('transparent');
+          $('#working').addClass('transparent');
         },
         success: function(model, response) {
           console.log('- got an API response');
           // SUCCESS
           if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
             console.log('- API call was successful');
-            store.set("user", _this);
-            $('#saveProfileButton').fadeIn();
-            $('#working').fadeOut();
+            _this.toggleProfileOptions();
+            store.set("user", _this.model);
+            $('#saveProfileButton').removeClass('transparent');
+            $('#working').addClass('transparent');
           }
           // FAIL
           else {
             console.log('- API call failed: ' + response.error);
             alert('User save failed: ' + response.error);
+
+            $('#saveProfileButton').removeClass('transparent');
+            $('#working').addClass('transparent');
           }
         }
       }
@@ -294,6 +320,16 @@ var MyProfileView = Backbone.View.extend({
         }
       }
     });
+  },
+
+  // toggleProfileOptions
+  // -----------------------------------------------------------------------
+  toggleProfileOptions: function(e) {
+    var container = $('.flipContainer');
+
+    if(container.hasClass('rotateY')) container.removeClass('rotateY');
+    else container.addClass('rotateY');
+    
   }
 });
 
@@ -327,6 +363,9 @@ var UsersFullView = Backbone.View.extend({
   render: function() {
     console.log('  ~ rendering UsersFullView for: ' + this.model.get('_id'));
     var _this = this;
+
+    // set variables
+    this.model.set('fLc', this.model.get('fL').length);
 
     // check if this person is in the user's favourites
     this.model.set({isFaved: false});
@@ -367,7 +406,8 @@ var UsersFullView = Backbone.View.extend({
     // resize columns
     var iLikesCount = this.model.get('fL').length;
     var iCommonLikesCount = this.model.get('commonLikesCount');
-    IS.resizeProfilePage(iLikesCount, iCommonLikesCount);
+    var iPhotosCount = this.model.get('p').length;
+    IS.resizeProfilePage(iLikesCount, iCommonLikesCount, false, iPhotosCount);
 
     // enable custom scrollbars
     var myScroll = new iScroll('content', {
@@ -462,6 +502,11 @@ var MyPhotosView = Backbone.View.extend({
     this.$('.photo img').load(function(){
       $(this).parent().removeClass('transparent');
     });
+
+    // resize columns
+    var iLikesCount = this.model.get('fL').length;
+    var iPhotosCount = this.model.get('p').length;
+    IS.resizeProfilePage(iLikesCount, 0, true, iPhotosCount);
   },
 
   // deletePhoto

@@ -9,120 +9,191 @@
     }
   }
 
-  .defaultPhoto {
-    .box-shadow(0, 5px, 20px, #888);
-    float: none;
-    margin-bottom: 20px;
-    max-height: 320px;
-    overflow: hidden;
-
-    img {
-      width: 100%;
-      border: 0 none;
-    }
-  }
-
-  #basicInfo,
-  #aboutSection {
-    width: 360px;
-  }
-
   #connectOptions {
     overflow: hidden;
     clear: both;
   }
   
   #basicInfo {
-    
-    h3 {
-      line-height: 2em;
-    }
-    
-    .tip {
-      line-height: 1em;
-      font-size: 1.2em;
+    .perspective(1000);
+    position: relative;
+    width: 360px;
+
+    .flipContainer {
+      .transform-style(preserve-3d);
+      .transition(all 0.8s ease-in-out);
+      width: 100%;
+      height: 100%;
+      position: relative;
     }
 
-    .meetPrefs {
+    #instasodaProfile {
+      .backface-visibility(hidden);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom: 1px solid #ccc;
+      overflow: hidden;
+
+      .defaultPhoto {
+        .backface-visibility(hidden);
+        .box-shadow(0, 4px, 8px -3px, #888);
+        max-height: 320px;
+        width: 100%;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+
+        &> img {
+          width: 100%;
+          border: 0 none;
+        }
+
+        .basicInfo {
+          .linear-gradient(rgba(0, 0, 0, 0.0), #000);
+          .backface-visibility(hidden);
+          display: block;
+          position: absolute;
+          bottom: 0px;
+          left: 0;
+          right: 0;
+          padding: 4em 0 0 20px;
+          line-height: 1.3em;
+          overflow: hidden;
+          text-shadow: 1px 1px #000;
+          
+          .infoTitle {
+            display: block;
+            color: @colorBlue5;
+            padding-bottom: 0.1em;
+          }
+          
+          .infoData {
+            font-weight: 700;
+            font-size: 1.2em;
+            clear: both;
+            display: block;
+            color: @colorBlue6;
+          }
+          
+          li {
+            float: left;
+            margin: 0em 1.5em 10px 0;
+          }
+        }
+      }
+
+      .aboutMe {
+        padding: 20px 20px 10px;
+        border: 1px solid #ccc;
+        height: 100%;
+
+        h2 {
+          font-size: 1.4em;
+          padding-bottom: 0.5em;
+        }
+
+        .aboutText {
+          font-size: 1.2em;
+          line-height: 1.4em;
+          color: #333;
+        }
+      }
+
+      .profileButtons {
+        .linear-gradient(rgba(255, 255, 255, 0), #fff);
+        .backface-visibility(hidden);
+        position: absolute;
+        bottom: 0;
+        left: 1px;
+        right: 1px;
+        padding: 40px 20px 10px;
+        text-align: left;
+
+        button {
+          margin-right: 1em;
+        }
+      }
+    }
+
+    #instasodaOptions {
+      .transform(rotateY(180deg));
+      .backface-visibility(hidden);
+      .box-sizing(border-box);
+      .box-shadow(0, 4px, 8px -3px, #888);
+      border: 1px solid #ccc;
+      padding: 10px 20px;
       display: block;
+      height: 100%;
+      overflow: auto;
       position: relative;
 
-      .meetMen,
-      .meetWomen {
+      h2 {
+        font-size: 1.8em;
+        font-weight: 300;
+        color: @colorBlue2;
+        margin-bottom: 0.5em;
+      }
+
+      .optionsName {
+        padding: 0 0 2em 0;
+      }
+
+      .optionsMeet {
         display: block;
-        clear: both;
         position: relative;
-        //overflow: hidden;
-        margin-bottom: 5px;
-      }
+        padding: 0 0 1em 0;
+        margin-bottom: 1em;
 
-      .meetToggle {
-        margin-right: 5px;
-      }
-
-      .meetGender {
-        font-size: 12px;
-        display: inline-block;
-      }
-
-    }
-    
-    .sidebar {
-      text-align: left;
-      
-      .photo {
-        float: none;
-        margin: 0;
-        
-        img {
+        .meetMen,
+        .meetWomen {
           display: block;
-          width: 250px;
-          cursor: default;
+          clear: both;
+          position: relative;
+          margin-bottom: 5px;
         }
-        
-        &:hover {
-          border: 1px solid #ddd;
+
+        .meetToggle {
+          margin-right: 5px;
+        }
+
+        .meetGender {
+          font-size: 12px;
+          display: inline-block;
         }
       }
-      
-      button {
-        margin: 1em auto;
+
+      .optionsAbout {
+        position: relative;
       }
-      
-      .tip {
-        font-size: 1em;
-        font-style: italic;
-        color: #666;
+
+      .optionsButtons {
+        padding: 20px 0px 10px;
+        position: relative;
+
+        #saveProfileButton {
+          z-index: 2;
+          position: relative;
+        }
+
+        #working {
+          background: url(../img/loading.gif) center center no-repeat transparent;
+          width: 90px;
+          height: 50px;
+          position: absolute;
+          top: 10px;
+          left: 0;
+          z-index: 1;
+        }
       }
     }
   }
 
-  #aboutSection p{
+  #aboutSection p {
     font-size: 1.4em;
     line-height: 1.4em;
-  }
-  
-  .fbInformation {
-    
-    line-height: 1.3em;
-    overflow: hidden;
-    
-    .fbTitle {
-      color: #666;
-      margin-right: 0.5em;      
-    }
-    
-    .fbData {
-      font-weight: 700;
-      font-size: 1.3em;
-      clear: both;
-      display: block;
-    }
-    
-    li {
-      float: left;
-      margin-right: 2em;
-    }
   }
 
   #likesSection {

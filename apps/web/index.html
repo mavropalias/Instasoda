@@ -48,7 +48,7 @@
   <script type="text/javascript" src="VERSION/js/lib/jquery.fancybox-thumbs.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/async.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.timeago.js"></script>
-  <script type="text/javascript" src="VERSION/js/lib/slimScroll.min.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/slimScroll.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/iscroll.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.appear-1.1.1.min.js"></script>
 
@@ -131,16 +131,16 @@
         <ul>
           <li><a id="instasodaLogo" href="#"></a></li>
           <ul>
-            {{^_id}}<li><a id="navWelcome" href="#">Instasoda</a></li>{{/_id}}
+            {{^_id}}<li><a id="nav_welcome" href="#">Instasoda</a></li>{{/_id}}
             {{#_id}}<li><div id="navNotifications">0</div></li>{{/_id}}
-            {{#_id}}<li><a id="navHome" href="#">Home</a></li>{{/_id}}
-            {{#_id}}<li><a id="navMatches" href="#matches">Matches</a></li>{{/_id}}
-            {{#_id}}<li><a id="navSearch" href="#search">Search</a></li>{{/_id}}
-            {{#_id}}<li><a id="navLikes" href="#likes">Likes</a></li>{{/_id}}
-            {{#_id}}<li><a id="navFavourites" href="#favourites">Favourites</a></li>{{/_id}}
-            <li><a id="navMosaic" href="#mosaic">Mosaic</a></li>
-            {{#_id}}<li><a id="navProfile" href="#me">Profile</a></li>{{/_id}}
-            {{#_id}}<li><a id="navLogout" href="#logout">Logout</a></li>{{/_id}}
+            {{#_id}}<li><a id="nav_home" href="#">Home</a></li>{{/_id}}
+            {{#_id}}<li><a id="nav_matches" href="#matches">Matches</a></li>{{/_id}}
+            {{#_id}}<li><a id="nav_search" href="#search">Search</a></li>{{/_id}}
+            {{#_id}}<li><a id="nav_likes" href="#likes">Likes</a></li>{{/_id}}
+            {{#_id}}<li><a id="nav_favourites" href="#favourites">Favourites</a></li>{{/_id}}
+            <li><a id="nav_mosaic" href="#mosaic">Mosaic</a></li>
+            {{#_id}}<li><a id="nav_profile" href="#me">Profile</a></li>{{/_id}}
+            {{#_id}}<li><a id="nav_logout" href="#logout">Logout</a></li>{{/_id}}
             <li id="navOnlineUsers"></li>
           </ul>
         </ul>
@@ -380,32 +380,32 @@
 
       <script id="tplLikesFilters" type="text/template">
         <section>
-          <h3>My favourite likes</h3>
-          <span class="tip">Which of your Facebook likes are the most important to you.</span>
+          <h3>My favourite likes <span class="tip" title="Which of your Facebook likes are the most important to you."></span></h3>
           <p>
             no favourites yet
           </p>
         </section>
         <section>
-          <h3>Search using likes</h3>
-          <span class="tip">Add up to 20 likes here and click search to see who likes them.</span>
-          <p>
-            <ul class="searchLikes">
-              {{#so.l}}
-                <li class="fbLike" data-id="{{_id}}">
-                  <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
-                </li>
-              {{/so.l}}
-            </ul>
-            
-            <a id="doSearch" class="button" href="#search">Search for people!</a>
-          </p>
+          <h3>Search using likes <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
+          <ul class="likes">
+            {{#so.l}}
+              <li class="like" data-id="{{_id}}" data-name="{{n}}">
+                <span class="likePic">
+                  <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
+                </span>
+                <span class="likeName">{{n}}</span>
+              </li>
+            {{/so.l}}
+          </ul>
+        </section>
+        <section>
+          <a id="doSearch" class="button" href="#search">Search for people!</a>
         </section>
       </script>
 
 
     <!------------------------------------------------------------------------>
-    <!-- LIKES RESULTS VIEW -->
+    <!-- LIKES CATEGORY VIEW -->
     <!------------------------------------------------------------------------>
 
       <script id="tplLikesWithCategories" type="text/template">
@@ -418,8 +418,10 @@
           {{#fLbyCategory}}
             <ul class="fbCategoryLikes left" data-cat="{{c}}">
               {{#l}}
-                <li class="like" data-id="{{_id}}">
-                  <span class="likePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+                <li class="like" data-id="{{_id}}" data-name="{{n}}">
+                  <span class="likePic">
+                    <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
+                  </span>
                   <span class="likeName">{{n}}</span>
                 </li>
               {{/l}}
@@ -455,7 +457,6 @@
 
       <script id="tplLikePanel" type="text/template">
         <div class="likeName">{{n}}</div>
-
         {{#isInSearch}}
           <span class="addToSearch">- Remove from search</span>
         {{/isInSearch}}
@@ -464,12 +465,7 @@
         {{/isInSearch}}
 
         <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank">> View on Facebook</a>
-
-
-
         <a class="doSearch button" title="Search for people that like this" href="#search">Search</a>
-          
-
       </script>
 
 
@@ -524,10 +520,6 @@
               Men
             </label>
           </p>
-        </section>
-        <section>
-          <h3>Who are aged...</h3>
-          <span class="tip">Set an approximate age range on the slider.</span>
           <p>
             <h3 id="ageNum"></h3>
             <div id="ageRange"></div>
@@ -542,12 +534,14 @@
           </p>
         </section>-->
         <section>
-          <h3>My favourite things are...</h3>
-          <span class="tip">Add up to 20 likes here and click search to see who likes them.</span>
-          <ul class="searchLikes">
+          <h3>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
+          <ul class="likes">
             {{#so.l}}
-              <li class="fbLike" data-id="{{_id}}">
-                <span class="fbLikePic"><img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50></span>
+              <li class="like" data-id="{{_id}}" data-name="{{n}}">
+                <span class="likePic">
+                  <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
+                </span>
+                <span class="likeName">{{n}}</span>
               </li>
             {{/so.l}}
           </ul>
@@ -556,9 +550,7 @@
           <a id="buttonAddLikes" class="button" href="#likes">+ Add likes</a>
         </section>
         <section>
-          <p>
-            <button id="doSearch">Search for matches!</button>
-          </p>
+          <button id="doSearch">Search for people</button>
         </section>
       </script>
 
@@ -591,90 +583,69 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplUsersProfile" type="text/template">
+
         <div id="basicInfo" class="column">
-          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
-          <div class="defaultPhoto">
-            {{#p}}
-              {{#d}}
-                <img src="http://img.instasoda.com/u/{{f}}" />
-              {{/d}}
-            {{/p}}
-            {{^p}}
-              <img src="http://img.instasoda.com/i/noPhoto.png" />
-            {{/p}}
-          </div>
+          <div class="flipContainer">
+            <div id="instasodaProfile">
+              <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
 
-          <div id="basicInfo">
-            <ul class="fbInformation">
-              <li class="marginTop1x">
-                <span class="fbTitle">Age:</span>
-                <span class="fbData">{{ag}}</span>
-              </li>
-              <li class="marginTop1x">
-                <span class="fbTitle">Relationship:</span>
-                <span class="fbData">
-                  {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
-                </span>
-              </li>
-              <li class="marginTop1x">
-                <span class="fbTitle">Location:</span>
-                <span class="fbData">
-                  {{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
-                </span>
-              </li>
-              <li class="marginTop1x">
-                <span class="fbTitle">Wants to meet:</span>
-                <span class="fbData">
-                  {{#w}}{{^m}}women{{/m}}{{/w}}
-                  {{#w}}{{#m}}women & men{{/m}}{{/w}}
-                  {{#m}}{{^w}}men{{/w}}{{/m}}
-                </span>
-              </li>
-            </ul>
-          </div>
+              <div class="defaultPhoto">
+                {{#p}}
+                  {{#d}}
+                    <img src="http://img.instasoda.com/u/{{f}}" />
+                  {{/d}}
+                {{/p}}
+                {{^p}}
+                  <img src="http://img.instasoda.com/i/noPhoto.png" />
+                {{/p}}
 
-          <div id="connectOptions">
-            <button id="sendMessage" class="left">Send message / Chat</button>
-            <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
-            <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
-          </div>
+                <ul class="basicInfo">
+                  <li>
+                    <span class="infoTitle">Age:</span>
+                    <span class="infoData infoVerified">{{ag}}</span>
+                  </li>
+                  <li>
+                    <span class="infoTitle">Relationship:</span>
+                    <span class="infoData infoVerified">
+                      {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
+                    </span>
+                  </li>
+                  <li>
+                    <span class="infoTitle">Location:</span>
+                    <span class="infoData infoVerified">
+                      {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+                    </span>
+                  </li>
+                  <li>
+                    <span class="infoTitle">Wants to meet:</span>
+                    <span class="infoData infoVerified">
+                      {{#w}}{{^m}}women{{/m}}{{/w}}
+                      {{#w}}{{#m}}women & men{{/m}}{{/w}}
+                      {{#m}}{{^w}}men{{/w}}{{/m}}
+                    </span>
+                  </li>
+                </ul>
+              </div>
 
-        </div>
+              <div class="aboutMe">
+                <h2>A little bit about {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}</h2>
+                <p class="aboutText">{{a}}</p>
+              </div>
+
+              <div id="connectOptions" class="profileButtons">
+                <button id="sendMessage" class="left">Send message / Chat</button>
+                <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
+                <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
+              </div>
+            </div> <!-- #instasodaProfile -->
+          </div> <!-- .flipContainer -->
+        </div> <!-- #basicInfo -->
 
         <div id="matchingSection" class="column">
           <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;({{commonLikesCount}})</h1>
           <div id="commonLikes">
             You do not seem to have anything in common :(
             </div>
-        </div>
-
-        <div id="aboutSection" class="column">
-          <h1>A little bit about {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}</h1>
-          <p>
-            {{#a}}
-              {{a}}
-              <p>Lorem ipsum dolor sit amet, nec ad sint legendos, te odio sanctus per. Eum cu solum dissentias, vim in latine postulant dignissim, fastidii ponderum sit ut. Has iusto prompta. </p>
-
-              <p>Interesset in, ex autem argumentum nam. An clita vivendo vix, eam ceteros perpetua id. Ut petentium voluptatum sit, eu est dictas salutatus.</p>
-
-              <p>Qui id dolorum splendide intellegebat, soluta option theophrastus at ius, ei vix case porro. Ex per vidit hendrerit scribentur, vix eu qualisque prodesset. His an phaedrum adversarium. </p>
-
-              <p>At sed detracto senserit, sea in atqui placerat, vim cu aliquid copiosae similique.</p>
-
-              <p>Id sed augue melius consequuntur, at reprimique disputando conclusionemque mea, an salutandi ullamcorper eum. Quando aperiri iudicabit nam eu, te nam fierent honestatis.</p>
-            {{/a}}
-            {{^a}}
-              Lorem ipsum dolor sit amet, nec ad sint legendos, te odio sanctus per. Eum cu solum dissentias, vim in latine postulant dignissim, fastidii ponderum sit ut. Has iusto prompta. 
-
-              Interesset in, ex autem argumentum nam. An clita vivendo vix, eam ceteros perpetua id. Ut petentium voluptatum sit, eu est dictas salutatus.
-
-              Qui id dolorum splendide intellegebat, soluta option theophrastus at ius, ei vix case porro. Ex per vidit hendrerit scribentur, vix eu qualisque prodesset. His an phaedrum adversarium. 
-
-              At sed detracto senserit, sea in atqui placerat, vim cu aliquid copiosae similique.
-
-              Id sed augue melius consequuntur, at reprimique disputando conclusionemque mea, an salutandi ullamcorper eum. Quando aperiri iudicabit nam eu, te nam fierent honestatis.
-            {{/a}}
-          </p>
         </div>
 
         <div id="photoSection" class="column">
@@ -702,74 +673,96 @@
       <script id="tplMyProfile" type="text/template">
 
         <div id="basicInfo" class="column">
-          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
-          <div class="defaultPhoto">
-            {{#p}}
-              {{#d}}
-                <img src="http://img.instasoda.com/u/{{f}}" />
-              {{/d}}
-            {{/p}}
-            {{^p}}
-              <img src="http://img.instasoda.com/i/noPhoto.png" />
-            {{/p}}
-          </div>
+          <div class="flipContainer">
+            <div id="instasodaProfile">
+              <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
 
-          <div id="basicInfo">
-            <ul class="fbInformation">
-              <li class="marginTop1x">
-                <span class="fbTitle">Age:</span>
-                <span class="fbData">{{ag}}</span>
-              </li>
-              <li class="marginTop1x">
-                <span class="fbTitle">Gender:</span>
-                <span class="fbData">{{fS}}</span>
-              </li>
-              <li class="marginTop1x">
-                <span class="fbTitle">Relationship:</span>
-                <span class="fbData">
-                  {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
-                </span>
-              </li>
-              <li class="marginTop1x" title="{{#fCl}}{{city}} / {{state}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}">
-                <span class="fbTitle">Location:</span>
-                <span class="fbData">
-                  {{#fCl}}{{city}} / {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
-                </span>
-              </li>
-            </ul>
-          </div>
+              <div class="defaultPhoto">
+                {{#p}}
+                  {{#d}}
+                    <img src="http://img.instasoda.com/u/{{f}}" />
+                  {{/d}}
+                {{/p}}
+                {{^p}}
+                  <img src="http://img.instasoda.com/i/noPhoto.png" />
+                {{/p}}
 
-          <h3>My dating name:</h3>
-          <p>
-            <input name="username" value="{{u}}" required maxlength=50> <span class="tip" title="This is how other instasoda users will see you."></span>
-          </p>
+                <ul class="basicInfo">
+                  <li>
+                    <span class="infoTitle">Age:</span>
+                    <span class="infoData infoVerified">{{ag}}</span>
+                  </li>
+                  <li>
+                    <span class="infoTitle">Gender:</span>
+                    <span class="infoData infoVerified">{{fS}}</span>
+                  </li>
+                  <li>
+                    <span class="infoTitle">Relationship:</span>
+                    <span class="infoData infoVerified">
+                      {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
+                    </span>
+                  </li>
+                  <li title="{{#fCl}}{{city}}, {{state}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}">
+                    <span class="infoTitle">Location:</span>
+                    <span class="infoData infoVerified">
+                      {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+                    </span>
+                  </li>
+                </ul>
+              </div>
 
-          <h3>I would like to meet:</h3>
-          <p class="meetPrefs">
-            <label class="meetWomen">
-              <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
-              <span class="meetGender">women</span>
-            </label>
-            <label class="meetMen">
-              <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
-              <span class="meetGender">men</span>
-            </label>
-          </p>
+              <div class="aboutMe">
+                <h2>A little bit about myself</h2>
+                <p class="aboutText">{{a}}</p>
+              </div>
 
-          <button type="submit" id="saveProfileButton">Save profile</button> <span class="tip" title="Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced periodically & automatically. We will not make any changes (we can&#8217;t!) to your Facebook acount ;)"></span>
-          <button type="submit" id="working" style="display:none;" disabled>Saving...</button>
-        </div>
+              <div class="profileButtons">
+                <button type="submit" id="editProfileButton">Edit profile</button> 
+              </div>
+            </div> <!-- #instasodaProfile -->
 
-        <div id="aboutSection" class="column">
-          <h1>A little bit about myself <span class="tip" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates."></span></h1>
+            <div id="instasodaOptions">
+              <h1>Profile options</h1>
 
-          <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 10em;">{{a}}</div>
-        </div>
+              <div class="optionsName">
+                <h2>My dating name <span class="tip" title="This is how other instasoda users will see you."></span></h2>
+                <input name="username" value="{{u}}" required maxlength=50>
+              </div>
+
+              <div class="optionsMeet">  
+                <h2>I would like to meet</h2>
+                <label class="meetWomen">
+                  <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
+                  <span class="meetGender">women</span>
+                </label>
+                <label class="meetMen">
+                  <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
+                  <span class="meetGender">men</span>
+                </label>
+              </div>
+
+              <div class="optionsAbout">
+                <h2>A little bit about myself <span class="tip" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates."></span></h2>
+
+                <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 20em;">{{a}}</div>
+              </div>
+
+              <div class="optionsButtons">
+                <button type="submit" id="saveProfileButton" class="animated">Save profile</button>
+                <button type="submit" id="cancelProfileButton" class="animated">Cancel</button> 
+                <span class="tip" title="Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced periodically & automatically. We will not make any changes (we can&#8217;t!) to your Facebook acount ;)"></span>
+                <div id="working" class="animated transparent"></div>
+              </div>
+            </div> <!-- #instasodaOptions -->
+
+          </div> <!-- .flipContainer -->
+
+        </div> <!-- #basicInfo -->
 
         <div id="photoSection" class="column">
           <h1>Me at my best! (photos) <span class="tip" title="Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos."></span></h1>
           <ul id="userPhotos">
-            <li id="uploadPhoto" class='photo animated'>
+            <li id="uploadPhoto" class='animated'>
               <div id="uploadWidget"></div>
             </li>
             <div id="userPhotosList">
@@ -794,7 +787,7 @@
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
           <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com/u/{{f}}">
-            <img src='http://img.instasoda.com/u/{{f}}' height="150">
+            <img class="photoSrc" src='http://img.instasoda.com/u/{{f}}'>
             <div class="photoControls">
               <span class="photoMakeDefault left {{#d}}hidden{{/d}}" title="Make this your default profile photo">make default</span>
               <span class="photoIsDefault left {{^d}}hidden{{/d}}" title="This is your default profile photo">default photo</span>
