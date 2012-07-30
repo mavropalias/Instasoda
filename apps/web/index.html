@@ -97,8 +97,13 @@
           oauth      : true,
         });
 
+        console.log('> Facebook is ready');
+
         $(document).ready(function() {
-          IS.facebookAuth();
+          // Initialize Backbone history
+          // ===========================
+          router = new Router;
+          Backbone.history.start({});
         });
       };
       (function(d){
@@ -236,17 +241,6 @@
             <span class="time" title="{{t}}"></span>
             <span class="message">{{m}}</span>
           </li>
-      </script>
-
-
-    <!------------------------------------------------------------------------>
-    <!-- BETA MESSAGE -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplBeta" type="text/template">
-        <div>
-          <img src="img/betaMessage.png" width="1021" height="469" />
-        </div>
       </script>
 
 

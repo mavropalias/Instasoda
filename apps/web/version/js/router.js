@@ -47,120 +47,201 @@ var Router = Backbone.Router.extend({
   // -----------------------------------------------------------------------
   welcome: function() {
     console.log('> routing welcome page');
-    welcomeView.render();
-    $('#content > div').detach();
-    $('#content').append(welcomeView.el);
-    IS.setupPage('home');
+
+    if(!appReady) {
+      IS.prepareApp(function() {
+        welcomeView.render();
+        $('#content > div').detach();
+        $('#content').append(welcomeView.el);
+        IS.setupPage('home');
+      });
+    } else {
+      welcomeView.render();
+      $('#content > div').detach();
+      $('#content').append(welcomeView.el);
+      IS.setupPage('home');
+    }
   },
   
   // myProfile
   // -----------------------------------------------------------------------
   myProfile: function() {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
     console.log('> routing my profile page');
-    myProfileView.render();
-    $('#content > div').detach();
-    $('#content').append(myProfileView.el);
-    IS.setupPage('profile');
+
+    if(!appReady) {
+      IS.prepareApp(function() {
+        myProfileView.render();
+        $('#content > div').detach();
+        $('#content').append(myProfileView.el);
+        IS.setupPage('profile');
+      });
+      return;
+    } else {
+      myProfileView.render();
+      $('#content > div').detach();
+      $('#content').append(myProfileView.el);
+      IS.setupPage('profile');
+    }
   },
 
   // matches
   // -----------------------------------------------------------------------
   matches: function() {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
     console.log('> routing matches page');
 
-    matchesCollection.fetch({
-      data: {
-        '_id': user.get('_id'),
-        'fTkn': user.get('fTkn')
-      }
-    });
+    if(!appReady) {
+      IS.prepareApp(function() {
+        matchesCollection.fetch({
+          data: {
+            '_id': user.get('_id'),
+            'fTkn': user.get('fTkn')
+          }
+        });
 
-    matchesView.render();
-    $('#content > div').detach();
-    $('#content').append(matchesView.el);
-    IS.setupPage('matches');
+        matchesView.render();
+        $('#content > div').detach();
+        $('#content').append(matchesView.el);
+        IS.setupPage('matches');
+      });
+      return;
+    } else {
+      matchesCollection.fetch({
+        data: {
+          '_id': user.get('_id'),
+          'fTkn': user.get('fTkn')
+        }
+      });
+
+      matchesView.render();
+      $('#content > div').detach();
+      $('#content').append(matchesView.el);
+      IS.setupPage('matches');
+    }
   },
        
   // search
   // -----------------------------------------------------------------------
   search: function(m, w, nearMe, ageMin, ageMax) {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
     console.log('> routing search page');
 
-    // search by like - array with like id's
-    var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
+    if(!appReady) {
+      IS.prepareApp(function() {
+        // search by like - array with like id's
+        var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
 
-    // fetch options - if null then load user defaults
-    if(ageMin > 0) {
-      usersCollection.fetch({
-        data: {
-          'm': m,
-          'w': w,
-          'nearMe': nearMe,
-          'ageMin': ageMin,
-          'ageMax': ageMax,
-          'l': searchByLike,
-          '_id': user.get('_id'),
-          'fTkn': user.get('fTkn')
+        // fetch options - if null then load user defaults
+        if(ageMin > 0) {
+          usersCollection.fetch({
+            data: {
+              'm': m,
+              'w': w,
+              'nearMe': nearMe,
+              'ageMin': ageMin,
+              'ageMax': ageMax,
+              'l': searchByLike,
+              '_id': user.get('_id'),
+              'fTkn': user.get('fTkn')
+            }
+          });
+        } else {
+          usersCollection.fetch({
+            data: {
+              'm': user.get('so').m,
+              'w': user.get('so').w,
+              'nearMe': user.get('so').nearMe,
+              'ageMin': user.get('so').ageMin,
+              'ageMax': user.get('so').ageMax,
+              'l': searchByLike,
+              '_id': user.get('_id'),
+              'fTkn': user.get('fTkn')
+            }
+          });
         }
+        searchView.render();
+        $('#content > div').detach();
+        $('#content').append(searchView.el);
+        IS.setupPage('search');
       });
+      return;
     } else {
-      usersCollection.fetch({
-        data: {
-          'm': user.get('so').m,
-          'w': user.get('so').w,
-          'nearMe': user.get('so').nearMe,
-          'ageMin': user.get('so').ageMin,
-          'ageMax': user.get('so').ageMax,
-          'l': searchByLike,
-          '_id': user.get('_id'),
-          'fTkn': user.get('fTkn')
-        }
-      });
+      // search by like - array with like id's
+      var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
+
+      // fetch options - if null then load user defaults
+      if(ageMin > 0) {
+        usersCollection.fetch({
+          data: {
+            'm': m,
+            'w': w,
+            'nearMe': nearMe,
+            'ageMin': ageMin,
+            'ageMax': ageMax,
+            'l': searchByLike,
+            '_id': user.get('_id'),
+            'fTkn': user.get('fTkn')
+          }
+        });
+      } else {
+        usersCollection.fetch({
+          data: {
+            'm': user.get('so').m,
+            'w': user.get('so').w,
+            'nearMe': user.get('so').nearMe,
+            'ageMin': user.get('so').ageMin,
+            'ageMax': user.get('so').ageMax,
+            'l': searchByLike,
+            '_id': user.get('_id'),
+            'fTkn': user.get('fTkn')
+          }
+        });
+      }
+      searchView.render();
+      $('#content > div').detach();
+      $('#content').append(searchView.el);
+      IS.setupPage('search');
     }
-    searchView.render();
-    $('#content > div').detach();
-    $('#content').append(searchView.el);
-    IS.setupPage('search');
   },
 
   // likes
   // -----------------------------------------------------------------------
   likes: function() {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
     console.log('> routing likes page');
-    likesView.render();
-    $('#content > div').detach();
-    $('#content').append(likesView.el);
-    IS.setupPage('likes');
+
+    if(!appReady) {
+      IS.prepareApp(function() {
+        likesView.render();
+        $('#content > div').detach();
+        $('#content').append(likesView.el);
+        IS.setupPage('likes');
+      });
+      return;
+    } else {
+      likesView.render();
+      $('#content > div').detach();
+      $('#content').append(likesView.el);
+      IS.setupPage('likes');
+    }
   },
 
   // favourites
   // -----------------------------------------------------------------------
   favourites: function() {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
     console.log('> routing favourites page');
-    favouritesView.render();
-    $('#content > div').detach();
-    $('#content').append(favouritesView.el);
-    IS.setupPage('favourites');
+
+    if(!appReady) {
+      IS.prepareApp(function() {
+        favouritesView.render();
+        $('#content > div').detach();
+        $('#content').append(favouritesView.el);
+        IS.setupPage('favourites');
+      });
+      return;
+    } else {
+      favouritesView.render();
+      $('#content > div').detach();
+      $('#content').append(favouritesView.el);
+      IS.setupPage('favourites');
+    }
   },
 
   // mosaic
@@ -181,19 +262,6 @@ var Router = Backbone.Router.extend({
     IS.setupPage('mosaic');
   },
   
-  // beta
-  // -----------------------------------------------------------------------
-  beta: function() {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
-    console.log('> routing beta page');
-    betaView.render();
-    $('#content > div').detach();
-    $('#content').append(betaView.el);
-  },
-  
   // logout
   // -----------------------------------------------------------------------
   logout: function() {
@@ -204,21 +272,32 @@ var Router = Backbone.Router.extend({
   // viewUser
   // -----------------------------------------------------------------------
   viewUser: function(id) {
-    if(!appReady) {
-      router.navigate('', {trigger: true});
-      return;
-    }
     console.log('> routing view user page');
-    
-    users.set({ '_id': id }, {silent: true});
-    users.fetch({
-      success: function() {
-        usersFullView.render();
-        $('#content > div').detach();
-        $('#content').append(usersFullView.el);
-        IS.setupPage('viewprofile');
-      }
-    });
+
+    if(!appReady) {
+      IS.prepareApp(function() {
+        users.set({ '_id': id }, {silent: true});
+        users.fetch({
+          success: function() {
+            usersFullView.render();
+            $('#content > div').detach();
+            $('#content').append(usersFullView.el);
+            IS.setupPage('viewprofile');
+          }
+        });
+      });
+      return;
+    } else {
+      users.set({ '_id': id }, {silent: true});
+      users.fetch({
+        success: function() {
+          usersFullView.render();
+          $('#content > div').detach();
+          $('#content').append(usersFullView.el);
+          IS.setupPage('viewprofile');
+        }
+      });
+    }
   }  
 }); 
-var router = new Router;
+var router = null;

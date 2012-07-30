@@ -3,10 +3,13 @@
 
   var IS = {};
   IS.notificationsArray = new Array;
+  IS.fbToken = null;
+  IS.fbTokenExpires = null;
 
 // Config
 // =============================================================================
   
+  var FB = false;
   var appReady = false;
   var socketIoHost = "http://localhost:8082"; //##socketIoHost##
   var sApi = "http://localhost:8080/api/"; //##apiUrl##
@@ -121,9 +124,8 @@
 // =============================================================================
   
   jQuery(function($) {
-
-    // Backbone views
-    // -------------------------------------------------------------------------
+    // Initialize Backbone views
+    // =========================
     navigationView = new NavigationView({
       el: $('nav')[0],
       model: user
@@ -133,7 +135,6 @@
       model: user
     });
     welcomeView = new WelcomeView();
-    betaView = new BetaView();
     myProfileView = new MyProfileView({
       model: user
     });
@@ -154,18 +155,4 @@
     likesView = new LikesView({
       model: user,
     });
-
-    // enable custom scrollbars
-    // -------------------------------------------------------------------------
-    /*var myScroll = new iScroll('content', {
-      vScroll: false,
-      hScrollbar: true, 
-      vScrollbar: false 
-    });
-
-    setInterval(function () {
-        myScroll.refresh();
-      }, 200);*/
-
-    Backbone.history.start({});
   });

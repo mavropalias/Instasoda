@@ -163,16 +163,132 @@ IS.addOrRemoveLikeFromSearchOptions = function(likeId, likeName) {
  * @param {String} path
  */
 IS.navigateTo = function(path) {
-  router.navigate(path, {trigger: true});
+  console.log('> navigateTo ' + path);
+  router.navigate(path, {trigger: true, replace: true});
+}
+
+/**
+ * Prepares APP.
+ */
+IS.prepareApp = function(cb) {
+  console.log('> Preparing app');
+
+  // Auth user & redirect to page
+  // ============================
+  //if(!!store.get("user") && store.get("user").hasOwnProperty('fTkn')) {
+  if(IS.nullOrEmpty(store.get("user"))) {
+    IS.facebookAuth(function(err, res) {
+      if(!err) {
+        console.log('> Attempting to login the user');
+
+        IS.login(IS.fbToken, res[0].third_party_id, function(err) {
+          if(!err) {
+            console.log('> SUCCESS! User is logged in');
+            appReady = true;
+            if(cb) cb();
+            else IS.navigateTo('me');
+          } else {
+            console.log('> FAIL: Need to create new account');
+            IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
+              if(!err) {
+                console.log('> SUCCESS! Account created');
+                appReady = true;
+                IS.navigateTo('me');
+              } else {
+                console.log('> ERROR: ' + res);
+                appReady = false;
+                IS.navigateTo('');
+              }
+            });
+          }
+        });
+      } else {
+        console.log('> User is not ready');
+        appReady = false;
+        //IS.logout();
+      }
+    });
+  } else if (!IS.nullOrEmpty(store.get("user"))) {
+    IS.fbToken = store.get("user").fbToken;
+
+    IS.login(IS.fbToken, store.get("user").fTid, function(err) {
+      if(!err) {
+        console.log('> SUCCESS! User is logged in');
+        appReady = true;
+        if(cb) cb();
+        else IS.navigateTo('me');
+      } else {
+        console.log('> FAIL: Need to create new account');
+        IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
+          if(!err) {
+            console.log('> SUCCESS! Account created');
+            appReady = true;
+            IS.navigateTo('me');
+          } else {
+            console.log('> ERROR: ' + res);
+            appReady = false;
+            IS.navigateTo('');
+          }
+        });
+      }
+    });
+  }
 }
 
 /**
  * Attempts to auth a FB user.
  */
-IS.facebookAuth = function(){
-  if(!!store.get("user") && store.get("user").hasOwnProperty('fTkn')) {
-    welcomeView.facebookAuth();
-  }
+IS.facebookAuth = function(cb){
+  console.log('> Doing Facebook auth');  
+  FB.getLoginStatus(function(res) {
+    if (!res.authResponse) {
+      //user is not connected to the app or logged out        
+        FB.login(function(response) { 
+          IS.facebookAuth();
+        },
+        {
+          scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+          + 'user_activities,user_education_history,user_interests,'
+          + 'user_likes,user_photos'
+        });    
+      
+    } else {
+      if (res.status === 'connected') {
+        console.log('> User is logged into Facebook and has authenticated the application');            
+        
+        // get facebook token data
+        IS.fbToken = res.authResponse.accessToken;
+        IS.fbTokenExpires = res.authResponse.expiresIn;
+                    
+        // Check if token is still valid
+        if(IS.fbTokenExpires > 0) {
+          console.log('> Facebook token expires in ' + (IS.fbTokenExpires / 60) + ' minutes');
+          console.log('>   -> ' + IS.fbToken);
+          // get third_party_id from Facebook and login the user
+          FB.api(
+            {
+              method: 'fql.query',
+              query: 'SELECT third_party_id FROM user WHERE uid=me()'
+            },
+            function(res) {
+              console.log('> Got user details from FB');
+              cb(null, res);
+            }
+          );
+        } else {
+          console.log('- Facebook token has expired');
+          FB.logout();
+          cb("Facebook token has expired");
+        }
+      } else if (res.status === 'not_authorized') {
+        console.log('> User is logged into Facebook but has not authenticated the application');
+        cb("User is logged into Facebook but has not authenticated the application");
+      } else {
+        console.log('> User is not logged into Facebook at this time');
+        cb("User is not logged into Facebook at this time");
+      }
+    }
+  });
 }
 
 /**
@@ -319,7 +435,8 @@ IS.logout = function() {
  * @param {any} property
  */
 IS.nullOrEmpty = function(property) {
-  if(property == '' || property == null || typeof property == 'undefined' ) return true;
+  if(typeof property == 'undefined') return true;
+  else if(property == '' || property == null) return true;
   else return false;
 }
 
@@ -460,25 +577,3 @@ IS.setupPage = function (page) {
     $('#nav_' + page).addClass('current');
   }
 }
-
-
-
-
-
-
-// =========================================================================
-// Beta message view
-// =========================================================================
-var BetaView = Backbone.View.extend({
-  // initialize
-  initialize: function() {
-    _.bindAll(this);
-  },
-  
-  // render
-  render: function() {
-    console.log('  ~ rendering beta view');
-    var template = $('#tplBeta').html();
-    $(this.el).html(template);
-  }
-});
