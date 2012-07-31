@@ -125,12 +125,15 @@ var LikesListView = Backbone.View.extend({
   initialize: function() {
     console.log('  ~ initializing LikesListView');
     _.bindAll(this);
+    this.renderType = null;
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
     var _this = this;
+    this.renderType = 1;
+    console.log('  ~ rendering LikesListView');
 
     var template = $('#tplLikesList').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
@@ -144,7 +147,8 @@ var LikesListView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   renderWithCategories: function() {
     var _this = this;
-    console.log('  ~ rendering LikesListView');
+    this.renderType = 2;
+    console.log('  ~ rendering LikesListView - with cats');
     var template = $('#tplLikesWithCategories').html();
     
     // pre-process likes and split them into categories
@@ -242,7 +246,8 @@ var LikesListView = Backbone.View.extend({
       // construct a new like model, based on the event's target
       var likeAttrs = {
         _id: target.data('id'),
-        n: target.data('name')
+        n: target.data('name'),
+        c: target.data('cat')
       };
       var like = new Like(likeAttrs);
 
@@ -272,7 +277,10 @@ var FacebookLikePanelView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .addToSearch': 'addOrRemoveLikeFromSearchOptions'
+    'click .addToSearch': 'addOrRemoveLikeFromSearchOptions',
+    'click .attitude1': 'rateLike1',
+    'click .attitude2': 'rateLike2',
+    'click .attitude3': 'rateLike3'
   },
 
   // initialize
@@ -289,10 +297,10 @@ var FacebookLikePanelView = Backbone.View.extend({
   render: function() {
     var _this = this;
     var template = $('#tplLikePanel').html();
+    var currentLike = this.model.get('_id');
 
     // check if the like is already in the user's search options
     var userSearchLikes = (!!user.get('so').l) ? user.get('so').l : [];
-    var currentLike = this.model.get('_id');
     if(_.any(userSearchLikes, function(like) { return like._id == currentLike; })) 
     {
       this.model.set('isInSearch', true);
@@ -300,6 +308,21 @@ var FacebookLikePanelView = Backbone.View.extend({
     else 
     {
       this.model.set('isInSearch', false);
+    }
+
+    // pre-process like's rating
+    this.model.set({
+      'like': false,
+      'dislike': false,
+      'fav': false
+    });
+    var fullLike = _.find(user.get('l'), function(like) {
+      return currentLike == like._id;
+    });
+    if(!!fullLike) {
+      if(fullLike.r === 2)  this.model.set('like', true);
+      else if(fullLike.r === 1)  this.model.set('dislike', true);
+      else if(fullLike.r === 3)  this.model.set('fav', true);
     }
 
     // render template
@@ -310,5 +333,44 @@ var FacebookLikePanelView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   addOrRemoveLikeFromSearchOptions: function(e) {
     IS.addOrRemoveLikeFromSearchOptions(this.model.get('_id'), this.model.get('n'));
-  }
+  },
+
+  // rateLike1
+  // -----------------------------------------------------------------------
+  rateLike1: function() {
+    var _this = this;
+    IS.addOrRemoveLikeAndRate(this.model.get('_id'),
+        this.model.get('n'),
+        1,
+        this.model.get('c'),
+        function() {
+          _this.render();
+        });
+  },
+
+  // rateLike2
+  // -----------------------------------------------------------------------
+  rateLike2: function() {
+    var _this = this;
+    IS.addOrRemoveLikeAndRate(this.model.get('_id'),
+        this.model.get('n'),
+        2,
+        this.model.get('c'),
+        function() {
+          _this.render();
+        });
+  },
+
+  // rateLike3
+  // -----------------------------------------------------------------------
+  rateLike3: function() {
+    var _this = this;
+    IS.addOrRemoveLikeAndRate(this.model.get('_id'),
+        this.model.get('n'),
+        3,
+        this.model.get('c'),
+        function() {
+          _this.render();
+        });
+  },
 });

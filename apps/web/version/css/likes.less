@@ -59,6 +59,33 @@
         width: 100%;
       }
 
+      .likeAttitudes {
+        .border-radius(4px);
+        .linear-gradient();
+        display: block;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid #ccc;
+
+        .likeAttitude {
+          width: 33%;
+          display: block;
+          float: left;
+          text-align: center;
+          padding: 0.5em 0;
+          cursor: pointer;
+
+          &:hover {
+            text-decoration: underline;
+          }
+
+          &.active {
+            .linear-gradient(@color1, @color2);
+            color: #fff;
+          }
+        }
+      }
+
       .doSearch {
         clear: both;
         display: block;

@@ -41,7 +41,7 @@ var MyProfileView = Backbone.View.extend({
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
 
     // render all likes
-    IS.renderLikes(this.model.get('fL'), this.$('#facebookLikes'));
+    IS.renderLikes(this.model.get('l'), this.$('#facebookLikes'));
 
     setTimeout(function() {
       _this.onView();

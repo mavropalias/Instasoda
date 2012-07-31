@@ -159,6 +159,76 @@ IS.addOrRemoveLikeFromSearchOptions = function(likeId, likeName) {
 }
 
 /**
+ * Adds or removes a like with a rating
+ * @param {String} likeId
+ * @param {String} likeRating
+ */
+IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory, cb) {
+  var userLikes = user.get('l');
+
+  // search if the like is already in the user's model
+  // if so, then change its rating or remove it
+  // ==========================================================
+  var like = _.find(userLikes, function(like) { return like._id == likeId; })
+  if(!!like) 
+  {
+    if(like.r != likeRating) {
+      console.log(' - changing like\'s rating to ' + likeRating);
+
+      // create new like array without said like
+      var updatedLikes = _.reject(userLikes, function(like) { return like._id == likeId; });
+
+      // set rating & push new like
+      like.r = likeRating;
+      updatedLikes.push(like);
+
+      // save user model
+      user.set('l', updatedLikes);
+      IS.saveUser();
+      cb();
+    } else {
+      console.log(' - removing like');
+
+      // create new like array without said like
+      var updatedLikes = _.reject(userLikes, function(like) { return like._id == likeId; });
+
+      // save user model
+      user.set('l', updatedLikes);
+      IS.saveUser();
+      cb();
+    }
+  }
+  // else add it
+  // ==========================================================
+  else
+  {
+    console.log(' - adding new like with rating of ' + likeRating);
+
+    // create current date for the like
+    var currentTime = new Date();
+    var month = currentTime.getMonth() + 1;
+      if(month < 10) month = '0' + month;
+    var day = currentTime.getDate();
+      if(day < 10) day = '0' + day;
+    var year = currentTime.getFullYear();
+
+    // set rating & push new like
+    userLikes.push({
+      _id: likeId,
+      n: likeName,
+      c: likeCategory,
+      t: year + month + day,
+      r: likeRating
+    });
+
+    // save user model
+    user.set('l', userLikes);
+    IS.saveUser();
+    cb();
+  }
+}
+
+/**
  * Navigates to a page.
  * @param {String} path
  */

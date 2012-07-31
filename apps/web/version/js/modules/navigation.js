@@ -38,7 +38,7 @@ var OnlineUsersView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering FacebookLikesView');
+    console.log('  ~ rendering OnlineUsersView');
     var template = $('#tplOnlineUsers').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
   }

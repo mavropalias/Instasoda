@@ -412,7 +412,7 @@
           {{#fLbyCategory}}
             <ul class="fbCategoryLikes left" data-cat="{{c}}">
               {{#l}}
-                <li class="like" data-id="{{_id}}" data-name="{{n}}">
+                <li class="like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
                   <span class="likePic">
                     <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
                   </span>
@@ -434,7 +434,7 @@
       <script id="tplLikesList" type="text/template">
         <ul class="likes">
           {{#likes}}
-            <li class="like" data-id="{{_id}}" data-name="{{n}}">
+            <li class="like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
               <span class="likePic">
                 <img data-src="http://img.instasoda.com/l/{{_id}}.jpg" src="http://img.instasoda.com/i/loading.gif" width=50 height=50 class="likeImg">
               </span>
@@ -457,6 +457,12 @@
         {{^isInSearch}}
           <span class="addToSearch">+ Add to search</span>
         {{/isInSearch}}
+
+        <ul class="likeAttitudes">
+          <li class="likeAttitude attitude1 {{#dislike}}active{{/dislike}}" title="I don't like this - avoid matching me with people who like it">Dislike</li>
+          <li class="likeAttitude attitude2 {{#like}}active{{/like}}" title="I like this">Like</li>
+          <li class="likeAttitude attitude3 {{#fav}}active{{/fav}}" title="I really like this - put more weight on this when matching me with other people">Favourite!</li>
+        </ul>
 
         <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank">> View on Facebook</a>
         <a class="doSearch button" title="Search for people that like this" href="#search">Search</a>
