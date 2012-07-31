@@ -216,7 +216,7 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
 
     // set rating & push new like
     userLikes.push({
-      _id: likeId,
+      _id: likeId.toString(),
       n: likeName,
       c: likeCategory,
       t: year + month + day,
