@@ -31,7 +31,7 @@ var MyProfileView = Backbone.View.extend({
     console.log('  ~ rendering MyProfileView');
 
     // set variables
-    this.model.set('fLc', this.model.get('fL').length);
+    this.model.set('likeCount', this.model.get('l').length);
 
     // render template
     var template = $('#tplMyProfile').html();
@@ -114,7 +114,7 @@ var MyProfileView = Backbone.View.extend({
       });
 
     // resize columns
-    var iLikesCount = this.model.get('fL').length;
+    var iLikesCount = this.model.get('l').length;
     var iPhotosCount = this.model.get('p').length;
     IS.resizeProfilePage(iLikesCount, 0, true, iPhotosCount);
 
@@ -365,7 +365,7 @@ var UsersFullView = Backbone.View.extend({
     var _this = this;
 
     // set variables
-    this.model.set('fLc', this.model.get('fL').length);
+    this.model.set('likeCount', this.model.get('l').length);
 
     // check if this person is in the user's favourites
     this.model.set({isFaved: false});
@@ -375,8 +375,8 @@ var UsersFullView = Backbone.View.extend({
       });
     }
 
-    // find common likes and the user model
-    var commonLikes = IS.getCommonLikes(this.model.get('fL'));
+    // find common likes and update the user model
+    var commonLikes = IS.getCommonLikes(this.model.get('l'));
     this.model.set('commonLikesCount', commonLikes.length);
 
     // render template
@@ -393,7 +393,7 @@ var UsersFullView = Backbone.View.extend({
     }
 
     // render all likes
-    IS.renderLikes(this.model.get('fL'), this.$('#facebookLikes'));
+    IS.renderLikes(this.model.get('l'), this.$('#facebookLikes'));
 
     setTimeout(function() {
       _this.onView();
@@ -404,7 +404,7 @@ var UsersFullView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   onView: function() {
     // resize columns
-    var iLikesCount = this.model.get('fL').length;
+    var iLikesCount = this.model.get('l').length;
     var iCommonLikesCount = this.model.get('commonLikesCount');
     var iPhotosCount = this.model.get('p').length;
     IS.resizeProfilePage(iLikesCount, iCommonLikesCount, false, iPhotosCount);
@@ -504,7 +504,7 @@ var MyPhotosView = Backbone.View.extend({
     });
 
     // resize columns
-    var iLikesCount = this.model.get('fL').length;
+    var iLikesCount = this.model.get('l').length;
     var iPhotosCount = this.model.get('p').length;
     IS.resizeProfilePage(iLikesCount, 0, true, iPhotosCount);
   },

@@ -35,20 +35,22 @@
     .likePanel {
       .box-shadow(0, 5px, 40px, #888);
       position: absolute;
-      width: 152px;
+      min-width: 152px;
+      max-width: 200px;
       top: 0px;
       left: 0px;
       background: #fff;
-      padding: 20px;
+      padding: 10px 20px;
       z-index: 9;
 
       .likePic {
-        margin: 0 0 1em 1em;
+        margin: 0 10px 10px 0;
         float: left;
       }
 
       .likeName {
         max-width: 300em;
+        width: 92px;
         text-align: left;
         height: auto;
         margin-top: 0;
@@ -56,23 +58,24 @@
         line-height: 1.2em;
         overflow: hidden;
         font-weight: bold;
-        width: 100%;
+        float: left;
       }
 
       .likeAttitudes {
-        .border-radius(4px);
         .linear-gradient();
         display: block;
+        clear: both;
         overflow: hidden;
         position: relative;
         border: 1px solid #ccc;
+        margin-bottom: 10px;
+        float: left;
 
         .likeAttitude {
-          width: 33%;
           display: block;
           float: left;
           text-align: center;
-          padding: 0.5em 0;
+          padding: 0.7em 9.5px;
           cursor: pointer;
 
           &:hover {
@@ -86,19 +89,34 @@
         }
       }
 
+      .addToSearch,
+      .removeFromSearch,
+      .likeFacebookUrl,
       .doSearch {
-        clear: both;
         display: block;
-        margin-top: 1em;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        float: left;
+        margin-right: 10px;
       }
 
-      .likeFacebookUrl,
       .addToSearch {
-        text-decoration: underline;
-        display: block;
-        padding: 0.3em 0;
-        cursor: pointer;
-        color: #06f;
+        background: url(../img/addToSearch.png) top left no-repeat;
+      }
+
+      .removeFromSearch {
+        background: url(../img/removeFromSearch.png) top left no-repeat;
+      }
+
+      .doSearch {
+        background: url(../img/search.png) top left no-repeat;
+      }
+
+      .likeFacebookUrl {
+        background: url(../img/fb_icon_20x20.png) top left no-repeat;
+        float: right;
+        margin-right: 0;
       }
     }
   }

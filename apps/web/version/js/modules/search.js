@@ -48,7 +48,7 @@ var SearchFiltersView = Backbone.View.extend({
     console.log('  ~ initializing SearchFiltersView');
     _.bindAll(this);
 
-    user.bind('removedSearchLike', this.doSearch);
+    user.bind('removedSearchLike', this.render);
   },
 
   // render

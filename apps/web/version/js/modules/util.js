@@ -124,6 +124,8 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
  * @param {String} likeName
  */
 IS.addOrRemoveLikeFromSearchOptions = function(likeId, likeName) {
+  l(likeId);
+  l(likeName);
   var userSearchLikes = (!!user.get('so').l) ? user.get('so').l : [];
 
   // search if the like is already in the user's search options
@@ -592,14 +594,14 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePag
  * @param {Array} otherUserLikes
  */
 IS.getCommonLikes = function(otherUserLikes) {
-  var myLikes = _.pluck(user.get('fL'), '_id');
+  var myLikes = _.pluck(user.get('l'), '_id');
   otherUserLikes = _.pluck(otherUserLikes, '_id');
 
   var commonLikes = _.intersection(myLikes, otherUserLikes);
 
   // rebuild commonLikes to add all like properties and return it
   return _.map(commonLikes, function(like) {
-    var fullLike = _.find(user.get('fL'), function(myLike) {
+    var fullLike = _.find(user.get('l'), function(myLike) {
       return myLike._id == like;
     });
     return fullLike;
@@ -646,4 +648,12 @@ IS.setupPage = function (page) {
     $('nav a').removeClass('current');
     $('#nav_' + page).addClass('current');
   }
+}
+
+/**
+ * Shortcut for console.log()
+ * @param {String} msg
+ */
+function l(msg) {
+  console.log(msg)
 }

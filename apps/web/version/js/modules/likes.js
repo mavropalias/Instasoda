@@ -27,7 +27,7 @@ var LikesView = Backbone.View.extend({
     this.likesFiltersView.setElement(this.$('#likesFilters')).render();
 
     // render likes
-    IS.renderLikes(this.model.get('fL'), this.$('#likesResults'), true);
+    IS.renderLikes(this.model.get('l'), this.$('#likesResults'), true);
   }
 });
 
@@ -278,6 +278,7 @@ var FacebookLikePanelView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   events: {
     'click .addToSearch': 'addOrRemoveLikeFromSearchOptions',
+    'click .removeFromSearch': 'addOrRemoveLikeFromSearchOptions',
     'click .attitude1': 'rateLike1',
     'click .attitude2': 'rateLike2',
     'click .attitude3': 'rateLike3'

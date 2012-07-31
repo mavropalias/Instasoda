@@ -450,22 +450,28 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikePanel" type="text/template">
-        <div class="likeName">{{n}}</div>
-        {{#isInSearch}}
-          <span class="addToSearch">- Remove from search</span>
-        {{/isInSearch}}
-        {{^isInSearch}}
-          <span class="addToSearch">+ Add to search</span>
-        {{/isInSearch}}
+        <div class="likePic" title="{{n}}">
+          <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
+        </div>
+
+        <div class="likeName" title="{{n}}">{{n}}</div>
 
         <ul class="likeAttitudes">
           <li class="likeAttitude attitude1 {{#dislike}}active{{/dislike}}" title="I don't like this - avoid matching me with people who like it">Dislike</li>
           <li class="likeAttitude attitude2 {{#like}}active{{/like}}" title="I like this">Like</li>
-          <li class="likeAttitude attitude3 {{#fav}}active{{/fav}}" title="I really like this - put more weight on this when matching me with other people">Favourite!</li>
+          <li class="likeAttitude attitude3 {{#fav}}active{{/fav}}" title="I really like this - put more weight on this when matching me with other people">Favourite</li>
         </ul>
 
-        <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank">> View on Facebook</a>
-        <a class="doSearch button" title="Search for people that like this" href="#search">Search</a>
+        {{#isInSearch}}
+          <span class="removeFromSearch" title="Remove this from your search filters"></span>
+        {{/isInSearch}}
+        {{^isInSearch}}
+          <span class="addToSearch" title="Add this to your search filters"></span>
+        {{/isInSearch}}
+
+        <a class="doSearch" title="Search for people who like this" href="#search"></a>
+
+        <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank" title="View this on Facebook"></a>
       </script>
 
 
@@ -658,7 +664,7 @@
         </div>
 
         <div id="likesSection" class="column">
-          <h1>Likes & interests ({{fLc}})</h1>
+          <h1>Likes & interests ({{likeCount}})</h1>
           <div id="facebookLikes">
 
           </div>
@@ -772,7 +778,7 @@
         </div>
 
         <div id="likesSection" class="column">
-          <h1>My Likes & interests ({{fLc}})</h1>
+          <h1>My Likes & interests ({{likeCount}})</h1>
           <div id="facebookLikes">
 
           </div>
