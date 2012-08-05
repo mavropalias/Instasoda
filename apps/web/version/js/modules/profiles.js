@@ -27,11 +27,15 @@ var MyProfileView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function(cb) {
-    var _this = this;
     console.log('  ~ rendering MyProfileView');
+    var _this = this;
+    var likes = this.model.get('l');
 
-    // set variables
-    this.model.set('likeCount', this.model.get('l').length);
+    // set likeCount
+    this.model.set('likeCount', likes.length);
+
+    // set favouriteCount
+    this.model.set('favouriteCount', IS.countLikesByRating(likes, '3'));
 
     // render template
     var template = $('#tplMyProfile').html();
@@ -41,7 +45,7 @@ var MyProfileView = Backbone.View.extend({
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
 
     // render all likes
-    IS.renderLikes(this.model.get('l'), this.$('#facebookLikes'));
+    IS.renderLikes(likes, this.$('#allLikes'));
 
     setTimeout(function() {
       _this.onView();

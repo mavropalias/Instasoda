@@ -554,7 +554,7 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePag
 
   // calculate & set 'left' css property for all .column divs
   if(bIsMyProfilePage) {
-    var sections = ['basicInfo', 'photoSection', 'likesSection'];
+    var sections = ['basicInfo', 'photoSection', 'favouritesSection', 'likesSection'];
   } else {
     var sections = ['basicInfo', 'matchingSection', 'photoSection', 'likesSection'];
   }
