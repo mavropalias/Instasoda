@@ -3,33 +3,73 @@
 // =============================================================================
   
   .like {
-    .box-shadow(0, 4px, 8px -3px, #888);
-    border: 1px solid #ccc;
+    border: 1px solid white;
     position: relative;
     padding: 10px; 
-    margin: 0 10px 10px 0; 
+    margin: 0 15px 15px 0; 
     background: #fff;
     float:left;
     display: block;
-    
-    &:hover {
-      background: #eee;
+    width: 141px;
+    background-image: linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
+    background-image: -o-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
+    background-image: -moz-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
+    background-image: -webkit-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
+    background-image: -ms-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
+    background-image: -webkit-gradient(
+      linear,
+      0 top,
+      left bottom,
+      color-stop(0.11, rgb(242,246,247)),
+      color-stop(0.5, rgb(234,242,245))
+    );
+    color: #303030;
+
+    &.likeUserDislikes {
+      background: white;
+      border: 1px dashed #ccc;
+    }
+
+    &.likeUserFavourites {
+      background-image: linear-gradient(left top, rgb(219,75,99) 11%, rgb(199,52,69) 50%);
+      background-image: -o-linear-gradient(left top, rgb(219,75,99) 11%, rgb(199,52,69) 50%);
+      background-image: -moz-linear-gradient(left top, rgb(219,75,99) 11%, rgb(199,52,69) 50%);
+      background-image: -webkit-linear-gradient(left top, rgb(219,75,99) 11%, rgb(199,52,69) 50%);
+      background-image: -ms-linear-gradient(left top, rgb(219,75,99) 11%, rgb(199,52,69) 50%);
+      background-image: -webkit-gradient(
+        linear,
+        left top,
+        right bottom,
+        color-stop(0.11, rgb(219,75,99)),
+        color-stop(0.5, rgb(199,52,69))
+      );
+      border: 1px solid #BE1E2D;
+      > .likeName {
+        color: white;
+      }
+      > .likePic {
+        border: 1px solid white;
+      }
     }
     
     .likeName {
       display: block;
-      font-size: 11px;
-      max-width: 6em;
-      height: 2.1em;
+      float: right;
+      font-size: 12px;
+      max-width: 6.5em;
+      height: 2.2em;
       overflow: hidden;
-      margin-top: 0.5em;
       text-overflow: ellipsis;
-      text-align: center;
+      text-align: right;
+      line-height: 1.1;
+      text-transform: lowercase;
+      font-weight: bold;
       cursor: default;
     }
 
     .likePic {
-      margin: 0 1em;
+      float:left;
+      border: 1px solid white;
     }
 
     .likePanel {
@@ -37,10 +77,11 @@
       position: absolute;
       min-width: 152px;
       max-width: 200px;
-      top: 0px;
-      left: 0px;
+      top: -33px;
+      left: -15px;
       background: #fff;
       padding: 10px 20px;
+      font-weight: normal;
       z-index: 9;
 
       .likePic {
@@ -49,16 +90,16 @@
       }
 
       .likeName {
-        max-width: 300em;
+        //max-width: 300em;
         width: 92px;
-        text-align: left;
+        text-align: right;
         height: auto;
         margin-top: 0;
         margin-bottom: 1em;
         line-height: 1.2em;
         overflow: hidden;
         font-weight: bold;
-        float: left;
+        float: right;
       }
 
       .likeAttitudes {

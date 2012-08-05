@@ -21,7 +21,7 @@
 
     .flipContainer {
       .transform-style(preserve-3d);
-      .transition(all 0.8s ease-in-out);
+      .transition(all 0.4s ease-in-out);
       width: 100%;
       height: 100%;
       position: relative;
@@ -29,6 +29,7 @@
 
     #instasodaProfile {
       .backface-visibility(hidden);
+      .transform-style(preserve-3d);
       position: absolute;
       top: 0;
       bottom: 0;
@@ -122,6 +123,7 @@
       .transform(rotateY(180deg));
       .backface-visibility(hidden);
       .box-sizing(border-box);
+      .transform-style(preserve-3d);
       .box-shadow(0, 4px, 8px -3px, #888);
       border: 1px solid #ccc;
       padding: 10px 20px;

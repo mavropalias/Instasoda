@@ -567,9 +567,11 @@ IS.resizeProfilePage = function (iLikesCount, iCommonLikesCount, bIsMyProfilePag
   });
 
   // calculate & set width for the likes container
+  console.log(likesWidth = $('.like').first().outerWidth());
+  console.log(likesHeight = $('.like').first().outerHeight());
   availableHeight = $('#content').height() - $('#likesSection > h1').outerHeight() - 40;
-  iMaxLikesRows = Math.floor(availableHeight / 115);
-  iLikesWrapperWidth = Math.ceil(iLikesCount / iMaxLikesRows) * 102;
+  iMaxLikesRows = Math.floor(availableHeight / likesWidth);
+  iLikesWrapperWidth = Math.ceil(iLikesCount / iMaxLikesRows) * 119;
   $("#likesSection").css({ 'width': iLikesWrapperWidth + 'px' });
 
   // set width for scroll container
@@ -615,6 +617,16 @@ IS.getCommonLikes = function(otherUserLikes) {
  * @param {Boolean} bShowCategories
  */
 IS.renderLikes = function(likes, container, bShowCategories) {
+    
+    // Adding likeType
+    $.each(likes, function(index, value) {
+      if (likes[index]['r'] == 2)
+        likes[index]['likeType'] = '';
+      else if (likes[index]['r'] == 3)
+        likes[index]['likeType'] = 'likeUserFavourites';
+      else
+        likes[index]['likeType'] = 'likeUserDislikes';
+    });
 
     // clear container
     container.html('');
