@@ -4,12 +4,11 @@
 
   button,
   .button {
-    background: @color3;
+    background: @color2;
     padding: 0.5em 1em;
-    border: 0 none;
+    border: 3px solid @color2;
     color: white;
-    font-size: 1.3em;
-    line-height: 1.5em;
+    font-size: 2em;
     cursor: pointer;
     display: block;
     display: inline-block;
@@ -18,7 +17,6 @@
     margin: 0;
     
     &:hover {
-      background: @color2;
       text-decoration: underline;
     }
   }
@@ -35,6 +33,13 @@
     position: relative;
     cursor: pointer;
     display: inline-block;*/
+  }
+
+  input[type="text"] {
+    border: 3px solid #999;
+    padding: 0.5em 1em;
+    font-size: 2em;
+    margin: 0;
   }
 
   .textArea {

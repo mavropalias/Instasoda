@@ -11,6 +11,7 @@
   
   var FB = false;
   var appReady = false;
+  var userReady = false;
   var socketIoHost = "http://localhost:8082"; //##socketIoHost##
   var sApi = "http://localhost:8080/api/"; //##apiUrl##
   jQuery.support.cors = true;

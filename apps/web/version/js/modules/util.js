@@ -269,7 +269,7 @@ IS.prepareApp = function(cb) {
               } else {
                 console.log('> ERROR: ' + res);
                 appReady = false;
-                IS.navigateTo('');
+                IS.logout();
               }
             });
           }
@@ -277,7 +277,7 @@ IS.prepareApp = function(cb) {
       } else {
         console.log('> User is not ready');
         appReady = false;
-        //IS.logout();
+        IS.logout();
       }
     });
   } else if (!IS.nullOrEmpty(store.get("user"))) {
@@ -299,7 +299,7 @@ IS.prepareApp = function(cb) {
           } else {
             console.log('> ERROR: ' + res);
             appReady = false;
-            IS.navigateTo('');
+            IS.logout();
           }
         });
       }
@@ -648,7 +648,7 @@ IS.renderLikes = function(likes, container, bShowCategories) {
 }
 
 /**
- * Calculate & set dimensions for a page, etc
+ * Do various admin tasks
  * @param {String} page
  */
 IS.setupPage = function (page) {
@@ -660,6 +660,33 @@ IS.setupPage = function (page) {
     $('nav a').removeClass('current');
     $('#nav_' + page).addClass('current');
   }
+
+  // setup user
+  IS.setupUser();
+}
+
+/**
+ * Sets user settings (username, sex prefs, etc)
+ */
+IS.setupUser = function () {
+  var u  = user.get('u');
+  var m = user.get('m');
+  var w = user.get('w');
+
+  // check for username + m + w
+  if(IS.nullOrEmpty(u) && IS.nullOrEmpty(m) && IS.nullOrEmpty(w)) {
+    l('1');
+  }
+  // check for m + w
+  else if(!IS.nullOrEmpty(u) && IS.nullOrEmpty(m) && IS.nullOrEmpty(w)) {
+    l('2');
+  }
+  // check for username
+  else if(IS.nullOrEmpty(u) && !(IS.nullOrEmpty(m) && IS.nullOrEmpty(w))) {
+    settingsView = new SettingsView({
+      id: 'settings'
+    });
+  }
 }
 
 /**
@@ -667,5 +694,5 @@ IS.setupPage = function (page) {
  * @param {String} msg
  */
 function l(msg) {
-  console.log(msg)
+  console.log(msg);
 }

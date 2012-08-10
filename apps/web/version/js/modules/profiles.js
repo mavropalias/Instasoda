@@ -35,7 +35,7 @@ var MyProfileView = Backbone.View.extend({
     this.model.set('likeCount', likes.length);
 
     // set favouriteCount
-    this.model.set('favouriteCount', IS.countLikesByRating(likes, '3'));
+    //this.model.set('favouriteCount', IS.countLikesByRating(likes, '3'));
 
     // render template
     var template = $('#tplMyProfile').html();
@@ -526,5 +526,33 @@ var MyPhotosView = Backbone.View.extend({
     setTimeout(function() {
       _this.$('#' + photoId).detach();
     }, 400);
+  }
+});
+
+
+// =========================================================================
+// SettingsView
+// =========================================================================
+var SettingsView = Backbone.View.extend({
+  // properties
+  // -----------------------------------------------------------------------
+  id: 'settings',
+  tagName: 'section',
+
+
+  // initialize
+  // -----------------------------------------------------------------------
+  initialize: function() {
+    console.log('  ~ initializing SettingsView');
+    _.bindAll(this);
+    this.render();
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function() {
+    console.log('  ~ rendering SettingsView');
+    var template = $('#tplSettings').html();
+    this.$el.html(template).appendTo('body');
   }
 });
