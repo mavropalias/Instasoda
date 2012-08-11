@@ -536,9 +536,14 @@ var MyPhotosView = Backbone.View.extend({
 var SettingsView = Backbone.View.extend({
   // properties
   // -----------------------------------------------------------------------
-  id: 'settings',
+  className: 'settings',
   tagName: 'section',
 
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click #saveUsername': 'save'
+  },
 
   // initialize
   // -----------------------------------------------------------------------
@@ -554,5 +559,12 @@ var SettingsView = Backbone.View.extend({
     console.log('  ~ rendering SettingsView');
     var template = $('#tplSettings').html();
     this.$el.html(template).appendTo('body');
+  },
+
+  // save
+  // -----------------------------------------------------------------------
+  save: function() {
+    console.log('  ~ saving SettingsView');
+    IS.pageFlip(this.$('.settingUsername'), this.$('.settingMeet'));
   }
 });

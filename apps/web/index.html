@@ -27,8 +27,8 @@
   <link rel="shortcut icon" href="/favicon.ico">
 
   <!-- CUSTOM FONTS -->
-  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>
+  <!--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>-->
 
   <!-- STYLES START -->
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery-ui-1.8.18.custom.css" />
@@ -833,16 +833,54 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSettings" type="text/template">
-        <div class="setting username">
-          <div class="settingTitle">
-            Welcome! What nickname would you like to have?
+        <div class="settingContainer settingUsername">
+          <div class="setting">
+            <div class="settingTitle">
+              Welcome! What nickname would you like to have?
+            </div>
+            <div class="settingContent">
+              <input type="text" name="username" placeholder="type your nickname here ..." required maxlength=50>
+              <button id="saveUsername">Ok1</button>
+            </div>
           </div>
-          <div class="settingContent">
-            <input type="text" name="username" placeholder="type your nickname here ..." required maxlength=50>
-            <button id="saveUsername">Ok</button>
+        </div>
+
+        <div class="settingContainer settingMeet">
+          <div class="setting">
+            <div class="settingTitle">
+              Would you like to meet men or women?
+            </div>
+            <div class="settingContent">
+              <input type="text" name="username" placeholder="type your nickname here ..." required maxlength=50>
+              <button id="saveUsername">Ok2</button>
+            </div>
           </div>
         </div>
       </script>
+
+
+
+    <!------------------------------------------------------------------------>
+    <!-- PAGE FLIP PLACEHOLDER -->
+    <!------------------------------------------------------------------------>
+
+      <section id="pageFlipPlaceholder">
+        <div class="pageFlip">
+          <div class="pageAcontainer">
+            <div class="page pageA"></div>
+          </div>
+          <div class="pageBcontainer">
+            <div class="page pageB"></div>
+          </div>
+        </div>
+
+        <div class="pageApartial">
+          <div class="pageApartialInner"></div>
+        </div>
+        <div class="pageBpartial">
+          <div class="pageBpartialInner"></div>
+        </div>
+      </section>
 
 </body>
 </html>

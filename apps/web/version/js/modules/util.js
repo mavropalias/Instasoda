@@ -690,6 +690,22 @@ IS.setupUser = function () {
 }
 
 /**
+ * Creates a page flip animation between two containers
+ * @param {String} c1
+ * @param {String} c2
+ */
+IS.pageFlip = function (c1, c2) {
+  $(c1).appendTo('.pageA, .pageApartialInner');
+  $(c2).appendTo('.pageB, .pageBpartialInner');
+  
+  $('#pageFlipPlaceholder').show();
+
+  setTimeout(function() {
+    $('.pageFlip').addClass('pageFlipped');
+  }, 10);
+}
+
+/**
  * Shortcut for console.log()
  * @param {String} msg
  */
