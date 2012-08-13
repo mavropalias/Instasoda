@@ -651,85 +651,89 @@
 
       <script id="tplUsersProfile" type="text/template">
 
-        <div id="basicInfo" class="column">
-          <div class="flipContainer">
-            <div id="instasodaProfile">
-              <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
+        <div class="column sidebar">
+          <div class="defaultPhoto">
+            {{#p}}
+              {{#d}}
+                <img src="http://img.instasoda.com/u/{{f}}" />
+              {{/d}}
+            {{/p}}
+            {{^p}}
+              <img src="http://img.instasoda.com/i/noPhoto.png" />
+            {{/p}}
+          </div> <!-- .defaultPhoto -->
 
-              <div class="defaultPhoto">
-                {{#p}}
-                  {{#d}}
-                    <img src="http://img.instasoda.com/u/{{f}}" />
-                  {{/d}}
-                {{/p}}
-                {{^p}}
-                  <img src="http://img.instasoda.com/i/noPhoto.png" />
-                {{/p}}
+          <ul class="basicInfo">
+            <li>
+              <span class="icon icon-gift"></span>
+              <span class="infoTitle">Age:</span>
+              <span class="infoData infoVerified">{{ag}}</span>
+            </li>
+            <li>
+              <span class="icon icon-heart"></span>
+              <span class="infoTitle">Relationship:</span>
+              <span class="infoData infoVerified">
+                {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
+              </span>
+            </li>
+            <li>
+              <span class="icon icon-map-marker"></span>
+              <span class="infoTitle">Location:</span>
+              <span class="infoData infoVerified">
+                {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+              </span>
+            </li>
+            <li>
+              <span class="icon icon-glass"></span>
+              <span class="infoTitle ">Wants to meet:</span>
+              <span class="infoData infoVerified">
+                {{#w}}{{^m}}women{{/m}}{{/w}}
+                {{#w}}{{#m}}women & men{{/m}}{{/w}}
+                {{#m}}{{^w}}men{{/w}}{{/m}}
+              </span>
+            </li>
+          </ul>
 
-                <ul class="basicInfo">
-                  <li>
-                    <span class="infoTitle">Age:</span>
-                    <span class="infoData infoVerified">{{ag}}</span>
-                  </li>
-                  <li>
-                    <span class="infoTitle">Relationship:</span>
-                    <span class="infoData infoVerified">
-                      {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
-                    </span>
-                  </li>
-                  <li>
-                    <span class="infoTitle">Location:</span>
-                    <span class="infoData infoVerified">
-                      {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
-                    </span>
-                  </li>
-                  <li>
-                    <span class="infoTitle">Wants to meet:</span>
-                    <span class="infoData infoVerified">
-                      {{#w}}{{^m}}women{{/m}}{{/w}}
-                      {{#w}}{{#m}}women & men{{/m}}{{/w}}
-                      {{#m}}{{^w}}men{{/w}}{{/m}}
-                    </span>
-                  </li>
-                </ul>
-              </div>
+          <div id="connectOptions" class="profileButtons">
+            <button id="sendMessage">Send message / Chat</button>
+            <br><br>
+            <button id="handleFavourite">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
+            <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
+          </div>
 
-              <div class="aboutMe">
-                <h2>A little bit about {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}</h2>
-                <p class="aboutText">{{a}}</p>
-              </div>
-
-              <div id="connectOptions" class="profileButtons">
-                <button id="sendMessage" class="left">Send message / Chat</button>
-                <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
-                <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
-              </div>
-            </div> <!-- #instasodaProfile -->
-          </div> <!-- .flipContainer -->
         </div> <!-- #basicInfo -->
 
-        <div id="matchingSection" class="column">
-          <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;({{commonLikesCount}})</h1>
-          <div id="commonLikes">
-            You do not seem to have anything in common :(
+        <div class="column mainContent">
+
+          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
+
+          <section class="aboutMe">
+            <p class="aboutText">{{a}}</p>
+          </section>
+
+          <section id="photoSection">
+            <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h2>
+            <ul id="userPhotos">
+              <div id="userPhotosList" class="noControls">
+                <!-- USER PHOTOS -->
+              </div>
+            </ul>
+          </section>
+
+          <section id="matchingSection">
+            <h2>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;({{commonLikesCount}})</h2>
+            <div id="commonLikes">
+              <p>You do not seem to have anything in common :(</p>
             </div>
-        </div>
+          </section>
 
-        <div id="photoSection" class="column">
-          <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h1>
-          <ul id="userPhotos">
-            <div id="userPhotosList" class="noControls">
-              <!-- USER PHOTOS -->
+          <section id="likesSection">
+            <h2>Likes & interests ({{likeCount}})</h2>
+            <div id="facebookLikes">
             </div>
-          </ul>
-        </div>
+          </section>
 
-        <div id="likesSection" class="column">
-          <h1>Likes & interests ({{likeCount}})</h1>
-          <div id="facebookLikes">
-
-          </div>
-        </div>
+        </div> <!-- .mainContent -->
       </script>
 
 

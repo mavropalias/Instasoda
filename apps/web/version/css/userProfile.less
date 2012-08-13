@@ -171,21 +171,59 @@
     }
   }
 
-  #aboutSection p {
-    font-size: 1.4em;
-    line-height: 1.4em;
+
+// =============================================================================
+// USER PROFILES - NEW STYLE
+// =============================================================================
+
+  .defaultPhoto {
+    max-height: 320px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+
+    &> img {
+      width: 100%;
+      border: 0 none;
+    }
   }
 
-  #likesSection {
-    max-width: 130000px;
-    width: 1000px;
-    padding: 0 40px 0 40px;
-  }
+  .basicInfo {
+    display: block;
+    padding: 1rem 0;
+    line-height: 1.3em;
+    overflow: hidden;
 
-  #matchingSection {
-    max-width: 130000px;
+    .icon {
+      font-size: 1.2rem;
+      float: left;
+      position: absolute;
+      margin-top: 0.5rem;
+    }
+    
+    .infoTitle {
+      display: block;
+      color: #666;
+      margin-left: 2rem;
+      padding-bottom: 0.1em;
+    }
+    
+    .infoData {
+      font-weight: 700;
+      font-size: 1.2em;
+      clear: both;
+      display: block;
+      margin-left: 2rem;
+      color: @colorBlue2;
+    }
+    
+    li {
+      float: left;
+      margin: 0em 0em 1rem 0;
+      width: 50%;
+    }
   }
-
 
 // =============================================================================
 // SETTINGS

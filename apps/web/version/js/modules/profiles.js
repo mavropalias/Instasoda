@@ -117,36 +117,6 @@ var MyProfileView = Backbone.View.extend({
         }
       });
 
-    // resize columns
-    var iLikesCount = this.model.get('l').length;
-    var iPhotosCount = this.model.get('p').length;
-    IS.resizeProfilePage(iLikesCount, 0, true, iPhotosCount);
-
-    // enable custom scrollbars for the full page
-    /*IS.myScroll.destroy();
-    console.log(IS.myScroll);
-    if(!!IS.myScroll) {
-      IS.myScroll.destroy();
-      IS.myScroll = null;
-      console.log(IS.myScroll);
-    }*/
-    IS.myScroll = new iScroll('content', {
-      hScroll: true,
-      hScrollbar: true,
-      vScroll: false,
-      vScrollbar: false,
-      scrollbarClass: 'scrollbar'
-    });
-
-    // add custom scrollbar in the #instasodaOptions div
-    /*var myScroll2 = new iScroll('instasodaOptions', {
-      hScroll: false,
-      hScrollbar: false,
-      vScroll: true,
-      vScrollbar: true,
-      scrollbarClass: 'scrollbar'
-    });*/
-
     // activate fancybox for all photos - including the newly uploaded
     this.$("#userPhotos").on("focusin", function(){
       _this.$(".fancybox-thumb").fancybox({
@@ -413,39 +383,27 @@ var UsersFullView = Backbone.View.extend({
     var iLikesCount = this.model.get('l').length;
     var iCommonLikesCount = this.model.get('commonLikesCount');
     var iPhotosCount = this.model.get('p').length;
-    IS.resizeProfilePage(iLikesCount, iCommonLikesCount, false, iPhotosCount);
 
-    // enable custom scrollbars
-    var myScroll = new iScroll('content', {
-      hScroll: true,
-      hScrollbar: true,
-      vScroll: false,
-      vScrollbar: false,
-      scrollbarClass: 'scrollbar'
-    });
-
-    // activate fancybox for all photos - including the newly uploaded
-    this.$("#userPhotos").on("focusin", function(){
-      _this.$(".fancybox-thumb").fancybox({
-        prevEffect  : 'elastic',
-        nextEffect  : 'elastic',
-        padding: 0,
-        helpers : {
-          title : {
-            type: 'outside'
-          },
-          overlay : {
-            opacity : 0.85,
-            css : {
-              'background-color' : '#000'
-            }
-          },
-          thumbs  : {
-            width : 50,
-            height: 50
+    // activate fancybox for all photos
+    this.$(".fancybox-thumb").fancybox({
+      prevEffect  : 'elastic',
+      nextEffect  : 'elastic',
+      padding: 0,
+      helpers : {
+        title : {
+          type: 'outside'
+        },
+        overlay : {
+          opacity : 0.85,
+          css : {
+            'background-color' : '#000'
           }
+        },
+        thumbs  : {
+          width : 50,
+          height: 50
         }
-      });
+      }
     });
   },
 
@@ -508,11 +466,6 @@ var MyPhotosView = Backbone.View.extend({
     this.$('.photo img').load(function(){
       $(this).parent().removeClass('transparent');
     });
-
-    // resize columns
-    var iLikesCount = this.model.get('l').length;
-    var iPhotosCount = this.model.get('p').length;
-    IS.resizeProfilePage(iLikesCount, 0, true, iPhotosCount);
   },
 
   // deletePhoto
