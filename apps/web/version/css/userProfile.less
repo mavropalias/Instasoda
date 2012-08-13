@@ -134,37 +134,15 @@
 
       h2 {
         font-size: 1.8em;
-        font-weight: 300;
+        font-weight: 700;
         color: @colorBlue2;
         margin-bottom: 0.5em;
       }
 
-      .optionsName {
-        padding: 0 0 2em 0;
-      }
-
+      .optionsName,
+      .optionsFind,
       .optionsMeet {
-        display: block;
-        position: relative;
-        padding: 0 0 1em 0;
-        margin-bottom: 1em;
-
-        .meetMen,
-        .meetWomen {
-          display: block;
-          clear: both;
-          position: relative;
-          margin-bottom: 5px;
-        }
-
-        .meetToggle {
-          margin-right: 5px;
-        }
-
-        .meetGender {
-          font-size: 12px;
-          display: inline-block;
-        }
+        padding: 0 0 2em 0;
       }
 
       .optionsAbout {
@@ -214,13 +192,14 @@
 // =============================================================================
 
   .settings {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     z-index: 200;
     background: #fff;
+    display: none;
   }
 
   .settingContainer {
@@ -231,26 +210,47 @@
 
     .setting {      
       position: absolute;
-      top: 50%;
+      top: 30%;
       width: 100%;
-      margin-top: -50px;
 
       .settingTitle {
         font-size: 30px;
+        line-height: 1.5em;
+        text-shadow: 1px 1px @colorBlue3;
+
+        strong {
+          font-weight: 500;
+        }
       }
 
       .settingContent {
         padding-top: 20px;
+      }
+
+      .settingTip {
+        font-size: 16px;
+        padding-top: 20px;
+        color: #666;
       }
     }
   }
 
   .settingUsername {
     z-index: 2;
+    background: @colorBlue4;
+  }
+
+  .settingFindType {
+    z-index: 1;
     background: @colorBlue5;
   }
 
-  .settingMeet {
+  .settingGenderPrefs {
     z-index: 1;
-    background: @colorBlue4;
+    background: @colorBlue5;
+  }
+
+  .settingDone {
+    z-index: 1;
+    background: @colorBlue6;
   }

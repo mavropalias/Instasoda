@@ -186,7 +186,9 @@ var MyProfileView = Backbone.View.extend({
         'u': this.$('input[name=username]').val(),
         'a': this.$('#aboutMe').html(),
         'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
-        'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0)
+        'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0),
+        'ff': ((this.$('input[name=findFriends]:checked').length > 0) ? 1 : 0),
+        'fd': ((this.$('input[name=findDates]:checked').length > 0) ? 1 : 0)
       },
       {
         error: function(model, response) {
@@ -526,45 +528,5 @@ var MyPhotosView = Backbone.View.extend({
     setTimeout(function() {
       _this.$('#' + photoId).detach();
     }, 400);
-  }
-});
-
-
-// =========================================================================
-// SettingsView
-// =========================================================================
-var SettingsView = Backbone.View.extend({
-  // properties
-  // -----------------------------------------------------------------------
-  className: 'settings',
-  tagName: 'section',
-
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    'click #saveUsername': 'save'
-  },
-
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing SettingsView');
-    _.bindAll(this);
-    this.render();
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    console.log('  ~ rendering SettingsView');
-    var template = $('#tplSettings').html();
-    this.$el.html(template).appendTo('body');
-  },
-
-  // save
-  // -----------------------------------------------------------------------
-  save: function() {
-    console.log('  ~ saving SettingsView');
-    IS.pageFlip(this.$('.settingUsername'), this.$('.settingMeet'));
   }
 });

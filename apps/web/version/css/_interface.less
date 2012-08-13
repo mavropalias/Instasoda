@@ -101,6 +101,7 @@
     h1 {
       white-space: nowrap;
       padding-bottom: 1em;
+      font-weight: 700;
     }
   }
 
@@ -216,12 +217,11 @@
 // =============================================================================
 
   #pageFlipPlaceholder {
-    .perspective(1000px);
+    .perspective(2000px);
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
-    //background: #fff;
     z-index: 999;
     display: none;
 
@@ -255,73 +255,49 @@
     }
 
     .pageFlip {
-      .transition(all 1.0s cubic-bezier(.77, .12, .12, .74));
-      -webkit-transform-origin: left center;
+      .transition(all 1.5s cubic-bezier(.77, .12, .12, .74));
+      .transform-style(preserve-3d);
+      .transform-origin(left center);
+      .transform(rotateY(0deg));
       position: absolute;
       z-index: 4;
       width: 100%;
       height: 100%;
-      overflow: hidden;
       left: 50%;
-      //background-color: #fff;
 
       &.pageFlipped {
-        .transform(rotateY(-120deg));
-
-        .pageAcontainer {
-          //background-color: #ccc;
-        }
+        .transform(rotateY(-180deg));
       }
 
       .pageAcontainer {
         .transform-style(preserve-3d);
         .transition(all 1.0s cubic-bezier(.77, .12, .12, .74));
         .backface-visibility(hidden);
-        //background-image: -webkit-linear-gradient(right, rgba(255, 255, 255, 0.9) 40%, rgba(255, 255, 255, 0.0) 50%);
-        //background-color: #fff;
-        width: 100%;
+        width: 50%;
         height: 100%;
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        left: -50%;
+        overflow: hidden;
 
         .page {
           position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          border-bottom: 1px solid #ccc;
           overflow: hidden;
-          width: 100%;
           height: 100%;
         }
       }
 
       .pageBcontainer {
         .backface-visibility(hidden);
+        .transform-style(preserve-3d);
         .transform(rotateY(-180deg));
-        width: 100%;
+        background-color: #fff;
+        width: 50%;
         height: 100%;
         position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        left: -50%;
+        overflow: hidden;
 
         .page {
           position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          border-bottom: 1px solid #ccc;
           overflow: hidden;
-          width: 100%;
           height: 100%;
         }
       }

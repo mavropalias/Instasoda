@@ -26,8 +26,8 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" href="/favicon.ico">
 
-  <!-- CUSTOM FONTS -->
-  <!--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
+  <!-- CUSTOM FONTS 
+  <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>-->
 
   <!-- STYLES START -->
@@ -69,6 +69,7 @@
   <script type="text/javascript" src="VERSION/js/modules/favourites.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/likes.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/matches.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/settings.js"></script>
 
 
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
@@ -739,8 +740,20 @@
                 <input name="username" value="{{u}}" required maxlength=50>
               </div>
 
+              <div class="optionsFind">  
+                <h2>I am looking for</h2>
+                <label class="findFriends">
+                  <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
+                  <span class="findType">friendship</span>
+                </label>
+                <label class="findDates">
+                  <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
+                  <span class="findType">dating</span>
+                </label>
+              </div>
+
               <div class="optionsMeet">  
-                <h2>I would like to meet</h2>
+                <h2>I want to meet</h2>
                 <label class="meetWomen">
                   <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
                   <span class="meetGender">women</span>
@@ -832,27 +845,95 @@
     <!-- SETTINGS -->
     <!------------------------------------------------------------------------>
 
-      <script id="tplSettings" type="text/template">
+      <script id="tplSettingsUsername" type="text/template">
         <div class="settingContainer settingUsername">
           <div class="setting">
             <div class="settingTitle">
-              Welcome! What nickname would you like to have?
+              Hi there! What nickname would you like to have?
             </div>
             <div class="settingContent">
-              <input type="text" name="username" placeholder="type your nickname here ..." required maxlength=50>
-              <button id="saveUsername">Ok1</button>
+              <input class="settingUsernameInput" type="text" name="username" placeholder="type your nickname here ..." required maxlength="50" size="30">
+              <button id="saveUsername">Ok</button>
             </div>
           </div>
         </div>
+      </script>
 
-        <div class="settingContainer settingMeet">
+      <script id="tplSettingsFindType" type="text/template">
+        <div class="settingContainer settingFindType">
           <div class="setting">
             <div class="settingTitle">
-              Would you like to meet men or women?
+              Welcome {{u}}! What are you looking for in Instasoda?
             </div>
             <div class="settingContent">
-              <input type="text" name="username" placeholder="type your nickname here ..." required maxlength=50>
-              <button id="saveUsername">Ok2</button>
+              <label>
+                <input type="checkbox" name="findFriends" value="true">
+                <span>Make new friends</span>
+              </label>
+              <label>
+                <input type="checkbox" name="findDates" value="true">
+                <span>Find a date</span>
+              </label>
+              <button id="saveFindType">Ok</button>
+            </div>
+            <div class="settingTip">
+              (you can change this later)
+            </div>
+          </div>
+        </div>
+      </script>
+
+      <script id="tplSettingsGenderPrefs" type="text/template">
+        <div class="settingContainer settingGenderPrefs">
+          <div class="setting">
+            <div class="settingTitle">
+              {{u}}, would you like to meet <strong>men</strong> or <strong>women</strong> for 
+              {{#ff}}
+                {{#fd}}
+                  friendship & dating
+                {{/fd}}
+                {{^fd}}
+                  friendship
+                {{/fd}}
+              {{/ff}}
+              {{^ff}}
+                {{#fd}}
+                  dating
+                {{/fd}}
+              {{/ff}}?
+            </div>
+            <div class="settingContent">
+              <label>
+                <input type="checkbox" name="men" value="true">
+                <span>Men</span>
+              </label>
+              <label>
+                <input type="checkbox" name="women" value="true">
+                <span>Women</span>
+              </label>
+              <button id="saveGenderPrefs">Ok</button>
+            </div>
+            <div class="settingTip">
+              (you can change this later)
+            </div>
+          </div>
+        </div>
+      </script>
+
+      <script id="tplSettingsDone" type="text/template">
+        <div class="settingContainer settingDone">
+          <div class="setting">
+            <div class="settingTitle">
+              That&#8217;s perfect!
+              <br>
+              Remember that <strong>none</strong> of your activity in Instasoda will be published to Facebook,
+              <br>
+              so feel free to get in touch with other people, upload photos, like things and explore.
+              <br>
+              Everything stays here :)
+            </div>
+            <div class="settingContent">
+              <button id="settingsButtonDone">Start meeting new people</button>
             </div>
           </div>
         </div>
@@ -864,7 +945,7 @@
     <!-- PAGE FLIP PLACEHOLDER -->
     <!------------------------------------------------------------------------>
 
-      <section id="pageFlipPlaceholder">
+      <section id="tplPageFlipPlaceholder">
         <div class="pageFlip">
           <div class="pageAcontainer">
             <div class="page pageA"></div>

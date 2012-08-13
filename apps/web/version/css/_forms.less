@@ -5,10 +5,11 @@
   button,
   .button {
     background: #06f;
-    padding: 0.5em 1em;
-    border: 3px solid #06f;
+    padding: 0em 1em;
+    border: 0 none;
     color: white;
     font-size: 2em;
+    line-height: 2em;
     cursor: pointer;
     display: block;
     display: inline-block;
@@ -19,22 +20,71 @@
     &:hover {
       text-decoration: underline;
       background: @color2;
-      border: 3px solid @color2;
+      //border: 3px solid @color2;
     }
   }
   
   label {
-    //.linear-gradient(@colorBlue5, @colorBlue6);
-    //.border-radius(2px);
-    //.box-shadow(0, 2px, 5px, rgba(0,0,0,.2) inset);
-    /*text-shadow: 1px 1px #fff;
-    color: @color1;
-    font-weight: 700;
-    font-size: 1.2em;
-    padding-top: 5px;
+    margin: 0 2em 0 0;
     position: relative;
-    cursor: pointer;
-    display: inline-block;*/
+    overflow: hidden;
+    color: #666;
+
+    &:hover {
+      color: #222;
+
+      input[type="checkbox"] {
+        border: 3px solid #aaa;
+      }
+    }
+
+    span {
+      display: inline-block;
+      font-size: 2em;
+      line-height: 2em;
+      padding-left: 2.5em;
+    }
+  }
+
+  input[type="checkbox"] {
+    .appearance(none);
+    .box-sizing(border-box);
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    border: 3px solid #ccc;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    height: 2em;
+    width: 2em;
+    font-size: 2em;
+    line-height: 1.8em;
+    text-align: center;
+
+    &:before {
+      font-family: FontAwesome;
+      font-weight: normal;
+      font-style: normal;
+      display: inline-block;
+      text-decoration: inherit;
+      content: "";
+      color: #ccc;
+    }
+
+    &:checked {
+      border: 3px solid @colorGreen !important;
+
+      &:before {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        display: inline-block;
+        text-decoration: inherit;
+        content: "\f00c";
+        color: @colorGreen;
+      }
+    }
   }
 
   input[type="text"] {
@@ -46,7 +96,6 @@
   }
 
   .textArea {
-    //.box-shadow(2px, 2px, 2px, rgba(0, 0, 0, 0.4) inset);
     overflow-y: auto;
     word-wrap: break-word;
     background: #fff;
@@ -56,9 +105,8 @@
     line-height: 1.2em;
   }
 
-  /* Checkbox */
 
-  input[type="checkbox"] {
+  /*input[type="checkbox"] {
     background-image: -webkit-linear-gradient(hsla(0,0%,0%,.1), hsla(0,0%,100%,.1)),
                       -webkit-linear-gradient(left, @colorRed2 50%, @colorGreen 50%);
     background-size: 100% 100%, 200% 100%;
@@ -112,4 +160,4 @@
   input[type="checkbox"]:checked:hover:before {
     background: @colorGreen;
     content: '✔';
-  }
+  }*/

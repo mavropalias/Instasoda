@@ -124,8 +124,6 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
  * @param {String} likeName
  */
 IS.addOrRemoveLikeFromSearchOptions = function(likeId, likeName) {
-  l(likeId);
-  l(likeName);
   var userSearchLikes = (!!user.get('so').l) ? user.get('so').l : [];
 
   // search if the like is already in the user's search options
@@ -668,24 +666,56 @@ IS.setupPage = function (page) {
 /**
  * Sets user settings (username, sex prefs, etc)
  */
-IS.setupUser = function () {
+IS.setupUser = function (currentView) {
   var u  = user.get('u');
   var m = user.get('m');
   var w = user.get('w');
+  var ff = user.get('ff');
+  var fd = user.get('fd');
 
-  // check for username + m + w
-  if(IS.nullOrEmpty(u) && IS.nullOrEmpty(m) && IS.nullOrEmpty(w)) {
-    l('1');
+  // check if the user need to update his profile
+  if(IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
+    if(IS.nullOrEmpty(u)) {
+      nextView = new SettingsUsernameView({
+        model: user
+      });
+    }
+    else if(IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) {
+      nextView = new SettingsFindTypeView({
+        model: user
+      });
+    }
+    else if(IS.nullOrEmpty(w) && IS.nullOrEmpty(m)) {
+      nextView = new SettingsGenderPrefsView({
+        model: user
+      });
+    }
+
+    if(currentView) {
+      $(nextView.el).appendTo('body').show();
+
+      setTimeout(function() {
+        IS.pageFlip(currentView.$el, nextView.$el);
+      }, 0);
+    } else {
+      $(nextView.el).appendTo('body').fadeIn();
+    }
   }
-  // check for m + w
-  else if(!IS.nullOrEmpty(u) && IS.nullOrEmpty(m) && IS.nullOrEmpty(w)) {
-    l('2');
-  }
-  // check for username
-  else if(IS.nullOrEmpty(u) && !(IS.nullOrEmpty(m) && IS.nullOrEmpty(w))) {
-    settingsView = new SettingsView({
-      id: 'settings'
+  // else show the 'done' screen if currentView exists
+  else if(currentView) {
+    $('<section/>', {
+        id: 'settingsDone'
+    }).html($('#tplSettingsDone').html()).addClass('settings').appendTo('body');
+
+    $('#settingsButtonDone').click(function() {
+      $('#settingsDone').fadeOut(400, function() {
+        $(this).remove();
+      });
     });
+
+    setTimeout(function() {
+      IS.pageFlip(currentView.$el, $('#settingsDone'));
+    }, 0);
   }
 }
 
@@ -695,14 +725,43 @@ IS.setupUser = function () {
  * @param {String} c2
  */
 IS.pageFlip = function (c1, c2) {
-  $(c1).appendTo('.pageA, .pageApartialInner');
-  $(c2).appendTo('.pageB, .pageBpartialInner');
+  var iWidth = $(window).width();
+
+  // create a new pageFlip placeholder
+  $('#tplPageFlipPlaceholder').clone().attr('id', 'pageFlipPlaceholder').appendTo('body');
+
+  // clone page into the placeholder divs
+  $(c1).children().clone().appendTo('#pageFlipPlaceholder .pageA, #pageFlipPlaceholder .pageApartialInner');
+  $(c2).children().clone().appendTo('#pageFlipPlaceholder .pageB, #pageFlipPlaceholder .pageBpartialInner');
+
+  // set CSS before the animation
+  $('#pageFlipPlaceholder .pageA').css({
+    'left': '-' + (iWidth/2) + 'px',
+    'width': iWidth + 'px'
+  });
+
+  $('#pageFlipPlaceholder .pageB').css({
+    'width': iWidth + 'px'
+  });
   
+  $('#pageFlipPlaceholder .pageA, #pageFlipPlaceholder .pageApartialInner, #pageFlipPlaceholder .pageB, #pageFlipPlaceholder .pageBpartialInner').children().show();
   $('#pageFlipPlaceholder').show();
 
+  // do the flip animation
   setTimeout(function() {
-    $('.pageFlip').addClass('pageFlipped');
-  }, 10);
+    $('#pageFlipPlaceholder .pageFlip').addClass('pageFlipped');
+  }, 0);
+
+  // process UI port-animation
+  setTimeout(function() {
+    // adjust z-index of original divs to bring the new one in front
+    $(c1).css('z-index', '998');
+    $(c2).css('z-index', '999').show();
+    $(c1).remove();
+
+    // remove dummy divs after the animation is over
+    $('#pageFlipPlaceholder').remove();
+  }, 1500);
 }
 
 /**
