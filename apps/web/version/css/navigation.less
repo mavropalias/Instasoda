@@ -4,7 +4,7 @@
 
   nav {
     .box-shadow(-10px, 0, 20px -2px, rgba(0, 0, 0, .1) inset);
-    border-right: 2px solid #ccc;
+    border-right: 1px solid #ddd;
     width: 80px;
     height: 100%;
     font-size: 1.5em;
@@ -14,7 +14,6 @@
     left: 0;
     z-index: 20;
     background: #fafafa;
-    overflow: hidden;
     
     #instasodaLogo {
       background: url(../img/instasoda_logo.png) center center no-repeat;
@@ -36,13 +35,17 @@
         
     a {
       display: block;
-      width: 100% !important;
+      width: 80px !important;
       padding: 0.1em 0em 0.4em;
       color: #777;
       cursor: pointer;
       font-weight: 300;
       font-size: 1.5em;
       text-align: center;
+
+      border-left: 1px solid transparent;
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
 
       &:before {
         width: 100%;
@@ -60,15 +63,15 @@
       }
 
       &.current {
-        .border-radius(8px 0 0 8px);
-        .box-shadow(-10px, 0, 20px -2px, rgba(0, 0, 0, .1));
+        .box-shadow(-10px, 10px, 20px -2px, rgba(0, 0, 0, .1));
         background: #fff;
         color: @color1;
         margin-left: 5px;
+        width: 75px !important;
 
-        border-left: 1px solid #ccc;
-        border-top: 1px solid #ccc;
-        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #ddd;
 
         &:before {
           color: @color1;
