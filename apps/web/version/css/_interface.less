@@ -70,9 +70,10 @@
 // =============================================================================
 
   #content {
-    background: url(../img/bubbleHeaderBg.png) right -0px no-repeat;
+    //background: url(../img/bubbleHeaderBg.png) right -0px no-repeat;
     position: relative;
-    padding-top: 90px;
+    margin: 0 100px;
+    padding: 4rem 0;
     overflow-y: hidden;
     overflow-x: auto;
     display: block;
@@ -106,27 +107,20 @@
   }
 
   .sidebar {
-    .box-shadow(0, 4px, 8px -3px, #333);
-    .linear-gradient();
-    .border-radius(3px);
     display: block;
     position: fixed;
-    left: 20px;
-    top: 90px;
-    width: 280px;
+    left: 80px;
+    top: 4rem;
+    width: 250px;
     z-index: 2;
     height: auto;
     color: @color1;
-    padding: 0;
-    border: 1px solid #ddd;
+    padding: 0 40px;
+    border-right: 3px solid #eee;
     
     section {
       clear: both;
-      padding: 20px 20px 0;
-
-      &:last-child {
-        padding: 20px;
-      }
+      padding: 0 0 20px;
       
       .tip {
         color: @colorBlue2;
@@ -138,13 +132,13 @@
   .mainContent {
     position: fixed;
     left: 0px;
-    top: 90px;
-    bottom: 30px;
+    top: 0px;
+    bottom: 0px;
     right: 0;
-    padding-left: 320px;
     overflow: auto;
     height: auto;
     display: block;
+    padding: 4rem 0 4rem 450px;
   }
 
 
