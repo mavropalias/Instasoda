@@ -119,6 +119,7 @@
   var matchesView;
   var usersFullView;
   var likesView;
+  var dashboardView;
 
 
 // Start application
@@ -130,6 +131,9 @@
     navigationView = new NavigationView({
       el: $('nav')[0],
       model: user
+    });
+    dashboardView = new DashboardView({
+      model: user,
     });
     chatView = new ChatView({
       el: $('#footer')[0],

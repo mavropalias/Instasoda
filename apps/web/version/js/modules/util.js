@@ -256,14 +256,14 @@ IS.prepareApp = function(bForceLogin, cb) {
             console.log('> SUCCESS! User is logged in');
             appReady = true;
             if(cb) cb();
-            else IS.navigateTo('me');
+            else IS.navigateTo('');
           } else {
             console.log('> FAIL: Need to create new account');
             IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
               if(!err) {
                 console.log('> SUCCESS! Account created');
                 appReady = true;
-                IS.navigateTo('me');
+                IS.navigateTo('');
               } else {
                 console.log('> ERROR: ' + res);
                 appReady = false;
@@ -286,14 +286,14 @@ IS.prepareApp = function(bForceLogin, cb) {
         console.log('> SUCCESS! User is logged in');
         appReady = true;
         if(cb) cb();
-        else IS.navigateTo('me');
+        else IS.navigateTo('');
       } else {
         console.log('> FAIL: Need to create new account');
         IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
           if(!err) {
             console.log('> SUCCESS! Account created');
             appReady = true;
-            IS.navigateTo('me');
+            IS.navigateTo('');
           } else {
             console.log('> ERROR: ' + res);
             appReady = false;
@@ -501,7 +501,11 @@ IS.logout = function(bStopRedirect) {
   store.clear(); // clear localStorage
   navigationView.render(); // update nav menu
   chatView.render(); // update footer/chat view
-  if(!bStopRedirect) router.navigate("", {trigger: true}); // redirect to homepage
+  appReady = false;
+  if(!bStopRedirect) {
+    router.navigate("", {trigger: true}); // redirect to homepage
+    router.welcome();
+  }
 }
 
 /**

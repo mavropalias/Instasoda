@@ -70,6 +70,7 @@
   <script type="text/javascript" src="VERSION/js/modules/likes.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/matches.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/settings.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
 
 
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
@@ -305,6 +306,19 @@
             <span class="time" title="{{t}}"></span>
             <span class="message">{{m}}</span>
           </li>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- DASHBOARD -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplDashboard" type="text/template">
+          <h2>Hi {{u}},</h2>
+          <p>Welcome to Instasoda’s closed beta!</p>
+          <p>We would love to hear your feedback about Instasoda. Please let use know your opinion, ideas and any issues you might have encounted!<p/>
+
+          <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog (powered by UserVoice)">Feedback & support</a>
       </script>
 
 
@@ -1034,14 +1048,14 @@
   <!-- FEEDBACK WIDGET (USERVOICE) -->
   <!-------------------------------------------------------------------------->
 
-  <script type="text/javascript">
-    var uvOptions = {};
-    (function() {
-      var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
-      uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/ZOkamMLqso8sFbtqNXbAiA.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
-    })();
-  </script>
+    <script type="text/javascript">
+      var uvOptions = {};
+      (function() {
+        var uv = document.createElement('script'); uv.type = 'text/javascript'; uv.async = true;
+        uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/ZOkamMLqso8sFbtqNXbAiA.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
+      })();
+    </script>
 
 
 </body>

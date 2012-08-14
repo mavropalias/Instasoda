@@ -48,19 +48,17 @@ var Router = Backbone.Router.extend({
   welcome: function() {
     console.log('> routing welcome page');
 
-    /*if(!appReady) {
-      IS.prepareApp(null, function() {
-        welcomeView.render();
-        $('#content > div').detach();
-        $('#content').append(welcomeView.el);
-        IS.setupPage('home');
-      });
-    } else {*/
+    if(appReady) {
+      dashboardView.render();
+      $('#content > div').detach();
+      $('#content').append(dashboardView.el);
+      IS.setupPage('home');
+    } else {
       welcomeView.render();
       $('#content > div').detach();
       $('#content').append(welcomeView.el);
       IS.setupPage('home');
-    //}
+    }
   },
   
   // myProfile

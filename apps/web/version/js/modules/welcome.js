@@ -143,7 +143,7 @@ var WelcomeView = Backbone.View.extend({
       if(err) {
         alert(err);
       } else {
-        IS.navigateTo('me');
+        router.welcome();
       }
     });
   }
