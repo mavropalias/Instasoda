@@ -139,6 +139,12 @@ var WelcomeView = Backbone.View.extend({
   // facebookAuth
   // -----------------------------------------------------------------------
   facebookAuth: function() {
-    IS.prepareApp();
+    IS.prepareApp(true, function(err) {
+      if(err) {
+        alert(err);
+      } else {
+        IS.navigateTo('me');
+      }
+    });
   }
 });
