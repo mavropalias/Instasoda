@@ -240,7 +240,7 @@ IS.navigateTo = function(path) {
 /**
  * Prepares APP.
  */
-IS.prepareApp = function(cb) {
+IS.prepareApp = function(bForceLogin, cb) {
   console.log('> Preparing app');
 
   // Auth user & redirect to page
@@ -281,7 +281,7 @@ IS.prepareApp = function(cb) {
   } else if (!IS.nullOrEmpty(store.get("user"))) {
     IS.fbToken = store.get("user").fbToken;
 
-    IS.login(IS.fbToken, store.get("user").fTid, function(err) {
+    IS.login(IS.fbToken, store.get("user")._id, function(err, res) {
       if(!err) {
         console.log('> SUCCESS! User is logged in');
         appReady = true;
@@ -389,6 +389,8 @@ IS.login = function(fTkn, fTid, cb) {
       user.set({ 'fTkn': fTkn });
       store.set("user", user);
       
+      navigationView.render(); // update nav menu
+
       cb(null);
     } else {
       console.log('- trying the API: ' + fTid);
@@ -423,6 +425,8 @@ IS.login = function(fTkn, fTid, cb) {
               // store the user details locally
               // ------------------------------
               store.set("user", user);
+
+              navigationView.render(); // update nav menu
 
               // callback success
               // ----------------
@@ -492,12 +496,12 @@ IS.createAccount = function(fbToken, fTid, cb) {
 /**
  * Logs the user out of the system.
  */
-IS.logout = function() {
+IS.logout = function(bStopRedirect) {
   user.clear({ silent: true }); // clear local Backbone model
   store.clear(); // clear localStorage
   navigationView.render(); // update nav menu
   chatView.render(); // update footer/chat view
-  router.navigate("", {trigger: true}); // redirect to homepage
+  if(!bStopRedirect) router.navigate("", {trigger: true}); // redirect to homepage
 }
 
 /**
@@ -589,7 +593,7 @@ IS.setupPage = function (page) {
   }
 
   // setup user
-  IS.setupUser();
+  if(!IS.nullOrEmpty(user.get('_id'))) IS.setupUser();
 }
 
 /**

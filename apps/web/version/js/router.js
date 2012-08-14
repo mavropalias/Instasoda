@@ -48,19 +48,19 @@ var Router = Backbone.Router.extend({
   welcome: function() {
     console.log('> routing welcome page');
 
-    if(!appReady) {
-      IS.prepareApp(function() {
+    /*if(!appReady) {
+      IS.prepareApp(null, function() {
         welcomeView.render();
         $('#content > div').detach();
         $('#content').append(welcomeView.el);
         IS.setupPage('home');
       });
-    } else {
+    } else {*/
       welcomeView.render();
       $('#content > div').detach();
       $('#content').append(welcomeView.el);
       IS.setupPage('home');
-    }
+    //}
   },
   
   // myProfile
@@ -69,7 +69,7 @@ var Router = Backbone.Router.extend({
     console.log('> routing my profile page');
 
     if(!appReady) {
-      IS.prepareApp(function() {
+      IS.prepareApp(null, function() {
         myProfileView.render();
         $('#content > div').detach();
         $('#content').append(myProfileView.el);
@@ -90,7 +90,7 @@ var Router = Backbone.Router.extend({
     console.log('> routing matches page');
 
     if(!appReady) {
-      IS.prepareApp(function() {
+      IS.prepareApp(null, function() {
         matchesCollection.fetch({
           data: {
             '_id': user.get('_id'),
@@ -125,7 +125,7 @@ var Router = Backbone.Router.extend({
     console.log('> routing search page');
 
     if(!appReady) {
-      IS.prepareApp(function() {
+      IS.prepareApp(null, function() {
         // search by like - array with like id's
         var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
 
@@ -208,7 +208,7 @@ var Router = Backbone.Router.extend({
     console.log('> routing likes page');
 
     if(!appReady) {
-      IS.prepareApp(function() {
+      IS.prepareApp(null, function() {
         likesView.render();
         $('#content > div').detach();
         $('#content').append(likesView.el);
@@ -229,7 +229,7 @@ var Router = Backbone.Router.extend({
     console.log('> routing favourites page');
 
     if(!appReady) {
-      IS.prepareApp(function() {
+      IS.prepareApp(null, function() {
         favouritesView.render();
         $('#content > div').detach();
         $('#content').append(favouritesView.el);
@@ -275,7 +275,7 @@ var Router = Backbone.Router.extend({
     console.log('> routing view user page');
 
     if(!appReady) {
-      IS.prepareApp(function() {
+      IS.prepareApp(null, function() {
         users.set({ '_id': id }, {silent: true});
         users.fetch({
           success: function() {
