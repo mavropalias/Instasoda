@@ -144,7 +144,7 @@
           {{^_id}}
             <li>
               <a id="nav_home" class="icon-home" href="#">
-                <span class="navItemTitle">Instasoda</span>
+                <span class="navItemTitle">Home</span>
               </a>
             </li>
           {{/_id}}
@@ -451,12 +451,46 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikesFilters" type="text/template">
-        <section>
-          <h3>My favourite likes <span class="tip" title="Which of your Facebook likes are the most important to you."></span></h3>
-          <p>
-            no favourites yet
-          </p>
+        <section class="likeViewsContainer">
+          <ul class="likeViews">
+            <li class="likeView viewDislikes">
+              <span class="icon icon-thumbs-down"></span>
+              Dislikes
+              <span class="viewCount">{{dislikesCount}}</span>
+            </li>
+            <li class="likeView viewAll current">
+              <span class="icon icon-thumbs-up"></span>
+              Likes
+              <span class="viewCount">{{likesCount}}</span>
+            </li>
+            <li class="likeView viewFavs">
+              <span class="icon icon-star-empty"></span>
+              Favs
+              <span class="viewCount">{{favouritesCount}}</span>
+            </li>
+          </ul>
+
+          <div class="likeCategories">
+            <ul data-cat="all" class="likeCategory catAll">
+              {{#likeCategories}}
+                <li data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
+              {{/likeCategories}}
+            </ul>
+
+            <ul data-cat="favourites" class="likeCategory catFavourites">
+              {{#favsCategories}}
+                <li data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
+              {{/favsCategories}}
+            </ul>
+
+            <ul data-cat="dislikes" class="likeCategory catDislikes">
+              {{#dislikeCategories}}
+                <li data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
+              {{/dislikeCategories}}
+            </ul>
+          </div>
         </section>
+
         <section>
           <h3>Search using likes <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
           <ul class="likes">
@@ -470,6 +504,7 @@
             {{/so.l}}
           </ul>
         </section>
+
         <section>
           <a id="doSearch" class="button" href="#search">Search for people!</a>
         </section>
@@ -481,11 +516,6 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikesWithCategories" type="text/template">
-        <ul class="fbLikeCategories">
-          {{#fLbyCategory}}
-            <li data-cat="{{c}}" class="fbLikeCategoryTitle">{{c}}</li>
-          {{/fLbyCategory}}
-        </ul>
         <div class="left">
           {{#fLbyCategory}}
             <ul class="fbCategoryLikes left" data-cat="{{c}}">
@@ -685,6 +715,11 @@
 
           <ul class="basicInfo">
             <li>
+              <span class="icon icon-user"></span>
+              <span class="infoTitle">Gender:</span>
+              <span class="infoData infoVerified">{{fS}}</span>
+            </li>
+            <li>
               <span class="icon icon-gift"></span>
               <span class="infoTitle">Age:</span>
               <span class="infoData infoVerified">{{ag}}</span>
@@ -706,7 +741,7 @@
             <li>
               <span class="icon icon-glass"></span>
               <span class="infoTitle ">Wants to meet:</span>
-              <span class="infoData infoVerified">
+              <span class="infoData">
                 {{#w}}{{^m}}women{{/m}}{{/w}}
                 {{#w}}{{#m}}women & men{{/m}}{{/w}}
                 {{#m}}{{^w}}men{{/w}}{{/m}}
@@ -721,7 +756,7 @@
             <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
           </div>
 
-        </div> <!-- #basicInfo -->
+        </div> <!-- .sidebar -->
 
         <div class="column mainContent">
 
@@ -763,10 +798,9 @@
 
       <script id="tplMyProfile" type="text/template">
 
-        <div id="basicInfo" class="column">
+        <div id="basicInfo" class="column sidebar">
           <div class="flipContainer">
             <div id="instasodaProfile">
-              <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
 
               <div class="defaultPhoto">
                 {{#p}}
@@ -780,31 +814,30 @@
 
                 <ul class="basicInfo">
                   <li>
-                    <span class="infoTitle">Age:</span>
-                    <span class="infoData infoVerified">{{ag}}</span>
-                  </li>
-                  <li>
+                    <span class="icon icon-user"></span>
                     <span class="infoTitle">Gender:</span>
                     <span class="infoData infoVerified">{{fS}}</span>
                   </li>
                   <li>
+                    <span class="icon icon-gift"></span>
+                    <span class="infoTitle">Age:</span>
+                    <span class="infoData infoVerified">{{ag}}</span>
+                  </li>
+                  <li>
+                    <span class="icon icon-heart"></span>
                     <span class="infoTitle">Relationship:</span>
                     <span class="infoData infoVerified">
                       {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
                     </span>
                   </li>
                   <li title="{{#fCl}}{{city}}, {{state}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}">
+                    <span class="icon icon-map-marker"></span>
                     <span class="infoTitle">Location:</span>
                     <span class="infoData infoVerified">
                       {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
                     </span>
                   </li>
                 </ul>
-              </div>
-
-              <div class="aboutMe">
-                <h2>A little bit about myself</h2>
-                <p class="aboutText">{{a}}</p>
               </div>
 
               <div class="profileButtons">
@@ -816,12 +849,12 @@
               <h1>Profile options</h1>
 
               <div class="optionsName">
-                <h2>My dating name <span class="tip" title="This is how other instasoda users will see you."></span></h2>
-                <input name="username" value="{{u}}" required maxlength=50>
+                <h3>My dating name <span class="tip" title="This is how other instasoda users will see you."></span></h3>
+                <input type="text" name="username" value="{{u}}" required maxlength=50>
               </div>
 
               <div class="optionsFind">  
-                <h2>I am looking for</h2>
+                <h3>I am looking for</h3>
                 <label class="findFriends">
                   <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
                   <span class="findType">friendship</span>
@@ -833,7 +866,7 @@
               </div>
 
               <div class="optionsMeet">  
-                <h2>I want to meet</h2>
+                <h3>I want to meet</h3>
                 <label class="meetWomen">
                   <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
                   <span class="meetGender">women</span>
@@ -844,12 +877,6 @@
                 </label>
               </div>
 
-              <div class="optionsAbout">
-                <h2>A little bit about myself <span class="tip" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates."></span></h2>
-
-                <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 20em;">{{a}}</div>
-              </div>
-
               <div class="optionsButtons">
                 <button type="submit" id="saveProfileButton" class="animated">Save profile</button>
                 <button type="submit" id="cancelProfileButton" class="animated">Cancel</button> 
@@ -857,36 +884,47 @@
                 <div id="working" class="animated transparent"></div>
               </div>
             </div> <!-- #instasodaOptions -->
-
           </div> <!-- .flipContainer -->
+        </div> <!-- .sidebar -->
 
-        </div> <!-- #basicInfo -->
+        <div class="column mainContent">
 
-        <div id="photoSection" class="column">
-          <h1>Me at my best! (photos) <span class="tip" title="Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos."></span></h1>
-          <ul id="userPhotos">
-            <li id="uploadPhoto" class='animated'>
-              <div id="uploadWidget"></div>
-            </li>
-            <div id="userPhotosList">
-              <!-- USER PHOTOS -->
+          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
+
+          <section class="optionsAbout">
+            <h2>A little bit about myself <span class="tip" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates."></span></h2>
+
+            <p class="aboutText">{{a}}</p>
+            <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 10rem;">{{a}}</div>
+          </section>
+
+          <section id="photoSection">
+            <h2>Me at my best! (photos) <span class="tip" title="Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos."></span></h2>
+            <ul id="userPhotos">
+              <li id="uploadPhoto" class='animated'>
+                <div id="uploadWidget"></div>
+              </li>
+              <div id="userPhotosList">
+                <!-- USER PHOTOS -->
+              </div>
+            </ul>
+          </section>
+
+          <section id="favouritesSection">
+            <h2>My favourite things ({{favouriteCount}})</h2>
+            <div class="likesList">
+              I have no favourites yet :(
             </div>
-          </ul>
-        </div>
+          </section>
 
-        <div id="favouritesSection" class="column">
-          <h1>My favourite things ({{favouriteCount}})</h1>
-          <div class="likesList">
-            I have no favourites yet :(
-          </div>
-        </div>
+          <section id="likesSection">
+            <h2>My Likes & interests ({{likeCount}})</h2>
+            <div id="allLikes">
 
-        <div id="likesSection" class="column">
-          <h1>My Likes & interests ({{likeCount}})</h1>
-          <div id="allLikes">
+            </div>
+          </section>
 
-          </div>
-        </div>
+        </div> <!-- .mainContent -->
       </script>
 
 
@@ -1003,14 +1041,9 @@
       <script id="tplSettingsDone" type="text/template">
         <div class="settingContainer settingDone">
           <div class="setting">
-            <div class="settingTitle">
-              That&#8217;s perfect!
-              <br>
-              Remember that <strong>none</strong> of your activity in Instasoda will be published to Facebook,
-              <br>
-              so feel free to get in touch with other people, upload photos, like things and explore.
-              <br>
-              Everything stays here :)
+            <div class="settingTitle">That&#8217;s perfect!</div>
+            <div class="settingTip">
+              Remember that <strong>none</strong> of your activity in Instasoda will be published to Facebook, so feel free to get in touch with other people, upload photos, like new things and explore.
             </div>
             <div class="settingContent">
               <button id="settingsButtonDone">Start meeting new people</button>

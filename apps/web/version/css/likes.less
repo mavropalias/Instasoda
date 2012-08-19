@@ -162,53 +162,103 @@
   }
   
 
-  // Likes results
+  // Like categories
   // ---------------------------------------------------------------------------
-  #likesResults {
+  .likeCategories {
+    position: absolute;
+    top: 45px;
+    left: 0px;
+    right: 0px;
+    bottom: 0;
+    text-align: left;
+    overflow: hidden;
+    overflow-y: auto;
 
-    .fbLikeCategories {
-      color: #444;
-      width: 100%;
-      //height: 46px;
-      overflow: hidden;
-      //background-color: @colorBlue4;
+    .likeCategoryTitle {
+      position: relative;
+      padding: 0.5rem 0rem 0.5rem 0.5rem;
+      cursor: pointer;
+      color: @color1;
+      font-size: 0.7rem;
+      overflow: visible;
+      background-color: @colorBlue6;
 
-      .fbLikeCategoryTitle {
-        position: relative;
-        padding: 8px 10px 8px 10px;
-        cursor: pointer;
-        float: left;
-        color: @color1;
-        font-size: 2em; 
-        overflow: visible;
+      &:hover {
+        text-decoration: underline;
+      }
 
-        &:hover {
-          text-decoration: underline;
-        }
-
-        &.active {
-          text-decoration: underline;
-          background-color: @colorBlue4;
-          
-          &:before {
-            content: ' ';
-            position: absolute;
-            left: 0px;
-            top: 36px;
-            width: 0; 
-            height: 0; 
-            border-left: 0px solid transparent;
-            border-right: 8px solid transparent;        
-            border-top: 8px solid @colorBlue4;
-            z-index: 2;
-          }
+      &.active {
+        background-color: @colorBlue2;
+        color: #fff;
+        
+        &:after {
+          content: ' ';
+          position: absolute;
+          right: -8px;
+          top: 4px;
+          width: 0; 
+          height: 0; 
+          border-left: 8px solid @colorBlue2;
+          border-right: 0px solid @colorBlue2;        
+          border-top: 8px solid transparent;
+          border-bottom: 8px solid transparent;
+          z-index: 2;
         }
       }
     }
 
-    .fbCategoryLikes {
+    .catFavourites,
+    .catDislikes {
       display: none;
-      position: absolute;
-      //top: 60px;
     }
+  }
+
+  .likeViewsContainer {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+
+    .likeViews {
+      position: absolute;
+      width: 100%;
+      overflow: hidden;
+      font-size: 0.9rem;
+      font-weight: 700;
+
+      .likeView {
+        .box-sizing(border-box);
+        display: block;
+        position: relative;
+        width: 33.33%;
+        padding: 0.5rem 0;
+        background: @color1;
+        color: #fff;
+        text-align: center;
+        float: left;
+        cursor: pointer;
+
+        &.current {
+          background: @colorBlue2;
+        }
+
+        .icon {
+          width: auto;
+        }
+
+        .viewCount {
+          display: block;
+          font-size: 0.7rem;
+          padding-top: 0.2rem;
+          color: @colorBlue4;
+        }
+      }
+    }
+  }
+
+  // Likes - other
+  // ---------------------------------------------------------------------------
+  .fbCategoryLikes {
+    display: none;
+    position: absolute;
+    //top: 60px;
   }

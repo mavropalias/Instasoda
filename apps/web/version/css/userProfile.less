@@ -1,13 +1,6 @@
 // =============================================================================
-// USER PROFILES
+// MY PROFILE
 // =============================================================================
-
-  .profile,
-  .myProfile {
-    .column {
-      display: none;
-    }
-  }
 
   #connectOptions {
     overflow: hidden;
@@ -16,8 +9,6 @@
   
   #basicInfo {
     .perspective(1000);
-    position: relative;
-    width: 360px;
 
     .flipContainer {
       .transform-style(preserve-3d);
@@ -31,92 +22,7 @@
       .backface-visibility(hidden);
       .transform-style(preserve-3d);
       position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      border-bottom: 1px solid #ccc;
       overflow: hidden;
-
-      .defaultPhoto {
-        .backface-visibility(hidden);
-        .box-shadow(0, 4px, 8px -3px, #888);
-        max-height: 320px;
-        width: 100%;
-        overflow: hidden;
-        position: relative;
-        z-index: 2;
-
-        &> img {
-          width: 100%;
-          border: 0 none;
-        }
-
-        .basicInfo {
-          .linear-gradient(rgba(0, 0, 0, 0.0), #000);
-          .backface-visibility(hidden);
-          display: block;
-          position: absolute;
-          bottom: 0px;
-          left: 0;
-          right: 0;
-          padding: 4em 0 0 20px;
-          line-height: 1.3em;
-          overflow: hidden;
-          text-shadow: 1px 1px #000;
-          
-          .infoTitle {
-            display: block;
-            color: @colorBlue5;
-            padding-bottom: 0.1em;
-          }
-          
-          .infoData {
-            font-weight: 700;
-            font-size: 1.2em;
-            clear: both;
-            display: block;
-            color: @colorBlue6;
-          }
-          
-          li {
-            float: left;
-            margin: 0em 1.5em 10px 0;
-          }
-        }
-      }
-
-      .aboutMe {
-        padding: 20px 20px 10px;
-        border: 1px solid #ccc;
-        height: 100%;
-
-        h2 {
-          font-size: 1.4em;
-          padding-bottom: 0.5em;
-        }
-
-        .aboutText {
-          font-size: 1.2em;
-          line-height: 1.4em;
-          color: #333;
-        }
-      }
-
-      .profileButtons {
-        .linear-gradient(rgba(255, 255, 255, 0), #fff);
-        .backface-visibility(hidden);
-        position: absolute;
-        bottom: 0;
-        left: 1px;
-        right: 1px;
-        padding: 40px 20px 10px;
-        text-align: left;
-
-        button {
-          margin-right: 1em;
-        }
-      }
     }
 
     #instasodaOptions {
@@ -124,20 +30,6 @@
       .backface-visibility(hidden);
       .box-sizing(border-box);
       .transform-style(preserve-3d);
-      .box-shadow(0, 4px, 8px -3px, #888);
-      border: 1px solid #ccc;
-      padding: 10px 20px;
-      display: block;
-      height: 100%;
-      overflow: auto;
-      position: relative;
-
-      h2 {
-        font-size: 1.8em;
-        font-weight: 700;
-        color: @colorBlue2;
-        margin-bottom: 0.5em;
-      }
 
       .optionsName,
       .optionsFind,
@@ -145,25 +37,22 @@
         padding: 0 0 2em 0;
       }
 
-      .optionsAbout {
-        position: relative;
-      }
-
       .optionsButtons {
         padding: 20px 0px 10px;
         position: relative;
 
         #saveProfileButton {
+          .backface-visibility(hidden);
           z-index: 2;
           position: relative;
         }
 
         #working {
           background: url(../img/loading.gif) center center no-repeat transparent;
-          width: 90px;
+          width: 130px;
           height: 50px;
           position: absolute;
-          top: 10px;
+          top: 15px;
           left: 0;
           z-index: 1;
         }
@@ -171,9 +60,15 @@
     }
   }
 
+  .optionsAbout {
+    #aboutMe {
+      display: none;
+    }
+  }
+
 
 // =============================================================================
-// USER PROFILES - NEW STYLE
+// USER PROFILES
 // =============================================================================
 
   .defaultPhoto {
@@ -246,7 +141,7 @@
     position: absolute;
     text-align: center;
 
-    .setting {      
+    .setting {
       position: absolute;
       top: 30%;
       width: 100%;
@@ -291,4 +186,15 @@
   .settingDone {
     z-index: 1;
     background: @colorBlue6;
+
+    .setting {
+      .settingTip {
+        font-size: 20px;
+        max-width: 550px;
+        margin: 0 auto;
+        padding-top: 0px;
+        color: #666;
+        line-height: 1.3em;
+      }
+    }
   }

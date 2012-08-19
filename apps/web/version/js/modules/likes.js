@@ -2,6 +2,14 @@
 // LikesView
 // =========================================================================
 var LikesView = Backbone.View.extend({
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click .viewAll': 'viewAll',
+    'click .viewFavs': 'viewFavs',
+    'click .viewDislikes': 'viewDislikes'
+  },
+
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
@@ -18,6 +26,9 @@ var LikesView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   render: function() {
     console.log('  ~ rendering LikesView');
+
+    // parse likes
+    IS.parseLikes(this.model, this.model.get('l'));
     
     // render template
     var template = $('#tplLikes').html();
@@ -28,6 +39,42 @@ var LikesView = Backbone.View.extend({
 
     // render likes
     IS.renderLikes(this.model.get('l'), this.$('#likesResults'), true);
+  },
+
+  // viewAll
+  // -----------------------------------------------------------------------
+  viewAll: function() {
+    if(!this.$('.viewAll').hasClass('current')) {
+      this.$('.likeCategory').hide();
+      this.$('.likeView').removeClass('current');
+
+      this.$('.viewAll').addClass('current');
+      this.$('.catAll').slideDown();
+    }
+  },
+
+  // viewFavs
+  // -----------------------------------------------------------------------
+  viewFavs: function() {
+    if(!this.$('.viewFavs').hasClass('current')) {
+      this.$('.likeCategory').hide();
+      this.$('.likeView').removeClass('current');
+
+      this.$('.viewFavs').addClass('current');
+      this.$('.catFavourites').slideDown();
+    }
+  },
+
+  // viewDislikes
+  // -----------------------------------------------------------------------
+  viewDislikes: function() {
+    if(!this.$('.viewDislikes').hasClass('current')) {
+      this.$('.likeCategory').hide();
+      this.$('.likeView').removeClass('current');
+
+      this.$('.viewDislikes').addClass('current');
+      this.$('.catDislikes').slideDown();
+    }
   }
 });
 
@@ -58,7 +105,7 @@ var LikesFiltersView = Backbone.View.extend({
   render: function() {
     var _this = this;
     console.log('  ~ rendering LikesFiltersView');
-    
+
     // render template
     var template = $('#tplLikesFilters').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
@@ -158,7 +205,7 @@ var LikesListView = Backbone.View.extend({
       var aLikes = this.model.get('likes');
 
       // 2) extract category names (pluck), and remove duplicates (uniq)
-      var aCategories = _.uniq( _.pluck(aLikes, 'c') );
+      var aCategories = _.uniq(_.pluck(aLikes, 'c').sort(), true);
 
       // 3) create object with categories and their likes
       var aCategoriesAndLikes = [];
@@ -175,8 +222,9 @@ var LikesListView = Backbone.View.extend({
         });
       });
 
-      // 4) insert aCategoriesAndLikes into the model's fLbyCategory property
+      // 4) update model
       this.model.set({ fLbyCategory: aCategoriesAndLikes });
+      this.model.set({ likeCategories: aCategories });
 
     // render likes
     // ============

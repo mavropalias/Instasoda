@@ -303,8 +303,16 @@ var MyProfileView = Backbone.View.extend({
   toggleProfileOptions: function(e) {
     var container = $('.flipContainer');
 
-    if(container.hasClass('rotateY')) container.removeClass('rotateY');
-    else container.addClass('rotateY');
+    if(container.hasClass('rotateY')) {
+      container.removeClass('rotateY');
+      $('#aboutMe').hide();
+      $('.aboutText').fadeIn();
+    }
+    else {
+      container.addClass('rotateY');
+      $('#aboutMe').fadeIn();
+      $('.aboutText').hide();
+    }
     
   }
 });

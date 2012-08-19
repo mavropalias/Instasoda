@@ -579,7 +579,53 @@ IS.renderLikes = function(likes, container, bShowCategories) {
     if(!bShowCategories) likesListView.render();
     else likesListView.renderWithCategories();
     container.append(likesListView.el);
+}
+
+/**
+ * Parses a user's likes and updates model with favs, dislikes and categories
+ * @param {Array} likes
+ */
+IS.parseLikes = function(model, likes) {
     
+  var aDislikes = [];
+  var aFavs = [];
+
+  var aLikeCategories = [];
+  var aDislikeCategories = [];
+  var aFavsCategories = [];
+
+  // get favourites and dislikes
+  $.each(likes, function(index, value) {
+    if (likes[index]['r'] === 1)
+      aDislikes.push(likes[index]);
+    else if (likes[index]['r'] === 3)
+      aFavs.push(likes[index]);
+  });
+
+  // get like categories
+  aLikeCategories = _.uniq(_.pluck(likes, 'c').sort(), true);
+
+  // get dislike categories
+  aDislikeCategories = _.uniq(_.pluck(aDislikes, 'c').sort(), true);
+
+  // get favs categories
+  aFavsCategories = _.uniq(_.pluck(aFavs, 'c').sort(), true);
+
+  // update model
+  model.set({ likeCategories: aLikeCategories });
+  model.set({ dislikeCategories: aDislikeCategories });
+  model.set({ favsCategories: aFavsCategories });
+
+  model.set({ likeCategoriesCount: aLikeCategories.length });
+  model.set({ dislikeCategoriesCount: aDislikeCategories.length });
+  model.set({ favsCategoriesCount: aFavsCategories.length });
+
+  model.set({ dislikes: aDislikes });
+  model.set({ favourites: aFavs });
+
+  model.set({ likesCount: likes.length });
+  model.set({ dislikesCount: aDislikes.length });
+  model.set({ favouritesCount: aFavs.length });
 }
 
 /**
