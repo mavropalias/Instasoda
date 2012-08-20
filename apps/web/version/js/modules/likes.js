@@ -5,9 +5,10 @@ var LikesView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .viewAll': 'viewAll',
+    'click .viewLikes': 'viewLikes',
     'click .viewFavs': 'viewFavs',
-    'click .viewDislikes': 'viewDislikes'
+    'click .viewDislikes': 'viewDislikes',
+    'click .likeCategoryTitle': 'viewCategory',
   },
 
   // initialize
@@ -42,14 +43,19 @@ var LikesView = Backbone.View.extend({
 
   // viewAll
   // -----------------------------------------------------------------------
-  viewAll: function() {
-    if(!this.$('.viewAll').hasClass('current')) {
+  viewLikes: function() {
+    if(!this.$('.viewLikes').hasClass('current')) {
       this.$('.likeCategory').hide();
       this.$('.likeView').removeClass('current');
 
-      this.$('.viewAll').addClass('current');
-      this.$('.catAll').slideDown();
+      this.$('.viewLikes').addClass('current');
+      this.$('.catLikes').slideDown();
     }
+
+    // remove active class from sub-tabs
+    this.$(".likeCategoryTitle").removeClass('active');
+
+    this.likesListView.render(2);
   },
 
   // viewFavs
@@ -62,6 +68,11 @@ var LikesView = Backbone.View.extend({
       this.$('.viewFavs').addClass('current');
       this.$('.catFavourites').slideDown();
     }
+
+    // remove active class from sub-tabs
+    this.$(".likeCategoryTitle").removeClass('active');
+
+    this.likesListView.render(3);
   },
 
   // viewDislikes
@@ -74,6 +85,24 @@ var LikesView = Backbone.View.extend({
       this.$('.viewDislikes').addClass('current');
       this.$('.catDislikes').slideDown();
     }
+
+    // remove active class from sub-tabs
+    this.$(".likeCategoryTitle").removeClass('active');
+
+    this.likesListView.render(1);
+  },
+
+  // viewCategory
+  // -----------------------------------------------------------------------
+  viewCategory: function(e) {
+    var likesType = parseInt($(e.currentTarget).data('liketype'));
+    var likesCategory = $(e.currentTarget).data('cat');
+
+    // Set active class on tab
+    this.$(".likeCategoryTitle").removeClass('active');
+    $(e.currentTarget).addClass('active');
+
+    this.likesListView.render(likesType, likesCategory);
   }
 });
 
@@ -101,6 +130,17 @@ var LikesFiltersView = Backbone.View.extend({
     // render template
     var template = $('#tplLikesFilters').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+
+    // enable custom scrollbars
+    this.$('.likeCategories').slimScroll({
+      height: '100%',
+      allowPageScroll: false,
+      alwaysVisible: true,
+      railVisible: false,
+      position: 'right',
+      start: 'top',
+      size: '4px'
+    });
   }
 });
 
@@ -112,8 +152,7 @@ var LikesListView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   events: {
     'mouseover .like': 'showLikePanel',
-    'mouseout .like': 'hideLikePanel',
-    'click .fbLikeCategoryTitle': 'showCategoryLikes'
+    'mouseout .like': 'hideLikePanel'
   },
 
   // initialize
@@ -126,82 +165,50 @@ var LikesListView = Backbone.View.extend({
 
   // render
   // -----------------------------------------------------------------------
-  render: function() {
+  render: function(iLikesType, sLikesCategory, bShowCommonLikes) {
     var _this = this;
     this.renderType = 1;
     console.log('  ~ rendering LikesListView');
 
+    // check iLikesType, sLikesCategory & bShowCommonLikes to determine which likes to render
+      var likesToRender = null;
+      // show common likes
+      if(bShowCommonLikes) 
+      {
+        likesToRender = this.model.get('commonLikes');
+      } 
+      else 
+      {
+        // show likes of a particular type (dislikes/likes/favourites)
+        if(iLikesType > 0) {
+          if(iLikesType === 1) likesToRender = this.model.get('dislikes');
+          else if(iLikesType === 2) likesToRender = this.model.get('likes');
+          else if(iLikesType === 3) likesToRender = this.model.get('favourites');
+        } 
+        // show all likes
+        else 
+        {
+          likesToRender = this.model.get('l');
+        }
+        // show likes of a specific category, while keeping any type that was defined earlier
+        if(!IS.nullOrEmpty(sLikesCategory))
+        {
+          var likesToRenderWithCat = likesToRender;
+          likesToRender = [];
+          
+          $.each(likesToRenderWithCat, function(index, value) {
+            if (likesToRenderWithCat[index]['c'] === sLikesCategory)
+              likesToRender.push(likesToRenderWithCat[index]);
+          });
+        }
+      }
+
+    this.model.set({ likesToRender: likesToRender });
+
+    // render template
     var template = $('#tplLikesList').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    setTimeout(function() {
-      _this.onView();
-    }, 0);
-  },
-
-  // renderWithCategories
-  // -----------------------------------------------------------------------
-  renderWithCategories: function() {
-    var _this = this;
-    this.renderType = 2;
-    console.log('  ~ rendering LikesListView - with cats');
-    var template = $('#tplLikesWithCategories').html();
-    
-    // pre-process likes and split them into categories
-    // ================================================
-
-      // 1) get all likes
-      var aLikes = this.model.get('likes');
-
-      // 2) extract category names (pluck), and remove duplicates (uniq)
-      var aCategories = _.uniq(_.pluck(aLikes, 'c').sort(), true);
-
-      // 3) create object with categories and their likes
-      var aCategoriesAndLikes = [];
-      _.each(aCategories, function(category) {
-        // get all likes for that category
-        var aCategoryLikes = _.filter(aLikes, function(like){
-          return like.c == category;
-        });
-
-        // push category and its likes into aCategoriesAndLikes
-        aCategoriesAndLikes.push({
-          c: category,
-          l: aCategoryLikes
-        });
-      });
-
-      // 4) update model
-      this.model.set({ fLbyCategory: aCategoriesAndLikes });
-      this.model.set({ likeCategories: aCategories });
-
-    // render likes
-    // ============
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    // Add active class to the first category
-    setTimeout(function() {
-      $(".fbLikeCategoryTitle:first-child").addClass('active');
-      $(".fbCategoryLikes").first().show();
-    }, 0);
-
-    // reload like images until they load, while the API moves them to S3
-    /*if(this.model.get('u') === "" && this.model.get('_id') === user.get('_id')) {
-      console.log('- reloading like photos');
-
-      this.$('.fbLikePic img').load(function(){
-        $(this).parent().show().parent().find('.fbLikePicLoading').remove();
-      });
-
-      this.$('.fbLikePic img').error(function(){
-        var _this = this;
-        setTimeout(function() {
-          var src = $(_this).attr('src');
-          var date = new Date();
-          $(_this).attr('src', src + "?v=" + date.getTime());
-        }, 10);
-      });
-    }*/
+    l(this.$el);
 
     setTimeout(function() {
       _this.onView();
@@ -215,22 +222,6 @@ var LikesListView = Backbone.View.extend({
     this.$('.likeImg').appear(function() {
       $(this).attr('src', $(this).data('src'));
     });
-  },
-
-  // showCategoryLikes
-  // -----------------------------------------------------------------------
-  showCategoryLikes: function(e) {
-    var target = $(e.currentTarget);
-    var category = target.data('cat');
-
-    // Remove active class from tabs
-    $(".fbLikeCategoryTitle").removeClass('active');
-
-    // Add active class to clicked tab
-    $('.fbCategoryLikes').hide();
-    $('.like').removeClass('active');
-    target.addClass('active');
-    $(".fbCategoryLikes[data-cat='" + category + "']").fadeIn(200);
   },
 
   // showLikePanel

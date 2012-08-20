@@ -22,6 +22,7 @@ var MyProfileView = Backbone.View.extend({
 
     // initialize sub-views
     this.myPhotosView = new MyPhotosView({ model: this.model });
+    this.likesListView = new LikesListView({ model: this.model });
   },
 
   // render
@@ -34,18 +35,13 @@ var MyProfileView = Backbone.View.extend({
     // set likeCount
     this.model.set('likeCount', likes.length);
 
-    // set favouriteCount
-    //this.model.set('favouriteCount', IS.countLikesByRating(likes, '3'));
-
     // render template
     var template = $('#tplMyProfile').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
 
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-
-    // render all likes
-    IS.renderLikes(likes, this.$('#allLikes'));
+    this.likesListView.setElement(this.$('#allLikes')).render();
 
     setTimeout(function() {
       _this.onView();
@@ -318,8 +314,6 @@ var MyProfileView = Backbone.View.extend({
 });
 
 
-
-
 // =========================================================================
 // UsersFullView - a complete view of a user's profile
 // =========================================================================
@@ -340,6 +334,8 @@ var UsersFullView = Backbone.View.extend({
 
     // initialize sub-views
     this.myPhotosView = new MyPhotosView({ model: this.model });
+    this.likesListView = new LikesListView({ model: this.model });
+    this.commonLikesListView = new LikesListView({ model: this.model });
   },
 
   // render
@@ -359,9 +355,10 @@ var UsersFullView = Backbone.View.extend({
       });
     }
 
-    // find common likes and update the user model
+    // find common likes
     var commonLikes = IS.getCommonLikes(this.model.get('l'));
     this.model.set('commonLikesCount', commonLikes.length);
+    this.model.set('commonLikes', commonLikes);
 
     // render template
     var template = $('#tplUsersProfile').html();
@@ -369,15 +366,8 @@ var UsersFullView = Backbone.View.extend({
     
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-
-    // render common likes
-    if(commonLikes.length > 0) {
-      var cLContainer = _this.$('#commonLikes');
-      IS.renderLikes(commonLikes, cLContainer);
-    }
-
-    // render all likes
-    IS.renderLikes(this.model.get('l'), this.$('#facebookLikes'));
+    this.likesListView.setElement(this.$('#facebookLikes')).render();
+    this.commonLikesListView.setElement(this.$('#commonLikes')).render(null, null, true);
 
     setTimeout(function() {
       _this.onView();

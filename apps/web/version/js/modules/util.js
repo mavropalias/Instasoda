@@ -536,49 +536,15 @@ IS.getCommonLikes = function(otherUserLikes) {
 
   var commonLikes = _.intersection(myLikes, otherUserLikes);
 
-  // rebuild commonLikes to add all like properties and return it
-  return _.map(commonLikes, function(like) {
+  // rebuild commonLikes to add all like properties, sort the collection and return it
+  return _.sortBy(_.map(commonLikes, function(like) {
     var fullLike = _.find(user.get('l'), function(myLike) {
       return myLike._id == like;
     });
     return fullLike;
-  });
-}
-
-/**
- * Renders a list of likes into the specified container
- * @param {Array} likes
- * @param {Object} container
- * @param {Boolean} bShowCategories
- */
-IS.renderLikes = function(likes, container, bShowCategories) {
-    
-    // Adding likeType
-    $.each(likes, function(index, value) {
-      if (likes[index]['r'] == 2)
-        likes[index]['likeType'] = '';
-      else if (likes[index]['r'] == 3)
-        likes[index]['likeType'] = 'likeUserFavourites';
-      else
-        likes[index]['likeType'] = 'likeUserDislikes';
-    });
-
-    // clear container
-    container.html('');
-
-    // create model
-    var likes = new Likes({
-      likes: likes
-    });
-
-    // create new view & render
-    var likesListView = new LikesListView({
-      model: likes
-    });
-
-    if(!bShowCategories) likesListView.render();
-    else likesListView.renderWithCategories();
-    container.append(likesListView.el);
+  }), function(like){
+    return like.r;
+  });;
 }
 
 /**
@@ -587,6 +553,7 @@ IS.renderLikes = function(likes, container, bShowCategories) {
  */
 IS.parseLikes = function(model, likes) {
     
+  var alikes = [];
   var aDislikes = [];
   var aFavs = [];
 
@@ -598,12 +565,14 @@ IS.parseLikes = function(model, likes) {
   $.each(likes, function(index, value) {
     if (likes[index]['r'] === 1)
       aDislikes.push(likes[index]);
+    else if (likes[index]['r'] === 2)
+      alikes.push(likes[index]);
     else if (likes[index]['r'] === 3)
       aFavs.push(likes[index]);
   });
 
   // get like categories
-  aLikeCategories = _.uniq(_.pluck(likes, 'c').sort(), true);
+  aLikeCategories = _.uniq(_.pluck(alikes, 'c').sort(), true);
 
   // get dislike categories
   aDislikeCategories = _.uniq(_.pluck(aDislikes, 'c').sort(), true);
@@ -620,10 +589,11 @@ IS.parseLikes = function(model, likes) {
   model.set({ dislikeCategoriesCount: aDislikeCategories.length });
   model.set({ favsCategoriesCount: aFavsCategories.length });
 
+  model.set({ likes: alikes });
   model.set({ dislikes: aDislikes });
   model.set({ favourites: aFavs });
 
-  model.set({ likesCount: likes.length });
+  model.set({ likesCount: alikes.length });
   model.set({ dislikesCount: aDislikes.length });
   model.set({ favouritesCount: aFavs.length });
 }

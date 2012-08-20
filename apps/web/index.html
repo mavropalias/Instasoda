@@ -458,7 +458,7 @@
               Dislikes
               <span class="viewCount">{{dislikesCount}}</span>
             </li>
-            <li class="likeView viewAll current">
+            <li class="likeView viewLikes current">
               <span class="icon icon-thumbs-up"></span>
               Likes
               <span class="viewCount">{{likesCount}}</span>
@@ -471,39 +471,44 @@
           </ul>
 
           <div class="likeCategories">
-            <ul data-cat="all" class="likeCategory catAll">
+            <ul data-liketype="2" class="likeCategory catLikes">
               {{#likeCategories}}
-                <li data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
+                <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
               {{/likeCategories}}
             </ul>
 
-            <ul data-cat="favourites" class="likeCategory catFavourites">
+            <ul data-liketype="3" class="likeCategory catFavourites">
               {{#favsCategories}}
-                <li data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
+                <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
               {{/favsCategories}}
             </ul>
 
-            <ul data-cat="dislikes" class="likeCategory catDislikes">
+            <ul data-liketype="1" class="likeCategory catDislikes">
               {{#dislikeCategories}}
-                <li data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
+                <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
               {{/dislikeCategories}}
             </ul>
           </div>
         </section>
+      </script>
 
-        <section>
-          <h3>Search using likes <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
-          <ul class="likes">
-            {{#so.l}}
-              <li class="like" data-id="{{_id}}" data-name="{{n}}">
-                <span class="likePic">
-                  <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
-                </span>
-                <span class="likeName">{{n}}</span>
-              </li>
-            {{/so.l}}
-          </ul>
-        </section>
+
+    <!------------------------------------------------------------------------>
+    <!-- LIKES CATEGORY VIEW -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplSearchLikes" type="text/template">
+        <h3>Search using likes <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
+        <ul class="likes">
+          {{#so.l}}
+            <li class="like" data-id="{{_id}}" data-name="{{n}}">
+              <span class="likePic">
+                <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
+              </span>
+              <span class="likeName">{{n}}</span>
+            </li>
+          {{/so.l}}
+        </ul>
       </script>
 
 
@@ -537,14 +542,14 @@
 
       <script id="tplLikesList" type="text/template">
         <ul class="likes">
-          {{#likes}}
-            <li class="like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
+          {{#likesToRender}}
+            <li class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
               <span class="likePic">
                 <img data-src="http://img.instasoda.com/l/{{_id}}.jpg" src="http://img.instasoda.com/i/loading.gif" width=50 height=50 class="likeImg">
               </span>
               <span class="likeName">{{n}}</span>
             </li>
-          {{/likes}}
+          {{/likesToRender}}
         </ul>
       </script>
 

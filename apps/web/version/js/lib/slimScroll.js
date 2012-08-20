@@ -15,15 +15,11 @@
         width : 'auto',
         height : '250px',
         size : '7px',
-        color: '#000',
         position : 'right',
         distance : '1px',
         start : 'top',
-        opacity : .4,
         alwaysVisible : false,
         railVisible : false,
-        railColor : '#333',
-        railOpacity : '0.2',
         railClass : 'slimScrollRail',
         barClass : 'slimScrollBar',
         wrapperClass : 'slimScrollDiv',
@@ -44,15 +40,11 @@
         cwidth = o.width,
         cheight = o.height,
         size = o.size,
-        color = o.color,
         position = o.position,
         distance = o.distance,
         start = o.start,
-        opacity = o.opacity,
         alwaysVisible = o.alwaysVisible,
         railVisible = o.railVisible,
-        railColor = o.railColor,
-        railOpacity = o.railOpacity,
         allowPageScroll = o.allowPageScroll,
         scroll = o.scroll;
       
@@ -102,9 +94,6 @@
             position: 'absolute',
             top: 0,
             display: (alwaysVisible && railVisible) ? 'block' : 'none',
-            'border-radius': size,
-            background: railColor,
-            opacity: railOpacity,
             zIndex: 90
           });
 
@@ -112,16 +101,10 @@
         var bar = $(divS)
           .addClass( o.barClass )
           .css({
-            background: color,
             width: size,
             position: 'absolute',
             top: 0,
-            opacity: opacity,
             display: alwaysVisible ? 'block' : 'none',
-            'border-radius' : size,
-            BorderRadius: size,
-            MozBorderRadius: size,
-            WebkitBorderRadius: size,
             zIndex: 99
           });
 
