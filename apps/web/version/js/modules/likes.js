@@ -20,6 +20,7 @@ var LikesView = Backbone.View.extend({
     
     // initialize sub-views
     this.likesFiltersView = new LikesFiltersView({ model: this.model });
+    this.likesListView = new LikesListView({ model: this.model });
   },
   
   // render
@@ -36,9 +37,7 @@ var LikesView = Backbone.View.extend({
     
     // render sub views
     this.likesFiltersView.setElement(this.$('#likesFilters')).render();
-
-    // render likes
-    IS.renderLikes(this.model.get('l'), this.$('#likesResults'), true);
+    this.likesListView.setElement(this.$('#likesResults')).render();
   },
 
   // viewAll
@@ -82,13 +81,6 @@ var LikesView = Backbone.View.extend({
 // LikesFilters view
 // =========================================================================
 var LikesFiltersView = Backbone.View.extend({
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    'mouseover .like': 'showLikePanel',
-    'mouseout .like': 'hideLikePanel',
-  },
-
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
@@ -109,49 +101,6 @@ var LikesFiltersView = Backbone.View.extend({
     // render template
     var template = $('#tplLikesFilters').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-  },
-
-  // addOrRemoveLikeFromSearchOptions
-  // -----------------------------------------------------------------------
-  addOrRemoveLikeFromSearchOptions: function(e) {
-    var likeId = $(e.currentTarget).data('id');    
-    IS.addOrRemoveLikeFromSearchOptions(likeId);
-  },
-
-  // newSearchLike
-  // show the new like that was added to the user's search options
-  // -----------------------------------------------------------------------
-  newSearchLike: function() {
-
-  },
-
-  // showLikePanel
-  // -----------------------------------------------------------------------
-  showLikePanel: function(e) {
-    var target = $(e.currentTarget);
-
-    if(target.find('.likePanel').length > 0) target.find('.likePanel').show();
-    else {
-      // construct a new like model, based on the event's target
-      var likeAttrs = {
-        _id: target.data('id'),
-        n: target.data('name')
-      };
-      var like = new Like(likeAttrs);
-
-      // create the panel view & render it
-      var facebookLikePanelView = new FacebookLikePanelView({
-        model: like
-      });
-      facebookLikePanelView.render();
-      $(e.currentTarget).append(facebookLikePanelView.el);
-    }
-  },
-
-  // hideLikePanel
-  // -----------------------------------------------------------------------
-  hideLikePanel: function() {
-    this.$('.likePanel').hide();
   }
 });
 
