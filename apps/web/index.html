@@ -71,6 +71,7 @@
   <script type="text/javascript" src="VERSION/js/modules/matches.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/settings.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/sidebar.js"></script>
 
 
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
@@ -128,7 +129,7 @@
 
     <nav></nav>
     <section id="content" role="main"></section>
-    <section id="footer"></section>
+    <aside id="sidebar"></aside>
 
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
@@ -678,21 +679,21 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearchResult" type="text/template">
-        <ul>
+        <a href="./#{{_id}}">
           {{#p}}
             {{#d}}
-              <li>
+              <div>
                 <img src="http://img.instasoda.com/u/{{f}}" height="150" />
-              </li>
+              </div>
             {{/d}}
           {{/p}}
           {{^p}}
-          <li>
+          <div>
             <img src="http://img.instasoda.com/i/noPhoto.png" height="150" />
-          </li>
+          </div>
           {{/p}}
-          <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
-        </ul>
+          <div class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</div>
+        </a>
       </script>
 
 
@@ -1053,6 +1054,18 @@
         </div>
       </script>
 
+
+    <!------------------------------------------------------------------------>
+    <!-- SIDEBAR -->
+    <!------------------------------------------------------------------------>
+
+      <section id="tplSidebar">
+        <section class="sidebarTabs">
+          <div class="sidebarTabTitle" id="chatTab">Chat</div>
+        </section>
+
+        <section class="sidebarTabContent" id="chat"></section>
+      </section>
 
 
     <!------------------------------------------------------------------------>

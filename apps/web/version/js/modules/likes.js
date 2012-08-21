@@ -135,7 +135,7 @@ var LikesFiltersView = Backbone.View.extend({
     this.$('.likeCategories').slimScroll({
       height: '100%',
       allowPageScroll: false,
-      alwaysVisible: true,
+      alwaysVisible: false,
       railVisible: false,
       position: 'right',
       start: 'top',
@@ -208,7 +208,6 @@ var LikesListView = Backbone.View.extend({
     // render template
     var template = $('#tplLikesList').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-    l(this.$el);
 
     setTimeout(function() {
       _this.onView();

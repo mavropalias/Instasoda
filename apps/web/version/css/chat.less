@@ -1,266 +1,255 @@
 // =============================================================================
-// FOOTER
+// CHAT
 // =============================================================================
-  
-  #footer {
-    .box-shadow(1px, 0px, 2px 0px, rgba(0, 0, 0, .2) inset);
-    background: #ececec;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    width: 200px;
-    z-index: 10;
     
-    #chatToggle {
-      .text-shadow;
-      background: #fafafa;
-      font-size: 1.1em;
-      color: #666;
-      font-weight: 700;
-      line-height: 30px;
-      border-left: 1px solid #ddd;
-      border-right: 1px solid #ddd;
-      float: left;
-      cursor: pointer;
-      position: relative;
-      z-index: 2;
-      
-      &.active {
-        .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
-        .linear-gradient();
-        color: #333;
-        border-left: 1px solid #ccc;
-        border-right: 1px solid #ccc;
-
-        #toggleIcon {
-          background: url(../img/toggle.png) bottom left no-repeat transparent;
-        }
-      }
-      
-      &.online {
-        .onlineInChat {
-          display: inline-block;
-        }
-        
-        .offlineInChat {
-          display: none;
-        }
-      }
-      
-      .chatStatusControls {
-        height: 30px;
-        display: block;
-        float: right;
-        border-left: 1px solid #eee;
-        padding: 0 10px;
-      }
-
-      .chatStatus {
-        float: left;
-        margin: 10px 0 0 0;
-      }
-
-      .toggleTitle {
-        display: block;
-        float: left;
-        padding: 0 10px;
-
-        &:hover {
-          text-decoration: underline;
-        }
-      }
+  #chatToggle {
+    .text-shadow;
+    background: #fafafa;
+    font-size: 1.1em;
+    color: #666;
+    font-weight: 700;
+    line-height: 30px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    float: left;
+    cursor: pointer;
+    position: relative;
+    z-index: 2;
+    
+    &.active {
+      .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
+      .linear-gradient();
+      color: #333;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
 
       #toggleIcon {
-        width: 6px;
-        height: 5px;
-        display: inline-block;
-        margin: 0 0 1px 3px;
-        background: url(../img/toggle.png) top left no-repeat transparent;
-      }
-      
-      .offlineInChat {
-        display: inline-block;
-      }
-      
-      .onlineInChat {
-        display: none;
-      }
-      
-      .offlineInChat,
-      .onlineInChat {
-        float: right;
-        margin: 10px 0 0 10px;
-        line-height: 10px;
-        font-size: 10px;
-        position: relative;
-        overflow: hidden;
+        background: url(../img/toggle.png) bottom left no-repeat transparent;
       }
     }
     
-    #chatWindow {
-      .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
-      background: #fff;
-      border: 1px solid #ccc;
-      position: fixed;
-      bottom: 29px;
-      left: 25px;
-      width: 600px;
-      min-height: 300px;
-      max-height: 500px;
-      z-index: 1;
-      display: none;
-      
-      #chatSessionsScroller {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        width: 148px;
-        border-right: 1px solid #ddd;
-        overflow-y: auto;
-        overflow-x: hidden;
-      }
-
-      .chatSessions {
-        
-        .chatSessionsTab {
-          .text-shadow;
-          background: #fafafa;
-          width: 128px;
-          padding: 5px 10px;
-          height: 40px;
-          border-bottom: 1px solid #ddd;
-          //border-top: 1px solid #fff;
-          cursor: pointer;
-          position: relative;
-          
-          &:hover {
-            .user {
-              text-decoration: underline;
-            }
-          }
-          
-          .photoThumbnail {
-            float: left;
-            margin-right: 10px;
-            display: block;
-            height: 40px;
-            overflow: hidden;
-            background: #fff;
-          }
-
-          .user {
-            font-size: 1.1em;
-          }
-
-          .meta {
-            color: #777;
-            font-size: 0.9em;
-            display: block;
-            margin-top: 5px;
-          }
-          
-          .unreadMessages {
-            .border-radius;
-            font-size: 0.9em;
-            position: absolute;
-            right: 5px;
-            top: 4px;
-            color: #aaa;
-            background: #fff;
-            padding: 5px;
-            border: 1px solid #eee;
-          }
-        }
-        
-        .active {
-          text-shadow: none;
-          background: @color1;
-          color: @colorBlue6;
-          cursor: default;
-          font-weight: 700;
-          
-          &:hover {
-            text-decoration: none;
-          }
-
-          .photoThumbnail {
-            background: @color1;
-          }
-        }
+    &.online {
+      .onlineInChat {
+        display: inline-block;
       }
       
-      .chatSession {
+      .offlineInChat {
         display: none;
+      }
+    }
+    
+    .chatStatusControls {
+      height: 30px;
+      display: block;
+      float: right;
+      border-left: 1px solid #eee;
+      padding: 0 10px;
+    }
+
+    .chatStatus {
+      float: left;
+      margin: 10px 0 0 0;
+    }
+
+    .toggleTitle {
+      display: block;
+      float: left;
+      padding: 0 10px;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    #toggleIcon {
+      width: 6px;
+      height: 5px;
+      display: inline-block;
+      margin: 0 0 1px 3px;
+      background: url(../img/toggle.png) top left no-repeat transparent;
+    }
+    
+    .offlineInChat {
+      display: inline-block;
+    }
+    
+    .onlineInChat {
+      display: none;
+    }
+    
+    .offlineInChat,
+    .onlineInChat {
+      float: right;
+      margin: 10px 0 0 10px;
+      line-height: 10px;
+      font-size: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+  }
+  
+  #chatWindow {
+    .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
+    background: #fff;
+    border: 1px solid #ccc;
+    position: fixed;
+    bottom: 29px;
+    left: 25px;
+    width: 600px;
+    min-height: 300px;
+    max-height: 500px;
+    z-index: 1;
+    display: none;
+    
+    #chatSessionsScroller {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 148px;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .chatSessions {
+      
+      .chatSessionsTab {
+        .text-shadow;
+        background: #fafafa;
+        width: 128px;
+        padding: 5px 10px;
+        height: 40px;
+        border-bottom: 1px solid #ddd;
+        //border-top: 1px solid #fff;
+        cursor: pointer;
+        position: relative;
+        
+        &:hover {
+          .user {
+            text-decoration: underline;
+          }
+        }
+        
+        .photoThumbnail {
+          float: left;
+          margin-right: 10px;
+          display: block;
+          height: 40px;
+          overflow: hidden;
+          background: #fff;
+        }
+
+        .user {
+          font-size: 1.1em;
+        }
+
+        .meta {
+          color: #777;
+          font-size: 0.9em;
+          display: block;
+          margin-top: 5px;
+        }
+        
+        .unreadMessages {
+          .border-radius;
+          font-size: 0.9em;
+          position: absolute;
+          right: 5px;
+          top: 4px;
+          color: #aaa;
+          background: #fff;
+          padding: 5px;
+          border: 1px solid #eee;
+        }
+      }
+      
+      .active {
+        text-shadow: none;
+        background: @color1;
+        color: @colorBlue6;
+        cursor: default;
+        font-weight: 700;
+        
+        &:hover {
+          text-decoration: none;
+        }
+
+        .photoThumbnail {
+          background: @color1;
+        }
+      }
+    }
+    
+    .chatSession {
+      display: none;
+      position: absolute;
+      left: 148px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      font-size: 1.1em;
+      
+      .chatLikes {
         position: absolute;
-        left: 148px;
         top: 0;
         right: 0;
-        bottom: 0;
-        font-size: 1.1em;
-        
-        .chatLikes {
-          position: absolute;
-          top: 0;
-          right: 0;
-          left: 0;
-          margin: 10px;
-          height: 40px;
-          background: #f3f3f3;
-        }
+        left: 0;
+        margin: 10px;
+        height: 40px;
+        background: #f3f3f3;
+      }
 
-        .chatLogScrollWrapper {
-          position: absolute;
-          top: 50px;
-          right: 0;
-          left: 0;
-          bottom: 40px;
-          margin: 10px;
-          overflow: auto;
-        }
+      .chatLogScrollWrapper {
+        position: absolute;
+        top: 50px;
+        right: 0;
+        left: 0;
+        bottom: 40px;
+        margin: 10px;
+        overflow: auto;
+      }
+      
+      .chatLog {
+        display: block;
+        line-height: 1.5em;
         
-        .chatLog {
-          display: block;
-          line-height: 1.5em;
+        .chatLogLine {
+          .clearBoth;
+          margin-bottom: 0.5em;
+          margin-right: 15px;
           
-          .chatLogLine {
-            .clearBoth;
-            margin-bottom: 0.5em;
-            margin-right: 15px;
-            
-            .user {
-              color: #999;
-            }
-            
-            .time {
-              color: #999;
-              float: right;
-            }
+          .user {
+            color: #999;
+          }
+          
+          .time {
+            color: #999;
+            float: right;
           }
         }
+      }
+      
+      .chatControls {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
         
-        .chatControls {
-          position: absolute;
-          bottom: 0;
-          right: 0;
-          left: 0;
+        .chatInput {
+          width: 421px;
+          margin: 10px;
+          border: 1px solid #d9d9d9;
+          border-top: 1px solid silver;
+          padding: 5px;
+          height: 1.7em;
+          line-height: 1.7em;
+          font-size: 1em;
           
-          .chatInput {
-            width: 421px;
-            margin: 10px;
-            border: 1px solid #d9d9d9;
-            border-top: 1px solid silver;
-            padding: 5px;
-            height: 1.7em;
-            line-height: 1.7em;
-            font-size: 1em;
-            
-            &:focus {
-              .box-shadow(0, 1px, 2px, rgba(0, 0, 0, .3) inset);
-              border: 1px solid @color2;
-              outline: none;
-            }
+          &:focus {
+            .box-shadow(0, 1px, 2px, rgba(0, 0, 0, .3) inset);
+            border: 1px solid @color2;
+            outline: none;
           }
         }
       }

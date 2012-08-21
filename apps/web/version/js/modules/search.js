@@ -178,18 +178,6 @@ var UsersView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   className: 'userPreview',
   tagName: 'li',
-  
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    'click': 'viewProfile'
-  },
-
-  // viewProfile
-  // -----------------------------------------------------------------------
-  viewProfile: function(e) {
-    router.navigate(this.model.get('_id'), {trigger: true});
-  },
 
   // render
   // -----------------------------------------------------------------------

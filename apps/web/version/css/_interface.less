@@ -83,6 +83,28 @@
     }
   }
 
+  #sidebar {
+    .box-shadow(1px, 0px, 2px 0px, rgba(0, 0, 0, .2) inset);
+    background: #ececec;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 200px;
+    z-index: 10;
+
+    .sidebarTabs {
+      background: #fff;
+      width: 100%;
+
+      .sidebarTabTitle {
+        background: @color2;
+        color: #fff;
+        padding: 0.5rem 1rem;
+      }
+    }
+  }
+
   .column {
     vertical-align: top;
     text-align: left;

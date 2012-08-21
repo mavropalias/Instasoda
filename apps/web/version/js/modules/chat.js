@@ -1,83 +1,4 @@
 // =========================================================================
-// Chat view
-// =========================================================================
-
-var ChatView = Backbone.View.extend({      
-  // events
-  // -----------------------------------------------------------------------
-  events: {
-    'click .toggleTitle': 'toggleChatWindow'
-  },
-  
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    _.bindAll(this);
-    
-    // initialize sub views
-    this.chatSessionTabs = new ChatSessionTabs({ collection: chatSessions });
-    this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
-    
-    this.model.bind('change', this.render);
-    this.render();
-  },
-  
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    console.log('  ~ rendering ChatView');
-    
-    var _this = this;
-    var template = $('#tplChat').html();
-    
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-    
-    // fetch chat sessions
-    chatSessions.reset();
-    chatSessions.fetch({
-      data: {
-        'id': this.model.get('_id'),
-        'fTkn': this.model.get('fTkn')
-      },
-      success: function(model, response) {
-        // render sub views
-        _this.chatSessionTabs.setElement(_this.$('.chatSessions')).render();
-        _this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
-      }
-    });
-
-    // enable custom scrollbars
-    this.$('.chatSessions').slimScroll({
-      height: '300px',
-      allowPageScroll: false,
-      alwaysVisible: false,
-      railVisible: true,
-      position: 'left',
-      start: 'bottom'
-    });
-  },
-  
-  // toggleChatWindow
-  // -----------------------------------------------------------------------
-  toggleChatWindow: function() {
-    console.log('  ~ toggling chat window');
-    this.$('#chatWindow').toggle(0, function() {
-      if($(this).is(':visible')) $('#chatToggle').addClass('active');
-      else $('#chatToggle').removeClass('active');
-    });
-  },
-  
-  // showChatWindow
-  // -----------------------------------------------------------------------
-  showChatWindow: function() {
-    console.log('  ~ showing chat window');
-    this.$('#chatWindow').show();
-    this.$('#chatToggle').addClass('active')
-  }
-});
-
-
-// =========================================================================
 // ChatSessionTabs
 // =========================================================================
 var ChatSessionTabs = Backbone.View.extend({
@@ -100,8 +21,22 @@ var ChatSessionTabs = Backbone.View.extend({
   // -----------------------------------------------------------------------
   render: function() {
     console.log('  ~ rendering ChatSessionTabs (tabs)');
-    this.$el.html('');
-    this.collection.each(this.renderSessionTab);
+
+    var _this = this;
+
+    // fetch chat sessions
+    chatSessions.reset();
+    chatSessions.fetch({
+      data: {
+        'id': user.get('_id'),
+        'fTkn': user.get('fTkn')
+      },
+      success: function(model, response) {
+        //_this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
+        _this.$el.html('');
+        _this.collection.each(_this.renderSessionTab);
+      }
+    });
   },
   
   // renderSessionTab

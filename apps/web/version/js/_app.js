@@ -110,7 +110,7 @@
   // Backbone views
   // -------------------------------------------------------------------------
   var navigationView;
-  var chatView;
+  var sidebarView;
   var welcomeView;
   var betaView;
   var myProfileView;
@@ -135,8 +135,8 @@
     dashboardView = new DashboardView({
       model: user,
     });
-    chatView = new ChatView({
-      el: $('#footer')[0],
+    sidebarView = new SidebarView({
+      el: $('#sidebar')[0],
       model: user
     });
     welcomeView = new WelcomeView();

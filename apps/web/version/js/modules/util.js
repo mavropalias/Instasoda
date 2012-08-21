@@ -1,3 +1,64 @@
+/*
+Function overview
+=================
+
+notify:
+Create a toast notification
+
+handleFavourite:  
+Add a person to the user's favourites
+
+addOrRemoveLikeFromSearchOptions: 
+Adds or removes a like from the user's search options
+
+addOrRemoveLikeAndRate: 
+Adds or removes a like with a rating
+
+navigateTo: 
+Navigates to a page
+
+prepareApp: 
+Prepares App
+
+facebookAuth: 
+Attempts to auth a FB user
+
+login: 
+Attempts to log the user into the system
+
+createAccount: 
+Create a new user account by connecting to Facebook
+
+logout: 
+Logs the user out of the system
+
+nullOrEmpty: 
+Checks if a property is null or empty "". If so, returns true
+
+saveUser: 
+Saves the User model to the API
+
+getCommonLikes: 
+Returns common likes between User and another user
+
+parseLikes: 
+Parses a user's likes and updates model with favs, dislikes and categories
+
+setupPage: 
+Do various admin tasks when loading a page
+
+setupUser: 
+Sets user settings (username, sex prefs, etc)
+
+pageFlip: 
+Creates a page flip animation between two containers
+
+l: 
+Shortcut for console.log()
+
+*/
+
+
 /**
  * Create a toast notification.
  * @param {String} message
@@ -500,7 +561,7 @@ IS.logout = function(bStopRedirect) {
   user.clear({ silent: true }); // clear local Backbone model
   store.clear(); // clear localStorage
   navigationView.render(); // update nav menu
-  chatView.render(); // update footer/chat view
+  sidebarView.render(); // update sidebarView
   appReady = false;
   if(!bStopRedirect) {
     router.navigate("", {trigger: true}); // redirect to homepage
@@ -519,7 +580,7 @@ IS.nullOrEmpty = function(property) {
 }
 
 /**
- * Saves the user model to the API.
+ * Saves the User model to the API.
  */
 IS.saveUser = function() {
   user.save();
@@ -527,7 +588,7 @@ IS.saveUser = function() {
 }
 
 /**
- * Returns common likes between two users
+ * Returns common likes between User and another user
  * @param {Array} otherUserLikes
  */
 IS.getCommonLikes = function(otherUserLikes) {
@@ -599,7 +660,7 @@ IS.parseLikes = function(model, likes) {
 }
 
 /**
- * Do various admin tasks
+ * Do various admin tasks when loading a page
  * @param {String} page
  */
 IS.setupPage = function (page) {
