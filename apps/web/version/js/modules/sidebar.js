@@ -18,7 +18,6 @@ var SidebarView = Backbone.View.extend({
     
     // initialize sub views
     this.chatSessionTabs = new ChatSessionTabs({ collection: chatSessions });
-    //this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
     
     //this.model.bind('change', this.render);
     this.render();
@@ -35,18 +34,7 @@ var SidebarView = Backbone.View.extend({
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
     
     // render sub-views
-    _this.chatSessionTabs.setElement(_this.$('#chat')).render();
-
-
-    // enable custom scrollbars
-    this.$('.chatSessions').slimScroll({
-      height: '300px',
-      allowPageScroll: false,
-      alwaysVisible: false,
-      railVisible: true,
-      position: 'left',
-      start: 'bottom'
-    });
+    this.chatSessionTabs.setElement(_this.$('.chatSessions')).render();
   },
   
   // toggleSidebar

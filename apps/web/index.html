@@ -274,9 +274,6 @@
 
       <script id="tplChatSession" type="text/template">
         <section class="chatSession" id="session_{{_id}}">
-          <ul class="chatLikes">
-            likes go here
-          </ul>
           <div id="scroller_{{_id}}" class="chatLogScrollWrapper">
             <ul class="chatLog">
               {{#log}}
@@ -290,7 +287,7 @@
           </div>
           <div class="chatControls">
             <form id="sendMessageForm" data-chatsessionid="{{_id}}">
-              <input autofocus="autofocus" class="chatInput" maxlength="500" placeholder="type here to chat..." />
+              <input autofocus="autofocus" type="text" class="chatInput" maxlength="500" placeholder="type here to chat..." />
             </form>
           </div>
         </section>
@@ -315,11 +312,36 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplDashboard" type="text/template">
-          <h2>Hi {{u}},</h2>
-          <p>Welcome to Instasoda’s closed beta!</p>
-          <p>We would love to hear your feedback about Instasoda. Please let us know your opinion, ideas and any issues you might have encounted!<p/>
+        <div class="column sidebar">
+          <section>
+            <h2>Hi {{u}},</h2>
+            <p>Welcome to Instasoda’s closed beta!</p>
+            <p>We would love to hear your feedback about Instasoda. Please let us know your opinion, ideas and any issues you might encounter!<p/>
 
-          <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog (powered by UserVoice)">Feedback & support</a>
+            <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog (powered by UserVoice)">Feedback & support</a>
+          </section>
+        </div>
+        <div class="column mainContent">
+          <section id="newMatches">
+            <h2>Online users</h2>
+            <p>stuff</p>
+          </section>
+
+          <section id="newMatches">
+            <h2>People with similar interests</h2>
+            <p>stuff</p>
+          </section>
+
+          <section id="newMatches">
+            <h2>New instasoda users</h2>
+            <p>stuff</p>
+          </section>
+
+          <section id="newMatches">
+            <h2>Your profile</h2>
+            <p>stuff</p>
+          </section>
+        </div>
       </script>
 
 
@@ -1059,13 +1081,18 @@
     <!-- SIDEBAR -->
     <!------------------------------------------------------------------------>
 
-      <section id="tplSidebar">
+      <script id="tplSidebar" type="text/template">
         <section class="sidebarTabs">
           <div class="sidebarTabTitle" id="chatTab">Chat</div>
         </section>
 
-        <section class="sidebarTabContent" id="chat"></section>
-      </section>
+        <section class="sidebarTabContent" id="chat">
+          <div id="chatSessionsScroller">
+            <ul class="chatSessions">no active chat sessions</ul>
+          </div>
+          <span class="chatSessionContainer"></span>
+        </section>
+      </script>
 
 
     <!------------------------------------------------------------------------>

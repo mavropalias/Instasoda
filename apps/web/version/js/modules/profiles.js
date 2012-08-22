@@ -408,7 +408,7 @@ var UsersFullView = Backbone.View.extend({
   // sendMessage
   // -----------------------------------------------------------------------
   sendMessage: function() {
-    chatView.chatSessionTabs.initiateSessionWith(this.model.get('_id'), this.model.get('u'), this.model.get('ag'), this.model.get('p'));
+    sidebarView.chatSessionTabs.initiateSessionWith(this.model.get('_id'), this.model.get('u'), this.model.get('ag'), this.model.get('p'));
   },
 
   // handleFavourite

@@ -135,10 +135,6 @@
     dashboardView = new DashboardView({
       model: user,
     });
-    sidebarView = new SidebarView({
-      el: $('#sidebar')[0],
-      model: user
-    });
     welcomeView = new WelcomeView();
     myProfileView = new MyProfileView({
       model: user

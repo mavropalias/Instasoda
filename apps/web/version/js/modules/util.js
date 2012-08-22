@@ -1,59 +1,62 @@
 /*
-Function overview
+Functions overview
 =================
 
-notify:
+> notify:
 Create a toast notification
 
-handleFavourite:  
-Add a person to the user's favourites
+> handleFavourite:  
+Add/remove a person to the user's favourites
 
-addOrRemoveLikeFromSearchOptions: 
+> addOrRemoveLikeFromSearchOptions: 
 Adds or removes a like from the user's search options
 
-addOrRemoveLikeAndRate: 
+> addOrRemoveLikeAndRate: 
 Adds or removes a like with a rating
 
-navigateTo: 
+> navigateTo: 
 Navigates to a page
 
-prepareApp: 
+> prepareApp: 
 Prepares App
 
-facebookAuth: 
+> facebookAuth: 
 Attempts to auth a FB user
 
-login: 
+> login: 
 Attempts to log the user into the system
 
-createAccount: 
+> createAccount: 
 Create a new user account by connecting to Facebook
 
-logout: 
-Logs the user out of the system
+> logout: 
+Logs the user out of the system & clears localStorage
 
-nullOrEmpty: 
-Checks if a property is null or empty "". If so, returns true
+> nullOrEmpty: 
+Checks if a property is null, empty or undefined. If so, returns true
 
-saveUser: 
+> saveUser: 
 Saves the User model to the API
 
-getCommonLikes: 
+> getCommonLikes: 
 Returns common likes between User and another user
 
-parseLikes: 
-Parses a user's likes and updates model with favs, dislikes and categories
+> parseLikes: 
+Parses a user's likes and extends model with favs, dislikes and categories
 
-setupPage: 
-Do various admin tasks when loading a page
+> setupPage: 
+Do various admin tasks after loading a page
 
-setupUser: 
+> showSidebar
+Shows or hides the sidebar
+
+> setupUser: 
 Sets user settings (username, sex prefs, etc)
 
-pageFlip: 
+> pageFlip: 
 Creates a page flip animation between two containers
 
-l: 
+> l: 
 Shortcut for console.log()
 
 */
@@ -315,7 +318,14 @@ IS.prepareApp = function(bForceLogin, cb) {
         IS.login(IS.fbToken, res[0].third_party_id, function(err) {
           if(!err) {
             console.log('> SUCCESS! User is logged in');
+
             appReady = true;
+
+            sidebarView = new SidebarView({
+              el: $('#sidebar')[0],
+              model: user
+            });
+
             if(cb) cb();
             else IS.navigateTo('');
           } else {
@@ -323,7 +333,14 @@ IS.prepareApp = function(bForceLogin, cb) {
             IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
               if(!err) {
                 console.log('> SUCCESS! Account created');
+
                 appReady = true;
+
+                sidebarView = new SidebarView({
+                  el: $('#sidebar')[0],
+                  model: user
+                });
+
                 IS.navigateTo('');
               } else {
                 console.log('> ERROR: ' + res);
@@ -345,7 +362,14 @@ IS.prepareApp = function(bForceLogin, cb) {
     IS.login(IS.fbToken, store.get("user")._id, function(err, res) {
       if(!err) {
         console.log('> SUCCESS! User is logged in');
+
         appReady = true;
+
+        sidebarView = new SidebarView({
+          el: $('#sidebar')[0],
+          model: user
+        });
+
         if(cb) cb();
         else IS.navigateTo('');
       } else {
@@ -353,7 +377,14 @@ IS.prepareApp = function(bForceLogin, cb) {
         IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
           if(!err) {
             console.log('> SUCCESS! Account created');
+
             appReady = true;
+
+            sidebarView = new SidebarView({
+              el: $('#sidebar')[0],
+              model: user
+            });
+
             IS.navigateTo('');
           } else {
             console.log('> ERROR: ' + res);
@@ -675,6 +706,36 @@ IS.setupPage = function (page) {
 
   // setup user
   if(!IS.nullOrEmpty(user.get('_id'))) IS.setupUser();
+
+  // show/hide sidebar
+  if(!IS.nullOrEmpty(user.get('_id'))) {
+    IS.showSidebar(true);
+  } else {
+    IS.showSidebar(false);
+  }
+
+  // add custom scrollbar in the main content area
+  var scroller = $('#content .mainContent');
+  scroller.slimScroll({
+    height: '100%',
+    allowPageScroll: false,
+    alwaysVisible: true,
+    railVisible: true,
+    start: 'top',
+    size: '10px'
+  });
+}
+
+/**
+ * Shows or hides the sidebar
+ * @param {Bool} true to show / false to hide
+ */
+IS.showSidebar = function (bShow) {
+  if(bShow) {
+    $('#sidebar').addClass('visible');
+  } else {
+    $('#sidebar').removeClass('visible');
+  }
 }
 
 /**

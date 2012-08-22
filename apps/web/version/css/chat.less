@@ -88,38 +88,18 @@
     }
   }
   
-  #chatWindow {
-    .box-shadow(4px, 4px, 4px, rgba(0, 0, 0, 0.2));
-    background: #fff;
-    border: 1px solid #ccc;
-    position: fixed;
-    bottom: 29px;
-    left: 25px;
-    width: 600px;
-    min-height: 300px;
-    max-height: 500px;
-    z-index: 1;
-    display: none;
+  #chat {
     
     #chatSessionsScroller {
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      width: 148px;
-      border-right: 1px solid #ddd;
-      overflow-y: auto;
-      overflow-x: hidden;
     }
 
     .chatSessions {
       
       .chatSessionsTab {
         .text-shadow;
-        background: #fafafa;
-        width: 128px;
+        width: 100%;
         padding: 5px 10px;
-        height: 40px;
+        overflow: hidden;
         border-bottom: 1px solid #ddd;
         //border-top: 1px solid #fff;
         cursor: pointer;
@@ -135,9 +115,8 @@
           float: left;
           margin-right: 10px;
           display: block;
-          height: 40px;
+          max-height: 40px;
           overflow: hidden;
-          background: #fff;
         }
 
         .user {
@@ -166,8 +145,7 @@
       
       .active {
         text-shadow: none;
-        background: @color1;
-        color: @colorBlue6;
+        background: #fff;
         cursor: default;
         font-weight: 700;
         
@@ -182,31 +160,24 @@
     }
     
     .chatSession {
+      .box-shadow(-1px, 2px, 2px 0px, rgba(0, 0, 0, .2));
       display: none;
-      position: absolute;
-      left: 148px;
-      top: 0;
-      right: 0;
-      bottom: 0;
+      position: fixed;
+      right: 210px;
+      top: 50px;
+      width: 30%;
+      height: 300px;
       font-size: 1.1em;
-      
-      .chatLikes {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
-        margin: 10px;
-        height: 40px;
-        background: #f3f3f3;
-      }
+      background: #fff;
+      overflow: hidden;
 
       .chatLogScrollWrapper {
         position: absolute;
-        top: 50px;
+        top: 0px;
         right: 0;
         left: 0;
-        bottom: 40px;
-        margin: 10px;
+        bottom: 45px;
+        margin: 0 0 0 10px;
         overflow: auto;
       }
       
@@ -224,7 +195,8 @@
           }
           
           .time {
-            color: #999;
+            font-size: 0.8em;
+            color: #ccc;
             float: right;
           }
         }
@@ -237,11 +209,14 @@
         left: 0;
         
         .chatInput {
-          width: 421px;
-          margin: 10px;
-          border: 1px solid #d9d9d9;
-          border-top: 1px solid silver;
-          padding: 5px;
+          .box-shadow(0px, 2px, 2px -1px, rgba(0, 0, 0, .1) inset);
+          display: block;
+          background: #f3f3f3;
+          width: 100%;
+          margin: 0;
+          border: 0px solid transparent;
+          border-top: 1px solid #ddd;
+          padding: 2em 1em;
           height: 1.7em;
           line-height: 1.7em;
           font-size: 1em;

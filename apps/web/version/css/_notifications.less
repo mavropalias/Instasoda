@@ -1,7 +1,8 @@
 .notification {
   width: 200px;
   position: fixed;
-  top: 20px;
+  z-index: 999;
+  top: -40px;
   right: 20px;
   padding: 10px;
   border: 1px solid @colorBlue4;
@@ -14,7 +15,7 @@
   .transition(all 0.6s ease-in-out);
   display: none;
   &.active {
-    top: 90px;
+    top: 20px;
     .transform( scale(1) skew(0deg, 0) );
   }
 

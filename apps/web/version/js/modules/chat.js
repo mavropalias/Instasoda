@@ -9,6 +9,9 @@ var ChatSessionTabs = Backbone.View.extend({
     _.bindAll(this);
     this.collection.bind('add', this.render);
     this.collection.bind('remove', this.render);
+
+    // sub-views
+    this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
   },
   
   // events
@@ -35,6 +38,19 @@ var ChatSessionTabs = Backbone.View.extend({
         //_this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
         _this.$el.html('');
         _this.collection.each(_this.renderSessionTab);
+
+        // render sub-views
+        _this.chatSessionsView.setElement($('.chatSessionContainer')).render();
+
+        // enable custom scrollbars
+        this.$('.chatSessions').slimScroll({
+          height: '100%',
+          allowPageScroll: false,
+          alwaysVisible: false,
+          railVisible: true,
+          position: 'left',
+          start: 'bottom'
+        });
       }
     });
   },
@@ -117,7 +133,7 @@ var ChatSessionTabs = Backbone.View.extend({
   initiateSessionWith: function(userId, username, age, photos) {
     var _this = this;
     
-    chatView.showChatWindow();
+    sidebarView.showChatWindow();
     
     // get session id
     var sessionId;
@@ -216,22 +232,21 @@ var ChatSessionsView = Backbone.View.extend({
     console.log('  - (chat) showSession ' + model.get('_id'));
     this.$('.chatSession').hide();
 
-    // show chat session and focus on the text input field
-    this.$('#session_' + model.get('_id')).show().find('.chatInput').focus();
+    // show chat session, position it and focus on the text input field
+    this.$('#session_' + model.get('_id')).css({
+      'top': $('#' + model.get('_id')).offset().top + 'px'
+    }).show().find('.chatInput').focus();
     
     // convert timestamps to timeago
     this.$('.time').timeago();
 
     // enable custom scrollbars
     var scroller = this.$('#scroller_' + model.get('_id') + ' > .chatLog');
-
-    //scroller.slimScroll({ scroll: 'bottom' });
-
     scroller.slimScroll({
-      height: '190px',
+      height: '255px',
       allowPageScroll: false,
-      alwaysVisible: true,
-      railVisible: true,
+      alwaysVisible: false,
+      railVisible: false,
       start: 'bottom'
     });
     
@@ -290,7 +305,7 @@ var ChatSessionView = Backbone.View.extend({
     console.log('  - (chat) sendMessage');
     
     // return if msg is empty
-    if($('.chatInput', this.el).val() == "") return false;
+    if(this.$('.chatInput').val() == "") return false;
     
     // construct message
     var date = new Date().toJSON();
