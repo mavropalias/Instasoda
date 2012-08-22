@@ -570,7 +570,7 @@
               <span class="likePic">
                 <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="http://img.instasoda.com/i/loading.gif" width=100 class="likeImg">
               </span>
-              <span class="likeName">{{n}}</span>
+              <span class="likeName" title="{{n}}">{{n}}</span>
             </li>
           {{/likesToRender}}
         </ul>
@@ -582,10 +582,6 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikePanel" type="text/template">
-        <div class="likePic" title="{{n}}">
-          <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
-        </div>
-
         <div class="likeName" title="{{n}}">{{n}}</div>
 
         <ul class="likeAttitudes">
@@ -600,8 +596,6 @@
         {{^isInSearch}}
           <span class="addToSearch" title="Add this to your search filters"></span>
         {{/isInSearch}}
-
-        <a class="doSearch" title="Search for people who like this" href="#search"></a>
 
         <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank" title="View this on Facebook"></a>
       </script>
