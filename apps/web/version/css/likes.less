@@ -3,25 +3,10 @@
 // =============================================================================
   
   .like {
-    border: 1px solid white;
     position: relative;
-    padding: 10px; 
     margin: 0 15px 15px 0; 
-    background: #fff;
     display: inline-block;
-    width: 161px;
-    background-image: linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
-    background-image: -o-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
-    background-image: -moz-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
-    background-image: -webkit-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
-    background-image: -ms-linear-gradient(left top, rgb(242,246,247) 11%, rgb(234,242,245) 50%);
-    background-image: -webkit-gradient(
-      linear,
-      0 top,
-      left bottom,
-      color-stop(0.11, rgb(242,246,247)),
-      color-stop(0.5, rgb(234,242,245))
-    );
+    width: 100px;
     color: #303030;
 
     &.rate1 {
@@ -48,22 +33,21 @@
     
     .likeName {
       display: block;
-      float: right;
+      float: left;
+      width: 100px;
       font-size: 12px;
-      max-width: 6.5em;
       height: 2.2em;
       overflow: hidden;
       text-overflow: ellipsis;
-      text-align: right;
+      text-align: center;
       line-height: 1.1;
-      text-transform: lowercase;
-      font-weight: bold;
       cursor: default;
     }
 
     .likePic {
       float:left;
-      border: 1px solid white;
+      height: 100px;
+      overflow: hidden;
     }
 
     .likePanel {
