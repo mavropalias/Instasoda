@@ -136,9 +136,17 @@ var SettingsGenderPrefsView = Backbone.View.extend({
     var w = this.$('input[name="women"]:checked').length;
 
     if(!IS.nullOrEmpty(m) || !IS.nullOrEmpty(w)) {
-      // save user model
+      // update gender prefs
       this.model.set('m', m);
       this.model.set('w', w);
+
+      // update gender prefs in the search options
+      var so = this.model.get('so');
+      so.m = (m > 0) ? 'male' : 0;
+      so.w = (w > 0) ? 'female' : 0;
+      this.model.set('so', so);
+
+      // save user
       IS.saveUser();
 
       // move on to the next setting
