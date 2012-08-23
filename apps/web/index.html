@@ -582,8 +582,6 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikePanel" type="text/template">
-        <div class="likeName" title="{{n}}">{{n}}</div>
-
         <ul class="likeAttitudes">
           <li class="likeAttitude attitude1 {{#dislike}}active{{/dislike}}" title="I don't like this - avoid matching me with people who like it">Dislike</li>
           <li class="likeAttitude attitude2 {{#like}}active{{/like}}" title="I like this">Like</li>
@@ -753,7 +751,7 @@
               <span class="icon icon-map-marker"></span>
               <span class="infoTitle">Location:</span>
               <span class="infoData infoVerified">
-                {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+                {{#fCl}}{{fCl}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
               </span>
             </li>
             <li>
@@ -852,7 +850,7 @@
                     <span class="icon icon-map-marker"></span>
                     <span class="infoTitle">Location:</span>
                     <span class="infoData infoVerified">
-                      {{#fCl}}{{city}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
+                      {{#fCl}}{{fCl}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
                     </span>
                   </li>
                 </ul>
