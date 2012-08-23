@@ -307,10 +307,9 @@ IS.navigateTo = function(path) {
 IS.prepareApp = function(bForceLogin, cb) {
   console.log('> Preparing app');
 
-  // Auth user & redirect to page
-  // ============================
-  //if(!!store.get("user") && store.get("user").hasOwnProperty('fTkn')) {
-  if(IS.nullOrEmpty(store.get("user"))) {
+  // Login or register user if bForceLogin == true
+  if(bForceLogin) 
+  {
     IS.facebookAuth(function(err, res) {
       if(!err) {
         console.log('> Attempting to login the user');
@@ -327,7 +326,10 @@ IS.prepareApp = function(bForceLogin, cb) {
             });
 
             if(cb) cb();
-            else IS.navigateTo('');
+            else {
+              IS.navigateTo('');
+              router.welcome();
+            }
           } else {
             console.log('> FAIL: Need to create new account');
             IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
@@ -336,12 +338,17 @@ IS.prepareApp = function(bForceLogin, cb) {
 
                 appReady = true;
 
+                // update sidebar
                 sidebarView = new SidebarView({
                   el: $('#sidebar')[0],
                   model: user
                 });
 
+                // update nav menu
+                navigationView.render();
+
                 IS.navigateTo('');
+                router.welcome();
               } else {
                 console.log('> ERROR: ' + res);
                 appReady = false;
@@ -356,8 +363,11 @@ IS.prepareApp = function(bForceLogin, cb) {
         IS.logout();
       }
     });
-  } else if (!IS.nullOrEmpty(store.get("user"))) {
-    IS.fbToken = store.get("user").fbToken;
+  } 
+  // else probe localStorage to see if the user is already logged in
+  else if (!IS.nullOrEmpty(store.get("user"))) 
+  {
+    IS.fbToken = store.get("user").fTkn;
 
     IS.login(IS.fbToken, store.get("user")._id, function(err, res) {
       if(!err) {
@@ -371,7 +381,10 @@ IS.prepareApp = function(bForceLogin, cb) {
         });
 
         if(cb) cb();
-        else IS.navigateTo('');
+        else {
+          IS.navigateTo('');
+          router.welcome();
+        }
       } else {
         console.log('> FAIL: Need to create new account');
         IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
@@ -380,12 +393,17 @@ IS.prepareApp = function(bForceLogin, cb) {
 
             appReady = true;
 
+            // update sidebar
             sidebarView = new SidebarView({
               el: $('#sidebar')[0],
               model: user
             });
 
+            // update nav menu
+            navigationView.render();
+
             IS.navigateTo('');
+            router.welcome();
           } else {
             console.log('> ERROR: ' + res);
             appReady = false;
@@ -394,6 +412,10 @@ IS.prepareApp = function(bForceLogin, cb) {
         });
       }
     });
+  } 
+  // else do nothing & redirect to welcome page
+  else {
+    cb();
   }
 }
 
@@ -783,6 +805,8 @@ IS.setupUser = function (currentView) {
     }).html($('#tplSettingsDone').html()).addClass('settings').appendTo('body');
 
     $('#settingsButtonDone').click(function() {
+      IS.navigateTo('');
+      router.welcome();
       $('#settingsDone').fadeOut(400, function() {
         $(this).remove();
       });

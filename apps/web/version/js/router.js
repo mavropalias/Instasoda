@@ -54,10 +54,21 @@ var Router = Backbone.Router.extend({
       $('#content').append(dashboardView.el);
       IS.setupPage('home');
     } else {
-      welcomeView.render();
-      $('#content > div').detach();
-      $('#content').append(welcomeView.el);
-      IS.setupPage('home');
+      IS.prepareApp(null, function() {
+        if(user.get('_id') == null) {
+          welcomeView.render();
+          $('#content > div').detach();
+          $('#content').append(welcomeView.el);
+          IS.setupPage('home');
+        }
+        else 
+        {
+          dashboardView.render();
+          $('#content > div').detach();
+          $('#content').append(dashboardView.el);
+          IS.setupPage('home');
+        }
+      });
     }
   },
   
