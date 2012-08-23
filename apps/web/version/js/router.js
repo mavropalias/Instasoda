@@ -43,7 +43,7 @@ var Router = Backbone.Router.extend({
     ":id": "viewUser"
   },
 
-  // welcome
+  // welcome 
   // -----------------------------------------------------------------------
   welcome: function() {
     console.log('> routing welcome page');
