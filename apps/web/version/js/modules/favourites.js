@@ -113,7 +113,7 @@ var FavouritesUserView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   render: function() {
     console.log('  ~ rendering FavouritesUserView');
-    var template = $('#tplFavouritesUser').html();
+    var template = $('#tplSearchResult').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
   }
 });

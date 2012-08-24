@@ -437,29 +437,6 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- FAVOURITE USER VIEW -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplFavouritesUser" type="text/template">
-        <ul>
-          {{#p}}
-            {{#d}}
-              <li>
-                <img src="http://img.instasoda.com/u/{{f}}" height="150" />
-              </li>
-            {{/d}}
-          {{/p}}
-          {{^p}}
-          <li>
-            <img src="http://img.instasoda.com/i/noPhoto.png" height="150" />
-          </li>
-          {{/p}}
-          <li class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</li>
-        </ul>
-      </script>
-
-
-    <!------------------------------------------------------------------------>
     <!-- LIKES PAGE VIEW -->
     <!------------------------------------------------------------------------>
 
@@ -696,7 +673,14 @@
         <a href="./#{{_id}}">
           {{#p}}
             {{#d}}
-              <div>
+              <div>                
+                {{#on}}
+                  <div class='onlineStatus isOnline' title='user is online!'></div>
+                {{/on}}
+                {{^on}}
+                  <div class='onlineStatus isOffline' title='user is offline'></div>
+                {{/on}}
+
                 <img src="http://img.instasoda.com/u/{{f}}" height="150" />
               </div>
             {{/d}}
@@ -761,6 +745,13 @@
                 {{#w}}{{^m}}women{{/m}}{{/w}}
                 {{#w}}{{#m}}women & men{{/m}}{{/w}}
                 {{#m}}{{^w}}men{{/w}}{{/m}}
+              </span>
+            </li>
+            <li>
+              <span class="icon icon-off"></span>
+              <span class="infoTitle">Currently:</span>
+              <span class="infoData">
+                {{#on}}online!{{/on}}{{^on}}offline :({{/on}}
               </span>
             </li>
           </ul>

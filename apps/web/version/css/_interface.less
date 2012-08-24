@@ -169,8 +169,8 @@
 
   .userPreview {
     .box-shadow(0, 1px, 1px, #888);
-    //border: 1px solid #ddd;
-    padding: 1em;
+    border: 1px solid #ddd;
+    padding: 1rem;
     position: relative;
     background: #eee;
     float:left;
@@ -179,6 +179,23 @@
     text-align: center;
     margin: 0 10px 8px 0;
     cursor: pointer;
+
+    .onlineStatus {
+      .border-radius(10px);
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 10px;
+      height: 10px;
+
+      &.isOnline {
+        background: green;
+      }
+
+      &.isOffline {
+        background: red;
+      }
+    }
 
     .userPreviewNickname {
       font-size: 11px;
