@@ -320,6 +320,10 @@ IS.prepareApp = function(bForceLogin, cb) {
 
             appReady = true;
 
+            // set user's online status
+            IS.userIsOnline(true);
+
+            // update sidebar
             sidebarView = new SidebarView({
               el: $('#sidebar')[0],
               model: user
@@ -337,6 +341,9 @@ IS.prepareApp = function(bForceLogin, cb) {
                 console.log('> SUCCESS! Account created');
 
                 appReady = true;
+
+                // set user's online status
+                IS.userIsOnline(true);
 
                 // update sidebar
                 sidebarView = new SidebarView({
@@ -375,6 +382,9 @@ IS.prepareApp = function(bForceLogin, cb) {
 
         appReady = true;
 
+        // set user's online status
+        IS.userIsOnline(true);
+
         sidebarView = new SidebarView({
           el: $('#sidebar')[0],
           model: user
@@ -392,6 +402,9 @@ IS.prepareApp = function(bForceLogin, cb) {
             console.log('> SUCCESS! Account created');
 
             appReady = true;
+
+            // set user's online status
+            IS.userIsOnline(true);
 
             // update sidebar
             sidebarView = new SidebarView({
@@ -608,9 +621,23 @@ IS.createAccount = function(fbToken, fTid, cb) {
 }
 
 /**
+ * Sets the user as online/offline in the API
+ * @param {Boolean} bIsOnline
+ */
+IS.userIsOnline = function(bIsOnline) {
+  l('> Online status for user is: ' + bIsOnline);
+  socket.emit('userIsOnline', {
+    _id: user.get('_id'),
+    fTkn: user.get('fTkn'),
+    isOnline: bIsOnline
+  });
+}
+
+/**
  * Logs the user out of the system.
  */
 IS.logout = function(bStopRedirect) {
+  IS.userIsOnline(false);
   user.clear({ silent: true }); // clear local Backbone model
   store.clear(); // clear localStorage
   navigationView.render(); // update nav menu
