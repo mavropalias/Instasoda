@@ -93,18 +93,18 @@
 
   #sidebar {
     .transition(all 0.6s cubic-bezier(.77, .12, .12, .74));
-    .box-shadow(1px, 0px, 2px 0px, rgba(0, 0, 0, .2) inset);
+    //.box-shadow(1px, 0px, 2px 0px, rgba(0, 0, 0, .2) inset);
     background: #ececec;
     position: fixed;
     top: 0;
     bottom: 0;
-    right: -200px;
-    width: 200px;
+    right: 0;
+    width: 0px;
     z-index: 10;
 
     &.visible {
       .transition(all 1.2s cubic-bezier(.77, .12, .12, .74));
-      right: 0;
+      width: 200px;
     }
 
     .sidebarTabs {
@@ -114,7 +114,9 @@
       .sidebarTabTitle {
         background: @color2;
         color: #fff;
-        padding: 0.5rem 1rem;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 0.8rem 1rem;
       }
     }
   }
@@ -133,7 +135,7 @@
     height: 100%;
     color: @color1;
     padding: 4rem 2rem;
-    border-right: 3px solid #eee;
+    border-right: 1px solid #e0e0e0;
     float: left;
     
     section {
@@ -153,7 +155,7 @@
     height: 100%;
     overflow: auto;
     display: block;
-    padding: 4rem 2rem;
+    padding: 4.7rem 4rem;
     float: left;
 
     section {

@@ -3,7 +3,8 @@
 // =============================================================================
 
   nav {
-    .box-shadow(-1px, 0, 2px 0px, rgba(0, 0, 0, .2) inset);
+    //.box-shadow(-1px, 0, 2px 0px, rgba(0, 0, 0, .2) inset);
+    border-right: 1px solid #ccc;
     width: 85px;
     height: 100%;
     font-size: 1.5em;
@@ -61,8 +62,10 @@
       }
 
       &.current {
-        .box-shadow(-1px, 2px, 2px 0px, rgba(0, 0, 0, .2));
+        //.box-shadow(-1px, 2px, 2px 0px, rgba(0, 0, 0, .2));
         //.border-radius(3px 0 0 3px);
+        border: 1px solid #ccc;
+        border-width: 1px 0 1px 1px;
         background: #f9f9f9;
         color: @color1;
         margin-left: 10px;
