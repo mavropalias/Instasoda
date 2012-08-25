@@ -89,10 +89,12 @@ var SearchFiltersView = Backbone.View.extend({
       'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : 0),
       'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : 0),
       'on': ((this.$('input[name=onlyOnline]:checked').length > 0) ? true : false),
-      'nearMe': 0,
+      'nearMe': ((this.$('input[name=nearMe]:checked').length > 0) ? 1 : 0),
       'ageMin': this.$("#ageRange").slider("values", 0),
       'ageMax': this.$("#ageRange").slider("values", 1),
-      'l': this.model.get('so').l
+      'l': this.model.get('so').l,
+      'lon': this.model.get('loc')[0],
+      'lat': this.model.get('loc')[1]
     });
 
     // save these preferences into the user model
