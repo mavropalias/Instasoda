@@ -93,8 +93,8 @@ var SearchFiltersView = Backbone.View.extend({
       'ageMin': this.$("#ageRange").slider("values", 0),
       'ageMax': this.$("#ageRange").slider("values", 1),
       'l': this.model.get('so').l,
-      'lon': this.model.get('loc')[0],
-      'lat': this.model.get('loc')[1]
+      'lon': (!!this.model.get('loc')) ? this.model.get('loc')[0] : null,
+      'lat': (!!this.model.get('loc')) ? this.model.get('loc')[1] : null,
     });
 
     // save these preferences into the user model
