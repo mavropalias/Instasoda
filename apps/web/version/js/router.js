@@ -22,7 +22,7 @@ var Router = Backbone.Router.extend({
     "search": "search",
     
     // Search results
-    "search/:m/:w/:nearMe/:ageMin/:ageMax": "search",
+    "search/:m/:w/:nearMe/:ageMin/:ageMax/:onlyOnline": "search",
 
     // Likes
     "likes": "likes",
@@ -130,7 +130,7 @@ var Router = Backbone.Router.extend({
        
   // search
   // -----------------------------------------------------------------------
-  search: function(m, w, nearMe, ageMin, ageMax) {
+  search: function(m, w, nearMe, ageMin, ageMax, onlyOnline) {
     console.log('> routing search page');
 
     if(!appReady) {
@@ -138,12 +138,13 @@ var Router = Backbone.Router.extend({
         // search by like - array with like id's
         var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
 
-        // fetch options - if null then load user defaults
+        // fetch options from URL - if null then load user defaults
         if(ageMin > 0) {
           usersCollection.fetch({
             data: {
               'm': m,
               'w': w,
+              'on': (onlyOnline == 'true'),
               'nearMe': nearMe,
               'ageMin': ageMin,
               'ageMax': ageMax,
@@ -157,6 +158,7 @@ var Router = Backbone.Router.extend({
             data: {
               'm': user.get('so').m,
               'w': user.get('so').w,
+              'on': user.get('so').on,
               'nearMe': user.get('so').nearMe,
               'ageMin': user.get('so').ageMin,
               'ageMax': user.get('so').ageMax,
@@ -182,6 +184,7 @@ var Router = Backbone.Router.extend({
           data: {
             'm': m,
             'w': w,
+            'on': (onlyOnline == 'true'),
             'nearMe': nearMe,
             'ageMin': ageMin,
             'ageMax': ageMax,
@@ -195,6 +198,7 @@ var Router = Backbone.Router.extend({
           data: {
             'm': user.get('so').m,
             'w': user.get('so').w,
+            'on': user.get('so').on,
             'nearMe': user.get('so').nearMe,
             'ageMin': user.get('so').ageMin,
             'ageMax': user.get('so').ageMax,
