@@ -5,23 +5,17 @@
   nav {
     //.box-shadow(-1px, 0, 2px 0px, rgba(0, 0, 0, .2) inset);
     border-right: 1px solid #ccc;
-    width: 85px;
+    width:7rem;
     height: 100%;
     font-size: 1.5em;
     font-weight: 700;
     position: relative;
     z-index: 20;
+    margin-top: 49px;
     background: #ececec;
+    margin-left: -1px;
     float: left;
     
-    #instasodaLogo {
-      background: url(../img/instasoda_logo.png) center center no-repeat;
-      height: 4rem;
-      margin: 0;
-      padding: 0;
-      display: block;
-    }
-
     #navOnlineUsers {
       font-size: 0.8em;
       width: 100%;
@@ -34,17 +28,16 @@
         
     a {
       display: block;
-      width: 85px !important;
-      padding: 0.1em 0em 0.4em;
+      width: 7rem!important;
+      padding: 0.6rem 1rem;
       color: #777;
       cursor: pointer;
       font-weight: 300;
-      font-size: 1.5em;
+      font-size: 2.4rem;
       text-align: center;
-
-      border-left: 1px solid transparent;
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid transparent;
+      line-height: 2rem;
+      border: 1px solid transparent;
+      border-width: 1px 0 1px 1px;
 
       &:before {
         width: 100%;
@@ -62,23 +55,19 @@
       }
 
       &.current {
-        //.box-shadow(-1px, 2px, 2px 0px, rgba(0, 0, 0, .2));
+        .box-shadow(-3px, 3px, 8px -5px, #aaa);
         //.border-radius(3px 0 0 3px);
         border: 1px solid #ccc;
         border-width: 1px 0 1px 1px;
         background: #f9f9f9;
         color: @color1;
-        margin-left: 10px;
-        padding-right: 10px;
-        width: 75px !important;
-
         &:before {
           color: @color1;
         }
       }
 
       .navItemTitle {
-        font-size: 0.5em;
+        font-size: 1.1rem;
       }
     }
   }
