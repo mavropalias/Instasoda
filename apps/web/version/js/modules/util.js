@@ -768,7 +768,7 @@ IS.setupPage = function (page) {
   scroller.slimScroll({
     height: '100%',
     allowPageScroll: false,
-    alwaysVisible: true,
+    alwaysVisible: false,
     railVisible: true,
     start: 'top',
     size: '10px'

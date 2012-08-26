@@ -11,11 +11,12 @@
     font-weight: 700;
     position: relative;
     z-index: 20;
-    margin-top: 49px;
     background: #ececec;
     margin-left: -1px;
+    margin-top: 49px;
     float: left;
-    
+
+   
     #navOnlineUsers {
       font-size: 0.8em;
       width: 100%;
@@ -25,7 +26,13 @@
       color: #666;
       font-weight: 300;
     }
-        
+
+    li:first-child {
+      a {
+        border-top: 1px solid #ccc!important;
+      }
+    }
+
     a {
       display: block;
       width: 7rem!important;
@@ -65,7 +72,6 @@
           color: @color1;
         }
       }
-
       .navItemTitle {
         font-size: 1.1rem;
       }

@@ -227,6 +227,12 @@ table {
   background: url(../img/fb_icon.png) left 1px no-repeat;
   padding-left: 14px;
 }
+#logo_cap {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  z-index: 9;
+}
 #content {
   -webkit-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
   -moz-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
@@ -236,7 +242,7 @@ table {
   position: absolute;
   left: 69px;
   top: 50px;
-  right: 200px;
+  right: 5rem;
   bottom: 0;
   overflow-y: hidden;
   overflow-x: auto;
@@ -259,32 +265,57 @@ table {
   -ms-transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
   -o-transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
   transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  background: #ececec;
+  background: #F9F9F9;
+  border-left: 1px solid #e0e0e0;
   position: fixed;
-  top: 50px;
+  top: 0px;
   bottom: 0;
-  right: 0;
-  width: 0px;
+  right: -15rem;
+  width: 20rem;
   z-index: 10;
 }
 #sidebar.visible {
-  -webkit-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -moz-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -ms-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -o-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  width: 200px;
+  -webkit-transition: right 0.5s ease-in-out;
+  -moz-transition: right 0.5s ease-in-out;
+  -ms-transition: right 0.5s ease-in-out;
+  -o-transition: right 0.5s ease-in-out;
+  transition: right 0.5s ease-in-out;
 }
 #sidebar .sidebarTabs {
   background: #fff;
   width: 100%;
 }
 #sidebar .sidebarTabs .sidebarTabTitle {
-  background: #3dbcdf;
   color: #fff;
   font-size: 16px;
   font-weight: bold;
-  padding: 0.8rem 1rem;
+  padding: 0.9rem 1rem 0.7rem;
+}
+#sidebar .sidebarTabs .sidebarTabTitle > span {
+  display: inline-block;
+  width: 5rem;
+  font-size: 3rem;
+  padding-left: 0.1rem;
+  -webkit-transition: font-size 0.5s ease-in-out;
+  -moz-transition: font-size 0.5s ease-in-out;
+  -ms-transition: font-size 0.5s ease-in-out;
+  -o-transition: font-size 0.5s ease-in-out;
+  transition: font-size 0.5s ease-in-out;
+}
+#sidebar .sidebarTabs .sidebarTabTitle#chatTab {
+  background: #3dbcdf;
+}
+#sidebar .sidebarTabs .sidebarTabTitle#favTab {
+  background: #be1e2d;
+}
+#sidebar .sidebarTabs .sidebarTabTitle#expandTab {
+  background: #ddd;
+  border-left: 1px solid #a9a9a9;
+  -moz-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
+  -ms-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
+  -o-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
 }
 .column {
   vertical-align: top;
@@ -298,7 +329,7 @@ table {
   z-index: 2;
   height: 100%;
   color: #00364d;
-  padding: 4rem 2rem;
+  padding: 2.5rem 3.5rem 0;
   border-right: 1px solid #e0e0e0;
   float: left;
 }
@@ -312,12 +343,13 @@ table {
 }
 .mainContent {
   position: relative;
-  width: 80%;
+  width: 100%!important;
   height: 100%;
   overflow: auto;
   display: block;
   padding: 2.5rem 3.2rem;
   float: left;
+  background-color: #fff;
 }
 .mainContent section {
   clear: both;
@@ -374,14 +406,15 @@ table {
   width: 40%;
 }
 .slimScrollBar {
-  background-color: #ddd;
+  background-color: #e0e0e0;
+  right: 0px!important;
 }
 .slimScrollBar:hover,
 .slimScrollBar.ui-draggable-dragging {
   background-color: #999;
 }
 .slimScrollRail {
-  background-color: #eee;
+  background-color: none;
 }
 #pageFlipPlaceholder {
   -webkit-perspective: 2000px;

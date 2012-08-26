@@ -19,6 +19,7 @@
         distance : '1px',
         start : 'top',
         alwaysVisible : false,
+        disableFadeOut: true,
         railVisible : false,
         railClass : 'slimScrollRail',
         barClass : 'slimScrollBar',
@@ -42,6 +43,7 @@
         size = o.size,
         position = o.position,
         distance = o.distance,
+        disableFadeOut = o.disableFadeOut,
         start = o.start,
         alwaysVisible = o.alwaysVisible,
         railVisible = o.railVisible,
@@ -271,7 +273,7 @@
           if (!alwaysVisible)
           {
             queueHide = setTimeout(function(){
-              if (!isOverBar && !isDragg) 
+              if (!(disableFadeOut && isOverPanel) && !isOverBar && !isDragg)
               { 
                 bar.fadeOut('slow');
                 rail.fadeOut('slow');

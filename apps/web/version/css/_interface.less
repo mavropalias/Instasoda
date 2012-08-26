@@ -65,12 +65,19 @@
 // LAYOUT
 // =============================================================================
 
+  #logo_cap {
+    position: absolute;
+    top: 0;
+    left: 0px;
+    z-index: 9;
+  }
+
   #content {
     .transition(all 1.2s cubic-bezier(.77, .12, .12, .74));
     position: absolute;
     left: 69px;
     top: 50px;
-    right: 200px;
+    right: 5rem;
     bottom: 0;
     overflow-y: hidden;
     overflow-x: auto;
@@ -94,17 +101,21 @@
   #sidebar {
     .transition(all 0.6s cubic-bezier(.77, .12, .12, .74));
     //.box-shadow(1px, 0px, 2px 0px, rgba(0, 0, 0, .2) inset);
-    background: #ececec;
+    background: #F9F9F9;
+    border-left: 1px solid #e0e0e0;
     position: fixed;
-    top: 50px;
+    top: 0px;
     bottom: 0;
-    right: 0;
-    width: 0px;
+    right: -15rem;
+    width: 20rem;
     z-index: 10;
 
     &.visible {
-      .transition(all 1.2s cubic-bezier(.77, .12, .12, .74));
-      width: 200px;
+      .transition(right 0.5s ease-in-out);
+      //right: 0;
+       .sidebarTabTitle > span {
+        //font-size: 1.7rem!important;
+       }
     }
 
     .sidebarTabs {
@@ -112,11 +123,28 @@
       width: 100%;
 
       .sidebarTabTitle {
-        background: @color2;
         color: #fff;
         font-size: 16px;
         font-weight: bold;
-        padding: 0.8rem 1rem;
+        padding: 0.9rem 1rem 0.7rem;
+        > span {
+          display: inline-block;
+          width: 5rem;
+          font-size: 3rem;
+          padding-left: 0.1rem;
+          .transition(font-size 0.5s ease-in-out);
+        }
+        &#chatTab {
+          background: @color2;
+        }
+        &#favTab {
+          background: @colorRed1;
+        }
+        &#expandTab {
+          background: #ddd;
+          border-left: 1px solid #a9a9a9;
+          .box-shadow(5px,5px,20px 0px, rgba(0,0,0,0.1) inset);
+        }
       }
     }
   }
@@ -134,7 +162,7 @@
     z-index: 2;
     height: 100%;
     color: @color1;
-    padding: 4rem 2rem;
+    padding: 2.5rem 3.5rem 0;
     border-right: 1px solid #e0e0e0;
     float: left;
     
@@ -151,12 +179,13 @@
 
   .mainContent {
     position: relative;
-    width: 80%;
+    width: 100%!important;
     height: 100%;
     overflow: auto;
     display: block;
     padding: 2.5rem 3.2rem;
     float: left;
+    background-color: #fff;
 
     section {
       clear: both;
@@ -229,7 +258,8 @@
 // =============================================================================
 
   .slimScrollBar {
-    background-color: #ddd;
+    background-color: #e0e0e0;
+    right: 0px!important;
 
     &:hover,
     &.ui-draggable-dragging {
@@ -238,7 +268,7 @@
   }
 
   .slimScrollRail {
-    background-color: #eee;
+    background-color: none;
   }
 
 // =============================================================================
