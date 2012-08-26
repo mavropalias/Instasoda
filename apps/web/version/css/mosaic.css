@@ -310,12 +310,8 @@ table {
 }
 #sidebar .sidebarTabs .sidebarTabTitle#expandTab {
   background: #ddd;
-  border-left: 1px solid #a9a9a9;
-  -moz-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
-  -webkit-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
-  -ms-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
-  -o-box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.1) inset;
+  color: #888;
+  border-left: 1px solid #bbb;
 }
 .column {
   vertical-align: top;
