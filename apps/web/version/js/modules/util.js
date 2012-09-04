@@ -441,7 +441,7 @@ IS.facebookAuth = function(cb){
     if (!res.authResponse) {
       //user is not connected to the app or logged out        
         FB.login(function(response) { 
-          IS.facebookAuth();
+          IS.facebookAuth(cb);
         },
         {
           scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
