@@ -22,7 +22,7 @@ var Router = Backbone.Router.extend({
     "search": "search",
     
     // Search results
-    "search/:m/:w/:nearMe/:ageMin/:ageMax/:onlyOnline": "search",
+    "search/:m/:w/:nearMe/:ageMin/:ageMax/:onlyOnline/:random": "search",
 
     // Likes
     "likes": "likes",
@@ -130,7 +130,7 @@ var Router = Backbone.Router.extend({
        
   // search
   // -----------------------------------------------------------------------
-  search: function(m, w, nearMe, ageMin, ageMax, onlyOnline) {
+  search: function(m, w, nearMe, ageMin, ageMax, onlyOnline, random) {
     console.log('> routing search page');
 
     if(!appReady) {
@@ -151,6 +151,7 @@ var Router = Backbone.Router.extend({
               'ageMin': ageMin,
               'ageMax': ageMax,
               'l': searchByLike,
+              'random': random,
               '_id': user.get('_id'),
               'fTkn': user.get('fTkn')
             }
@@ -167,6 +168,7 @@ var Router = Backbone.Router.extend({
               'ageMin': user.get('so').ageMin,
               'ageMax': user.get('so').ageMax,
               'l': searchByLike,
+              'random': random,
               '_id': user.get('_id'),
               'fTkn': user.get('fTkn')
             }
@@ -195,6 +197,7 @@ var Router = Backbone.Router.extend({
             'ageMin': ageMin,
             'ageMax': ageMax,
             'l': searchByLike,
+            'random': random,
             '_id': user.get('_id'),
             'fTkn': user.get('fTkn')
           }
@@ -211,6 +214,7 @@ var Router = Backbone.Router.extend({
             'ageMin': user.get('so').ageMin,
             'ageMax': user.get('so').ageMax,
             'l': searchByLike,
+            'random': random,
             '_id': user.get('_id'),
             'fTkn': user.get('fTkn')
           }
