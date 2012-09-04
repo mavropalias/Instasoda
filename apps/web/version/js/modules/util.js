@@ -511,7 +511,44 @@ IS.login = function(fTkn, fTid, cb) {
     if (user.get('_id')) {
       console.log('- found user in local storage');
       
-      // TODO sync data from API
+      // sync local data from server
+      user.fetch(
+        { 
+          data: {
+            'fTkn': fTkn
+          }
+        , 
+          error: function(model, response) {
+            //TODO: properly handle errors
+            //a false might only mean that the API server is N/A
+            console.log('- login error: ' + response.error);
+            alert('Could not sync your account from server!');
+            IS.logout();
+          }
+        ,
+          success: function(model, response) {
+            // Ajax call was successful
+            // ------------------------
+            console.log('- got an API response');
+            // Now check if the account was created
+            // ------------------------------------
+            if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+              // store the user details locally
+              // ------------------------------
+              store.set("user", user);
+
+              navigationView.render(); // update nav menu
+            }
+            // FAIL
+            // ----
+            else {
+              console.log('- ' + response.error);
+              alert('Could not sync your account from server!');
+              IS.logout();
+            }
+          }
+        }
+      );
       
       user.set({ 'fTkn': fTkn });
       store.set("user", user);
