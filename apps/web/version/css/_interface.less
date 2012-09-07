@@ -72,6 +72,17 @@
     z-index: 9;
   }
 
+  #topPanel {
+    .transition(all 0.5s ease-in-out);
+    background: #f9f9f9 url(../img/instasoda_logo2.png) 35px 15px no-repeat;
+    position: absolute;
+    top: 0;
+    left: 8rem;
+    right: 5rem;
+    height: 5rem;
+    z-index: 25;
+  }
+
   #content {
     .transition(all 1.2s cubic-bezier(.77, .12, .12, .74));
     position: absolute;
@@ -100,9 +111,8 @@
 
   #sidebar {
     .transition(all 0.6s cubic-bezier(.77, .12, .12, .74));
-    //.box-shadow(1px, 0px, 2px 0px, rgba(0, 0, 0, .2) inset);
-    background: #F9F9F9;
-    border-left: 1px solid #e0e0e0;
+    .box-shadow(-4px, 0px, 8px -4px, @color1);
+    background: #f9f9f9;
     position: fixed;
     top: 0px;
     bottom: 0;
@@ -161,10 +171,10 @@
     width: 23%;
     z-index: 2;
     height: 100%;
-    color: @color1;
+    color: #fff;
     padding: 2.5rem 3.5rem 0;
-    border-right: 1px solid #e0e0e0;
     float: left;
+    background: @color2;
     
     section {
       clear: both;
@@ -185,7 +195,6 @@
     display: block;
     padding: 2.5rem 3.2rem;
     float: left;
-    background-color: #fff;
 
     section {
       clear: both;
@@ -199,11 +208,11 @@
 // =============================================================================
 
   .userPreview {
-    .box-shadow(0, 1px, 1px, #888);
-    border: 1px solid #ddd;
+    //.box-shadow(1px, 1px, 1px, @colorBlue1);
+    //border: 1px solid @colorBlue2;
     padding: 1rem;
     position: relative;
-    background: #eee;
+    background: #fff;
     float:left;
     overflow: hidden;
     display: block;
@@ -220,11 +229,11 @@
       height: 10px;
 
       &.isOnline {
-        background: green;
+        background: @colorGreen;
       }
 
       &.isOffline {
-        background: red;
+        background: @colorRed2;
       }
     }
 
@@ -235,7 +244,7 @@
     } 
 
     &:hover {
-      background: #ddd;
+      background: @colorBlue3;
       text-decoration: underline;
     }
   }
@@ -258,12 +267,12 @@
 // =============================================================================
 
   .slimScrollBar {
-    background-color: #e0e0e0;
-    right: 0px!important;
+    background-color: @colorBlue2;
+    margin-right: 4px;
 
     &:hover,
     &.ui-draggable-dragging {
-      background-color: #999;      
+      background-color: @colorBlue1;
     }
   }
 

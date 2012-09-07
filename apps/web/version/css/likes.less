@@ -135,15 +135,14 @@
     overflow-y: auto;
 
     .likeCategoryTitle {
+      .transition(all 0.1s ease-in-out);
       position: relative;
       padding: 0.8rem 0rem 0.8rem 0.8rem;
       cursor: pointer;
-      color: #316880;
+      color: #fff;
       font-size: 1.3rem;
       font-weight: bold;
       overflow: visible;
-      background-color: @colorBlue6;
-      .transition(all 0.1s ease-in-out);
 
       &:hover {
         text-decoration: underline;
@@ -151,7 +150,6 @@
 
       &.active {
         background-color: @colorBlue2;
-        color: #fff;
       }
     }
 
@@ -174,6 +172,7 @@
       overflow: hidden;
       font-size: 0.9rem;
       font-weight: 700;
+      border-bottom: 1px solid @colorBlue2;
 
       .likeView {
         .box-sizing(border-box);
@@ -182,7 +181,6 @@
         width: 33.33%;
         font-size: 1.4rem;
         padding: 1rem 0;
-        background: @color1;
         color: #fff;
         text-align: center;
         float: left;

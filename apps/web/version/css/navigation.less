@@ -3,17 +3,15 @@
 // =============================================================================
 
   nav {
-    //.box-shadow(-1px, 0, 2px 0px, rgba(0, 0, 0, .2) inset);
-    border-right: 1px solid #ccc;
-    width:7rem;
+    .box-shadow(4px, 0px, 8px -4px, @color1);
+    width:8rem;
     height: 100%;
     font-size: 1.5em;
     font-weight: 700;
     position: relative;
     z-index: 20;
-    background: #ececec;
+    background: #f9f9f9;
     margin-left: -1px;
-    margin-top: 49px;
     float: left;
 
    
@@ -27,15 +25,9 @@
       font-weight: 300;
     }
 
-    li:first-child {
-      a {
-        border-top: 1px solid #ccc!important;
-      }
-    }
-
     a {
       display: block;
-      width: 7rem!important;
+      width: 7rem !important;
       padding: 0.6rem 1rem;
       color: #777;
       cursor: pointer;
@@ -43,13 +35,14 @@
       font-size: 2.4rem;
       text-align: center;
       line-height: 2rem;
-      border: 1px solid transparent;
-      border-width: 1px 0 1px 1px;
+      border-left: 1px solid #f9f9f9;
+      margin-left: 1rem;
+      position: relative;
 
       &:before {
         width: 100%;
         text-align: center;
-        color: #ccc;
+        color: #ddd;
         line-height: 0em;
       }
 
@@ -62,16 +55,36 @@
       }
 
       &.current {
-        .box-shadow(-3px, 3px, 8px -5px, #aaa);
-        //.border-radius(3px 0 0 3px);
-        border: 1px solid #ccc;
-        border-width: 1px 0 1px 1px;
-        background: #f9f9f9;
-        color: @color1;
+        .box-shadow(4px, 0px, 8px -4px, @color1 inset);
+        background: @colorBlue3;
+        color: #fff;
+        border-top: 1px solid @colorBlue5;
+        border-bottom: 1px solid @colorBlue5;
+
         &:before {
-          color: @color1;
+          color: #fff;
+        }
+
+        &:after {
+          width: 1rem;
+          height: 6rem;
+          background: @color2;
+          right: -10px;
+          top: 0;
+          position: absolute;
+          content: "";
         }
       }
+
+      &#nav_logo {
+        height: 6rem;
+        background: /*url(../img/logo_cap.png) 2rem center no-repeat*/ @color1;
+        margin-left: 0;
+        width: 8rem !important;
+        padding-left: 2rem;
+        height: 5rem;
+      }
+
       .navItemTitle {
         font-size: 1.1rem;
       }
