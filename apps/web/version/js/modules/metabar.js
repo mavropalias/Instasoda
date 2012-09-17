@@ -1,8 +1,8 @@
 // =========================================================================
-// SidebarView
+// MetabarView
 // =========================================================================
 
-var SidebarView = Backbone.View.extend({      
+var MetabarView = Backbone.View.extend({      
   // events
   // -----------------------------------------------------------------------
   events: {
@@ -12,7 +12,7 @@ var SidebarView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-  	console.log('  ~ initializing SidebarView');
+  	console.log('  ~ initializing MetabarView');
 
     _.bindAll(this);
     
@@ -26,10 +26,10 @@ var SidebarView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering SidebarView');
+    console.log('  ~ rendering MetabarView');
     
     var _this = this;
-    var template = $('#tplSidebar').html();
+    var template = $('#tplMetabar').html();
     
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
     
@@ -37,10 +37,10 @@ var SidebarView = Backbone.View.extend({
     this.chatSessionTabs.setElement(_this.$('.chatSessions')).render();
   },
   
-  // toggleSidebar
+  // toggleMetabar
   // -----------------------------------------------------------------------
-  toggleSidebar: function() {
-    console.log('  ~ toggling chat window');
+  toggleMetabar: function() {
+    console.log('  ~ toggling metabar');
     this.$('#chatWindow').toggle(0, function() {
       if($(this).is(':visible')) $('#chatToggle').addClass('active');
       else $('#chatToggle').removeClass('active');

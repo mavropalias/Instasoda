@@ -47,8 +47,8 @@ Parses a user's likes and extends model with favs, dislikes and categories
 > setupPage: 
 Do various admin tasks after loading a page
 
-> showSidebar
-Shows or hides the sidebar
+> showMetabar
+Shows or hides the metabar
 
 > setupUser: 
 Sets user settings (username, sex prefs, etc)
@@ -323,9 +323,9 @@ IS.prepareApp = function(bForceLogin, cb) {
             // set user's online status
             IS.userIsOnline(true);
 
-            // update sidebar
-            sidebarView = new SidebarView({
-              el: $('#sidebar')[0],
+            // update metabar
+            metabarView = new MetabarView({
+              el: $('#metabar')[0],
               model: user
             });
 
@@ -345,9 +345,9 @@ IS.prepareApp = function(bForceLogin, cb) {
                 // set user's online status
                 IS.userIsOnline(true);
 
-                // update sidebar
-                sidebarView = new SidebarView({
-                  el: $('#sidebar')[0],
+                // update metabar
+                metabarView = new MetabarView({
+                  el: $('#metabar')[0],
                   model: user
                 });
 
@@ -385,8 +385,8 @@ IS.prepareApp = function(bForceLogin, cb) {
         // set user's online status
         IS.userIsOnline(true);
 
-        sidebarView = new SidebarView({
-          el: $('#sidebar')[0],
+        metabarView = new MetabarView({
+          el: $('#metabar')[0],
           model: user
         });
 
@@ -406,9 +406,9 @@ IS.prepareApp = function(bForceLogin, cb) {
             // set user's online status
             IS.userIsOnline(true);
 
-            // update sidebar
-            sidebarView = new SidebarView({
-              el: $('#sidebar')[0],
+            // update metabar
+            metabarView = new MetabarView({
+              el: $('#metabar')[0],
               model: user
             });
 
@@ -678,7 +678,7 @@ IS.logout = function(bStopRedirect) {
   user.clear({ silent: true }); // clear local Backbone model
   store.clear(); // clear localStorage
   navigationView.render(); // update nav menu
-  sidebarView.render(); // update sidebarView
+  metabarView.render(); // update metabarView
   appReady = false;
   if(!bStopRedirect) {
     router.navigate("", {trigger: true}); // redirect to homepage
@@ -793,11 +793,11 @@ IS.setupPage = function (page) {
   // setup user
   if(!IS.nullOrEmpty(user.get('_id'))) IS.setupUser();
 
-  // show/hide sidebar
+  // show/hide metabar
   if(!IS.nullOrEmpty(user.get('_id'))) {
-    IS.showSidebar(true);
+    IS.showMetabar(true);
   } else {
-    IS.showSidebar(false);
+    IS.showMetabar(false);
   }
 
   // add custom scrollbar in the main content area
@@ -813,14 +813,14 @@ IS.setupPage = function (page) {
 }
 
 /**
- * Shows or hides the sidebar
+ * Shows or hides the metabar
  * @param {Bool} true to show / false to hide
  */
-IS.showSidebar = function (bShow) {
+IS.showMetabar = function (bShow) {
   if(bShow) {
-    $('#sidebar').addClass('visible');
+    $('#metabar').addClass('visible');
   } else {
-    $('#sidebar').removeClass('visible');
+    $('#metabar').removeClass('visible');
   }
 }
 

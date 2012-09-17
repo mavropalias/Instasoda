@@ -110,7 +110,7 @@
   // Backbone views
   // -------------------------------------------------------------------------
   var navigationView;
-  var sidebarView;
+  var metabarView;
   var welcomeView;
   var betaView;
   var myProfileView;

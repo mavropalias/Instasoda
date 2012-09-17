@@ -71,7 +71,7 @@
   <script type="text/javascript" src="VERSION/js/modules/matches.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/settings.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
-  <script type="text/javascript" src="VERSION/js/modules/sidebar.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/metabar.js"></script>
 
 
   <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
@@ -129,7 +129,7 @@
     <nav></nav>
     <section id="topPanel"></section>
     <section id="content" role="main"></section>
-    <aside id="sidebar"></aside>
+    <aside id="metabar"></aside>
 
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
@@ -1060,17 +1060,17 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- SIDEBAR -->
+    <!-- METABAR -->
     <!------------------------------------------------------------------------>
 
-      <script id="tplSidebar" type="text/template">
-        <section class="sidebarTabs">
-          <div class="sidebarTabTitle" id="expandTab"><span class="icon-resize-horizontal"></span></div>
-          <div class="sidebarTabTitle" id="chatTab"><span class="icon-comments"></span>Chat</div>
-          <div class="sidebarTabTitle" id="favTab"><span class="icon-heart"></span>Chat</div>
+      <script id="tplMetabar" type="text/template">
+        <section class="metabarTabs">
+          <div class="metabarTabTitle" id="expandTab"><span class="icon-resize-horizontal"></span></div>
+          <div class="metabarTabTitle" id="chatTab"><span class="icon-comments"></span>Chat</div>
+          <div class="metabarTabTitle" id="favTab"><span class="icon-heart"></span>Chat</div>
         </section>
 
-        <section class="sidebarTabContent" id="chat">
+        <section class="metabarTabContent" id="chat">
           <div id="chatSessionsScroller">
             <ul class="chatSessions">no active chat sessions</ul>
           </div>

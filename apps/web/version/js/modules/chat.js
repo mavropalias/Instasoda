@@ -133,7 +133,7 @@ var ChatSessionTabs = Backbone.View.extend({
   initiateSessionWith: function(userId, username, age, photos) {
     var _this = this;
     
-    sidebarView.showChatWindow();
+    metabarView.showChatWindow();
     
     // get session id
     var sessionId;
