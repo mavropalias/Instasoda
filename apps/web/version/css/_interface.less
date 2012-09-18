@@ -111,21 +111,16 @@
 
   #metabar {
     .transition(all 0.6s cubic-bezier(.77, .12, .12, .74));
-    .box-shadow(-4px, 0px, 8px -4px, @color1);
-    background: #f9f9f9;
+
     position: fixed;
-    top: 0px;
-    bottom: 0;
-    right: -15rem;
-    width: 20rem;
-    z-index: 10;
+    display: none;
+    top: 0;
+    right: 0;
+    z-index: 30;
 
     &.visible {
       .transition(right 0.5s ease-in-out);
-      //right: 0;
-       .sidebarTabTitle > span {
-        //font-size: 1.7rem!important;
-       }
+      display: block;
     }
 
     .metabarTabs {
@@ -156,6 +151,18 @@
           border-left: 1px solid #bbb;
         }
       }
+    }
+
+    .metabarTabContent {
+      .box-shadow(-4px, 0px, 8px -4px, @color1);
+      background: #f9f9f9;
+      display: none;
+      position: fixed;
+      top: 5rem;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      //width: 100px;
     }
   }
 

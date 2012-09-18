@@ -6,7 +6,7 @@ var MetabarView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #chatTab': 'render'
+    'click #chatTab': 'toggleChatWindow'
   },
   
   // initialize
@@ -37,13 +37,13 @@ var MetabarView = Backbone.View.extend({
     this.chatSessionTabs.setElement(_this.$('.chatSessions')).render();
   },
   
-  // toggleMetabar
+  // toggleChatWindow
   // -----------------------------------------------------------------------
-  toggleMetabar: function() {
-    console.log('  ~ toggling metabar');
-    this.$('#chatWindow').toggle(0, function() {
-      if($(this).is(':visible')) $('#chatToggle').addClass('active');
-      else $('#chatToggle').removeClass('active');
+  toggleChatWindow: function() {
+    console.log('  ~ toggling chat window');
+    this.$('#chat').toggle(0, function() {
+      //if($(this).is(':visible')) $('#chatTab').addClass('active');
+      //else $('#chatTab').removeClass('active');
     });
   },
   
@@ -51,7 +51,7 @@ var MetabarView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   showChatWindow: function() {
     console.log('  ~ showing chat window');
-    this.$('#chatWindow').show();
-    this.$('#chatToggle').addClass('active')
+    this.$('#chat').show();
+    //this.$('#chatTab').addClass('active');
   }
 });
