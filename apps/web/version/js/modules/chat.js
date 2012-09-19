@@ -7,7 +7,7 @@ var ChatSessionTabs = Backbone.View.extend({
   initialize: function() {
     console.log('  ~ initializing ChatSessionTabs');
     _.bindAll(this);
-    this.collection.bind('add', this.render);
+    this.collection.bind('add', this.renderSessionTab);
     this.collection.bind('remove', this.render);
 
     // sub-views
@@ -100,9 +100,21 @@ var ChatSessionTabs = Backbone.View.extend({
   // chatSessionsTabClick
   // -----------------------------------------------------------------------
   chatSessionsTabClick: function(e) {        
+    var _this = this;
     var sSessionId = $(e.currentTarget).attr('id');
+    var toHide = false;
     console.log('  - chatSessionsTabClick:' + sSessionId);
-    this.showChatSession(sSessionId);
+
+    this.collection.each(function(m) {
+      if(m.get('_id') == sSessionId ) {
+        if(m.get('active'))  {
+          _this.hideChatSession(sSessionId);
+          toHide = true;
+        }
+      }
+    });
+
+    if(!toHide) this.showChatSession(sSessionId);
   },
   
   // showChatSession
@@ -125,7 +137,20 @@ var ChatSessionTabs = Backbone.View.extend({
         console.log('  ~ showChatSession (2): ' + m.get('_id'));
         m.set({ active: true });            
       }
-    });       
+    });
+  },
+
+  // hideChatSession
+  // -----------------------------------------------------------------------
+  hideChatSession: function(sSessionId) {
+    console.log('  - hideChatSession: ' + sSessionId);
+
+    this.$('#' + sSessionId).removeClass('active');
+    this.collection.each(function(m) {
+      if(m.get('_id') == sSessionId ) {
+        m.set({ active: false });
+      }
+    });
   },
   
   // initiateSessionWith
@@ -204,7 +229,7 @@ var ChatSessionsView = Backbone.View.extend({
     _.bindAll(this);
     this.collection.bind('add', this.render);
     this.collection.bind('remove', this.render);
-    this.collection.bind('change:active', this.showSession);
+    this.collection.bind('change:active', this.showHideSession);
   },
   
   // render
@@ -226,29 +251,32 @@ var ChatSessionsView = Backbone.View.extend({
     this.$el.append(chatSessionView.el);
   },
   
-  // showSession
+  // showHideSession
   // -----------------------------------------------------------------------
-  showSession: function(model) {
-    console.log('  - (chat) showSession ' + model.get('_id'));
+  showHideSession: function(model) {
+    console.log('  - (chat) showHideSession ' + model.get('_id'));
+
     this.$('.chatSession').hide();
 
-    // show chat session, position it and focus on the text input field
-    this.$('#session_' + model.get('_id')).css({
-      'top': $('#' + model.get('_id')).offset().top + 'px'
-    }).show().find('.chatInput').focus();
-    
-    // convert timestamps to timeago
-    this.$('.time').timeago();
+    if(model.get('active')) {
+      // show chat session, position it and focus on the text input field
+      this.$('#session_' + model.get('_id')).css({
+        'top': $('#' + model.get('_id')).offset().top + 'px'
+      }).show().find('.chatInput').focus();
+      
+      // convert timestamps to timeago
+      this.$('.time').timeago();
 
-    // enable custom scrollbars
-    var scroller = this.$('#scroller_' + model.get('_id') + ' > .chatLog');
-    scroller.slimScroll({
-      height: '255px',
-      allowPageScroll: false,
-      alwaysVisible: false,
-      railVisible: false,
-      start: 'bottom'
-    });
+      // enable custom scrollbars
+      var scroller = this.$('#scroller_' + model.get('_id') + ' > .chatLog');
+      scroller.slimScroll({
+        height: '255px',
+        allowPageScroll: false,
+        alwaysVisible: false,
+        railVisible: false,
+        start: 'bottom'
+      });
+    }
     
     //TODO: investigate why this gets triggered twice
   }

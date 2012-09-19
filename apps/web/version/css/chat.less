@@ -12,10 +12,8 @@
       .chatSessionsTab {
         .text-shadow;
         width: 100%;
-        padding: 5px 10px;
         overflow: hidden;
-        border-bottom: 1px solid #ddd;
-        //border-top: 1px solid #fff;
+        border-bottom: 1px solid #ccc;
         cursor: pointer;
         position: relative;
         
@@ -27,26 +25,29 @@
         
         .photoThumbnail {
           float: left;
-          margin-right: 10px;
+          margin-right: 0.5rem;
           display: block;
-          max-height: 40px;
+          height: 4rem;
           overflow: hidden;
+          background-color: #fff;
         }
 
         .user {
-          font-size: 1.1em;
+          display: block;
+          padding-top: 0.5rem;
+          font-size: 1.1rem;
         }
 
         .meta {
           color: #777;
-          font-size: 0.9em;
+          font-size: 0.9rem;
           display: block;
           margin-top: 5px;
         }
         
         .unreadMessages {
           .border-radius;
-          font-size: 0.9em;
+          font-size: 0.9rem;
           position: absolute;
           right: 5px;
           top: 4px;
@@ -59,16 +60,21 @@
       
       .active {
         text-shadow: none;
-        background: #fff;
+        background: @color2;
         cursor: default;
         font-weight: 700;
+        color: @colorBlue1;
         
         &:hover {
           text-decoration: none;
         }
 
+        .meta {
+          color: @colorBlue2;
+        }
+
         .photoThumbnail {
-          background: @color1;
+          background: @color2;
         }
       }
     }
@@ -77,7 +83,7 @@
       .box-shadow(-1px, 2px, 2px 0px, rgba(0, 0, 0, .2));
       display: none;
       position: fixed;
-      right: 210px;
+      right: 12rem;
       top: 50px;
       width: 30%;
       height: 300px;

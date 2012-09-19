@@ -42,8 +42,14 @@ var MetabarView = Backbone.View.extend({
   toggleChatWindow: function() {
     console.log('  ~ toggling chat window');
     this.$('#chat').toggle(0, function() {
-      //if($(this).is(':visible')) $('#chatTab').addClass('active');
-      //else $('#chatTab').removeClass('active');
+      if($(this).is(':visible')) {
+        $('#chatTab').addClass('active');
+        $('body').addClass('metaBarVisible');
+      }
+      else {
+        $('#chatTab').removeClass('active');
+        $('body').removeClass('metaBarVisible');
+      }
     });
   },
   
@@ -52,6 +58,7 @@ var MetabarView = Backbone.View.extend({
   showChatWindow: function() {
     console.log('  ~ showing chat window');
     this.$('#chat').show();
-    //this.$('#chatTab').addClass('active');
+    this.$('#chatTab').addClass('active');
+    $('body').addClass('metaBarVisible');
   }
 });

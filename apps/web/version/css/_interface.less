@@ -78,17 +78,16 @@
     position: absolute;
     top: 0;
     left: 8rem;
-    right: 5rem;
+    right: 0;
     height: 5rem;
     z-index: 25;
   }
 
   #content {
-    .transition(all 1.2s cubic-bezier(.77, .12, .12, .74));
     position: absolute;
     left: 69px;
     top: 50px;
-    right: 5rem;
+    right: 0;
     bottom: 0;
     overflow-y: hidden;
     overflow-x: auto;
@@ -109,9 +108,11 @@
     }
   }
 
-  #metabar {
-    .transition(all 0.6s cubic-bezier(.77, .12, .12, .74));
+  .metaBarVisible #content {
+    right: 12rem;
+  }
 
+  #metabar {
     position: fixed;
     display: none;
     top: 0;
@@ -124,32 +125,30 @@
     }
 
     .metabarTabs {
-      background: #fff;
-      width: 100%;
 
       .metabarTabTitle {
-        color: #fff;
+        color: @color2;
         font-size: 16px;
         font-weight: bold;
         padding: 0.9rem 1rem 0.7rem;
+        width: 12rem;
+        cursor: pointer;
+
         > span {
           display: inline-block;
           width: 5rem;
           font-size: 3rem;
           padding-left: 0.1rem;
-          .transition(font-size 0.5s ease-in-out);
         }
-        &#chatTab {
-          background: @color2;
+
+        &:hover {
+          color: @colorBlue1;
         }
-        &#favTab {
-          background: @colorRed1;
-        }
-        &#expandTab {
-          background: #ddd;
-          color: #888;
-          border-left: 1px solid #bbb;
-        }
+      }
+
+      .active {
+        color: #fff;
+        background: @color2;
       }
     }
 
@@ -162,7 +161,7 @@
       right: 0;
       bottom: 0;
       z-index: 30;
-      //width: 100px;
+      width: 12rem;
     }
   }
 
