@@ -39,6 +39,8 @@
 
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="VERSION/js/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
+    </script>
   <script type="text/javascript" src="http://localhost:8082/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/underscore-min.js"></script>
@@ -55,6 +57,7 @@
   <script type="text/javascript" src="VERSION/js/lib/slimScroll.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/iscroll.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.appear-1.1.1.min.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/gmaps.js"></script>
 
   <script type="text/javascript" src="VERSION/js/_app.js"></script>
   <script type="text/javascript" src="VERSION/js/router.js"></script>
@@ -85,6 +88,22 @@
   <meta property="og:image" content="" />
   <meta property="og:site_name" content="Instasoda" />
   <meta property="fb:admins" content="659710874" />
+
+  <!-- GOOGLE ANALYTICS -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-749229-25']);
+    _gaq.push(['_setDomainName', 'instasoda.com']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
 
 </head>
 <body>
