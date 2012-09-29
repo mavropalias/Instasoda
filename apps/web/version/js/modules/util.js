@@ -833,36 +833,55 @@ IS.setupUser = function (currentView) {
   var w = user.get('w');
   var ff = user.get('ff');
   var fd = user.get('fd');
+  var loc = user.get('loc');
+  var locN = user.get('locN');
 
   // check if the user need to update his profile
-  if(IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
+  if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(locN) || IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
+    // check username
     if(IS.nullOrEmpty(u)) {
       nextView = new SettingsUsernameView({
         model: user
       });
     }
+    // check location
+    else if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(locN)) {
+      nextView = new SettingsLocationView({
+        model: user
+      });
+    }
+    // check looking for friends/dates
     else if(IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) {
       nextView = new SettingsFindTypeView({
         model: user
       });
     }
+    // check gender preference
     else if(IS.nullOrEmpty(w) && IS.nullOrEmpty(m)) {
       nextView = new SettingsGenderPrefsView({
         model: user
       });
     }
 
+    // if we're already showing a settings page (currentView), flip the two views
     if(currentView) {
       $(nextView.el).appendTo('body').show();
 
       setTimeout(function() {
         IS.pageFlip(currentView.$el, nextView.$el);
       }, 0);
-    } else {
+    } 
+    // else fadeIn the settings page over the app
+    else {
       $(nextView.el).appendTo('body').fadeIn();
     }
+
+    // if it was the location page, activate the map by calling the view's show function
+    if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(locN)) nextView.show();
   }
-  // else show the 'done' screen if currentView exists
+  // we don't need to update any more settings, check if the user was previously 
+  // going through the setup process (if currentView is not null) and show the
+  // 'done' screen
   else if(currentView) {
     $('<section/>', {
         id: 'settingsDone'
@@ -933,4 +952,66 @@ IS.pageFlip = function (c1, c2) {
  */
 function l(msg) {
   console.log(msg);
+}
+
+/**
+ * Creates a map widget and returns [lon,lat] per user selection
+ * @param {String} container
+ * @param {Boolean} bAllowTextInput
+ */
+function showMapAndGetLocation(container, bAllowTextInput, cb) {
+    var haveAddress = false;
+    var lat = null;
+    var lng = null;
+    var formattedAddress = null;
+
+    // init map object
+    var map = new GMaps({
+      div: container,
+      lat: -12.043333,
+      lng: -77.028333,
+      streetViewControl: false,
+      width: '100%',
+      height: '100%',
+      zoom: 12,
+      dragend: function() {
+        GMaps.geocode({
+          location: map.getCenter(),
+          callback: function(results, status) {
+            if (status == 'OK') {
+              $('#targetAdress').html(results[2].formatted_address);
+              $('.mapCenterLocationMarker').html(results[2].formatted_address);
+              haveAddress = true;
+            }
+          }
+        });
+      }
+    });
+
+    // enable button
+    $('#setLocation').on('click', function() {
+      if(haveAddress) {
+        lat = map.getCenter().Xa;
+        lng = map.getCenter().Ya;
+        formattedAddress = $('#targetAdress').text();
+
+        cb(lat, lng, formattedAddress);
+      }
+    })
+
+    // get geoLocation
+    GMaps.geolocate({
+      success: function(position) {
+        map.setCenter(position.coords.latitude, position.coords.longitude);
+      },
+      error: function(error) {
+        alert('Geolocation failed: '+error.message);
+      },
+      not_supported: function() {
+        //alert("Your browser does not support geolocation");
+      },
+      always: function() {
+        //alert("Done!");
+      }
+    });
 }

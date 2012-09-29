@@ -46,6 +46,62 @@ var SettingsUsernameView = Backbone.View.extend({
 });
 
 // =========================================================================
+// SettingsLocationView
+// =========================================================================
+var SettingsLocationView = Backbone.View.extend({
+  // properties
+  // -----------------------------------------------------------------------
+  className: 'settings',
+  tagName: 'section',
+
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    //'click #saveUsername': 'save'
+  },
+
+  // initialize
+  // -----------------------------------------------------------------------
+  initialize: function() {
+    console.log('  ~ initializing SettingsLocationView');
+    _.bindAll(this);
+    this.render();
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function() {
+    console.log('  ~ rendering SettingsLocationView');
+    var template = $('#tplMapWidget').html();
+    var mapStrings = {
+      h1: 'Welcome ' + this.model.get('u') + '! What is your location?',
+      h2: 'Instasoda members will see your location. In order to protect your privacy, we recommend only zooming-in up to your general area in your city/town.',
+      target: 'drag the map to center at your approximate location!',
+      buttonTxt: 'Ok, my location is <span id="targetAdress"> ...drag the map!</span>'
+    };
+    this.$el.html(Mustache.to_html(template, mapStrings));
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    var _this = this;
+
+    // show map widget
+    showMapAndGetLocation('#mapContainer', true, function(lat, lng, formattedAddress) {
+      _this.model.set('loc', [lng, lat]);
+      _this.model.set('locN', formattedAddress);
+      
+      // save user model
+      IS.saveUser();
+
+      // move on to the next setting
+      IS.setupUser(_this);
+    });
+  }
+});
+
+// =========================================================================
 // SettingsFindTypeView (friendship / dating)
 // =========================================================================
 var SettingsFindTypeView = Backbone.View.extend({

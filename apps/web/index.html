@@ -1006,7 +1006,7 @@
         <div class="settingContainer settingFindType">
           <div class="setting">
             <div class="settingTitle">
-              Welcome {{u}}! What are you looking for in Instasoda?
+              What are you looking for in Instasoda?
             </div>
             <div class="settingContent">
               <label>
@@ -1117,6 +1117,23 @@
           <div class="pageBpartialInner"></div>
         </div>
       </section>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- MAP WIDGET -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplMapWidget" type="text/template">
+        <div id="mapWidget">
+          <div class="mapTitle">
+            <h1>{{h1}}</h1>
+            <h2>{{h2}}</h2>
+          </div>
+          <div id="mapContainer"></div>
+          <div class="mapCenterLocationMarker">{{target}}</div>
+          <a class="button" id="setLocation">{{{buttonTxt}}}</a>
+        </div>
+      </script>
 
 
   <!-------------------------------------------------------------------------->
