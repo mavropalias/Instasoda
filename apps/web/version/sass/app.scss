@@ -1,0 +1,159 @@
+// You custom settings file to override Foundation defaults
+@import "settings";
+
+// Comment out this import if you are customizing you imports below
+@import "foundation";
+
+// ----------------------------------------
+// Import specific parts of Foundation by commenting the import "foundation"
+// and uncommenting what you want below. You must uncomment the following if customizing
+
+// @import "compass/css3";
+// @import "foundation/settings";
+// @import "foundation/functions/all";
+
+// Control which mixins you have access too
+
+// Must include next two for semantic grid to work
+
+@import "foundation/mixins/respond-to";
+@import "foundation/mixins/semantic-grid";
+
+@import "foundation/common/globals";
+// @import "modular-scale";
+
+// Must include the grid for any responsiveness
+
+@import "foundation/components/grid";
+
+// Control which common styles get compiled
+
+@import "foundation/common/typography";
+@import "foundation/common/forms";
+
+// @import "foundation/mixins/clearfix";
+@import "foundation/mixins/css-triangle";
+@import "foundation/mixins/font-size";
+@import "fonts";
+@import "foundation/mixins/css-transitions";
+
+// Control which components you get if customizing
+// @import "foundation/components/modules/offcanvas";
+
+#main-content {
+    padding: 70px 0px 0 42px;
+    overflow-x: hidden;
+    .main-block {
+        &.row {
+            padding: 0 32px 0 74px;
+        }
+        h1 { @include font-size(36); display: inline-block; margin: 5px 0; }
+        h2 { @include font-size(30); }
+        h3 { @include font-size(11); font-weight: 500; color: #a8a8a8; }
+        > .columns > h1 {
+            margin: 0 0 15px;
+            line-height: 1;
+        }
+    } 
+
+    .secondary-block {
+        position: relative;
+        min-height:340px;
+        margin-bottom: 30px;
+        padding: 0 22px;
+        h2 {
+            display: block;
+            margin: 10px 0 0;
+            line-height: 1.2;
+        }
+        > span {
+            margin-bottom: 10px;
+            @include font-size(10);
+            color: #a8a8a8;
+        }
+    }
+}
+
+// App-specific styles
+@import "app/colors";
+@import "app/sidebars";
+@import "app/notifications";
+@import "app/profile";
+@import "app/likes";
+
+
+.settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 200;
+    background: #fff;
+    display: none;
+}
+
+.settingContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+
+    .setting {
+        position: absolute;
+        top: 30%;
+        width: 100%;
+
+        .settingTitle {
+            @include font-size(30);
+            text-shadow: 1px 1px $colorBlue3;
+
+            strong {
+                font-weight: 500;
+            }
+        }
+
+        .settingContent {
+            padding-top: 20px;
+            position: relative;
+        }
+
+        .settingTip {
+            @include font-size(16);
+            padding-top: 20px;
+            color: #666;
+        }
+    }
+}
+
+.settingUsername {
+    z-index: 2;
+    background: $colorBlue4;
+}
+
+.settingFindType {
+    z-index: 1;
+    background: $colorBlue5;
+}
+
+.settingGenderPrefs {
+    z-index: 1;
+    background: $colorBlue5;
+}
+
+.settingDone {
+    z-index: 1;
+    background: $colorBlue6;
+
+    .setting {
+        .settingTip {
+            @include font-size(20);
+            max-width: 550px;
+            margin: 0 auto;
+            padding-top: 0px;
+            color: #666;
+        }
+    }
+}
+
+

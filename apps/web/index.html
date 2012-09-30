@@ -34,7 +34,7 @@
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery-ui-1.8.18.custom.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox.css" />
   <link rel="stylesheet" type="text/css" href="VERSION/css/jquery.fancybox-thumbs.css" />
-  <link rel="stylesheet" type="text/css" href="VERSION/css/instasoda.css">
+  <link rel="stylesheet" type="text/css" href="VERSION/stylesheets/app.css">
   <!-- STYLES END -->
 
   <!-- SCRIPTS START -->
@@ -77,7 +77,7 @@
   <script type="text/javascript" src="VERSION/js/modules/metabar.js"></script>
 
 
-  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>-->
   <!-- SCRIPTS END -->
 
 
@@ -145,10 +145,38 @@
   <!-------------------------------------------------------------------------->
   <!-- CONTENT -->
   <!-------------------------------------------------------------------------->
-    <nav></nav>
-    <section id="topPanel"></section>
-    <section id="content" role="main"></section>
-    <aside id="metabar"></aside>
+    <div id="navigation-bar"></div>
+    <div id="user-bar" class="row">
+      <div id="profile-settings">
+        <h2>Konstantinos</h2>
+        <strong>MANAGE YOUR ACCOUNT</strong>
+        <span class="icon-cog"></span>
+      </div>
+      <div id="site-label">
+        <h1>
+          <span>INSTA<strong>SODA</strong></span>
+          <img src="./version/images/main-icon-my-profile.png" alt="">&nbsp;my profile
+        </h1>
+      </div>
+      <div id="chat-button">
+        <span class="icon-comments"></span>
+        <a href="#">CHAT</a>
+      </div>
+    </div>
+    <div id="main-content">
+
+      <div id="notifications-important" class="row no-padding">
+        <div class="twelve columns centered">
+          <h2>Konstantinos, your profile appears to be incomplete.</h2>
+          <p>By adding more information you <strong>increase the chances</strong> to find the perfect match!</p>
+        </div>
+      </div>
+      <div id="notifications-important-shadow" class="twelve columns"></div>
+      <div class="main-block row">
+        <section id="content" role="main"></section>
+      </div>
+    </div>
+    <!--<aside id="metabar"></aside>-->
 
   <!-------------------------------------------------------------------------->
   <!-- MUSTACHE TEMPLATES -->
@@ -159,72 +187,62 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplNavigation" type="text/template">
+        <div class="navigation-bar-tr"></div>
+        <img class="left" src="./version/images/pic-small.jpg" height="70" width="92" alt="">
         <ul>
-          <li>
-            <a id="nav_logo" href="#"></a>
-          </li>
-          <li>
-            <a id="nav_home" class="icon-home" href="#">
-              <span class="navItemTitle">Home</span>
+          <li id="nav_home">
+            <a href="#">
+              <span class="icon-home"></span>
+              <h3>HOME</h3>
             </a>
           </li>
-
           {{#_id}}
-            <li>
-              <a id="nav_matches" class="icon-heart" href="#matches">
-                <span class="navItemTitle">Matches</span>
+            <li id="nav_profile" class="active">
+              <a href="#me">
+                <span class="icon-user"></span>
+                <h3>PROFILE</h3>
               </a>
             </li>
           {{/_id}}
 
           {{#_id}}
-            <li>
-              <a id="nav_search" class="icon-search" href="#search">
-                <span class="navItemTitle">Search</span>
-              </a>
-            </li>
+          <li id="nav_matches">
+            <a href="#matches">
+              <span class="icon-heart"></span>
+              <h3>MATCHES</h3>
+            </a>
+          </li>
           {{/_id}}
 
           {{#_id}}
-            <li>
-              <a id="nav_likes" class="icon-thumbs-up" href="#likes">
-                <span class="navItemTitle">Likes</span>
-              </a>
-            </li>
+          <li id="nav_favourites">
+            <a href="#favourites">
+              <span class="icon-user">
+                <span class="icon-star"></span>
+              </span>
+              <h3>FAVOURITES</h3>
+            </a>
+          </li>
           {{/_id}}
 
           {{#_id}}
-            <li>
-              <a id="nav_favourites" class="icon-star" href="#favourites">
-                <span class="navItemTitle">Favourites</span>
-              </a>
-            </li>
-          {{/_id}}
-
-            <!--<li>
-              <a id="nav_mosaic" class="icon-qrcode" href="#mosaic">
-                <span class="navItemTitle">Mosaic</span>
-              </a>
-            </li>-->
-
-          {{#_id}}
-            <li>
-              <a id="nav_profile" class="icon-user" href="#me">
-                <span class="navItemTitle">Profile</span>
-              </a>
-            </li>
+          <li id="nav_likes">
+            <a href="#likes">
+              <span class="icon-thumbs-up"></span>
+              <h3>LIKES</h3>
+            </a>
+          </li>
           {{/_id}}
 
           {{#_id}}
-            <li>
-              <a id="nav_logout" class="icon-off" href="#logout">
-                <span class="navItemTitle">Logout</span>
-              </a>
-            </li>
+          <li id="nav_search">
+            <a href="#search">
+              <span class="icon-search"></span>
+              <h3>SEARCH</h3>
+            </a>
+          </li>
           {{/_id}}
 
-          <li id="navOnlineUsers"></li>
-          {{#_id222}}<li><div id="navNotifications">0</div></li>{{/_id222}}
         </ul>
       </script>
 
@@ -323,27 +341,23 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplDashboard" type="text/template">
-        <div class="column sidebar">
-          <section>
+        <div class="twelve columns">
             <h2>Hi {{u}}, this is your home page. Wonderful things will appear here as the beta progresses!</h2>
             <p>We would love to hear your feedback about Instasoda. Please let us know your opinion, ideas and any issues you might encounter!<p/>
 
             <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">What do you think about Instasoda?</a>
-          </section>
         </div>
-        <div class="column mainContent">
-          <section>
+        <div class="twelve columns">
             <h2>Make the best first impression!</h2>
             <p>Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos!</p>
             <p>The second most important element in your profile is your "about me". You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</p>
             <a class="button" href="#me">Manage your introduction & photos</a>
-          </section>
-          <section>
+        </div>
+        <div class="twelve columns">
             <h2>Ready for some action?</h2>
             <p>
               <a class="button" href="#matches">View your matches!</a> or <a class="button" href="#search">Search for people</a>
             </p>
-          </section>
         </div>
       </script>
 
@@ -823,133 +837,311 @@
 
       <script id="tplMyProfile" type="text/template">
 
-        <div id="basicInfo" class="column sidebar">
-          <div class="flipContainer">
-            <div id="instasodaProfile">
+        <!-- Profile -->
+        <div id="block-profile">
 
-              <div class="defaultPhoto">
-                {{#p}}
-                  {{#d}}
-                    <img src="http://img.instasoda.com/u/{{f}}" />
-                  {{/d}}
-                {{/p}}
-                {{^p}}
-                  <img src="http://img.instasoda.com/i/noPhoto.png" />
-                {{/p}}
-
-                <ul class="basicInfo">
-                  <li>
-                    <span class="icon icon-user"></span>
-                    <span class="infoTitle">Gender:</span>
-                    <span class="infoData infoVerified">{{fS}}</span>
-                  </li>
-                  <li>
-                    <span class="icon icon-gift"></span>
-                    <span class="infoTitle">Age:</span>
-                    <span class="infoData infoVerified">{{ag}}</span>
-                  </li>
-                  <li>
-                    <span class="icon icon-heart"></span>
-                    <span class="infoTitle">Relationship:</span>
-                    <span class="infoData infoVerified">
-                      {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
-                    </span>
-                  </li>
-                  <li title="{{#fCl}}{{city}}, {{state}}, {{country}}{{/fCl}}{{^fCl}}unknown{{/fCl}}">
-                    <span class="icon icon-map-marker"></span>
-                    <span class="infoTitle">Location:</span>
-                    <span class="infoData infoVerified">
-                      {{#fCl}}{{fCl}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
-                    </span>
-                  </li>
-                </ul>
-              </div>
-
-              <div class="profileButtons">
-                <button type="submit" id="editProfileButton">Edit profile</button> 
-              </div>
-            </div> <!-- #instasodaProfile -->
-
-            <div id="instasodaOptions">
-              <h1>Profile options</h1>
-
-              <div class="optionsName">
-                <h3>My dating name <span class="tip" title="This is how other instasoda users will see you."></span></h3>
-                <input type="text" name="username" value="{{u}}" required maxlength=50>
-              </div>
-
-              <div class="optionsFind">  
-                <h3>I am looking for</h3>
-                <label class="findFriends">
-                  <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
-                  <span class="findType">friendship</span>
-                </label>
-                <label class="findDates">
-                  <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
-                  <span class="findType">dating</span>
-                </label>
-              </div>
-
-              <div class="optionsMeet">  
-                <h3>I want to meet</h3>
-                <label class="meetWomen">
-                  <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
-                  <span class="meetGender">women</span>
-                </label>
-                <label class="meetMen">
-                  <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
-                  <span class="meetGender">men</span>
-                </label>
-              </div>
-
-              <div class="optionsButtons">
-                <button type="submit" id="saveProfileButton" class="animated">Save profile</button>
-                <button type="submit" id="cancelProfileButton" class="animated">Cancel</button> 
-                <span class="tip" title="Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced periodically & automatically. We will not make any changes (we can&#8217;t!) to your Facebook acount ;)"></span>
-                <div id="working" class="animated transparent"></div>
-              </div>
-            </div> <!-- #instasodaOptions -->
-          </div> <!-- .flipContainer -->
-        </div> <!-- .sidebar -->
-
-        <div class="column mainContent">
-
-          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
-
-          <section class="optionsAbout">
-            <h2>A little bit about myself <span class="tip" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates."></span></h2>
-
-            <p class="aboutText">{{a}}</p>
-            <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 10rem;">{{a}}</div>
-          </section>
-
-          <section id="photoSection">
-            <h2>Me at my best! (photos) <span class="tip" title="Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos."></span></h2>
-            <ul id="userPhotos">
-              <li id="uploadPhoto" class='animated'>
-                <div id="uploadWidget"></div>
-              </li>
-              <div id="userPhotosList">
-                <!-- USER PHOTOS -->
-              </div>
-            </ul>
-          </section>
-
-          <section id="favouritesSection">
-            <h2>My favourite things ({{favouriteCount}})</h2>
-            <div class="likesList">
-              I have no favourites yet :(
+          <div class="twelve columns no-padding">
+            <div class="twelve columns">
+              <span class="icon-user"></span>
+              <h1>my profile</h1>
             </div>
-          </section>
 
-          <section id="likesSection">
-            <h2>My Likes & interests ({{likeCount}})</h2>
-            <div id="allLikes">
+            <div id="profile-picture" class="mobile-four columns secondary-block">
+              {{#p}}
+                {{#d}}
+                  <img src="http://img.instasoda.com/u/{{f}}" />
+                {{/d}}
+              {{/p}}
+              {{^p}}
+                <img src="http://img.instasoda.com/i/noPhoto.png" />
+              {{/p}}
+              <span class="icon-pencil"></span>
+            </div>
+
+            <div id="profile-details" class="mobile-four columns secondary-block">
+              <h2>my details</h2>
+              <span>YOUR PERSONAL DETAILS</span>
+              <div>
+                <span class="icon-user"></span>
+                <h3>GENDER</h3>
+                <h3><strong>{{fS}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-gift"></span>
+                <h3>AGE</h3>
+                <h3><strong>{{ag}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-heart"></span>
+                <h3>RELATIONSHIP</h3>
+                <h3><strong>{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}UNKNOWN{{/fRs}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-map-marker"></span>
+                <h3>LOCATION</h3>
+                <h3><strong>{{#fCl}}{{fCl}}{{/fCl}}{{^fCl}}UNKNOWN{{/fCl}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-glass"></span>
+                <h3>WANTS TO MEET</h3>
+                <h3><strong>MEN &amp; WOMEN</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+            </div>
+
+            <div id="profile-pictures-wrapper" class="mobile-four columns end secondary-block">
+              <h2>my pictures</h2>
+              <span>YOUR MOST PRECIOUS MOMENTS DEPICTED</span>
+
+              <div id="profile-pictures" class="row">
+
+                <div id="uploadPhoto" class='animated'>
+                  <div id="uploadWidget"></div>
+                </div>
+
+                  <div id="userPhotosList">
+                    <!-- USER PHOTOS -->
+                  </div>
+
+               
+                <div id="view-all-pictures" class="four mobile-one columns end">
+                  <a href="#">
+                    <span class="icon-share-alt"></span>
+                    <strong>VIEW ALL</strong>
+                  </a>
+                </div>
+              </div>
 
             </div>
-          </section>
 
-        </div> <!-- .mainContent -->
+            <div id="profile-introduction" class="mobile-four columns secondary-block end">
+              <h2>my introduction</h2>
+              <span>WRITE A LITTLE BIT ABOUT YOURSELF</span>
+              <div class="row">
+                <div class="twelve columns">
+                  <p>{{a}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Likes -->
+        <div id="block-likes">
+            <div class="twelve columns">
+              <span class="icon-thumbs-up"></span>
+              <h1>my likes</h1>
+            </div>
+
+            <div id="like-block-favourites" class="six mobile-four columns secondary-block">
+              <div class="like-type-label">
+                <span class="icon-star"></span>
+                <h2>FAVOURITES</h2>
+              </div>
+              <div class="row">
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/1.jpg" alt="">
+                  <p>Bark Psychosis</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/2.jpg" alt="">
+                  <p>Aighard Graphic Design</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/3.jpg" alt="">
+                  <p>Late-Night-Static</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/4.jpg" alt="">
+                  <p>Breaking Bad</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/5.jpg" alt="">
+                  <p>Community</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/6.jpg" alt="">
+                  <p>Opeth</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/7.jpg" alt="">
+                  <p>Incrediblue</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/8.jpg" alt="">
+                  <p>Between The Buried And Me</p>
+                </div>
+                <div class="mobile-one columns end">
+                  <img src="./version/images/dummy/likes/9.jpg" alt="">
+                  <p>yndi halda</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="like-block-dislikes" class="six mobile-four columns end secondary-block">
+              <div class="like-type-label">
+                <span class="icon-thumbs-down"></span>
+                <h2>DISLIKES</h2>
+              </div>
+              <div class="row">
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/1.jpg" alt="">
+                  <p>Bark Psychosis</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/2.jpg" alt="">
+                  <p>Aighard Graphic Design</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/3.jpg" alt="">
+                  <p>Late-Night-Static</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/4.jpg" alt="">
+                  <p>Breaking Bad</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/5.jpg" alt="">
+                  <p>Community</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/6.jpg" alt="">
+                  <p>Opeth</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/7.jpg" alt="">
+                  <p>Incrediblue</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/8.jpg" alt="">
+                  <p>Between The Buried And Me</p>
+                </div>
+                <div class="mobile-one columns end">
+                  <img src="./version/images/dummy/likes/9.jpg" alt="">
+                  <p>yndi halda</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="like-block-likes" class="twelve mobile-four columns secondary-block end">
+              <div class="like-type-label">
+                <span class="icon-thumbs-up"></span>
+                <h2>LIKES</h2>
+              </div>
+              <div class="row">
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/1.jpg" alt="">
+                  <p>Bark Psychosis</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/2.jpg" alt="">
+                  <p>Aighard Graphic Design</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/3.jpg" alt="">
+                  <p>Late-Night-Static</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/4.jpg" alt="">
+                  <p>Breaking Bad</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/5.jpg" alt="">
+                  <p>Community</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/6.jpg" alt="">
+                  <p>Opeth</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/7.jpg" alt="">
+                  <p>Incrediblue</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/8.jpg" alt="">
+                  <p>Between The Buried And Me</p>
+                </div>
+                <div class="mobile-one columns end">
+                  <img src="./version/images/dummy/likes/9.jpg" alt="">
+                  <p>yndi halda</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/1.jpg" alt="">
+                  <p>Bark Psychosis</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/2.jpg" alt="">
+                  <p>Aighard Graphic Design</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/3.jpg" alt="">
+                  <p>Late-Night-Static</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/4.jpg" alt="">
+                  <p>Breaking Bad</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/5.jpg" alt="">
+                  <p>Community</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/6.jpg" alt="">
+                  <p>Opeth</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/7.jpg" alt="">
+                  <p>Incrediblue</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/8.jpg" alt="">
+                  <p>Between The Buried And Me</p>
+                </div>
+                <div class="mobile-one columns end">
+                  <img src="./version/images/dummy/likes/9.jpg" alt="">
+                  <p>yndi halda</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/1.jpg" alt="">
+                  <p>Bark Psychosis</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/2.jpg" alt="">
+                  <p>Aighard Graphic Design</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/3.jpg" alt="">
+                  <p>Late-Night-Static</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/4.jpg" alt="">
+                  <p>Breaking Bad</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/5.jpg" alt="">
+                  <p>Community</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/6.jpg" alt="">
+                  <p>Opeth</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/7.jpg" alt="">
+                  <p>Incrediblue</p>
+                </div>
+                <div class="mobile-one columns">
+                  <img src="./version/images/dummy/likes/8.jpg" alt="">
+                  <p>Between The Buried And Me</p>
+                </div>
+                <div class="mobile-one columns end">
+                  <img src="./version/images/dummy/likes/9.jpg" alt="">
+                  <p>yndi halda</p>
+                </div>
+              </div>
+            </div>
+
+        </div>
+
       </script>
 
 
@@ -959,14 +1151,18 @@
 
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
-          <a class="photo animated transparent fancybox-thumb {{#d}}default{{/d}}" tabindex="1" rel="fancybox-thumb" id="{{id}}" href="http://img.instasoda.com/u/{{f}}">
-            <img class="photoSrc" src='http://img.instasoda.com/u/{{f}}'>
-            <div class="photoControls">
-              <span class="photoMakeDefault left {{#d}}hidden{{/d}}" title="Make this your default profile photo">make default</span>
-              <span class="photoIsDefault left {{^d}}hidden{{/d}}" title="This is your default profile photo">default photo</span>
-              <span class="photoDelete right" title="Delete photo"></span>
+          <div class="four mobile-one columns">
+            <div class="picture-options photoMakeDefault {{#d}}picture-is-default{{/d}}">
+              {{#d}}<img src="./version/images/dummy/profile/bg-default-true.png" alt="">{{/d}}
             </div>
-          </a>
+            <div class="view-original-image">
+              <a href="#">
+                <span class="icon-search"></span>
+                <strong>VIEW</strong>
+              </a>
+            </div>
+            <img src="http://img.instasoda.com/u/{{f}}" alt="">
+          </div>
         {{/p}}
       </script>
 

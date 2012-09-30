@@ -1,0 +1,157 @@
+/**********************************
+*****        Navigation       *****
+**********************************/
+
+/*
+    1. Main site navigation
+    2. Top bar - Section labels and user settings
+*/
+
+// 1. Main site navigation
+#navigation-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 92px;
+    text-align: center;
+    background: #f2f2f2;
+    z-index: 3;
+    .navigation-bar-tr {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 10px;
+        background: url(../images/navigation-bar-tr.png) repeat;
+    }
+    ul {
+        list-style: none;
+        li {
+            a {
+                color: #5f5f5f;
+            }
+            &.active {
+                a, h3, span {
+                    color: white;
+                }
+                &#nav_home { background-color: #74d9ff; }
+                &#nav_profile { background-color: #9DCDEC; } //#AEDCFA
+                &#nav_matches { background-color: #74d9ff; }
+                &#nav_favourites { background-color: #74d9ff; }
+                &#nav_likes { background-color: #74d9ff; }
+                &#nav_search { background-color: #74d9ff; }
+            }
+        }
+    }
+    h3 {
+        margin: 0;
+        padding: 0 10px 17px 0;
+        @include font-size(10);
+        font-weight: 400;        
+    }
+    span {
+        position: relative;
+        padding: 22px 10px 0 0;
+        @include font-size(26, false, 1);
+        margin: 0;
+        span {
+            position: absolute;
+            padding: 0;
+            margin: 0;
+            top: 16px;
+            right: 1px;
+            @include font-size(11);
+        }
+    }
+}
+
+
+// 2. Top bar - Section labels and user settings
+#user-bar {
+    position: fixed;
+    top: 0;
+    left: 0px;
+    right: 0;
+    margin: 0;
+    padding: 0 0 0 92px;
+    height: 70px;
+    background: url(../images/top-bar-bg.jpg) repeat;
+    border-bottom: 1px solid #d9d9d9;
+    //box-shadow: 0 0 30px -10px #000;
+    z-index: 2;
+
+    #profile-settings {
+        position: absolute;
+        display: inline-block;
+        height: 70px;
+        padding:9px 50px 0 20px;
+        color: white;
+        background-color: #4c4c4c;
+        border-right: 1px solid #2e2e2e;
+        cursor: pointer;
+        &:hover {
+            background-color: #5c5c5c;
+        }
+        h2 {
+            margin: 10px 0 0;
+            @include font-size(20, false, 1.7);
+            font-weight: 600;
+            color: white;
+        }
+        strong {
+            @include font-size(10);
+            font-weight: 500;
+            color: #cacaca;
+        }
+        span {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            margin-top: -18px;
+            @include font-size(24);
+        }
+    }
+
+    #site-label {
+        text-align: center;
+        h1 {
+            display: inline-block;
+            position: relative;
+            @include font-size(32);
+            color: #696969;
+            text-shadow: 0 1px 0 #fff;
+            img, span {
+                position: absolute;
+            }
+            span {
+                top: 0;
+                left: 10px;
+                @include font-size(12);
+                font-weight: 400;
+            }
+            img {
+                top: 19px;
+                left: -22px;
+            }
+        }
+    }
+
+    #chat-button {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+        text-align: center;
+        a, span {
+            color: #5f5f5f;
+        }
+        span {
+            display: block;
+            @include font-size(36, false, 2.6);
+        }
+        a {
+            @include font-size(11);
+            font-weight: 400;
+        }
+    }
+}

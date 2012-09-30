@@ -1,0 +1,176 @@
+/*
+ * Apply a CSS3 transition
+ *
+ * $property The property you want to animate, eg opacity
+ * $duration The duration of the animation, eg 1s
+ * $ms Include -ms-transition; default is false because IE does not support transitionEnd callback
+ *
+ * @include transition(opacity, 0.5s);
+ */
+
+@mixin transition($property, $duration, $easing) {
+    -webkit-transition: $property $duration $easing;
+    -moz-transition: $property $duration $easing;
+    -o-transition: $property $duration $easing;
+    -ms-transition: $property $duration $easing;
+    transition: $property $duration $easing;
+}
+
+@mixin transitionLong($property, $duration, $easing:ease-in-out, $delay:false) {
+    @include transitionProperty($property);
+    @include transitionDuration($duration);
+    
+    @if($delay) {
+        @include transitionDelay($delay);
+    }
+    
+    @if($easing) {
+        @include transitionTimingFunction($easing);
+    }
+}
+
+/*
+ * Apply a CSS3 transition-delay
+ * @include transitionDelay(2s);
+ */
+@mixin transitionDelay($delay) {
+    -webkit-transition-delay: $delay;
+    -moz-transition-delay: $delay;
+    -o-transition-delay: $delay;
+    -ms-transition-delay: $delay;
+    transition-delay: $delay;
+}
+
+/*
+ * Apply a CSS3 transition-duration
+ * @include transitionDuration(1s);
+ */
+@mixin transitionDuration($duration) {
+    -webkit-transition-duration: $duration;
+    -moz-transition-duration: $duration;
+    -o-transition-duration: $duration;
+    -ms-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
+/*
+ * Apply a CSS3 transition-property
+ * @include transitionProperty(opacity);
+ * @include transitionProperty((height, width)); Multiple properties can be passed in surrounded by brackets
+ */
+@mixin transitionProperty($property) {
+    -webkit-transition-property: $property;
+    -moz-transition-property: $property;
+    -o-transition-property: $property;
+    -ms-transition-property: $property;
+    transition-property: $property;
+}
+
+/*
+ * Apply a CSS3 transition-timing-function
+ * @include transitionTimingFunction(easing);
+ */
+@mixin transitionTimingFunction($easing) {
+    -webkit-transition-timing-function: $easing;
+    -moz-transition-timing-function: $easing;
+    -o-transition-timing-function: $easing;
+    -ms-transition-timing-function: $easing;
+    transition-timing-function: $easing;
+}
+
+@mixin scale($value, $is-important: false) {
+    @if $is-important {
+        -webkit-transform: scale($value) !important;
+        -moz-transform: scale($value) !important;
+        -o-transform: scale($value) !important;
+        -ms-transform: scale($value) !important;
+        transform: scale($value) !important;
+    } @else {
+        -webkit-transform: scale($value);
+        -moz-transform: scale($value);
+        -o-transform: scale($value);
+        -ms-transform: scale($value);
+        transform: scale($value);
+    }
+}
+
+@mixin translateZ($value, $is-important: false) {
+    @if $is-important {
+        -webkit-transform: translateZ($value) !important;
+        -moz-transform: translateZ($value) !important;
+        -o-transform: translateZ($value) !important;
+        -ms-transform: translateZ($value) !important;
+        transform: translateZ($value) !important;
+    } @else {
+        -webkit-transform: translateZ($value);
+        -moz-transform: translateZ($value);
+        -o-transform: translateZ($value);
+        -ms-transform: translateZ($value);
+        transform: translateZ($value);
+    }
+}
+
+
+@mixin rotate($value, $is-important: false) {
+    @if $is-important {
+        -webkit-transform: rotate($value) !important;
+        -moz-transform: rotate($value) !important;
+        -o-transform: rotate($value) !important;
+        -ms-transform: rotate($value) !important;
+        transform: rotate($value) !important;
+    } @else {
+        -webkit-transform: rotate($value);
+        -moz-transform: rotate($value);
+        -o-transform: rotate($value);
+        -ms-transform: rotate($value);
+        transform: rotate($value);
+    }
+}
+
+@mixin rotateX($value, $is-important: false) {
+    @if $is-important {
+        -webkit-transform: rotateX($value) !important;
+        -moz-transform: rotateX($value) !important;
+        -o-transform: rotateX($value) !important;
+        -ms-transform: rotateX($value) !important;
+        transform: rotateX($value) !important;
+    } @else {
+        -webkit-transform: rotateX($value);
+        -moz-transform: rotateX($value);
+        -o-transform: rotateX($value);
+        -ms-transform: rotateX($value);
+        transform: rotateX($value);
+    }
+}
+
+@mixin rotateY($value, $is-important: false) {
+    @if $is-important {
+        -webkit-transform: rotateY($value) !important;
+        -moz-transform: rotateY($value) !important;
+        -o-transform: rotateY($value) !important;
+        -ms-transform: rotateY($value) !important;
+        transform: rotateY($value) !important;
+    } @else {
+        -webkit-transform: rotateY($value);
+        -moz-transform: rotateY($value);
+        -o-transform: rotateY($value);
+        -ms-transform: rotateY($value);
+        transform: rotateY($value);
+    }
+}
+
+@mixin rotateZ($value, $is-important: false) {
+    @if $is-important {
+        -webkit-transform: rotateZ($value) !important;
+        -moz-transform: rotateZ($value) !important;
+        -o-transform: rotateZ($value) !important;
+        -ms-transform: rotateZ($value) !important;
+        transform: rotateZ($value) !important;
+    } @else {
+        -webkit-transform: rotateZ($value);
+        -moz-transform: rotateZ($value);
+        -o-transform: rotateZ($value);
+        -ms-transform: rotateZ($value);
+        transform: rotateZ($value);
+    }
+}

@@ -233,16 +233,25 @@ table {
   left: 0px;
   z-index: 9;
 }
+#topPanel {
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  background: #f9f9f9 url(../img/instasoda_logo2.png) 35px 15px no-repeat;
+  position: absolute;
+  top: 0;
+  left: 8rem;
+  right: 0;
+  height: 5rem;
+  z-index: 25;
+}
 #content {
-  -webkit-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -moz-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -ms-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -o-transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  transition: all 1.2s cubic-bezier(0.77, 0.12, 0.12, 0.74);
   position: absolute;
   left: 69px;
   top: 50px;
-  right: 5rem;
+  right: 0;
   bottom: 0;
   overflow-y: hidden;
   overflow-x: auto;
@@ -259,59 +268,59 @@ table {
   display: table;
   clear: both;
 }
-#sidebar {
-  -webkit-transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -moz-transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -ms-transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  -o-transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  transition: all 0.6s cubic-bezier(0.77, 0.12, 0.12, 0.74);
-  background: #F9F9F9;
-  border-left: 1px solid #e0e0e0;
-  position: fixed;
-  top: 0px;
-  bottom: 0;
-  right: -15rem;
-  width: 20rem;
-  z-index: 10;
+.metaBarVisible #content {
+  right: 12rem;
 }
-#sidebar.visible {
+#metabar {
+  position: fixed;
+  display: none;
+  top: 0;
+  right: 0;
+  z-index: 30;
+}
+#metabar.visible {
   -webkit-transition: right 0.5s ease-in-out;
   -moz-transition: right 0.5s ease-in-out;
   -ms-transition: right 0.5s ease-in-out;
   -o-transition: right 0.5s ease-in-out;
   transition: right 0.5s ease-in-out;
+  display: block;
 }
-#sidebar .sidebarTabs {
-  background: #fff;
-  width: 100%;
-}
-#sidebar .sidebarTabs .sidebarTabTitle {
-  color: #fff;
+#metabar .metabarTabs .metabarTabTitle {
+  color: #3dbcdf;
   font-size: 16px;
   font-weight: bold;
   padding: 0.9rem 1rem 0.7rem;
+  width: 12rem;
+  cursor: pointer;
 }
-#sidebar .sidebarTabs .sidebarTabTitle > span {
+#metabar .metabarTabs .metabarTabTitle > span {
   display: inline-block;
   width: 5rem;
   font-size: 3rem;
   padding-left: 0.1rem;
-  -webkit-transition: font-size 0.5s ease-in-out;
-  -moz-transition: font-size 0.5s ease-in-out;
-  -ms-transition: font-size 0.5s ease-in-out;
-  -o-transition: font-size 0.5s ease-in-out;
-  transition: font-size 0.5s ease-in-out;
 }
-#sidebar .sidebarTabs .sidebarTabTitle#chatTab {
+#metabar .metabarTabs .metabarTabTitle:hover {
+  color: #00364d;
+}
+#metabar .metabarTabs .active {
+  color: #fff;
   background: #3dbcdf;
 }
-#sidebar .sidebarTabs .sidebarTabTitle#favTab {
-  background: #be1e2d;
-}
-#sidebar .sidebarTabs .sidebarTabTitle#expandTab {
-  background: #ddd;
-  color: #888;
-  border-left: 1px solid #bbb;
+#metabar .metabarTabContent {
+  -moz-box-shadow: -4px 0px 8px -4px #00364d;
+  -webkit-box-shadow: -4px 0px 8px -4px #00364d;
+  -ms-box-shadow: -4px 0px 8px -4px #00364d;
+  -o-box-shadow: -4px 0px 8px -4px #00364d;
+  box-shadow: -4px 0px 8px -4px #00364d;
+  background: #f9f9f9;
+  display: none;
+  position: fixed;
+  top: 5rem;
+  right: 0;
+  bottom: 0;
+  z-index: 30;
+  width: 12rem;
 }
 .column {
   vertical-align: top;
@@ -324,10 +333,10 @@ table {
   width: 23%;
   z-index: 2;
   height: 100%;
-  color: #00364d;
+  color: #fff;
   padding: 2.5rem 3.5rem 0;
-  border-right: 1px solid #e0e0e0;
   float: left;
+  background: #3dbcdf;
 }
 .sidebar section {
   clear: both;
@@ -345,22 +354,15 @@ table {
   display: block;
   padding: 2.5rem 3.2rem;
   float: left;
-  background-color: #fff;
 }
 .mainContent section {
   clear: both;
   margin-bottom: 2rem;
 }
 .userPreview {
-  -moz-box-shadow: 0 1px 1px #888888;
-  -webkit-box-shadow: 0 1px 1px #888888;
-  -ms-box-shadow: 0 1px 1px #888888;
-  -o-box-shadow: 0 1px 1px #888888;
-  box-shadow: 0 1px 1px #888888;
-  border: 1px solid #ddd;
   padding: 1rem;
   position: relative;
-  background: #eee;
+  background: #fff;
   float: left;
   overflow: hidden;
   display: block;
@@ -381,10 +383,10 @@ table {
   height: 10px;
 }
 .userPreview .onlineStatus.isOnline {
-  background: green;
+  background: #74b843;
 }
 .userPreview .onlineStatus.isOffline {
-  background: red;
+  background: #ed1c24;
 }
 .userPreview .userPreviewNickname {
   font-size: 11px;
@@ -392,7 +394,7 @@ table {
   color: #555;
 }
 .userPreview:hover {
-  background: #ddd;
+  background: #3dbcdf;
   text-decoration: underline;
 }
 .fancybox-next {
@@ -402,12 +404,12 @@ table {
   width: 40%;
 }
 .slimScrollBar {
-  background-color: #e0e0e0;
-  right: 0px!important;
+  background-color: #007da6;
+  margin-right: 4px;
 }
 .slimScrollBar:hover,
 .slimScrollBar.ui-draggable-dragging {
-  background-color: #999;
+  background-color: #00364d;
 }
 .slimScrollRail {
   background-color: none;
@@ -599,7 +601,7 @@ table {
 }
 button,
 .button {
-  background: #3dbcdf;
+  background: #00364d;
   padding: 0.5rem 1rem;
   border: 0 none;
   color: white;
@@ -615,13 +617,12 @@ button,
 button:hover,
 .button:hover {
   text-decoration: underline;
-  background: #3dbcdf;
 }
 label {
   margin: 0 1rem 0 0;
   position: relative;
   overflow: hidden;
-  color: #666;
+  color: #fff;
 }
 label:hover {
   color: #222;
@@ -703,7 +704,7 @@ body {
   font-weight: 300;
   overflow: hidden;
   height: 100%;
-  background: #f9f9f9;
+  background: #96d9ee;
 }
 a {
   text-decoration: none;
@@ -716,13 +717,13 @@ h1 {
   font-size: 3rem;
   font-weight: 700;
   padding-bottom: 0.5rem;
-  color: #007da6;
+  color: #fff;
 }
 h2 {
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: #007da6;
+  color: #fff;
 }
 h3 {
   font-size: 1.8rem;
