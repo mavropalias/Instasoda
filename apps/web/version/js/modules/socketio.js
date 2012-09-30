@@ -17,7 +17,7 @@ socket.on('connected', function (data) {
     if(typeof user.get('_id') != 'undefined') {
       socket.emit('getNotifications', {
         _id: user.get('_id'),
-        fTkn: user.get('fTkn')
+        instasodaToken: user.get('tkn')
       }, function(err, data) {
         if(!IS.nullOrEmpty(data)) {
           

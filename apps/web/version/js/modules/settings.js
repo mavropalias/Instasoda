@@ -197,7 +197,7 @@ var SettingsGenderPrefsView = Backbone.View.extend({
       this.model.set('w', w);
 
       // update gender prefs in the search options
-      var so = this.model.get('so');
+      var so = (this.model.get('so')) ? this.model.get('so') : {};
       so.m = (m > 0) ? 'male' : 0;
       so.w = (w > 0) ? 'female' : 0;
       this.model.set('so', so);
