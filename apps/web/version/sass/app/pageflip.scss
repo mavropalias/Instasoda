@@ -1,0 +1,161 @@
+#pageFlipPlaceholder {
+  @include perspective(2000px);
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  display: none;
+
+  .pageApartial,
+  .pageBpartial {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .pageApartial {
+    left: -50%;
+    z-index: 3;
+
+    .pageApartialInner {
+      margin-left: 50%;
+    }
+  }
+
+  .pageBpartial {
+    left: 50%;
+    z-index: 1;
+
+    .pageBpartialInner {
+      margin-left: -50%;
+    }
+  }
+
+  .pageFlip {
+    @include transition(all, 1.5s, cubic-bezier(.77, .12, .12, .74));
+    @include transform-style(preserve-3d);
+    @include transform-origin(left center);
+    @include rotateY(0deg);
+    position: absolute;
+    z-index: 4;
+    width: 100%;
+    height: 100%;
+    left: 50%;
+
+    &.pageFlipped {
+      @include rotateY(-180deg);
+    }
+
+    .pageAcontainer {
+      @include transform-style(preserve-3d);
+      @include transition(all, 1.0s, cubic-bezier(.77, .12, .12, .74));
+      @include backface-visibility(hidden);
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
+
+      .page {
+        position: absolute;
+        overflow: hidden;
+        height: 100%;
+      }
+    }
+
+    .pageBcontainer {
+      @include backface-visibility(hidden);
+      @include transform-style(preserve-3d);
+      @include rotateY(-180deg);
+      background-color: #fff;
+      width: 50%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
+
+      .page {
+        position: absolute;
+        overflow: hidden;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.settings {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 200;
+    background: #fff;
+    display: none;
+}
+
+.settingContainer {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    text-align: center;
+
+    .setting {
+        position: absolute;
+        top: 30%;
+        width: 100%;
+
+        .settingTitle {
+            @include font-size(30);
+            text-shadow: 1px 1px $colorBlue3;
+
+            strong {
+                font-weight: 500;
+            }
+        }
+
+        .settingContent {
+            padding-top: 20px;
+            position: relative;
+        }
+
+        .settingTip {
+            @include font-size(16);
+            padding-top: 20px;
+            color: #666;
+        }
+    }
+}
+
+.settingUsername {
+    z-index: 2;
+    background: $colorBlue4;
+}
+
+.settingFindType {
+    z-index: 1;
+    background: $colorBlue5;
+}
+
+.settingGenderPrefs {
+    z-index: 1;
+    background: $colorBlue5;
+}
+
+.settingDone {
+    z-index: 1;
+    background: $colorBlue6;
+
+    .setting {
+        .settingTip {
+            @include font-size(20);
+            max-width: 550px;
+            margin: 0 auto;
+            padding-top: 0px;
+            color: #666;
+        }
+    }
+}

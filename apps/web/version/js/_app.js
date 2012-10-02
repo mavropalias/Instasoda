@@ -110,6 +110,7 @@
   // Backbone views
   // -------------------------------------------------------------------------
   var navigationView;
+  var userbarView;
   var metabarView;
   var welcomeView;
   var betaView;
@@ -130,6 +131,10 @@
     // =========================
     navigationView = new NavigationView({
       el: $('#navigation-bar')[0],
+      model: user
+    });
+    userbarView = new UserbarView({
+      el: $('#user-bar')[0],
       model: user
     });
     dashboardView = new DashboardView({

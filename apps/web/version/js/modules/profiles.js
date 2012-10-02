@@ -114,7 +114,7 @@ var MyProfileView = Backbone.View.extend({
       });
 
     // activate fancybox for all photos - including the newly uploaded
-    this.$("#userPhotos").on("focusin", function(){
+    this.$("#userPhotosList").on("focusin", function(){
       _this.$(".fancybox-thumb").fancybox({
         prevEffect  : 'elastic',
         nextEffect  : 'elastic',
@@ -195,7 +195,7 @@ var MyProfileView = Backbone.View.extend({
     e.stopPropagation();
 
     // get photo id
-    var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
+    var photoId = parseInt($(e.currentTarget).parent().find('> img').attr('id'));
     var photoSrc = $(e.currentTarget).parent().parent().find('img').attr('src');
     var photos = this.model.get('p');
 
@@ -210,28 +210,27 @@ var MyProfileView = Backbone.View.extend({
     }
 
     // update photo text to working
-    $('#userPhotos #' + photoId + ' .photoMakeDefault').html('saving...');
+    $('#profile-pictures #' + photoId + ' .picture-is-default').html('saving...');
 
     // save model
     this.model.save({ 'p': photos }, {
       error: function(model, res) {
-        $('#userPhotos #' + photoId + ' .photoMakeDefault').html('make default');
+        $('#profile-pictures #' + photoId + ' .picture-is-default').html('make default');
         alert('Error: could not change photo status');
       },
       success: function(model, res) {
         // save locally
         store.set("user", _this.model);
-
         // update UI
-        $('#userPhotos .photoMakeDefault').removeClass('hidden');
-        $('#userPhotos .photoIsDefault').addClass('hidden');
+        $('#profile-pictures .photoMakeDefault').removeClass('hidden');
+        $('#profile-pictures .photoIsDefault').addClass('hidden');
 
-        $('#userPhotos .photo').removeClass('default');
-        $('#userPhotos #' + photoId).addClass('default');
+        $('#profile-pictures .photo').removeClass('picture-is-default');
+        $('#profile-pictures #' + photoId).addClass('picture-is-default');
 
-        $('#userPhotos #' + photoId + ' .photoMakeDefault').addClass('hidden');
-        $('#userPhotos #' + photoId + ' .photoIsDefault').removeClass('hidden');
-        $('#userPhotos #' + photoId + ' .photoMakeDefault').html('make default');
+        $('#profile-pictures #' + photoId + ' .photoMakeDefault').addClass('hidden');
+        $('#profile-pictures #' + photoId + ' .photoIsDefault').removeClass('hidden');
+        $('#profile-pictures #' + photoId + ' .photoMakeDefault').html('make default');
 
         // update default photo in the left column
         _this.$('#basicInfo .defaultPhoto img').attr('src', photoSrc);

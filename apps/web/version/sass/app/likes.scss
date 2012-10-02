@@ -1,11 +1,14 @@
-#block-likes {
+#block-likes, #likesResults {
+    li {
+        list-style: none;
+    }
 
     h1, h2, h3, span {
         display: inline-block;
         color: #505050;
     }
 
-    .secondary-block {
+    .secondary-block, .row {
         margin-top: -10px;
         min-height: 190px;
         .columns {
@@ -13,16 +16,19 @@
             min-height: 150px;
             p {
                 width: 100px;
+                height: 40px;
                 min-width: 100px;
                 margin: 0 0 7px 0;
                 @include font-size(12);
                 color: #585858;
                 text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             img {
                 width: 100px;
+                height: 100px;
                 min-width: 100px;
-                height: auto;
             }
         }
     }

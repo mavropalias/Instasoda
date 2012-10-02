@@ -64,6 +64,7 @@
 
   <script type="text/javascript" src="VERSION/js/modules/chat.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/navigation.js"></script>
+  <script type="text/javascript" src="VERSION/js/modules/userbar.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/profiles.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/search.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/socketio.js"></script>
@@ -146,23 +147,8 @@
   <!-- CONTENT -->
   <!-------------------------------------------------------------------------->
     <div id="navigation-bar"></div>
-    <div id="user-bar" class="row">
-      <div id="profile-settings">
-        <h2>Konstantinos</h2>
-        <strong>MANAGE YOUR ACCOUNT</strong>
-        <span class="icon-cog"></span>
-      </div>
-      <div id="site-label">
-        <h1>
-          <span>INSTA<strong>SODA</strong></span>
-          <img src="./version/images/main-icon-my-profile.png" alt="">&nbsp;my profile
-        </h1>
-      </div>
-      <div id="chat-button">
-        <span class="icon-comments"></span>
-        <a href="#">CHAT</a>
-      </div>
-    </div>
+    <div id="user-bar" class="row"></div>
+
     <div id="main-content">
 
       <div id="notifications-important" class="row no-padding">
@@ -190,15 +176,15 @@
         <div class="navigation-bar-tr"></div>
         <img class="left" src="./version/images/pic-small.jpg" height="70" width="92" alt="">
         <ul>
-          <li id="nav_home">
-            <a href="#">
+          <li id="nav_home" class="active">
+            <a class="hide-for-small" href="#">
               <span class="icon-home"></span>
               <h3>HOME</h3>
             </a>
           </li>
           {{#_id}}
-            <li id="nav_profile" class="active">
-              <a href="#me">
+            <li id="nav_profile">
+              <a class="hide-for-small" href="#me">
                 <span class="icon-user"></span>
                 <h3>PROFILE</h3>
               </a>
@@ -207,7 +193,7 @@
 
           {{#_id}}
           <li id="nav_matches">
-            <a href="#matches">
+            <a class="hide-for-small" href="#matches">
               <span class="icon-heart"></span>
               <h3>MATCHES</h3>
             </a>
@@ -216,7 +202,7 @@
 
           {{#_id}}
           <li id="nav_favourites">
-            <a href="#favourites">
+            <a class="hide-for-small" href="#favourites">
               <span class="icon-user">
                 <span class="icon-star"></span>
               </span>
@@ -227,7 +213,7 @@
 
           {{#_id}}
           <li id="nav_likes">
-            <a href="#likes">
+            <a class="hide-for-small" href="#likes">
               <span class="icon-thumbs-up"></span>
               <h3>LIKES</h3>
             </a>
@@ -236,7 +222,7 @@
 
           {{#_id}}
           <li id="nav_search">
-            <a href="#search">
+            <a class="hide-for-small" href="#search">
               <span class="icon-search"></span>
               <h3>SEARCH</h3>
             </a>
@@ -244,6 +230,29 @@
           {{/_id}}
 
         </ul>
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- USER BAR -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplUserbar" type="text/template">
+        <div id="profile-settings">
+          <h2>{{u}}</h2>
+          <strong>MANAGE YOUR ACCOUNT</strong>
+          <span class="icon-cog"></span>
+        </div>
+        <div id="site-label">
+          <h1>
+            <span>INSTA<strong>SODA</strong></span>
+            <img src="./version/images/main-icon-my-profile.png" alt="">&nbsp;my profile
+          </h1>
+        </div>
+        <div id="chat-button">
+          <span class="icon-comments"></span>
+          <a href="#">CHAT</a>
+        </div>
       </script>
 
 
@@ -458,8 +467,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikes" type="text/template">
-        <div id="likesFilters" class="sidebar"></div>
-        <div id="likesResults" class="mainContent"></div>
+        <div id="likesFilters" class="twelve mobile-four columns secondary-block"></div>
+        <div id="likesResults" class="twelve mobile-four columns secondary-block"></div>
       </script>
 
 
@@ -558,16 +567,14 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikesList" type="text/template">
-        <ul class="likes">
+        <div class="row">
           {{#likesToRender}}
-            <li class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
-              <span class="likePic">
+            <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
                 <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="http://img.instasoda.com/i/loading.gif" width=100 class="likeImg">
-              </span>
-              <span class="likeName" title="{{n}}">{{n}}</span>
-            </li>
+              <p title="{{n}}">{{n}}</p>
+            </div>
           {{/likesToRender}}
-        </ul>
+        </div>
       </script>
 
 
@@ -898,17 +905,10 @@
                   <div id="uploadWidget"></div>
                 </div>
 
-                  <div id="userPhotosList">
-                    <!-- USER PHOTOS -->
-                  </div>
-
-               
-                <div id="view-all-pictures" class="four mobile-one columns end">
-                  <a href="#">
-                    <span class="icon-share-alt"></span>
-                    <strong>VIEW ALL</strong>
-                  </a>
+                <div id="userPhotosList">
+                  <!-- USER PHOTOS -->
                 </div>
+
               </div>
 
             </div>
@@ -1156,14 +1156,20 @@
               {{#d}}<img src="./version/images/dummy/profile/bg-default-true.png" alt="">{{/d}}
             </div>
             <div class="view-original-image">
-              <a href="#">
+              <a href="http://img.instasoda.com/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
                 <span class="icon-search"></span>
                 <strong>VIEW</strong>
               </a>
             </div>
-            <img src="http://img.instasoda.com/u/{{f}}" alt="">
+            <img id="{{id}}" src="http://img.instasoda.com/u/{{f}}" alt="">
           </div>
         {{/p}}
+                        <div id="view-all-pictures" class="four mobile-one columns end">
+                  <a href="#">
+                    <span class="icon-share-alt"></span>
+                    <strong>VIEW ALL</strong>
+                  </a>
+                </div>
       </script>
 
 

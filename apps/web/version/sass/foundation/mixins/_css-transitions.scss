@@ -174,3 +174,33 @@
         transform: rotateZ($value);
     }
 }
+
+@mixin perspective($value) {
+    -webkit-perspective: $value;
+    -moz-perspective: $value;
+    -o-perspective: $value;
+    -ms-perspective: $value;
+    perspective: $value;
+}
+
+@mixin transform-style($value) {
+    -webkit-transform-style: $value;
+    -moz-transform-style: $value;
+    -o-transform-style: $value;
+    -ms-transform-style: $value;
+    transform-style: $value;
+}
+
+@mixin transform-origin($origin) {
+    -moz-transform-origin: $origin;
+    -webkit-transform-origin: $origin;
+    -ms-transform-origin: $origin;
+    transform-origin: $origin;
+}
+
+@mixin backface-visibility($visibility){
+    -webkit-backface-visibility: $visibility;
+    -moz-backface-visibility: $visibility;
+    -ms-backface-visibility: $visibility;
+    backface-visibility: $visibility;
+}

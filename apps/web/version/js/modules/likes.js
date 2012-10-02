@@ -131,16 +131,6 @@ var LikesFiltersView = Backbone.View.extend({
     var template = $('#tplLikesFilters').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
 
-    // enable custom scrollbars
-    this.$('.likeCategories').slimScroll({
-      height: '100%',
-      allowPageScroll: false,
-      alwaysVisible: false,
-      railVisible: false,
-      position: 'right',
-      start: 'top',
-      size: '4px'
-    });
   }
 });
 
