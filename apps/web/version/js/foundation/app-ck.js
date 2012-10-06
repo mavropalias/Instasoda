@@ -1,1 +1,0 @@
-(function(e,t,n){"use strict";var r=e(document),i=t.Modernizr;e.fn.foundationMediaQueryViewer?r.foundationMediaQueryViewer():null;e.fn.foundationTooltips?r.foundationTooltips():null;e("input, textarea").placeholder();i.touch&&e(t).load(function(){setTimeout(function(){t.scrollTo(0,1)},0)})})(jQuery,this);

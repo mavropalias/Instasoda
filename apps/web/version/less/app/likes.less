@@ -1,0 +1,59 @@
+#block-likes, #likesResults {
+    li {
+        list-style: none;
+    }
+
+    h1, h2, h3, span {
+        display: inline-block;
+        color: #505050;
+    }
+
+    .secondary-block, .row {
+        margin-top: -10px;
+        min-height: 190px;
+        .columns {
+            padding: 0 10px 0 20px;
+            min-height: 150px;
+            p {
+                width: 100px;
+                height: 40px;
+                min-width: 100px;
+                margin: 0 0 7px 0;
+                .font-size(1.2);
+                color: #585858;
+                text-align: center;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            img {
+                width: 100px;
+                height: 100px;
+                min-width: 100px;
+            }
+        }
+    }
+
+    > div > span {
+        .font-size(2.4);
+    }
+
+    #like-block-favourites .mobile-one, #like-block-dislikes .mobile-one {
+        min-width: 110px;
+    }
+
+    .like-type-label {
+        margin-bottom: 10px;
+        h2 {
+            display: inline-block;
+            .font-size(1.4);
+            font-weight: 400;
+        }
+        span {
+            position: relative;
+            padding-right: 3px;
+            .font-size(1.8, 1.2);
+        }
+        .icon-star { color: orange; }
+        .icon-thumbs-down { top: -3px; color: #888; }
+    }
+}

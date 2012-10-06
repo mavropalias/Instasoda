@@ -1,4 +1,0 @@
-// =========================================================================
-// Navigation view
-// =========================================================================
-var NavigationView=Backbone.View.extend({initialize:function(){_.bindAll(this);this.render()},render:function(){console.log("  ~ rendering NavigationView");var e=$("#tplNavigation").html();this.$el.html(Mustache.to_html(e,this.model.toJSON()));this.onlineUsersView=new OnlineUsersView({model:onlineUsers});this.onlineUsersView.setElement(this.$("#navOnlineUsers")).render()}}),OnlineUsersView=Backbone.View.extend({initialize:function(){console.log("  ~ initializing OnlineUsersView");_.bindAll(this);this.model.bind("change",this.render)},render:function(){console.log("  ~ rendering OnlineUsersView");var e=$("#tplOnlineUsers").html();this.$el.html(Mustache.to_html(e,this.model.toJSON()))}});
