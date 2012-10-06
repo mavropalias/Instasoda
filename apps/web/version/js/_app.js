@@ -14,6 +14,7 @@
   var userReady = false;
   var socketIoHost = "http://localhost:8082"; //##socketIoHost##
   var sApi = "http://localhost:8080/api/"; //##apiUrl##
+  var sApiHttps = "https://localhost/api/"; //##apiHttpsUrl##
   jQuery.support.cors = true;
 
 

@@ -610,11 +610,10 @@ IS.login = function(fTkn, fTid, cb) {
 }
 
 /**
- * Create a new user account by connecting to Facebook.
- * @param {Integer} package 1=basic, 2=standard, 3=complete
+ * Create a new user account
  * @param {String} facebookToken
+ * @param {String} fTid
  * @param {Function} callback
- * @return {Object} Returns an object {'s': 'success/fail'}
  */
 IS.createAccount = function(fbToken, fTid, cb) {
   console.log('- creating account');
@@ -624,21 +623,31 @@ IS.createAccount = function(fbToken, fTid, cb) {
     'fTkn': fbToken
   });
 
+  // switch to HTTPS while creating new account
+  user.urlRoot = sApiHttps + 'user';
+
   user.save({
     error: function(model, response) {
       //TODO: properly handle errors
       //a false might only mean that the API server is N/A
       console.log('- login error: ' + response.error);
+
+      // revert to non-https
+      user.urlRoot = sApi + 'user';
+
       cb(true, response.error);
     }
   }, {
     success: function(model, response) {
       // Ajax call was successful
-      // ------------------------
       console.log('- got an API response');
+
+      // revert to non-https
+      user.urlRoot = sApi + 'user';
+
       // Now check if the account was created
       // ------------------------------------
-      if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+      if (!IS.nullOrEmpty(model.attributes._id)) {
         // store the user details locally
         // ------------------------------
         store.set("user", user);
@@ -650,7 +659,8 @@ IS.createAccount = function(fbToken, fTid, cb) {
       // FAIL
       // ----
       else {
-        console.log('- ' + response.error);
+        console.log('- ' + response);
+        alert('Could not create your account');
         cb(true, response.error);
       }
     }
