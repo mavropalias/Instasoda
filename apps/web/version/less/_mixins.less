@@ -12,6 +12,31 @@
   line-height: ~"@{lineHeightRem}rem";
 }
 
+.linear-gradient (@from: #fff, @to: #eee, @start: 0%, @finish: 100%) {
+    background: @to;
+    background: -ms-linear-gradient(@from @start, @to @finish);
+    background: -moz-linear-gradient(@from @start, @to @finish);
+    background: -webkit-linear-gradient(@from @start, @to @finish);
+    background: -o-linear-gradient(@from @start, @to @finish);
+    background: linear-gradient(@from @start, @to @finish);
+}
+
+.box-shadow (@x: 0px, @y: 0px, @spread: 40px, @color: rgba(0, 0, 0, 0.4)) {
+    -moz-box-shadow: @x @y @spread @color;
+    -webkit-box-shadow: @x @y @spread @color;
+    -ms-box-shadow: @x @y @spread @color;
+    -o-box-shadow: @x @y @spread @color;
+    box-shadow: @x @y @spread @color;
+}
+
+.box-shadows (@sh1, @sh2) {
+    -moz-box-shadow: @sh1, @sh2;
+    -webkit-box-shadow: @sh1, @sh2;
+    -ms-box-shadow: @sh1, @sh2;
+    -o-box-shadow: @sh1, @sh2;
+    box-shadow: @sh1, @sh2;
+}
+
 .transition(@transition) {
     -webkit-transition: @transition;
     -moz-transition: @transition;

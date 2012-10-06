@@ -1,62 +1,130 @@
 #block-likes, #likesResults {
-    li {
-        list-style: none;
-    }
+  li {
+    list-style: none;
+  }
 
-    h1, h2, h3, span {
-        display: inline-block;
-        color: #505050;
-    }
+  h1, h2, h3, span {
+    display: inline-block;
+    color: #505050;
+  }
 
-    .secondary-block, .row {
-        margin-top: -10px;
-        min-height: 190px;
-        .columns {
-            padding: 0 10px 0 20px;
-            min-height: 150px;
-            p {
-                width: 100px;
-                height: 40px;
-                min-width: 100px;
-                margin: 0 0 7px 0;
-                .font-size(1.2);
-                color: #585858;
-                text-align: center;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            img {
-                width: 100px;
-                height: 100px;
-                min-width: 100px;
-                border-radius: 8px;
-                background: #eee;
-                border: 1px solid white;
-            }
+  .secondary-block, .row {
+    margin-top: -10px;
+    min-height: 190px;
+    .columns {
+      padding: 0 10px 0 20px;
+      min-height: 150px;
+      p {
+        width: 100px;
+        height: 40px;
+        min-width: 100px;
+        margin: 0 0 7px 0;
+        .font-size(1.2);
+        color: #585858;
+        text-align: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      img {
+        width: 100px;
+        height: 100px;
+        min-width: 100px;
+        border-radius: 8px;
+        background: #eee;
+        border: 1px solid white;
+      }
+    }
+  }
+
+  > div > span {
+    .font-size(2.4);
+  }
+
+  #like-block-favourites .mobile-one, #like-block-dislikes .mobile-one {
+    min-width: 110px;
+  }
+
+  .like-type-label {
+    margin-bottom: 10px;
+    h2 {
+      display: inline-block;
+      .font-size(1.4);
+      font-weight: 400;
+    }
+    span {
+      position: relative;
+      padding-right: 3px;
+      .font-size(1.8, 1.2);
+    }
+    .icon-star { color: orange; }
+    .icon-thumbs-down { top: -3px; color: #888; }
+  }
+}
+
+.likePanel {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  font-weight: normal;
+  z-index: 9;
+  text-align: center;
+
+  .likeAttitudes {
+    display: block;
+    overflow: hidden;
+    position: relative;
+    margin: 30px 0 10px -21px;
+    width: 14rem;
+    background-color: #fff;
+    .box-shadow(0, 0, 10px 0, #999);
+    .font-size(1.1);
+
+    .likeAttitude {
+      display: block;
+      float: left;
+      text-align: center;
+      padding: 0.7rem 0.6rem;
+      cursor: pointer;
+      &.attitude2 {
+        border: 1px solid #ccc;
+        border-width: 0 1px 0 1px;
+      }
+      &:hover {
+        text-decoration: underline;
+      }
+      &.active {
+        .linear-gradient(@color1, @color2);
+        color: #fff;
+        &.attitude2 {
+          border-color: #777;
         }
+      }
     }
+  }
 
-    > div > span {
-        .font-size(2.4);
-    }
+  .addToSearch,
+  .removeFromSearch,
+  .likeFacebookUrl {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 1rem;
+  }
 
-    #like-block-favourites .mobile-one, #like-block-dislikes .mobile-one {
-        min-width: 110px;
-    }
+  .addToSearch {
+    margin-left: 1rem;
+    background: url(../img/addToSearch.png) top left no-repeat;
+  }
 
-    .like-type-label {
-        margin-bottom: 10px;
-        h2 {
-            display: inline-block;
-            .font-size(1.4);
-            font-weight: 400;
-        }
-        span {
-            position: relative;
-            padding-right: 3px;
-            .font-size(1.8, 1.2);
-        }
-        .icon-star { color: orange; }
-        .icon-thumbs-down { top: -3px; color: #888; }
-    }
+  .removeFromSearch {
+    background: url(../img/removeFromSearch.png) top left no-repeat;
+  }
+
+  .likeFacebookUrl {
+    background: url(../img/fb_icon_20x20.png) top left no-repeat;
+  }
 }
