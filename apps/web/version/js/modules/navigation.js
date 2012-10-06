@@ -19,7 +19,7 @@ var NavigationView = Backbone.View.extend({
     
     // render sub views
     this.onlineUsersView = new OnlineUsersView({ model: onlineUsers });
-    this.onlineUsersView.setElement(this.$('#navOnlineUsers')).render();
+    this.onlineUsersView.setElement(this.$('#nav_onlineUsers .userCount')).render();
   }
 });
 

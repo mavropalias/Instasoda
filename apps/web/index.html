@@ -79,7 +79,7 @@
   <script type="text/javascript" src="VERSION/js/modules/metabar.js"></script>
 
 
-  <!--<script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
 
 
@@ -147,7 +147,7 @@
   <!-------------------------------------------------------------------------->
   <!-- CONTENT -->
   <!-------------------------------------------------------------------------->
-    <div id="navigation-bar"></div>
+    <nav id="navigation-bar"></nav>
     <div id="user-bar" class="row"></div>
 
     <div id="main-content">
@@ -179,14 +179,14 @@
         <ul>
           <li id="nav_home" class="active">
             <a class="hide-for-small" href="#">
-              <span class="icon-home"></span>
+              <span class="navIcon icon-home"></span>
               <h3>HOME</h3>
             </a>
           </li>
           {{#_id}}
             <li id="nav_profile">
               <a class="hide-for-small" href="#me">
-                <span class="icon-user"></span>
+                <span class="navIcon icon-user"></span>
                 <h3>PROFILE</h3>
               </a>
             </li>
@@ -195,7 +195,7 @@
           {{#_id}}
           <li id="nav_matches">
             <a class="hide-for-small" href="#matches">
-              <span class="icon-heart"></span>
+              <span class="navIcon icon-heart"></span>
               <h3>MATCHES</h3>
             </a>
           </li>
@@ -204,7 +204,7 @@
           {{#_id}}
           <li id="nav_favourites">
             <a class="hide-for-small" href="#favourites">
-              <span class="icon-user">
+              <span class="navIcon icon-user">
                 <span class="icon-star"></span>
               </span>
               <h3>FAVOURITES</h3>
@@ -215,7 +215,7 @@
           {{#_id}}
           <li id="nav_likes">
             <a class="hide-for-small" href="#likes">
-              <span class="icon-thumbs-up"></span>
+              <span class="navIcon icon-thumbs-up"></span>
               <h3>LIKES</h3>
             </a>
           </li>
@@ -224,8 +224,28 @@
           {{#_id}}
           <li id="nav_search">
             <a class="hide-for-small" href="#search">
-              <span class="icon-search"></span>
+              <span class="navIcon icon-search"></span>
               <h3>SEARCH</h3>
+            </a>
+          </li>
+          {{/_id}}
+
+          {{#_id}}
+          <li id="nav_onlineUsers">
+            <a class="hide-for-small" href="#onlineusers">
+              <span class="navIcon icon-group"></span>
+
+              <h3><span class="userCount"></span> ONLINE NOW</h3>
+            </a>
+          </li>
+          {{/_id}}
+
+          {{#_id}}
+          <li id="nav_logout">
+            <a class="hide-for-small" href="#logout">
+              <span class="navIcon icon-off"></span>
+
+              <h3>LOGOUT</h3>
             </a>
           </li>
           {{/_id}}
@@ -441,17 +461,11 @@
     <!-- ONLINE USERS VIEW -->
     <!------------------------------------------------------------------------>
 
-      <script id="tplOnlineUsers" type="text/template">
-         <div id="navOnlineUsers">
-           <span id="navOnlineUsersCount">
-            {{count}} 
-            {{^count}}
-              <img src="VERSION/img/loading.gif" height="16px">
-            {{/count}}
-           </span>
-           online users
-         </div>
-      </script>
+    <script id="tplOnlineUsers" type="text/template">
+      <span id="navOnlineUsersCount">
+        {{count}} 
+      </span>
+    </script>
 
 
     <!------------------------------------------------------------------------>

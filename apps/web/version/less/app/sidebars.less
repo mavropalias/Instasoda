@@ -29,7 +29,8 @@
         list-style: none;
         li {
             a {
-                color: #5f5f5f;  
+                display: block;
+                color: #5f5f5f; 
             }
             &.active {
                 a, h3, span {
@@ -50,12 +51,12 @@
         .font-size(1);
         font-weight: 400;     
     }
-    span {
+    .navIcon  {
         position: relative;
         padding: 22px 10px 0 0;
         .font-size(2.6, 1);
         margin: 0;
-        span {
+        > span {
             position: absolute;
             padding: 0;
             margin: 0;

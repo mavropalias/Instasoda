@@ -796,8 +796,8 @@ IS.setupPage = function (page) {
 
   // highligh the current page in the navigation menu
   if(page !== "viewprofile") {
-    $('nav a').removeClass('current');
-    $('#nav_' + page).addClass('current');
+    $('nav li').removeClass('active');
+    $('#nav_' + page).addClass('active');
   }
 
   // setup user
