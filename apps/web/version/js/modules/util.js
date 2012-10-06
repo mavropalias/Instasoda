@@ -812,14 +812,18 @@ IS.setupPage = function (page) {
 
   // add custom scrollbar in the main content area
   var scroller = $('#content .mainContent');
-  scroller.slimScroll({
-    height: '100%',
-    allowPageScroll: false,
-    alwaysVisible: false,
-    railVisible: true,
-    start: 'top',
-    size: '10px'
-  });
+
+  /*
+    scroller.slimScroll({
+      height: '100%',
+      allowPageScroll: false,
+      alwaysVisible: false,
+      railVisible: true,
+      start: 'top',
+      size: '10px'
+    });
+  */
+  
 }
 
 /**
