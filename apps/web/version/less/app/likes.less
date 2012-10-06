@@ -77,14 +77,13 @@
 
 #likesFilters {
   position: fixed;
-  top: 145px;
+  top: 0px;
   left: 92px;
   width: 107px;
   height: 100%;
-  background: #505050;
-  box-shadow: 5px 0 15px -12px #777;
-  border-right: 1px solid #ccc;
-  padding: 3px 20px;
+  background: #4C4C4C;
+  border-left: 5px solid #444;
+  padding: 75px 20px 0 16px;
   .likeView  {
     color: transparent;
     .scale(0.8);
@@ -94,22 +93,22 @@
       .transition(all 0.2s ease-in-out);
     }
     .icon-thumbs-up {
-      color: thistle;
+      color: @colorBlue3;
     }
     .icon-thumbs-down {
-      color: #aaa;
+      color: #ddd;
     }
     .icon-star-empty {
       color: darkorange;
     }
     &.current .icon {
-      .scale(2)!important;
+      .scale(1.5)!important;
     }
   }
   .likeCategories {
     .opacity(0);
   }
-  z-index: 999;
+  z-index: 2;
 }
 
 .likePanel {
