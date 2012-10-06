@@ -79,7 +79,7 @@ small { font-size: 60%; line-height: inherit; }
 code { font-weight: bold; background: #ffff99; }
 
 /* Lists ---------------------- */
-ul, ol { font-size: 14px; line-height: 1.6; margin-bottom: 17px; list-style-position: inside; }
+ul, ol { font-size: 14px; line-height: 1.6; margin-bottom: 17px; list-style-position: inside; list-style: none; }
 
 ul li ul, ul li ol { margin-left: 20px; margin-bottom: 0; }
 ul.square, ul.circle, ul.disc { margin-left: 17px; }

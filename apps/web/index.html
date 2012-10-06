@@ -482,7 +482,7 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikes" type="text/template">
-        <div id="likesFilters" class="twelve mobile-four columns secondary-block"></div>
+        <div id="likesFilters"></div>
         <div id="likesResults" class="twelve mobile-four columns secondary-block"></div>
       </script>
 
@@ -585,7 +585,7 @@
         <div class="row">
           {{#likesToRender}}
             <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
-                <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="http://img.instasoda.com/i/loading.gif" width=100 class="likeImg">
+                <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="http://img.instasoda.com/i/loading.gif" width=100 height=100 class="likeImg">
               <p title="{{n}}">{{n}}</p>
             </div>
           {{/likesToRender}}
