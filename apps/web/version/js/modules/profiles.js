@@ -113,29 +113,13 @@ var MyProfileView = Backbone.View.extend({
         }
       });
 
-    // activate fancybox for all photos - including the newly uploaded
+    // activate fancybox for photos
+    addToFancybox(_this.$(".fancybox-thumb"));
+
+    // activate fancybox when user uploads new photos
     this.$("#userPhotosList").on("focusin", function(){
-      _this.$(".fancybox-thumb").fancybox({
-        prevEffect  : 'elastic',
-        nextEffect  : 'elastic',
-        padding: 0,
-        helpers : {
-          title : {
-            type: 'outside'
-          },
-          overlay : {
-            opacity : 0.85,
-            css : {
-              'background-color' : '#000'
-            }
-          },
-          thumbs  : {
-            width : 50,
-            height: 50
-          }
-        }
-      }); // fancybox
-    }); // on
+      addToFancybox(_this.$(".fancybox-thumb"));
+    });
   },
 
   // save

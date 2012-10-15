@@ -1029,3 +1029,29 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
       }
     });
 }
+
+/**
+ * Add fancybox to images
+ * @param {Object} objects
+ */
+function addToFancybox(jqObjects) {
+  jqObjects.fancybox({
+    prevEffect  : 'elastic',
+    nextEffect  : 'elastic',
+    padding: 0,
+    helpers : {
+      title : {
+        type: 'outside'
+      },
+      overlay : {
+        opacity : 0.85,
+        css : {
+          'background-color' : '#000'
+        }
+      },
+      thumbs  : {
+        height: 50
+      }
+    }
+  });
+}
