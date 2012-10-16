@@ -22,7 +22,9 @@ var MyProfileView = Backbone.View.extend({
 
     // initialize sub-views
     this.myPhotosView = new MyPhotosView({ model: this.model });
-    this.likesListView = new LikesListView({ model: this.model });
+    this.favouritesView = new LikesListView({ model: this.model });
+    this.dislikesView = new LikesListView({ model: this.model });
+    this.likesView = new LikesListView({ model: this.model });
   },
 
   // render
@@ -32,8 +34,8 @@ var MyProfileView = Backbone.View.extend({
     var _this = this;
     var likes = this.model.get('l');
 
-    // set likeCount
-    this.model.set('likeCount', likes.length);
+    // parse likes and extend user model with favs & dislikes
+    IS.parseLikes(this.model, this.model.get('l'));
 
     // render template
     var template = $('#tplMyProfile').html();
@@ -41,7 +43,9 @@ var MyProfileView = Backbone.View.extend({
 
     // render sub views
     this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-    this.likesListView.setElement(this.$('#allLikes')).render();
+    this.favouritesView.setElement(this.$('#like-block-favourites-placeholder')).render(3, null, null, 9);
+    this.dislikesView.setElement(this.$('#like-block-dislikes-placeholder')).render(1, null, null, 9);
+    this.likesView.setElement(this.$('#like-block-likes-placeholder')).render(2, null, null, 30);
 
     setTimeout(function() {
       _this.onView();

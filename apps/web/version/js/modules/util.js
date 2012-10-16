@@ -47,7 +47,7 @@ Parses a user's likes and extends model with favs, dislikes and categories
 > setupPage: 
 Do various admin tasks after loading a page
 
-> showMetabar
+> showMetabar:
 Shows or hides the metabar
 
 > setupUser: 
@@ -58,6 +58,12 @@ Creates a page flip animation between two containers
 
 > l: 
 Shortcut for console.log()
+
+> showMapAndGetLocation: 
+Creates a map widget and returns [lon,lat] per user selection
+
+> addToFancybox: 
+Fancybox-ise specified images
 
 */
 
@@ -740,7 +746,7 @@ IS.getCommonLikes = function(otherUserLikes) {
  * @param {Array} likes
  */
 IS.parseLikes = function(model, likes) {
-    
+  
   var alikes = [];
   var aDislikes = [];
   var aFavs = [];

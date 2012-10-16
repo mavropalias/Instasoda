@@ -155,7 +155,7 @@ var LikesListView = Backbone.View.extend({
 
   // render
   // -----------------------------------------------------------------------
-  render: function(iLikesType, sLikesCategory, bShowCommonLikes) {
+  render: function(iLikesType, sLikesCategory, bShowCommonLikes, iLimit) {
     var _this = this;
     this.renderType = 1;
     console.log('  ~ rendering LikesListView');
@@ -191,6 +191,9 @@ var LikesListView = Backbone.View.extend({
               likesToRender.push(likesToRenderWithCat[index]);
           });
         }
+
+        // limit the number of rendered likes
+        if(iLimit > 0) likesToRender = likesToRender.slice(0, iLimit);
       }
 
     this.model.set({ likesToRender: likesToRender });
