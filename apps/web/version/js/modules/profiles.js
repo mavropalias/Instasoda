@@ -183,8 +183,8 @@ var MyProfileView = Backbone.View.extend({
     e.stopPropagation();
 
     // get photo id
-    var photoId = parseInt($(e.currentTarget).parent().find('> img').attr('id'));
-    var photoSrc = $(e.currentTarget).parent().parent().find('img').attr('src');
+    var photoId = parseInt($(e.currentTarget).parent().children('> img').attr('id'));
+    var photoSrc = $(e.currentTarget).parent().children('img').attr('src');
     var photos = this.model.get('p');
 
     // process and update model photos
@@ -220,8 +220,8 @@ var MyProfileView = Backbone.View.extend({
         $('#profile-pictures #' + photoId + ' .photoIsDefault').removeClass('hidden');
         $('#profile-pictures #' + photoId + ' .photoMakeDefault').html('make default');
 
-        // update default photo in the left column
-        _this.$('#basicInfo .defaultPhoto img').attr('src', photoSrc);
+        // update default profile photo in the page
+        _this.$('#profile-picture img').attr('src', photoSrc);
       }
     });
   },
