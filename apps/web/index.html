@@ -496,40 +496,33 @@
           <ul class="likeViews">
             <li class="likeView viewDislikes">
               <span class="icon icon-thumbs-down"></span>
-              Dislikes
               <span class="viewCount">{{dislikesCount}}</span>
+              <ul data-liketype="1" class="likeCategory catDislikes">
+                {{#dislikeCategories}}
+                  <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+                {{/dislikeCategories}}
+              </ul>
             </li>
             <li class="likeView viewLikes current">
               <span class="icon icon-thumbs-up"></span>
-              Likes
               <span class="viewCount">{{likesCount}}</span>
+              <ul data-liketype="2" class="likeCategory catLikes">
+                {{#likeCategories}}
+                  <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+                {{/likeCategories}}
+              </ul>
             </li>
             <li class="likeView viewFavs">
               <span class="icon icon-star-empty"></span>
-              Favs
               <span class="viewCount">{{favouritesCount}}</span>
+              <ul data-liketype="3" class="likeCategory catFavourites">
+                {{#favsCategories}}
+                  <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+                {{/favsCategories}}
+              </ul>
             </li>
           </ul>
-
-          <div class="likeCategories">
-            <ul data-liketype="2" class="likeCategory catLikes">
-              {{#likeCategories}}
-                <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
-              {{/likeCategories}}
-            </ul>
-
-            <ul data-liketype="3" class="likeCategory catFavourites">
-              {{#favsCategories}}
-                <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
-              {{/favsCategories}}
-            </ul>
-
-            <ul data-liketype="1" class="likeCategory catDislikes">
-              {{#dislikeCategories}}
-                <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle">{{.}}</li>
-              {{/dislikeCategories}}
-            </ul>
-          </div>
+          
         </section>
       </script>
 
@@ -644,8 +637,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearch" type="text/template">
-        <div id="searchFilters" class="column sidebar"></div>
-        <div id="searchResults" class="column mainContent"></div>
+        <div id="searchFilters" class="three columns sidebar"></div>
+        <div id="searchResults" class="nine columns mainContent"></div>
       </script>
 
 
