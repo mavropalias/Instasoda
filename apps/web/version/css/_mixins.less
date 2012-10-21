@@ -177,3 +177,24 @@
     -ms-backface-visibility: @visibility;
     backface-visibility: @visibility;
 }
+
+.appearance(@value) {
+    -moz-appearance: @value;
+    -webkit-appearance: @value;
+    appearance: @value;
+}
+
+.box-sizing(@value) {
+    -webkit-box-sizing: @value;
+    -moz-box-sizing: @value;
+    -ms-box-sizing: @value;
+    box-sizing: @value;
+}
+
+.border-radius(@arg: 4px) {
+    -webkit-border-radius: @arg;
+    -moz-border-radius: @arg;
+    -ms-border-radius: @arg;
+    -o-border-radius: @arg;
+    border-radius: @arg;
+}
