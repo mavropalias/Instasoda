@@ -65,6 +65,9 @@ Creates a map widget and returns [lon,lat] per user selection
 > addToFancybox: 
 Fancybox-ise specified images
 
+> Backbone.sync
+Overwrite Backbone's sync method, to hash all requests using HMAC
+
 */
 
 
@@ -1061,3 +1064,113 @@ function addToFancybox(jqObjects) {
     }
   });
 }
+
+
+/**
+ * Overwrite Backbone's sync method, to hash all requests using HMAC
+ */
+Backbone.sync = function(method, model, options) {
+  // Map from CRUD to HTTP for our default `Backbone.sync` implementation.
+  var methodMap = {
+    'create': 'POST',
+    'update': 'PUT',
+    'delete': 'DELETE',
+    'read':   'GET'
+  };
+
+  // Helper function to get a value from a Backbone object as a property
+  // or as a function.
+  var getValue = function(object, prop) {
+    if (!(object && object[prop])) return null;
+    return _.isFunction(object[prop]) ? object[prop]() : object[prop];
+  };
+
+  var type = methodMap[method];
+
+  // Default options, unless specified.
+  options || (options = {});
+
+  // Default JSON-request options.
+  var params = {type: type, dataType: 'json'};
+
+  // Ensure that we have a URL.
+  if (!options.url) {
+    params.url = getValue(model, 'url') || urlError();
+  }
+
+  // Ensure that we have the appropriate request data.
+  if (!options.data && model && (method == 'create' || method == 'update')) {
+    params.contentType = 'application/json';
+    params.data = model.toJSON();
+  }
+
+  // For older servers, emulate JSON by encoding the request into an HTML-form.
+  if (Backbone.emulateJSON) {
+    params.contentType = 'application/x-www-form-urlencoded';
+    params.data = params.data ? {model: params.data} : {};
+  }
+
+  // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
+  // And an `X-HTTP-Method-Override` header.
+  if (Backbone.emulateHTTP) {
+    if (type === 'PUT' || type === 'DELETE') {
+      if (Backbone.emulateJSON) params.data._method = type;
+      params.type = 'POST';
+      params.beforeSend = function(xhr) {
+        xhr.setRequestHeader('X-HTTP-Method-Override', type);
+      };
+    }
+  }
+
+  // Don't process data on a non-GET request.
+  if (params.type !== 'GET' && !Backbone.emulateJSON) {
+    params.processData = false;
+  }
+
+  // Make the request, allowing the user to override any Ajax options.
+
+  // Get user token
+  var userToken = null;
+  var signed = false;
+  if(!!user) {
+    if(!!user.get('tkn')) {
+      userToken = user.get('tkn');
+      signed = true;
+
+    }
+  }
+
+  // Make a hashed request
+  var hashedRequest = {};
+
+  // Set request data
+  var requestData = {};
+
+  // Set UTC timestamp
+  var now = new Date(); 
+  var timestamp = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
+
+  // Create request object
+  requestData.data = params.data;
+  requestData.timestamp = timestamp; // protection against 'replay' attacks
+  requestData.uri = params.url;
+  requestData.requestType = type; // protection against hash-collision attacks (setting DELETE instead of GET)
+
+  // Create hashed request object
+  hashedRequest.data = (signed) ? CryptoJS.HmacSHA256(JSON.stringify(requestData), user.get('tkn')) : JSON.stringify(requestData);
+  hashedRequest._id = user.get('_id'); // attach user's _id
+  hashedRequest.isHashed = signed;
+
+  l(options.data);
+  l(params.data);
+  // update params with the hashed data
+  params.data = JSON.stringify(hashedRequest);
+  delete options.data;
+
+  // make a POST request
+  params.type = 'POST';
+
+  l('############## custom sync');
+  l(params);
+  return $.ajax(_.extend(params, options));
+};
