@@ -240,7 +240,7 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
   var userLikes = user.get('l');
 
   // search if the like is already in the user's model
-  // if so, then change its rating or remove it
+  // if so, change its rating or remove it
   // ==========================================================
   var like = _.find(userLikes, function(like) { return like._id == likeId; })
   if(!!like) 
@@ -1092,6 +1092,7 @@ Backbone.sync = function(method, model, options) {
 
   // Default JSON-request options.
   var params = {type: type, dataType: 'json'};
+  params.contentType = 'application/json';
 
   // Ensure that we have a URL.
   if (!options.url) {
@@ -1099,28 +1100,9 @@ Backbone.sync = function(method, model, options) {
   }
 
   // Ensure that we have the appropriate request data.
-  if (!options.data && model && (method == 'create' || method == 'update')) {
-    params.contentType = 'application/json';
+  //if (!options.data && model && (method == 'create' || method == 'update')) {
     params.data = model.toJSON();
-  }
-
-  // For older servers, emulate JSON by encoding the request into an HTML-form.
-  if (Backbone.emulateJSON) {
-    params.contentType = 'application/x-www-form-urlencoded';
-    params.data = params.data ? {model: params.data} : {};
-  }
-
-  // For older servers, emulate HTTP by mimicking the HTTP method with `_method`
-  // And an `X-HTTP-Method-Override` header.
-  if (Backbone.emulateHTTP) {
-    if (type === 'PUT' || type === 'DELETE') {
-      if (Backbone.emulateJSON) params.data._method = type;
-      params.type = 'POST';
-      params.beforeSend = function(xhr) {
-        xhr.setRequestHeader('X-HTTP-Method-Override', type);
-      };
-    }
-  }
+  //}
 
   // Don't process data on a non-GET request.
   if (params.type !== 'GET' && !Backbone.emulateJSON) {
@@ -1130,13 +1112,12 @@ Backbone.sync = function(method, model, options) {
   // Make the request, allowing the user to override any Ajax options.
 
   // Get user token
-  var userToken = null;
+  var userToken = "null";
   var signed = false;
   if(!!user) {
     if(!!user.get('tkn')) {
       userToken = user.get('tkn');
       signed = true;
-
     }
   }
 
@@ -1151,18 +1132,22 @@ Backbone.sync = function(method, model, options) {
   var timestamp = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
   // Create request object
-  requestData.data = params.data;
+  requestData.data = (params.data) ? params.data : {};
   requestData.timestamp = timestamp; // protection against 'replay' attacks
   requestData.uri = params.url;
   requestData.requestType = type; // protection against hash-collision attacks (setting DELETE instead of GET)
 
   // Create hashed request object
-  hashedRequest.data = (signed) ? CryptoJS.HmacSHA256(JSON.stringify(requestData), user.get('tkn')) : JSON.stringify(requestData);
-  hashedRequest._id = user.get('_id'); // attach user's _id
+  hashedRequest.data = (params.data) ? params.data : {};
+  hashedRequest.hashedData = CryptoJS.HmacSHA256(JSON.stringify(requestData), userToken).toString(CryptoJS.enc.Hex);
+  hashedRequest._id = user.get('_id');
   hashedRequest.isHashed = signed;
+  hashedRequest.timestamp = timestamp;
+  hashedRequest.uri = params.url;
+  hashedRequest.requestType = type;
 
-  l(options.data);
-  l(params.data);
+  l(hashedRequest);
+
   // update params with the hashed data
   params.data = JSON.stringify(hashedRequest);
   delete options.data;
@@ -1170,7 +1155,5 @@ Backbone.sync = function(method, model, options) {
   // make a POST request
   params.type = 'POST';
 
-  l('############## custom sync');
-  l(params);
   return $.ajax(_.extend(params, options));
 };
