@@ -87,7 +87,7 @@
 }
 
 .settings {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
@@ -110,7 +110,7 @@
 
     .settingTitle {
       .font-size(3);
-      text-shadow: 1px 1px $colorBlue3;
+      text-shadow: 1px 1px @colorBlue3;
 
       strong {
         font-weight: 500;
@@ -132,22 +132,22 @@
 
 .settingUsername {
   z-index: 2;
-  background: $colorBlue4;
+  background: @colorBlue4;
 }
 
 .settingFindType {
   z-index: 1;
-  background: $colorBlue5;
+  background: @colorBlue5;
 }
 
 .settingGenderPrefs {
   z-index: 1;
-  background: $colorBlue5;
+  background: @colorBlue5;
 }
 
 .settingDone {
   z-index: 1;
-  background: $colorBlue6;
+  background: @colorBlue6;
 
   .setting {
     .settingTip {

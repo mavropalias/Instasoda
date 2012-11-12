@@ -15,7 +15,6 @@
   }
 
   .secondary-block, .row {
-    margin-top: -10px;
     min-height: 190px;
     .columns {
       padding: 0 15px;
@@ -42,11 +41,13 @@
         height: 150px;
         min-width: 100px;
         min-height: 100px;
-        border-radius: 8px;
         background: #eee;
         border: 1px solid white;
         .transition(all 0.3s);
       }
+    }
+    .like-type-label {
+      margin-top: -10px;
     }
   }
 
@@ -54,12 +55,21 @@
     .font-size(2.4);
   }
 
-  #like-block-favourites .mobile-one, #like-block-dislikes .mobile-one {
-    min-width: 110px;
+  #like-block-favourites, #like-block-dislikes, #like-block-likes {
+    margin-top: -15px;
+  }
+
+  #like-block-favourites-placeholder, #like-block-dislikes-placeholder, #like-block-likes-placeholder {
+    padding-left: 30px;
+    .row {
+      margin-bottom: 40px;
+    }
   }
 
   .like-type-label {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    height: 40px;
+    border-bottom: 1px dotted #BBB;
     h2 {
       display: inline-block;
       .font-size(1.4);

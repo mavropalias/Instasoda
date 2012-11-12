@@ -372,13 +372,14 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplDashboard" type="text/template">
-        <div class="twelve columns">
+      <div id="dashboard">
+        <div class="six columns">
             <h2>Hi {{u}}, this is your home page. Wonderful things will appear here as the beta progresses!</h2>
             <p>We would love to hear your feedback about Instasoda. Please let us know your opinion, ideas and any issues you might encounter!<p/>
 
             <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">What do you think about Instasoda?</a>
         </div>
-        <div class="twelve columns">
+        <div class="six columns">
             <h2>Make the best first impression!</h2>
             <p>Photos are the single most important element in your profile. This is the first impression that others get of you. Choose carefully the photos that best represent you at the moment. This gives you a better chance of finding someone that really likes you for who you are. Make sure to upload high quality photos!</p>
             <p>The second most important element in your profile is your "about me". You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.</p>
@@ -389,6 +390,7 @@
             <p>
               <a class="button" href="#matches">View your matches!</a> or <a class="button" href="#search">Search for people</a>
             </p>
+        </div>
         </div>
       </script>
 
@@ -916,12 +918,12 @@
                   <div id="uploadWidget"></div>
                 </div>
 
-                <div id="view-all-pictures" class="four mobile-one columns end">
+                <!-- <div id="view-all-pictures" class="four mobile-one columns end">
                   <a href="#">
                     <span class="icon-share-alt"></span>
                     <strong>VIEW ALL</strong>
                   </a>
-                </div>
+                </div> -->
 
                 <div id="userPhotosList">
                   <!-- USER PHOTOS -->
@@ -951,18 +953,18 @@
               <h1>my likes</h1>
             </div>
 
-            <div id="like-block-favourites" class="six mobile-four columns secondary-block">
+            <div id="like-block-favourites" class="twelve mobile-four columns ">
               <div class="like-type-label">
                 <span class="icon-star"></span>
-                <h2>FAVOURITES ({{favouritesCount}})</h2>
+                <h2>FAVOURITES&nbsp;<strong class="counter">{{favouritesCount}}</strong></h2>
               </div>
               <div id="like-block-favourites-placeholder" class="row">No favs yet!</div>
             </div>
 
-            <div id="like-block-dislikes" class="six mobile-four columns end secondary-block">
+            <div id="like-block-dislikes" class="twelve mobile-four columns end secondary-block">
               <div class="like-type-label">
                 <span class="icon-thumbs-down"></span>
-                <h2>DISLIKES ({{dislikesCount}})</h2>
+                <h2>DISLIKES&nbsp;<strong class="counter">{{dislikesCount}}</strong></h2>
               </div>
               <div id="like-block-dislikes-placeholder" class="row">No dislikes yet!</div>
             </div>
@@ -970,7 +972,7 @@
             <div id="like-block-likes" class="twelve mobile-four columns secondary-block end">
               <div class="like-type-label">
                 <span class="icon-thumbs-up"></span>
-                <h2>LIKES ({{likesCount}})</h2>
+                <h2>LIKES&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
               </div>
               <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
             </div>

@@ -69,14 +69,15 @@
       padding-top: 9px;
       margin-right: 0;
       .columns {
-        width: 30%!important;
-        min-width: 75px;
-        height: auto;
+        //width: 30%!important;
+        width: 75px;
+        height: 75px;
         padding: 0;
         margin: 0 8px 8px 0;
+        overflow: hidden;
         .translateZ(0);
         > img {
-          width: 100%;
+          width: 500px;
           height: auto;
         }
         &:hover {
@@ -298,16 +299,20 @@
       }
       
       .qq-upload-drop-area {
-        background: url(../img/uploadPhotoBg.png) center 30px no-repeat #fff;
+        background: url(../img/uploadPhotoBg.svg) center center no-repeat #f8f8f8;
         display: block !important;
-        position: absolute;
-        top: 40px;
-        left: 0px;
-        right: 0px;
         height: 112px;
+        margin-bottom: 5px;
         z-index: 2;
         text-align:center;
-        border: 1px dashed #ccc;
+        border: 1px solid #eaeaea;
+        background-size: 150px;
+        .translate3d(0,0,0);
+        .transition(all 0.3s);
+        &:hover {
+          background-position: center -175px;
+          background-size: 400px;
+        }
       }
       
       .qq-upload-drop-area-active {

@@ -5,21 +5,27 @@
   // BUTTON
   button,
   .button {
-    background: @color1;
-    padding: 0.5rem 1rem;
-    border: 0 none;
+    background: @colorBlue3;
+    padding: 1rem 1rem;
+    border-top: 1px solid @color2;
+    border-bottom: 1px solid #44B6DB;
+    border-width: 1px 0 1px 0;
     color: white;
-    font-size: 1.6rem;
+    .font-size(1.2);
     cursor: pointer;
-    display: block;
     display: inline-block;
     opacity: 1;
+    font-weight: normal!important;
     text-align: center;
+    text-transform: uppercase;
     margin: 0;
-    font-family: "Segoe WP", "Segoe UI", helvetica, arial,sans-serif;
-    
+    .transition(all 0.1s ease-in-out);
+
     &:hover {
-      text-decoration: underline;
+      color: white;
+      background: @colorBlue2;
+      border-top: 1px solid @colorBlue2;
+      border-bottom: 1px solid #348CD1;
     }
   }
   
@@ -94,7 +100,7 @@
     padding: 0.5rem;
     font-size: 1.6rem;
     margin: 0;
-    display: inline-block;
+    display: inline-block!important;
   }
 
   // TEXT AREA

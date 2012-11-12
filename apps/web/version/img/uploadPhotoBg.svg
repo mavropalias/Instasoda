@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="150px" height="112px" viewBox="0 0 150 112" enable-background="new 0 0 150 112" xml:space="preserve">
+<text transform="matrix(1 0 0 1 26.1123 43)" fill="#878787" font-family="'HelveticaNeue-Light'" font-size="14">YOUR PHOTOS</text>
+<text transform="matrix(1 0 0 1 25.3203 26)" fill="#878787" font-family="'HelveticaNeue-CondensedBold'" font-size="18">DRAG &amp; DROP</text>
+<text transform="matrix(1 0 0 1 34.6621 62)" fill="#878787" font-family="'HelveticaNeue-CondensedBold'" font-size="18">TO UPLOAD</text>
+<g id="cloud_x5F_upload" opacity="0.7">
+	<g>
+		<path fill="#3DBCDF" d="M82.625,74.594c-0.357,0-0.703,0.06-1.05,0.104c-1.329-2.346-3.786-3.917-6.575-3.917
+			c-2.848,0-5.308,1.586-6.616,3.909c-0.335-0.044-0.668-0.097-1.009-0.097c-4.206,0-7.625,3.418-7.625,7.625
+			s3.419,7.625,7.625,7.625h15.25c4.207,0,7.625-3.418,7.625-7.625S86.832,74.594,82.625,74.594z M82.625,86.031h-15.25
+			c-2.102,0-3.812-1.713-3.812-3.812c0-2.092,1.853-3.701,3.816-3.76c0.008,0.9,0.164,1.779,0.477,2.613l3.571-1.334
+			c-0.159-0.424-0.238-0.871-0.238-1.332c0-2.1,1.71-3.812,3.812-3.812c1.234,0,2.348,0.61,3.051,1.564
+			C76.211,77.55,75,79.735,75,82.219h3.812c0-2.1,1.713-3.812,3.812-3.812s3.812,1.713,3.812,3.812S84.725,86.031,82.625,86.031z"/>
+		<g>
+			<polygon fill="#3DBCDF" points="76.908,95.562 80.719,95.562 75.003,89.844 69.283,95.562 73.096,95.562 73.096,101.281 
+				76.908,101.281 			"/>
+		</g>
+	</g>
+</g>
+</svg>
