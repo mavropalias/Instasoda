@@ -181,4 +181,5 @@
     // show navigation
     // -------------------------------------------------------------------------
       navigationView.show();
+      userbarView.show();
   });
