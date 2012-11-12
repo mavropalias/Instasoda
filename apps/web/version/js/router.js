@@ -151,9 +151,7 @@ var Router = Backbone.Router.extend({
               'ageMin': ageMin,
               'ageMax': ageMax,
               'l': searchByLike,
-              'random': random,
-              '_id': user.get('_id'),
-              'fTkn': user.get('fTkn')
+              'random': random
             }
           });
         } else {
@@ -168,9 +166,7 @@ var Router = Backbone.Router.extend({
               'ageMin': user.get('so').ageMin,
               'ageMax': user.get('so').ageMax,
               'l': searchByLike,
-              'random': random,
-              '_id': user.get('_id'),
-              'fTkn': user.get('fTkn')
+              'random': random
             }
           });
         }
@@ -197,9 +193,7 @@ var Router = Backbone.Router.extend({
             'ageMin': ageMin,
             'ageMax': ageMax,
             'l': searchByLike,
-            'random': random,
-            '_id': user.get('_id'),
-            'fTkn': user.get('fTkn')
+            'random': random
           }
         });
       } else {
@@ -214,9 +208,7 @@ var Router = Backbone.Router.extend({
             'ageMin': user.get('so').ageMin,
             'ageMax': user.get('so').ageMax,
             'l': searchByLike,
-            'random': random,
-            '_id': user.get('_id'),
-            'fTkn': user.get('fTkn')
+            'random': random
           }
         });
       }

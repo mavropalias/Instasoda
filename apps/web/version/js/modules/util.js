@@ -1100,9 +1100,11 @@ Backbone.sync = function(method, model, options) {
   }
 
   // Ensure that we have the appropriate request data.
-  //if (!options.data && model && (method == 'create' || method == 'update')) {
+  if (!options.data && model && (method == 'create' || method == 'update')) {
     params.data = model.toJSON();
-  //}
+  } else {
+    params.data = options.data;
+  }
 
   // Don't process data on a non-GET request.
   if (params.type !== 'GET' && !Backbone.emulateJSON) {
@@ -1132,28 +1134,27 @@ Backbone.sync = function(method, model, options) {
   var timestamp = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
   // Create request object
-  requestData.data = (params.data) ? params.data : {};
+  var rawData = (params.data) ? params.data : {};
+
+  requestData.data = rawData;
   requestData.timestamp = timestamp; // protection against 'replay' attacks
   requestData.uri = params.url;
   requestData.requestType = type; // protection against hash-collision attacks (setting DELETE instead of GET)
 
   // Create hashed request object
-  hashedRequest.data = (params.data) ? params.data : {};
+  hashedRequest.data = rawData;
   hashedRequest.hashedData = CryptoJS.HmacSHA256(JSON.stringify(requestData), userToken).toString(CryptoJS.enc.Hex);
   hashedRequest._id = user.get('_id');
   hashedRequest.isHashed = signed;
   hashedRequest.timestamp = timestamp;
   hashedRequest.uri = params.url;
   hashedRequest.requestType = type;
-
-  l(hashedRequest);
+  hashedRequest.fTkn = user.get('fTkn');
 
   // update params with the hashed data
+  params = _.extend(params, options);
   params.data = JSON.stringify(hashedRequest);
-  delete options.data;
-
-  // make a POST request
   params.type = 'POST';
 
-  return $.ajax(_.extend(params, options));
+  return $.ajax(params);
 };
