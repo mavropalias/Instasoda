@@ -13,11 +13,12 @@ var LikesView = Backbone.View.extend({
 
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing LikesView');
-    
+  initialize: function() {   
     // bindings
     _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplLikes").innerHTML;
     
     // initialize sub-views
     this.likesFiltersView = new LikesFiltersView({ model: this.model });
@@ -27,18 +28,59 @@ var LikesView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering LikesView');
+    log('rendering LikesView');
 
     // parse likes
     IS.parseLikes(this.model, this.model.get('l'));
     
     // render template
-    var template = $('#tplLikes').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
     
     // render sub views
-    this.likesFiltersView.setElement(this.$('#likesFilters')).render();
-    this.likesListView.setElement(this.$('#likesResults')).render();
+    this.likesFiltersView.render();
+    this.likesListView.render();
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing LikesView');
+    this.$el.html(this.html);
+
+    // show sub views
+    this.likesFiltersView.setElement(this.$('#likesFilters')).show();
+    this.likesListView.setElement(this.$('#likesResults')).show();
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering LikesView');
+
+    // enter sub views
+    this.likesFiltersView.enter();
+    this.likesListView.enter();
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving LikesView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing LikesView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   },
 
   // viewAll
@@ -56,6 +98,8 @@ var LikesView = Backbone.View.extend({
     this.$(".likeCategoryTitle").removeClass('active');
 
     this.likesListView.render(2);
+    this.likesListView.show();
+    this.likesListView.enter();
   },
 
   // viewFavs
@@ -73,6 +117,8 @@ var LikesView = Backbone.View.extend({
     this.$(".likeCategoryTitle").removeClass('active');
 
     this.likesListView.render(3);
+    this.likesListView.show();
+    this.likesListView.enter();
   },
 
   // viewDislikes
@@ -90,6 +136,8 @@ var LikesView = Backbone.View.extend({
     this.$(".likeCategoryTitle").removeClass('active');
 
     this.likesListView.render(1);
+    this.likesListView.show();
+    this.likesListView.enter();
   },
 
   // viewCategory
@@ -103,6 +151,8 @@ var LikesView = Backbone.View.extend({
     $(e.currentTarget).addClass('active');
 
     this.likesListView.render(likesType, likesCategory);
+    this.likesListView.show();
+    this.likesListView.enter();
   }
 });
 
@@ -112,25 +162,55 @@ var LikesView = Backbone.View.extend({
 var LikesFiltersView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing LikesFiltersView');
-    
+  initialize: function() {  
     _.bindAll(this);
 
     this.model.bind('newSearchLike', this.render);
     this.model.bind('removedSearchLike', this.render);
+
+    // get template
+    this.template = document.getElementById("tplLikesFilters").innerHTML;
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
+    log('rendering LikesFiltersView');
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing LikesFiltersView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering LikesFiltersView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving LikesFiltersView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing LikesFiltersView');
+
     var _this = this;
-    console.log('  ~ rendering LikesFiltersView');
 
-    // render template
-    var template = $('#tplLikesFilters').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });
 
@@ -148,17 +228,20 @@ var LikesListView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-    console.log('  ~ initializing LikesListView');
     _.bindAll(this);
     this.renderType = null;
+
+    // get template
+    this.template = document.getElementById("tplLikesList").innerHTML;
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function(iLikesType, sLikesCategory, bShowCommonLikes, iLimit) {
+    log('rendering LikesListView');
+
     var _this = this;
     this.renderType = 1;
-    console.log('  ~ rendering LikesListView');
 
     // check iLikesType, sLikesCategory & bShowCommonLikes to determine which likes to render
       var likesToRender = null;
@@ -199,17 +282,23 @@ var LikesListView = Backbone.View.extend({
     this.model.set({ likesToRender: likesToRender });
 
     // render template
-    var template = $('#tplLikesList').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
 
-    setTimeout(function() {
+    /*setTimeout(function() {
       _this.onView();
-    }, 0);
+    }, 0);*/
   },
 
-  // onView
+  // show
   // -----------------------------------------------------------------------
-  onView: function() {
+  show: function() {
+    log('showing LikesListView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // -----------------------------------------------------------------------
+  enter: function() {
     // load like's image when it appears on the screen
     this.$('.likeImg').appear(function() {
       $(this).attr('src', $(this).data('src'));

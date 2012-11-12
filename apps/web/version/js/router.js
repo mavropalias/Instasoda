@@ -46,26 +46,29 @@ var Router = Backbone.Router.extend({
   // welcome 
   // -----------------------------------------------------------------------
   welcome: function() {
-    console.log('> routing welcome page');
+    log('routing welcome page', 'info');
 
     if(appReady) {
-      dashboardView.render();
+      /*dashboardView.render();
       $('#content > div').detach();
-      $('#content').append(dashboardView.el);
+      $('#content').append(dashboardView.el);*/
+      IS.changeView(IS.currentView, dashboardView);
       IS.setupPage('home');
     } else {
       IS.prepareApp(null, function() {
         if(user.get('_id') == null) {
-          welcomeView.render();
+          /*welcomeView.render();
           $('#content > div').detach();
-          $('#content').append(welcomeView.el);
+          $('#content').append(welcomeView.el);*/
+          IS.changeView(IS.currentView, welcomeView);
           IS.setupPage('home');
         }
         else 
         {
-          dashboardView.render();
+          /*dashboardView.render();
           $('#content > div').detach();
-          $('#content').append(dashboardView.el);
+          $('#content').append(dashboardView.el);*/
+          IS.changeView(IS.currentView, dashboardView);
           IS.setupPage('home');
         }
       });
@@ -75,20 +78,22 @@ var Router = Backbone.Router.extend({
   // myProfile
   // -----------------------------------------------------------------------
   myProfile: function() {
-    console.log('> routing my profile page');
+    log('routing my profile page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        myProfileView.render();
+        /*myProfileView.render();
         $('#content > div').detach();
-        $('#content').append(myProfileView.el);
+        $('#content').append(myProfileView.el);*/
+        IS.changeView(IS.currentView, myProfileView);
         IS.setupPage('profile');
       });
       return;
     } else {
-      myProfileView.render();
+      /*myProfileView.render();
       $('#content > div').detach();
-      $('#content').append(myProfileView.el);
+      $('#content').append(myProfileView.el);*/
+      IS.changeView(IS.currentView, myProfileView);
       IS.setupPage('profile');
     }
   },
@@ -96,7 +101,7 @@ var Router = Backbone.Router.extend({
   // matches
   // -----------------------------------------------------------------------
   matches: function() {
-    console.log('> routing matches page');
+    log('routing matches page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
@@ -107,9 +112,10 @@ var Router = Backbone.Router.extend({
           }
         });
 
-        matchesView.render();
+        /*matchesView.render();
         $('#content > div').detach();
-        $('#content').append(matchesView.el);
+        $('#content').append(matchesView.el);*/
+        IS.changeView(IS.currentView, matchesView);
         IS.setupPage('matches');
       });
       return;
@@ -121,9 +127,10 @@ var Router = Backbone.Router.extend({
         }
       });
 
-      matchesView.render();
+      /*matchesView.render();
       $('#content > div').detach();
-      $('#content').append(matchesView.el);
+      $('#content').append(matchesView.el);*/
+      IS.changeView(IS.currentView, matchesView);
       IS.setupPage('matches');
     }
   },
@@ -131,7 +138,7 @@ var Router = Backbone.Router.extend({
   // search
   // -----------------------------------------------------------------------
   search: function(m, w, nearMe, ageMin, ageMax, onlyOnline, random) {
-    console.log('> routing search page');
+    log('routing search page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
@@ -170,9 +177,10 @@ var Router = Backbone.Router.extend({
             }
           });
         }
-        searchView.render();
+        /*searchView.render();
         $('#content > div').detach();
-        $('#content').append(searchView.el);
+        $('#content').append(searchView.el);*/
+        IS.changeView(IS.currentView, searchView);
         IS.setupPage('search');
       });
       return;
@@ -212,9 +220,10 @@ var Router = Backbone.Router.extend({
           }
         });
       }
-      searchView.render();
+      /*searchView.render();
       $('#content > div').detach();
-      $('#content').append(searchView.el);
+      $('#content').append(searchView.el);*/
+      IS.changeView(IS.currentView, searchView);
       IS.setupPage('search');
     }
   },
@@ -222,20 +231,22 @@ var Router = Backbone.Router.extend({
   // likes
   // -----------------------------------------------------------------------
   likes: function() {
-    console.log('> routing likes page');
+    log('routing likes page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        likesView.render();
+        /*likesView.render();
         $('#content > div').detach();
-        $('#content').append(likesView.el);
+        $('#content').append(likesView.el);*/
+        IS.changeView(IS.currentView, likesView);
         IS.setupPage('likes');
       });
       return;
     } else {
-      likesView.render();
+      /*likesView.render();
       $('#content > div').detach();
-      $('#content').append(likesView.el);
+      $('#content').append(likesView.el);*/
+      IS.changeView(IS.currentView, likesView);
       IS.setupPage('likes');
     }
   },
@@ -243,20 +254,22 @@ var Router = Backbone.Router.extend({
   // favourites
   // -----------------------------------------------------------------------
   favourites: function() {
-    console.log('> routing favourites page');
+    log('routing favourites page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        favouritesView.render();
+        /*favouritesView.render();
         $('#content > div').detach();
-        $('#content').append(favouritesView.el);
+        $('#content').append(favouritesView.el);*/
+        IS.changeView(IS.currentView, favouritesView);
         IS.setupPage('favourites');
       });
       return;
     } else {
-      favouritesView.render();
+      /*favouritesView.render();
       $('#content > div').detach();
-      $('#content').append(favouritesView.el);
+      $('#content').append(favouritesView.el);*/
+      IS.changeView(IS.currentView, favouritesView);
       IS.setupPage('favourites');
     }
   },
@@ -264,7 +277,7 @@ var Router = Backbone.Router.extend({
   // mosaic
   // -----------------------------------------------------------------------
   mosaic: function() {
-    console.log('> routing mosaic page');
+    log('routing mosaic page', 'info');
     
     $('#content > div').detach();
     
@@ -282,23 +295,24 @@ var Router = Backbone.Router.extend({
   // logout
   // -----------------------------------------------------------------------
   logout: function() {
-    console.log('> routing logout page');
+    log('routing logout page', 'info');
     IS.logout();
   },
   
   // viewUser
   // -----------------------------------------------------------------------
   viewUser: function(id) {
-    console.log('> routing view user page');
+    log('routing view user page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
         users.set({ '_id': id }, {silent: true});
         users.fetch({
           success: function() {
-            usersFullView.render();
+            /*usersFullView.render();
             $('#content > div').detach();
-            $('#content').append(usersFullView.el);
+            $('#content').append(usersFullView.el);*/
+            IS.changeView(IS.currentView, usersFullView);
             IS.setupPage('viewprofile');
           }
         });
@@ -308,9 +322,10 @@ var Router = Backbone.Router.extend({
       users.set({ '_id': id }, {silent: true});
       users.fetch({
         success: function() {
-          usersFullView.render();
+          /*usersFullView.render();
           $('#content > div').detach();
-          $('#content').append(usersFullView.el);
+          $('#content').append(usersFullView.el);*/
+          IS.changeView(IS.currentView, usersFullView);
           IS.setupPage('viewprofile');
         }
       });

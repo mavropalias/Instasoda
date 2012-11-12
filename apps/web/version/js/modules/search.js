@@ -4,11 +4,12 @@
 var SearchView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing SearchView');
-    
+  initialize: function() {    
     // bindings
     _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplSearch").innerHTML;
     
     // initialize sub-views
     this.searchResultsView = new SearchResultsView({ collection: this.collection });
@@ -18,15 +19,50 @@ var SearchView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering SearchView');
-    
-    // render template
-    var template = $('#tplSearch').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    log('rendering SearchView');
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
     
     // render sub views
-    this.searchFiltersView.setElement(this.$('#searchFilters')).render();
-    this.searchResultsView.setElement(this.$('#searchResults'));
+    this.searchFiltersView.render();
+    this.searchResultsView.render();
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing SearchView');
+    this.$el.html(this.html);
+
+    // show sub views
+    this.searchFiltersView.setElement(this.$('#searchFilters')).show();
+    this.searchResultsView.setElement(this.$('#searchResults')).show();
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering SearchView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving SearchView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing SearchView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });
 
@@ -46,40 +82,71 @@ var SearchFiltersView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-    console.log('  ~ initializing SearchFiltersView');
     _.bindAll(this);
 
-    user.bind('removedSearchLike', this.render);
+    // get template
+    this.template = document.getElementById("tplNavigation").innerHTML;
+
+    user.bind('removedSearchLike', this.refresh);
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
     var _this = this;
-    console.log('  ~ rendering SearchFiltersView');
+    log('rendering SearchFiltersView');
     
     // determine default filter values
-    var userSearchOptions = this.model.get('so');
+    this.userSearchOptions = this.model.get('so');
     
     // render template
-    var template = $('#tplSearchFilters').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-    
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing SearchFiltersView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering SearchFiltersView');
+
     // enable jquery slider
     this.$("#ageRange").slider({
       range: true,
       min: 18,
       max: 70,
-      values: [userSearchOptions.ageMin, userSearchOptions.ageMax],
+      values: [this.userSearchOptions.ageMin, this.userSearchOptions.ageMax],
       slide: function (event, ui) {
         $("#ageNum").text(ui.values[0] + " - " + ui.values[1] + " years old");
-        // small easter egg :)
-        if (ui.values[1] == 99) {
-          $("#ageNum").text(ui.values[0] + " - " + ui.values[1] + " years old (wow!)");
-        }
       }
     });
     this.$("#ageNum").text(this.$("#ageRange").slider("values", 0) + " - " + this.$("#ageRange").slider("values", 1) + " years old");
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving SearchFiltersView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing SearchFiltersView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   },
   
   // doSearch
@@ -183,7 +250,7 @@ var SearchResultsView = Backbone.View.extend({
     console.log('  ~ initializing SearchResultsView');
     
     _.bindAll(this);
-    this.collection.bind('reset', this.render);
+    this.collection.bind('reset', this.refresh);
   },
 
   // renderItem
@@ -193,15 +260,49 @@ var SearchResultsView = Backbone.View.extend({
       model: model
     });
     usersView.render();
-    this.$el.append(usersView.el);
+    this.html = this.html + '<li class="userPreview">' + usersView.$el.html() + '</li>';
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering SearchResultsView');
-    this.$el.html('');
+    log('rendering SearchResultsView');
+    this.html = '';
     this.collection.each(this.renderItem);
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing SearchResultsView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering SearchResultsView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving SearchResultsView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing SearchResultsView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });
 
@@ -214,10 +315,18 @@ var UsersView = Backbone.View.extend({
   className: 'userPreview',
   tagName: 'li',
 
+  // initialize
+  // ---------------------------------------------------------------------------
+  initialize: function() {
+    _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplSearchResult").innerHTML;
+  },
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    var template = $('#tplSearchResult').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    this.$el.html(Mustache.to_html(this.template, this.model.toJSON()));
   }
 });

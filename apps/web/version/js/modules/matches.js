@@ -4,29 +4,65 @@
 var MatchesView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing MatchesView');
-    
+  initialize: function() {    
     // bindings
     _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplMatches").innerHTML;
     
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
     this.matchesFiltersView = new MatchesFiltersView({ model: this.model });
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering MatchesView');
-    
-    // render template
-    var template = $('#tplMatches').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-    
+    log('rendering MatchesView');
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
+
     // render sub views
-    this.matchesFiltersView.setElement(this.$('#matchesFilters')).render();
-    this.matchesResultsView.setElement(this.$('#matchesResults'));
+    this.matchesFiltersView.render();
+    this.matchesResultsView.render();
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing MatchesView');
+    this.$el.html(this.html);
+
+    // show sub views
+    this.matchesFiltersView.setElement(this.$('#matchesFilters')).show();
+    this.matchesResultsView.setElement(this.$('#matchesResults')).show();
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering MatchesView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving MatchesView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing MatchesView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });
 
@@ -37,18 +73,50 @@ var MatchesFiltersView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-    console.log('  ~ initializing MatchesFiltersView');
     _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplMatchesFilters").innerHTML;
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
+    log('rendering MatchesFiltersView');
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing MatchesFiltersView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering MatchesFiltersView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving MatchesFiltersView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing MatchesFiltersView');
+
     var _this = this;
-    console.log('  ~ rendering MatchesFiltersView');
-    
-    // render template
-    var template = $('#tplMatchesFilters').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });

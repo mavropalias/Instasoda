@@ -4,9 +4,7 @@
 var FavouritesView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing FavouritesView');
-    
+  initialize: function() {   
     // bindings
     _.bindAll(this);
 
@@ -18,41 +16,76 @@ var FavouritesView = Backbone.View.extend({
     
     // initialize sub-views
     this.favouritesUserListView = new FavouritesUserListView({ collection: this.favsCollection });
+
+    // get template
+    this.template = document.getElementById("tplFavourites").innerHTML;
   },
   
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering FavouritesView');
+    log('rendering FavouritesView');
 
     var _this = this;
 
     // render template
-    var template = $('#tplFavourites').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
-
-    // render sub views
-    this.favouritesUserListView.setElement(this.$('#favouriteUsers'));
-
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
 
     // reset & populate collection from user's 'favs'
     this.favsCollection.reset();
     _.each(this.model.get('favs'), function(user){
 
-      // fetch user's basic info
-      socket.emit('getBasicUserInfoFromId', {
-        userId: user
-      }, function(err, user) {
-        if(!err) {
-          _this.favsCollection.add(user);
-          _this.favouritesUserListView.render();
-          //TODO: don't render on every user
-        } else {
-          console.log('getBasicUserInfoFromId error');
-          //TODO: handle errors
-        }
-      }); 
-    });  
+    // render sub view
+    socket.emit('getBasicUserInfoFromId', {
+      userId: user
+    }, function(err, user) {
+      if(!err) {
+        _this.favsCollection.add(user);
+        _this.favouritesUserListView.render();
+        //TODO: don't render on every user
+      } else {
+        log('getBasicUserInfoFromId error', 'error');
+        //TODO: handle errors
+      }
+    }); 
+  });  
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing NavigationView');
+    this.$el.html(this.html);
+
+    // show sub views
+    this.favouritesUserListView.setElement(this.$('#favouriteUsers')).show();
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering NavigationView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving NavigationView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing NavigationView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });
 
@@ -62,11 +95,8 @@ var FavouritesView = Backbone.View.extend({
 var FavouritesUserListView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {
-    console.log('  ~ initializing FavouritesUserListView');
-    
+  initialize: function() {   
     _.bindAll(this);
-    //this.collection.bind('reset', this.render);
   },
 
   // renderItem
@@ -76,44 +106,81 @@ var FavouritesUserListView = Backbone.View.extend({
         model: model
     });
     favouritesUserView.render();
-    this.$el.append(favouritesUserView.el);
+    this.html = this.html + '<div class="userPreview">' + favouritesUserView.$el.html() + '</div>';
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering FavouritesUserListView');
-    this.$el.html('');
+    log('rendering FavouritesUserListView');
+    this.html = '';
     this.collection.each(this.renderItem);
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing FavouritesUserListView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering FavouritesUserListView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving FavouritesUserListView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing FavouritesUserListView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   }
 });
 
-// =========================================================================
+// =============================================================================
 // FavouritesUserView - a basic view of a user appearing in the favourites
-// =========================================================================
+// =============================================================================
 var FavouritesUserView = Backbone.View.extend({
   // properties
-  // -----------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   className: 'userPreview',
   tagName: 'div',
   
   // events
-  // -----------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   events: {
     'click': 'viewProfile'
   },
 
   // viewProfile
-  // -----------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   viewProfile: function(e) {
     router.navigate(this.model.get('_id'), {trigger: true});
   },
 
   // render
-  // -----------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering FavouritesUserView');
-    var template = $('#tplSearchResult').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    log('rendering FavouritesUserView');
+
+    // get template
+    this.template = document.getElementById("tplSearchResult").innerHTML;
+
+    this.$el.html(Mustache.to_html(this.template, this.model.toJSON()));
   }
 });

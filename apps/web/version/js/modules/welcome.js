@@ -3,7 +3,7 @@
 // =========================================================================
 var WelcomeView = Backbone.View.extend({
   // settings
-  id: 'welcome',
+  //id: 'welcome',
   
   // events
   // -----------------------------------------------------------------------
@@ -16,16 +16,53 @@ var WelcomeView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   initialize: function() {
     _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplWelcome").innerHTML;
   },
   
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering welcome view');
-    var template = $('#tplWelcome').html();
-    $(this.el).html(template);
+    log('rendering WelcomeView');
+    this.html = this.template;
   },
   
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing WelcomeView');
+    this.$el.html(this.html);
+    console.log(this.el);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering WelcomeView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving WelcomeView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing WelcomeView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
+  },
+
   // featureInstantProfiles
   // -----------------------------------------------------------------------
   featureInstantProfiles: function() {

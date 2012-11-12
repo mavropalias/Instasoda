@@ -17,6 +17,12 @@ Adds or removes a like with a rating
 > navigateTo: 
 Navigates to a page
 
+> changeView:
+Changes current view
+
+> animateToView:
+Creates an animated transition from the current page to the destination page
+
 > prepareApp: 
 Prepares App
 
@@ -308,6 +314,96 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
 IS.navigateTo = function(path) {
   console.log('> navigateTo ' + path);
   router.navigate(path, {trigger: true, replace: true});
+}
+
+/**
+ * Changes current view
+ * @param currentView
+ * @param destinationView
+ */
+IS.changeView = function(currentView, destinationView) {
+  async.series([
+    // allow the currentView to execute its leave function
+    function(cb) {
+      log('leaving currentView');
+      if(!IS.nullOrEmpty(currentView) && !IS.nullOrEmpty(currentView.leave)) {
+        currentView.leave(cb);
+      } else {
+        cb();
+      }
+    },
+    // if leave is not rejected, transition between the two views
+    function(cb) {
+      log('animating views');
+      IS.animateToView(currentView, destinationView, cb);
+    },
+    // execute any further actions defined by the destinationView's enter method
+    function(cb){
+      log('calling destinationView:enter');
+      if(!IS.nullOrEmpty(destinationView.enter)) destinationView.enter(cb);
+      else cb();
+    },
+  ],
+  function(err, results) {
+    // update app's currentView
+    log('update IS.currentView');
+    if(!err) IS.currentView = destinationView;
+  });
+}
+
+/**
+ * Creates an animated transition from the current view to the 
+ * destination view.
+ * @param currentView
+ * @param destinationView
+ */
+IS.animateToView = function(currentView, destinationView, cb) {
+
+  // check if destinationView is rendered
+  if(!destinationView.html) destinationView.render();
+
+  // transition the views
+  if(!IS.nullOrEmpty(currentView)) {
+    // hide currentView
+    currentView.$el.stop(true, true).animate({
+      opacity: 0,
+      'margin-left': '-40px'
+    }, 200, 'easeInQuad', function() {
+
+      // hide destinationView
+      destinationView.$el.css({
+        opacity: 0,
+        'margin-left': '40px'
+      });
+
+      // detach currentView from the dom
+      //$('#content > div').detach();
+
+      // show destinationView
+      destinationView.show();
+      destinationView.$el.stop(true, true).animate({
+        opacity: 1,
+        'margin-left': '0px'
+      }, 200, 'easeOutQuad', function() {
+        cb();
+      });
+    });
+  } else {
+    // hide destinationView
+    destinationView.$el.css({
+      opacity: 0,
+      'margin-left': '40px'
+    });
+
+    // show destinationView
+    destinationView.show();
+    destinationView.$el.stop(true, true).animate({
+      opacity: 1,
+      'margin-left': '0px'
+    }, 200, 'easeOutQuad', function() {
+      cb();
+    });
+  }
 }
 
 /**
@@ -851,6 +947,8 @@ IS.showMetabar = function (bShow) {
  * Sets user settings (username, sex prefs, etc)
  */
 IS.setupUser = function (currentView) {
+  log('setting up user preferences', 'info');
+
   var u  = user.get('u');
   var m = user.get('m');
   var w = user.get('w');
@@ -1065,6 +1163,32 @@ function addToFancybox(jqObjects) {
   });
 }
 
+/**
+ * Helper log function
+ * @param msg
+ * @param msgType
+ * @param context
+ */
+function log(msg, msgType, context) {
+  if (typeof console != "undefined") { 
+    switch(msgType) {
+      case 'log':
+        console.log('  ~ ' + msg);
+        break;
+      case 'warn':
+        console.warn(msg);
+        break;
+      case 'error':
+        console.error(msg, context);
+        break;
+      case 'info':
+        console.info('> ' + msg);
+        break;
+      default:
+        console.log('  ~ ' + msg);
+    }
+  }
+}
 
 /**
  * Overwrite Backbone's sync method, to hash all requests using HMAC

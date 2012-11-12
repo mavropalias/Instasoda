@@ -5,6 +5,7 @@
   IS.notificationsArray = new Array;
   IS.fbToken = null;
   IS.fbTokenExpires = null;
+  IS.currentView = null;
 
 // Config
 // =============================================================================
@@ -126,40 +127,58 @@
 
 // Start application
 // =============================================================================
+
+  // get main content area
+  var mainContentElement = document.getElementById('content');
+  var navigationBarElement = '';//document.getElementById('navigation-bar');
+  var userBarElement = '';//document.getElementById('user-bar');
   
   jQuery(function($) {
     // Initialize Backbone views
     // =========================
     navigationView = new NavigationView({
-      el: $('#navigation-bar')[0],
+      el: document.getElementById('navigation-bar'),
       model: user
     });
     userbarView = new UserbarView({
-      el: $('#user-bar')[0],
+      el: document.getElementById('user-bar'),
       model: user
     });
     dashboardView = new DashboardView({
-      model: user,
+      el: document.getElementById('content'),
+      model: user
     });
-    welcomeView = new WelcomeView();
+    welcomeView = new WelcomeView({
+      el: document.getElementById('content')
+    });
     myProfileView = new MyProfileView({
+      el: document.getElementById('content'),
       model: user
     });
     searchView = new SearchView({
+      el: document.getElementById('content'),
       collection: usersCollection,
       model: user
     });
     matchesView = new MatchesView({
+      el: document.getElementById('content'),
       collection: matchesCollection,
       model: user
     });
     favouritesView = new FavouritesView({
+      el: document.getElementById('content'),
       model: user
     });
     usersFullView = new UsersFullView({
-      model: users,
+      el: document.getElementById('content'),
+      model: users
     });
     likesView = new LikesView({
-      model: user,
+      el: document.getElementById('content'),
+      model: user
     });
+
+    // show navigation
+    // -------------------------------------------------------------------------
+      navigationView.show();
   });

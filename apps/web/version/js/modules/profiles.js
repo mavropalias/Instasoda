@@ -15,12 +15,13 @@ var MyProfileView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function(options) {
-    console.log('  ~ initializing MyProfileView');
-
     // bindings
     _.bindAll(this);
 
-    // initialize sub-views
+    // get template
+    this.template = document.getElementById("tplMyProfile").innerHTML;
+
+    // init sub views
     this.myPhotosView = new MyPhotosView({ model: this.model });
     this.favouritesView = new LikesListView({ model: this.model });
     this.dislikesView = new LikesListView({ model: this.model });
@@ -30,7 +31,7 @@ var MyProfileView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function(cb) {
-    console.log('  ~ rendering MyProfileView');
+    log('rendering MyProfileView');
     var _this = this;
     var likes = this.model.get('l');
 
@@ -38,84 +39,99 @@ var MyProfileView = Backbone.View.extend({
     IS.parseLikes(this.model, this.model.get('l'));
 
     // render template
-    var template = $('#tplMyProfile').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
 
     // render sub views
-    this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-    this.favouritesView.setElement(this.$('#like-block-favourites-placeholder')).render(3, null, null, 9);
-    this.dislikesView.setElement(this.$('#like-block-dislikes-placeholder')).render(1, null, null, 9);
-    this.likesView.setElement(this.$('#like-block-likes-placeholder')).render(2, null, null, 30);
+    this.myPhotosView.render();
+    this.favouritesView.render(3, null, null, 9);
+    this.dislikesView.render(1, null, null, 9);
+    this.likesView.render(2, null, null, 30);
 
-    setTimeout(function() {
+    /*setTimeout(function() {
       _this.onView();
-    }, 0);
+    }, 0);*/
   },
 
-  // onView
+  // show
   // -----------------------------------------------------------------------
-  onView: function() {
+  show: function() {
+    log('showing MyProfileView');
+    this.$el.html(this.html);
+
+    // show sub views
+    this.myPhotosView.setElement(this.$('#userPhotosList')).show();
+    this.favouritesView.setElement(this.$('#like-block-favourites-placeholder')).show();
+    this.dislikesView.setElement(this.$('#like-block-dislikes-placeholder')).show();
+    this.likesView.setElement(this.$('#like-block-likes-placeholder')).show();
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering MyProfileView');
+
     // create upload widget
     var _this = this;
     var iUploads = 0;
-    console.log('- creating upload widget')
-      var uploader = new qq.FileUploader({
-        element: document.getElementById('uploadWidget'),
-        action: sApi + 'user/' + user.get('_id') + '/photo',
-        allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-        debug: false,
-        sizeLimit: 3000000, // 3MB
-        maxConnections: 3,
-        onSubmit: function(id, fileName){
-          iUploads++;
-          //$('.qq-upload-drop-area').addClass('working');
-        },
-        onProgress: function(id, fileName, loaded, total){
-          $('.qq-upload-drop-area').addClass('working');
-        },
-        onComplete: function(id, fileName, res){
-          iUploads--;
+    log('creating upload widget');
 
-          if(res.success === true) {
-            // update model
-            var newPhotoId = Math.floor(Math.random()*10001)+Math.floor(Math.random()*10001);
-            var photos = _this.model.get('p');
-            photos.push({
+    var uploader = new qq.FileUploader({
+      element: document.getElementById('uploadWidget'),
+      action: sApi + 'user/' + user.get('_id') + '/photo',
+      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+      debug: false,
+      sizeLimit: 3000000, // 3MB
+      maxConnections: 3,
+      onSubmit: function(id, fileName){
+        iUploads++;
+        //$('.qq-upload-drop-area').addClass('working');
+      },
+      onProgress: function(id, fileName, loaded, total){
+        $('.qq-upload-drop-area').addClass('working');
+      },
+      onComplete: function(id, fileName, res){
+        iUploads--;
+
+        if(res.success === true) {
+          // update model
+          var newPhotoId = Math.floor(Math.random()*10001)+Math.floor(Math.random()*10001);
+          var photos = _this.model.get('p');
+          photos.push({
+            id: newPhotoId,
+            f: res.file,
+            p: 1,
+            d: 0
+          });
+          _this.model.set({
+            'p': photos
+          });
+
+          log('inserting new photo to the model', 'info');
+
+          // trigger newPhoto event for myPhotosView
+          _this.myPhotosView.trigger('newPhoto', {
+            p: {
               id: newPhotoId,
               f: res.file,
               p: 1,
               d: 0
-            });
-            _this.model.set({
-              'p': photos
-            });
-
-            console.log('- inserting new photo to the model');
-
-            // trigger newPhoto event for myPhotosView
-            _this.myPhotosView.trigger('newPhoto', {
-              p: {
-                id: newPhotoId,
-                f: res.file,
-                p: 1,
-                d: 0
-              }
-            });
-          } else {
-            // TODO: handle errors
-            console.log('- error uploading photo ' + fileName + ' (' + res.error + ')')
-          }
-
-          // When all photos have been uploaded:
-          if(iUploads === 0) {
-            // remove loading animation
-            $('.qq-upload-drop-area').removeClass('working');
-
-            // save model
-            _this.save();
-          }
+            }
+          });
+        } else {
+          // TODO: handle errors
+          log('error uploading photo ' + fileName + ' (' + res.error + ')', 'error')
         }
-      });
+
+        // When all photos have been uploaded:
+        if(iUploads === 0) {
+          // remove loading animation
+          $('.qq-upload-drop-area').removeClass('working');
+
+          // save model
+          _this.save();
+        }
+      }
+    });
 
     // activate fancybox for photos
     addToFancybox(_this.$(".fancybox-thumb"));
@@ -124,12 +140,38 @@ var MyProfileView = Backbone.View.extend({
     this.$("#userPhotosList").on("focusin", function(){
       addToFancybox(_this.$(".fancybox-thumb"));
     });
+
+    // enter sub views
+    this.favouritesView.enter();
+    this.dislikesView.enter();
+    this.likesView.enter();
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving MyProfileView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing MyProfileView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
   },
 
   // save
   // -----------------------------------------------------------------------
   save: function() {
-    console.log('- saving user');
+    log('saving user');
     _this = this;
 
     $('#saveProfileButton').addClass('transparent');
@@ -152,10 +194,10 @@ var MyProfileView = Backbone.View.extend({
           $('#working').addClass('transparent');
         },
         success: function(model, response) {
-          console.log('- got an API response');
+          log('got an API response', 'info');
           // SUCCESS
           if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
-            console.log('- API call was successful');
+            log('API call was successful', 'info');
             _this.toggleProfileOptions();
             store.set("user", _this.model);
             $('#saveProfileButton').removeClass('transparent');
@@ -163,7 +205,7 @@ var MyProfileView = Backbone.View.extend({
           }
           // FAIL
           else {
-            console.log('- API call failed: ' + response.error);
+            log('API call failed: ' + response.error, 'error');
             alert('User save failed: ' + response.error);
 
             $('#saveProfileButton').removeClass('transparent');
@@ -177,7 +219,7 @@ var MyProfileView = Backbone.View.extend({
   // photoMakeDefault
   // -----------------------------------------------------------------------
   photoMakeDefault: function(e) {
-    console.log('- changing default photo');
+    log('changing default photo', 'info');
     var _this = this;
     e.preventDefault();
     e.stopPropagation();
@@ -191,7 +233,7 @@ var MyProfileView = Backbone.View.extend({
     for(var i = 0; i < photos.length; i++) {
      if(photos[i].id === photoId) {
        photos[i].d = 1;
-       console.log('- new default photo: ' + photoId);
+       log('new default photo: ' + photoId, 'info');
      } else {
        photos[i].d = 0;
      }
@@ -230,7 +272,7 @@ var MyProfileView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   photoDelete: function(e) {
     var _this = this;
-    console.log('- deleting photo');
+    log('deleting photo', 'info');
     e.preventDefault();
     e.stopPropagation();
 
@@ -241,7 +283,7 @@ var MyProfileView = Backbone.View.extend({
     // Check if this is the default profile photo
     this.model.get('p').forEach(function(photo, index) {
       if(photo.id === photoId && photo.d === 1) {
-        console.log(' - warning: deleting the default photo!');
+        log('warning: deleting the default photo!', 'warn');
         isDefault = true;
       }
     });
@@ -255,7 +297,7 @@ var MyProfileView = Backbone.View.extend({
       },
       success: function(data, textStatus, jqXHR){
         if(textStatus === 'success') {
-          console.log('- photo deleted from S3');
+          log('photo deleted from S3', 'info');
           // Remove photo from the model
           var photos = _this.model.get('p');
           for(var i = 0; i < photos.length; i++) {
@@ -272,7 +314,7 @@ var MyProfileView = Backbone.View.extend({
           _this.myPhotosView.trigger('deletePhoto', photoId);
 
           // update default photo in the top sidebar
-          console.log(' - replacing default photo with a generic one');
+          log('replacing default photo with a generic one', 'info');
           if(isDefault) _this.$('#basicInfo .photo img').attr('src', 'http://img.instasoda.com/i/noPhoto.png');
         } else {
           alert('Error deleting photo');
@@ -315,9 +357,10 @@ var UsersFullView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-    console.log('  ~ initializing UsersFullView');
     _.bindAll(this);
-    //this.model.bind('change', this.render);
+
+    // get template
+    this.template = document.getElementById("tplUsersProfile").innerHTML;
 
     // initialize sub-views
     this.myPhotosView = new MyPhotosView({ model: this.model });
@@ -328,7 +371,7 @@ var UsersFullView = Backbone.View.extend({
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering UsersFullView for: ' + this.model.get('_id'));
+    log('rendering UsersFullView for: ' + this.model.get('_id'));
     var _this = this;
 
     // set variables
@@ -348,22 +391,35 @@ var UsersFullView = Backbone.View.extend({
     this.model.set('commonLikes', commonLikes);
 
     // render template
-    var template = $('#tplUsersProfile').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
     
     // render sub views
-    this.myPhotosView.setElement(this.$('#userPhotosList')).render();
-    this.likesListView.setElement(this.$('#facebookLikes')).render();
-    this.commonLikesListView.setElement(this.$('#commonLikes')).render(null, null, true);
+    this.myPhotosView.render();
+    this.likesListView.render();
+    this.commonLikesListView.render(null, null, true);
 
-    setTimeout(function() {
+    /*setTimeout(function() {
       _this.onView();
-    }, 0);
+    }, 0);*/
   },
 
-  // onView
+  // show
   // -----------------------------------------------------------------------
-  onView: function() {
+  show: function() {
+    log('showing UsersFullView');
+    this.$el.html(this.html);
+
+    // show sub views
+    this.myPhotosView.setElement(this.$('#userPhotosList')).show();
+    this.likesListView.setElement(this.$('#facebookLikes')).show();
+    this.commonLikesListView.setElement(this.$('#commonLikes')).show();
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering UsersFullView');
+
     // resize columns
     var iLikesCount = this.model.get('l').length;
     var iCommonLikesCount = this.model.get('commonLikesCount');
@@ -389,6 +445,31 @@ var UsersFullView = Backbone.View.extend({
           height: 50
         }
       }
+    });
+
+    // enter sub views
+    this.likesListView.enter();
+    this.commonLikesListView.enter();
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving UsersFullView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing UsersFullView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
     });
   },
 
@@ -418,19 +499,33 @@ var MyPhotosView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
-    console.log('  ~ initializing MyPhotosView');
     _.bindAll(this);
-    //this.model.bind('change:p', this.render);
-    this.bind('newPhoto', this.renderNewPhoto);
+    
+    // get template
+    this.template = document.getElementById("tplMyPhotos").innerHTML;
+
+    this.bind('newPhoto', this.refresh);
     this.bind('deletePhoto', this.deletePhoto);
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
-    console.log('  ~ rendering MyPhotosView');
-    var template = $('#tplMyPhotos').html();
-    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+    log('rendering MyPhotosView');
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing MyPhotosView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering MyPhotosView');
 
     // fadein user photos
     this.$('.photo img').load(function(){
@@ -438,25 +533,31 @@ var MyPhotosView = Backbone.View.extend({
     });
   },
 
-  // renderNewPhoto
-  // -----------------------------------------------------------------------
-  renderNewPhoto: function(newPhoto) {
-    console.log('  ~ rendering new photo ');
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving MyPhotosView');
+    cb();
+  },
 
-    // inject new photo into view
-    var template = $('#tplMyPhotos').html();
-    this.$el.append(Mustache.to_html(template, newPhoto));
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing MyPhotosView');
 
-    // fadein photo
-    this.$('.photo img').load(function(){
-      $(this).parent().removeClass('transparent');
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
     });
   },
 
   // deletePhoto
   // -----------------------------------------------------------------------
   deletePhoto: function(photoId) {
-    console.log('  ~ deleting photo ');
+    log('deleting photo ', 'info');
 
     // fadeout photo...
     var _this = this;
