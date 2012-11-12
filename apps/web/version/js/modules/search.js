@@ -85,7 +85,7 @@ var SearchFiltersView = Backbone.View.extend({
     _.bindAll(this);
 
     // get template
-    this.template = document.getElementById("tplNavigation").innerHTML;
+    this.template = document.getElementById("tplSearchFilters").innerHTML;
 
     user.bind('removedSearchLike', this.refresh);
   },
