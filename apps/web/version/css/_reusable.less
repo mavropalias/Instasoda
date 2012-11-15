@@ -16,3 +16,51 @@
 	font-weight: bold;
 	border-radius: 5px;
 }
+
+.userPreview {
+  padding: 1rem;
+  position: relative;
+  background: #fff;
+  float:left;
+  overflow: hidden;
+  display: block;
+  text-align: center;
+  margin: 0 10px 8px 0;
+  cursor: pointer;
+
+  .onlineStatus {
+    .border-radius(10px);
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 10px;
+    height: 10px;
+
+    &.isOnline {
+      background: @colorGreen;
+    }
+
+    &.isOffline {
+      background: @colorRed2;
+    }
+  }
+
+  .userPreviewNickname {
+    font-size: 11px;
+    margin: 5px 0 0 0;
+    color: #555;
+  } 
+
+  img {
+    height: 200px;
+    max-width: 300px;
+  }
+
+  &:hover {
+    background: @colorBlue3;
+
+    .userPreviewNickname {
+      color: #fff;
+    } 
+  }
+}
