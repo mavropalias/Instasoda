@@ -309,9 +309,6 @@ var Router = Backbone.Router.extend({
         users.set({ '_id': id }, {silent: true});
         users.fetch({
           success: function() {
-            /*usersFullView.render();
-            $('#content > div').detach();
-            $('#content').append(usersFullView.el);*/
             IS.changeView(IS.currentView, usersFullView);
             IS.setupPage('viewprofile');
           }
@@ -320,11 +317,15 @@ var Router = Backbone.Router.extend({
       return;
     } else {
       users.set({ '_id': id }, {silent: true});
+
       users.fetch({
         success: function() {
-          /*usersFullView.render();
-          $('#content > div').detach();
-          $('#content').append(usersFullView.el);*/
+          // only re-render the user page if going to a different user
+          if(router.previousProfileViewed != id) {
+            usersFullView.render();
+            router.previousProfileViewed = id;
+          }
+          
           IS.changeView(IS.currentView, usersFullView);
           IS.setupPage('viewprofile');
         }
