@@ -325,7 +325,7 @@ IS.changeView = function(currentView, destinationView) {
   async.series([
     // allow the currentView to execute its leave function
     function(cb) {
-      log('leaving currentView');
+      log('leaving currentView', 'info');
       if(!IS.nullOrEmpty(currentView) && !IS.nullOrEmpty(currentView.leave)) {
         currentView.leave(cb);
       } else {
@@ -334,19 +334,22 @@ IS.changeView = function(currentView, destinationView) {
     },
     // if leave is not rejected, transition between the two views
     function(cb) {
-      log('animating views');
+      log('animating views', 'info');
       IS.animateToView(currentView, destinationView, cb);
     },
     // execute any further actions defined by the destinationView's enter method
     function(cb){
-      log('calling destinationView:enter');
-      if(!IS.nullOrEmpty(destinationView.enter)) destinationView.enter(cb);
+      log('calling destinationView:enter', 'info');
+      if(!IS.nullOrEmpty(destinationView.enter)) {
+        destinationView.enter();
+        cb();
+      }
       else cb();
     },
   ],
   function(err, results) {
     // update app's currentView
-    log('update IS.currentView');
+    log('update IS.currentView', 'info');
     if(!err) IS.currentView = destinationView;
   });
 }
@@ -358,36 +361,37 @@ IS.changeView = function(currentView, destinationView) {
  * @param destinationView
  */
 IS.animateToView = function(currentView, destinationView, cb) {
-
   // check if destinationView is rendered
   if(!destinationView.html) destinationView.render();
 
   // transition the views
   if(!IS.nullOrEmpty(currentView)) {
     // hide currentView
-    currentView.$el.stop(true, true).animate({
-      opacity: 0,
-      'margin-left': '-40px'
-    }, 200, 'easeInQuad', function() {
-
-      // hide destinationView
-      destinationView.$el.css({
+    currentView.$el.stop(true, true).animate(
+      {
         opacity: 0,
-        'margin-left': '40px'
-      });
+        'margin-left': '-40px'
+      }, 200, 'easeInQuad', 
+      function() {
+        // hide destinationView
+        destinationView.$el.css({
+          opacity: 0,
+          'margin-left': '40px'
+        });
 
-      // detach currentView from the dom
-      //$('#content > div').detach();
+        // detach currentView from the dom
+        //$('#content > div').detach();
 
-      // show destinationView
-      destinationView.show();
-      destinationView.$el.stop(true, true).animate({
-        opacity: 1,
-        'margin-left': '0px'
-      }, 200, 'easeOutQuad', function() {
-        cb();
-      });
-    });
+        // show destinationView
+        destinationView.show();
+        destinationView.$el.stop(true, true).animate({
+          opacity: 1,
+          'margin-left': '0px'
+        }, 200, 'easeOutQuad', function() {
+          cb();
+        });
+      }
+    );
   } else {
     // hide destinationView
     destinationView.$el.css({
