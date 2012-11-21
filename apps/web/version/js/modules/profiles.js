@@ -78,7 +78,11 @@ var MyProfileView = Backbone.View.extend({
     var uploader = new qq.FileUploader({
       element: document.getElementById('uploadWidget'),
       action: sApi + 'user/' + user.get('_id') + '/photo',
+      params: {
+
+      },
       allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+      acceptFiles: ['jpg', 'jpeg', 'png', 'gif'],
       debug: false,
       sizeLimit: 3000000, // 3MB
       maxConnections: 3,
