@@ -155,7 +155,26 @@ var MyProfileView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   leave: function(cb) {
     log('leaving MyProfileView');
-    cb();
+
+    var _this = this;
+
+    // leave sub-views
+    async.parallel(
+      [
+        function(cb){
+          _this.favouritesView.leave(cb);
+        },
+        function(cb){
+          _this.dislikesView.leave(cb);
+        },
+        function(cb){
+          _this.likesView.leave(cb);
+        },
+      ],
+      function(err, res){
+        cb();
+      }
+    );
   },
 
   // refresh
@@ -460,7 +479,23 @@ var UsersFullView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   leave: function(cb) {
     log('leaving UsersFullView');
-    cb();
+
+    var _this = this;
+
+    // leave sub-views
+    async.parallel(
+      [
+        function(cb){
+          _this.likesListView.leave(cb);
+        },
+        function(cb){
+          _this.commonLikesListView.leave(cb);
+        },
+      ],
+      function(err, res){
+        cb();
+      }
+    );
   },
 
   // refresh
