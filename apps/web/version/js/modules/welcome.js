@@ -33,7 +33,6 @@ var WelcomeView = Backbone.View.extend({
   show: function() {
     log('showing WelcomeView');
     this.$el.html(this.html);
-    console.log(this.el);
   },
 
   // enter

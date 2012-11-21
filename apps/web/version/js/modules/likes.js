@@ -300,9 +300,21 @@ var LikesListView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   enter: function() {
     // load like's image when it appears on the screen
-    this.$('.likeImg').appear(function() {
+    this.$('.likeImg').appear();
+    this.$('.likeImg').on('appear', function() {
       $(this).attr('src', $(this).data('src'));
     });
+  },
+
+  // leave
+  // -----------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving LikesListView');
+
+    // destroy appear event listener
+    this.$('.likeImg').off('appear');
+
+    cb();
   },
 
   // showLikePanel
