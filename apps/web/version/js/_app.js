@@ -113,7 +113,6 @@
   // -------------------------------------------------------------------------
   var navigationView;
   var userbarView;
-  var metabarView;
   var welcomeView;
   var betaView;
   var myProfileView;

@@ -515,7 +515,7 @@ var UsersFullView = Backbone.View.extend({
   // sendMessage
   // -----------------------------------------------------------------------
   sendMessage: function() {
-    metabarView.chatSessionTabs.initiateSessionWith(this.model.get('_id'), this.model.get('u'), this.model.get('ag'), this.model.get('p'));
+    userbarView.chatSessionTabs.initiateSessionWith(this.model.get('_id'), this.model.get('u'), this.model.get('ag'), this.model.get('p'));
   },
 
   // handleFavourite
