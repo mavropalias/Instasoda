@@ -1,6 +1,11 @@
+// =============================================================================
+// MAIN CONTAINER
+// =============================================================================
+
 #main-content {
   padding: 70px 0px 0 42px;
   overflow-x: hidden;
+
   .main-block {
     &.row {
       padding: 40px 32px 0 74px;
@@ -41,3 +46,26 @@
     }
   }
 }
+
+.chat-is-visible #main-content {
+  margin-right: 20rem;
+}
+
+
+// =============================================================================
+// SLIMSCROLL
+// =============================================================================
+
+  .slimScrollBar {
+    background-color: @colorBlue2;
+    margin-right: 2px;
+
+    &:hover,
+    &.ui-draggable-dragging {
+      background-color: @colorBlue1;
+    }
+  }
+
+  .slimScrollRail {
+    background-color: none;
+  }
