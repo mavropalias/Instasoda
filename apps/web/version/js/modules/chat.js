@@ -7,8 +7,10 @@ var ChatSessionTabs = Backbone.View.extend({
   initialize: function() {
     console.log('  ~ initializing ChatSessionTabs');
     _.bindAll(this);
+
     this.collection.bind('add', this.renderSessionTab);
     this.collection.bind('remove', this.render);
+    this.model.bind('change:tkn', this.render);
 
     // sub-views
     this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
@@ -17,7 +19,7 @@ var ChatSessionTabs = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .chatSessionsTab': 'chatSessionsTabClick'
+    'click .chat-tab': 'chatSessionsTabClick'
   },
   
   // render
@@ -36,20 +38,21 @@ var ChatSessionTabs = Backbone.View.extend({
       },
       success: function(model, response) {
         //_this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
-        _this.$el.html('');
+        _this.$('.chat-tabs').html('');
         _this.collection.each(_this.renderSessionTab);
 
         // render sub-views
-        _this.chatSessionsView.setElement($('.chatSessionContainer')).render();
+        _this.chatSessionsView.setElement(_this.$('.chat-sessions-container')).render();
 
         // enable custom scrollbars
-        this.$('.chatSessions').slimScroll({
+        this.$('.chat-tabs').slimScroll({
           height: '100%',
           allowPageScroll: false,
           alwaysVisible: false,
           railVisible: true,
-          position: 'left',
-          start: 'bottom'
+          position: 'right',
+          start: 'top',
+          width: '20rem'
         });
       }
     });
@@ -66,7 +69,7 @@ var ChatSessionTabs = Backbone.View.extend({
     // pre-process the 'u' property of the model, and set it to the other
     // person's username
     if(IS.nullOrEmpty(model.get('u'))) {
-      var otherPersonsId = model.get('uA') == user.get('_id') ? model.get('uB') : model.get('uA');
+      var otherPersonsId = (model.get('uA') == user.get('_id')) ? model.get('uB') : model.get('uA');
       
       // now find the other person's username, using his id
       if(!IS.nullOrEmpty(otherPersonsId)) {
@@ -82,8 +85,8 @@ var ChatSessionTabs = Backbone.View.extend({
             })
             
             // render the template
-            var template = $('#tplChatSessions').html();
-            _this.$el.append(Mustache.to_html(template, model.toJSON()));
+            var template = $('#tplChatSessionsButtons').html();
+            _this.$('.chat-tabs').append(Mustache.to_html(template, model.toJSON()));
           } else {
             console.log('!!! ERROR: renderSessionTab -> ' + err);
             //TODO: handle errors
@@ -92,8 +95,8 @@ var ChatSessionTabs = Backbone.View.extend({
       } // else do nothing
     } else {
       // render the template
-      var template = $('#tplChatSessions').html();
-      _this.$el.append(Mustache.to_html(template, model.toJSON()));
+      var template = $('#tplChatSessionsButtons').html();
+      _this.$('.chat-tabs').append(Mustache.to_html(template, model.toJSON()));
     }
   },
   
@@ -123,7 +126,7 @@ var ChatSessionTabs = Backbone.View.extend({
     console.log('  - showChatSession (1): ' + sSessionId);
     
     // apply 'active' style to the tab
-    this.$('.chatSessionsTab').removeClass('active');
+    this.$('.chat-tab').removeClass('active');
     this.$('#' + sSessionId).addClass('active');
     
     // set 'active' status for the model in the collection
@@ -158,7 +161,7 @@ var ChatSessionTabs = Backbone.View.extend({
   initiateSessionWith: function(userId, username, age, photos) {
     var _this = this;
     
-    metabarView.showChatWindow();
+    userbarView.showChatWindow();
     
     // get session id
     var sessionId;
@@ -256,19 +259,19 @@ var ChatSessionsView = Backbone.View.extend({
   showHideSession: function(model) {
     console.log('  - (chat) showHideSession ' + model.get('_id'));
 
-    this.$('.chatSession').hide();
+    this.$('.chat-session').hide();
 
     if(model.get('active')) {
       // show chat session, position it and focus on the text input field
       this.$('#session_' + model.get('_id')).css({
-        'top': $('#' + model.get('_id')).offset().top + 'px'
-      }).show().find('.chatInput').focus();
+        'top': $('#' + model.get('_id')).offset().top - $(document).scrollTop() + 'px'
+      }).show().find('.chat-input').focus();
       
       // convert timestamps to timeago
       this.$('.time').timeago();
 
       // enable custom scrollbars
-      var scroller = this.$('#scroller_' + model.get('_id') + ' > .chatLog');
+      var scroller = this.$('#scroller_' + model.get('_id') + ' > .chat-log');
       scroller.slimScroll({
         height: '255px',
         allowPageScroll: false,
@@ -291,7 +294,7 @@ var ChatSessionView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'submit form#sendMessageForm': 'sendMessage'
+    'submit form#send-sessage-form': 'sendMessage'
   },
   
   // initialize
@@ -314,14 +317,14 @@ var ChatSessionView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   renderNewChatMessage: function(sMsg) {
     console.log('  ~ (chat) renderNewChatMessage');
-    oChatLog = $('.chatLog', this.el);
+    oChatLog = $('.chat-log', this.el);
     
     // append the new msg into the dom
     var template = $('#tplChatLog').html();
     oChatLog.append(Mustache.to_html(template, sMsg));
     
     // convert timestamps to timeago
-    $('.chatLog .time', this.el).timeago();
+    $('.chat-log .time', this.el).timeago();
     
     // scroll to the bottom of the chat log
     oChatLog.scrollTop(oChatLog[0].scrollHeight);
@@ -333,14 +336,14 @@ var ChatSessionView = Backbone.View.extend({
     console.log('  - (chat) sendMessage');
     
     // return if msg is empty
-    if(this.$('.chatInput').val() == "") return false;
+    if(this.$('.chat-input').val() == "") return false;
     
     // construct message
     var date = new Date().toJSON();
     var sMsg = {
       u: user.get('u'),
       t: date,
-      m: $('.chatInput', this.el).val()
+      m: $('.chat-input', this.el).val()
     };
     
     // update the model's log
@@ -357,7 +360,7 @@ var ChatSessionView = Backbone.View.extend({
     });
     
     // clear chat input
-    $('.chatInput', this.el).val('');
+    $('.chat-input', this.el).val('');
     
     // done - prevent default form action
     return false;
