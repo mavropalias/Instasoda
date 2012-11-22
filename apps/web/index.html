@@ -77,10 +77,9 @@
   <script type="text/javascript" src="VERSION/js/modules/matches.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/settings.js"></script>
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
-  <script type="text/javascript" src="VERSION/js/modules/metabar.js"></script>
 
 
-  <!-- <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script> -->
+  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
 
 
@@ -260,58 +259,43 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplUserbar" type="text/template">
-        <div id="profile-settings">
-          <h2>{{u}}</h2>
-          <strong>MANAGE YOUR ACCOUNT</strong>
-          <span class="icon-cog"></span>
-        </div>
+        {{#_id}}
+          <div id="profile-settings">
+            <h2>{{u}}</h2>
+            <strong>MANAGE YOUR ACCOUNT</strong>
+            <span class="icon-cog"></span>
+          </div>
+        {{/_id}}
+
         <div id="site-label">
           <h1>
             <span>INSTA<strong>SODA</strong></span>
             <img src="./version/images/main-icon-my-profile.png" alt="">&nbsp;my profile
           </h1>
         </div>
-        <div id="chat-button">
-          <span class="icon-comments"></span>
-          <a href="#">CHAT</a>
-        </div>
-      </script>
 
-
-    <!------------------------------------------------------------------------>
-    <!-- CHAT -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplChat" type="text/template">
         {{#_id}}
-          <div id="chatToggle" class="active online">
-            <span class="toggleTitle">
-              Chat
-              <span id="toggleIcon" class=""></span>
-            </span>
-            <label class="chatStatusControls">
-              <input type="checkbox" name="chatStatus" class="chatStatus" value="true" checked>
-              <span class="onlineInChat">online</span>
-              <span class="offlineInChat">offline</span>
-            </label>
+          <div id="chat-button">
+            <span class="icon-comments"></span>
+            <span class="chat-title">CHAT</span>
           </div>
-          <div id="chatWindow">
-            <div id="chatSessionsScroller">
-              <ul class="chatSessions">no active chat sessions</ul>
-            </div>
-            <span class="chatSessionContainer"></span>
-          </div>
+
+          <section id="chat">
+            <ul class="chat-tabs">
+            </ul>
+            <span class="chat-sessions-container"></span>
+          </section>
         {{/_id}}
       </script>
 
 
     <!------------------------------------------------------------------------>
-    <!-- CHAT SESSIONS (TABS) -->
+    <!-- CHAT SESSIONS (BUTTONS FOR ALL CHAT SESSIONS) -->
     <!------------------------------------------------------------------------>
 
-      <script id="tplChatSessions" type="text/template">
-        <li class="chatSessionsTab" id="{{_id}}">
-          <span class="photoThumbnail">
+      <script id="tplChatSessionsButtons" type="text/template">
+        <li class="chat-tab" id="{{_id}}">
+          <span class="photo">
             {{#p}}
               {{#d}}
                 <img src="http://img.instasoda.com/u/{{f}}" width="40" />
@@ -323,21 +307,21 @@
           </span>
           <span class="user">{{u}}</span>
           <span class="meta">({{ag}} y.o.)</span>
-          <span class="unreadMessages">{{m}}</span>
+          <span class="unread-messages">{{m}}</span>
         </li>
       </script>
 
 
     <!------------------------------------------------------------------------>
-    <!-- CHAT SESSION -->
+    <!-- CHAT SESSION CONTAINER (FOR A SINGLE SESSION) -->
     <!------------------------------------------------------------------------>
 
       <script id="tplChatSession" type="text/template">
-        <section class="chatSession" id="session_{{_id}}">
-          <div id="scroller_{{_id}}" class="chatLogScrollWrapper">
-            <ul class="chatLog">
+        <section class="chat-session" id="session_{{_id}}">
+          <div id="scroller_{{_id}}" class="chat-log-scroll-wrapper">
+            <ul class="chat-log">
               {{#log}}
-                <li class="chatLogLine">
+                <li class="chat-log-line">
                   <span class="user">{{u}}:</span>
                   <span class="time" title="{{t}}"></span>
                   <span class="message">{{m}}</span>
@@ -345,9 +329,9 @@
               {{/log}}
             </ul>
           </div>
-          <div class="chatControls">
-            <form id="sendMessageForm" data-chatsessionid="{{_id}}">
-              <input autofocus="autofocus" type="text" class="chatInput" maxlength="500" placeholder="type here to chat..." />
+          <div class="chat-controls">
+            <form id="send-sessage-form" data-chatsessionid="{{_id}}">
+              <input autofocus="autofocus" type="text" class="chat-input" maxlength="500" placeholder="type here to chat..." />
             </form>
           </div>
         </section>
@@ -355,11 +339,11 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- CHAT LOG -->
+    <!-- CHAT LOG (THE ACTUAL LOG OF A SINGLE CHAT SESSION) -->
     <!------------------------------------------------------------------------>
 
       <script id="tplChatLog" type="text/template">
-          <li class="chatLogLine">
+          <li class="chat-log-line">
             <span class="user">{{u}}:</span>
             <span class="time" title="{{t}}"></span>
             <span class="message">{{m}}</span>
@@ -950,7 +934,7 @@
         <div id="block-likes">
             <div class="twelve columns">
               <span class="icon-thumbs-up"></span>
-              <h1>my likes</h1>
+              <h1>my likes (<a href="#likes">view all</a>)</h1>
             </div>
 
             <div id="like-block-favourites" class="twelve mobile-four columns ">
@@ -1108,24 +1092,6 @@
             </div>
           </div>
         </div>
-      </script>
-
-
-    <!------------------------------------------------------------------------>
-    <!-- METABAR -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplMetabar" type="text/template">
-        <section class="metabarTabs">
-          <div class="metabarTabTitle" id="chatTab"><span class="icon-comments"></span>Chat</div>
-        </section>
-
-        <section class="metabarTabContent" id="chat">
-          <div id="chatSessionsScroller">
-            <ul class="chatSessions">no active chat sessions</ul>
-          </div>
-          <span class="chatSessionContainer"></span>
-        </section>
       </script>
 
 
