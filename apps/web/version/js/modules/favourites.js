@@ -9,7 +9,7 @@ var FavouritesView = Backbone.View.extend({
     _.bindAll(this);
 
     // model listener
-    this.model.bind('change:favs', this.render);
+    this.model.bind('change:favs', this.refresh);
 
     // create collection for the view
     this.favsCollection = new FavouritesCollection();
