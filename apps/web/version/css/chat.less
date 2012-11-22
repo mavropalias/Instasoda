@@ -1,0 +1,134 @@
+#chat {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  top: 7rem;
+  background: #444;
+  width: 20rem;
+  display: none;
+
+  .chat-tab {
+    width: 100%;
+    overflow: hidden;
+    border-top: 1px solid #666;
+    cursor: pointer;
+    position: relative;
+    
+    &:hover {
+      background: #333;
+      .user {
+        text-decoration: underline;
+        //color: #000;
+      }
+    }
+    
+    .photo {
+      float: left;
+      margin-right: 0.5rem;
+      display: block;
+      height: 4rem;
+      overflow: hidden;
+      background-color: #fff;
+    }
+
+    .user {
+      display: block;
+      padding-top: 0.5rem;
+      font-size: 1.3rem;
+      line-height: 1.5rem;
+      color: #eee;
+    }
+
+    .meta {
+      color: #999;
+      font-size: 0.9rem;
+      display: block;
+    }
+    
+    .unread-messages {
+      font-size: 0.9rem;
+      position: absolute;
+      right: 5px;
+      top: 4px;
+      color: #aaa;
+      background: #fff;
+      padding: 5px;
+      border: 1px solid #eee;
+      display: none; // until it actually works
+    }
+
+    &.active {
+      background: #333;
+    }
+  }
+
+  .chat-session {
+    display: none;
+    position: fixed;
+    right: 20rem;
+    top: 7rem;
+    width: 30%;
+    height: 300px;
+    font-size: 1.1em;
+    background: #eee;
+    overflow: hidden;
+    border: 2px solid #444;
+
+    .chat-log-scroll-wrapper {
+      position: absolute;
+      top: 0px;
+      right: 0;
+      left: 0;
+      bottom: 45px;
+      margin: 0 0 0 10px;
+    }
+    
+    .chat-log {
+      display: block;
+      line-height: 1.5rem;
+      
+      .chat-log-line {
+        font-size: 1.3rem;
+        line-height: 1.7rem;
+        margin: 0.5rem 1.5rem 0.5rem 0;
+        
+        .user {
+          color: #999;
+        }
+        
+        .time {
+          font-size: 1.1rem;
+          color: #999;
+          float: right;
+        }
+      }
+    }
+    
+    .chat-controls {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+
+      #send-sessage-form {
+        margin: 0;
+      }
+      
+      .chat-input {
+        display: block;
+        background: #fff;
+        width: 100%;
+        margin: 0;
+        border: 0px solid #fff;
+        padding: 2rem 1rem;
+        height: 1.7rem;
+        line-height: 1.7rem;
+        font-size: 1.3rem;
+        
+        &:focus {
+          outline: none;
+        }
+      }
+    }
+  }
+}
