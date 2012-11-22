@@ -14,7 +14,7 @@ var NavigationView = Backbone.View.extend({
     this.onlineUsersView = new OnlineUsersView({ model: onlineUsers });
 
     // update nav when user models changes
-    this.model.bind('change:_id', this.refresh);
+    this.model.bind('change:tkn', this.refresh);
 
     // render
     this.render();

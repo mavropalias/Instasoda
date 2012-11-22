@@ -379,9 +379,6 @@ IS.animateToView = function(currentView, destinationView, cb) {
           'margin-left': '40px'
         });
 
-        // detach currentView from the dom
-        //$('#content > div').detach();
-
         // show destinationView
         destinationView.show();
         destinationView.$el.stop(true, true).animate({
@@ -432,12 +429,6 @@ IS.prepareApp = function(bForceLogin, cb) {
             // set user's online status
             IS.userIsOnline(true);
 
-            // update metabar
-            metabarView = new MetabarView({
-              el: $('#metabar')[0],
-              model: user
-            });
-
             if(cb) cb();
             else {
               IS.navigateTo('');
@@ -453,15 +444,6 @@ IS.prepareApp = function(bForceLogin, cb) {
 
                 // set user's online status
                 IS.userIsOnline(true);
-
-                // update metabar
-                metabarView = new MetabarView({
-                  el: $('#metabar')[0],
-                  model: user
-                });
-
-                // update nav menu
-                navigationView.render();
 
                 IS.navigateTo('');
                 router.welcome();
@@ -494,11 +476,6 @@ IS.prepareApp = function(bForceLogin, cb) {
         // set user's online status
         IS.userIsOnline(true);
 
-        metabarView = new MetabarView({
-          el: $('#metabar')[0],
-          model: user
-        });
-
         if(cb) cb();
         else {
           IS.navigateTo('');
@@ -514,15 +491,6 @@ IS.prepareApp = function(bForceLogin, cb) {
 
             // set user's online status
             IS.userIsOnline(true);
-
-            // update metabar
-            metabarView = new MetabarView({
-              el: $('#metabar')[0],
-              model: user
-            });
-
-            // update nav menu
-            navigationView.render();
 
             IS.navigateTo('');
             router.welcome();
@@ -645,8 +613,6 @@ IS.login = function(fTkn, fTid, cb) {
               // store the user details locally
               // ------------------------------
               store.set("user", user);
-
-              navigationView.render(); // update nav menu
             }
             // FAIL
             // ----
@@ -661,8 +627,6 @@ IS.login = function(fTkn, fTid, cb) {
       
       user.set({ 'fTkn': fTkn });
       store.set("user", user);
-      
-      navigationView.render(); // update nav menu
 
       cb(null);
     } else {
@@ -698,8 +662,6 @@ IS.login = function(fTkn, fTid, cb) {
               // store the user details locally
               // ------------------------------
               store.set("user", user);
-
-              navigationView.render(); // update nav menu
 
               // callback success
               // ----------------
@@ -794,10 +756,8 @@ IS.userIsOnline = function(bIsOnline) {
  */
 IS.logout = function(bStopRedirect) {
   IS.userIsOnline(false);
-  user.clear({ silent: true }); // clear local Backbone model
+  user.clear(); // clear local Backbone model
   store.clear(); // clear localStorage
-  navigationView.render(); // update nav menu
-  metabarView.render(); // update metabarView
   appReady = false;
   if(!bStopRedirect) {
     router.navigate("", {trigger: true}); // redirect to homepage
