@@ -250,7 +250,9 @@ var SearchResultsView = Backbone.View.extend({
     console.log('  ~ initializing SearchResultsView');
     
     _.bindAll(this);
+    
     this.collection.bind('reset', this.refresh);
+    this.collection.bind('change', this.refresh);
   },
 
   // renderItem

@@ -51,7 +51,7 @@
   // UsersCollection - a collection of Users
   // =========================================================================
   var UsersCollection = Backbone.Collection.extend({
-    url: sApi + 'user/search'
+    url: sApi + 'search'
   });
 
   // MatchesCollection - a collection of matches
@@ -145,6 +145,7 @@
     });
     dashboardView = new DashboardView({
       el: document.getElementById('content'),
+      collection: matchesCollection,
       model: user
     });
     welcomeView = new WelcomeView({

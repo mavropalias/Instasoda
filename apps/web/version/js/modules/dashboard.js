@@ -10,6 +10,9 @@ var DashboardView = Backbone.View.extend({
     // get template
     this.template = document.getElementById("tplDashboard").innerHTML;
 
+    // initialize sub-views
+    this.matchesResultsView = new SearchResultsView({ collection: this.collection });
+
     // render
     this.render();
   },
@@ -19,6 +22,9 @@ var DashboardView = Backbone.View.extend({
   render: function() {
     log('rendering DashboardView');
     this.html = Mustache.to_html(this.template, this.model.toJSON());
+
+    // render sub views
+    this.matchesResultsView.render();
   },
 
   // show
@@ -26,6 +32,9 @@ var DashboardView = Backbone.View.extend({
   show: function() {
     log('showing DashboardView');
     this.$el.html(this.html);
+
+    // show sub views
+    this.matchesResultsView.setElement(this.$('#dashboard-matches')).show();
   },
 
   // enter
