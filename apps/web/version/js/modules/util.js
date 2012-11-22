@@ -911,8 +911,6 @@ IS.showMetabar = function (bShow) {
  * Sets user settings (username, sex prefs, etc)
  */
 IS.setupUser = function (currentView) {
-  log('setting up user preferences', 'info');
-
   var u  = user.get('u');
   var m = user.get('m');
   var w = user.get('w');
@@ -923,6 +921,8 @@ IS.setupUser = function (currentView) {
 
   // check if the user need to update his profile
   if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(locN) || IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
+    log('setting up user preferences', 'info');
+
     // check username
     if(IS.nullOrEmpty(u)) {
       nextView = new SettingsUsernameView({
@@ -968,6 +968,8 @@ IS.setupUser = function (currentView) {
   // going through the setup process (if currentView is not null) and show the
   // 'done' screen
   else if(currentView) {
+    log('user preferences are set - moving to the next page', 'info');
+
     $('<section/>', {
         id: 'settingsDone'
     }).html($('#tplSettingsDone').html()).addClass('settings').appendTo('body');
@@ -1076,9 +1078,11 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
     // enable button
     $('#setLocation').on('click', function() {
       if(haveAddress) {
-        lat = map.getCenter().Xa;
-        lng = map.getCenter().Ya;
+        lat = map.getCenter().lat();
+        lng = map.getCenter().lng();
         formattedAddress = $('#targetAdress').text();
+
+        log('user location set to: ' + lat + '/' + lng + ' (' + formattedAddress + ')', 'info');
 
         cb(lat, lng, formattedAddress);
       }
