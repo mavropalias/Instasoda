@@ -1055,12 +1055,12 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
     // init map object
     var map = new GMaps({
       div: container,
-      lat: -12.043333,
-      lng: -77.028333,
+      lat: 43.834526782236814,
+      lng: -37.265625,
       streetViewControl: false,
       width: '100%',
       height: '100%',
-      zoom: 12,
+      zoom: 2,
       dragend: function() {
         GMaps.geocode({
           location: map.getCenter(),
@@ -1091,10 +1091,25 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
     // get geoLocation
     GMaps.geolocate({
       success: function(position) {
+        // center map to user's location
         map.setCenter(position.coords.latitude, position.coords.longitude);
+        map.setZoom(12);
+
+        // get geocode
+        GMaps.geocode({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+          callback: function(results, status) {
+            if (status == 'OK') {
+              $('#targetAdress').html(results[2].formatted_address);
+              $('.mapCenterLocationMarker').html(results[2].formatted_address);
+              haveAddress = true;
+            }
+          }
+        });
       },
       error: function(error) {
-        alert('Geolocation failed: '+error.message);
+        //alert('Geolocation failed: '+ error.message);
       },
       not_supported: function() {
         //alert("Your browser does not support geolocation");
