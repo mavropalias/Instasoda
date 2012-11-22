@@ -86,6 +86,8 @@ var LikesView = Backbone.View.extend({
   // viewAll
   // -----------------------------------------------------------------------
   viewLikes: function() {
+    log('showing likes');
+
     if(!this.$('.viewLikes').hasClass('current')) {
       this.$('.likeCategory').hide();
       this.$('.likeView').removeClass('current');
@@ -105,6 +107,8 @@ var LikesView = Backbone.View.extend({
   // viewFavs
   // -----------------------------------------------------------------------
   viewFavs: function() {
+    log('showing favourites');
+
     if(!this.$('.viewFavs').hasClass('current')) {
       this.$('.likeCategory').hide();
       this.$('.likeView').removeClass('current');
@@ -124,6 +128,8 @@ var LikesView = Backbone.View.extend({
   // viewDislikes
   // -----------------------------------------------------------------------
   viewDislikes: function() {
+    log('showing dislikes');
+
     if(!this.$('.viewDislikes').hasClass('current')) {
       this.$('.likeCategory').hide();
       this.$('.likeView').removeClass('current');
@@ -143,8 +149,13 @@ var LikesView = Backbone.View.extend({
   // viewCategory
   // -----------------------------------------------------------------------
   viewCategory: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
     var likesType = parseInt($(e.currentTarget).data('liketype'));
     var likesCategory = $(e.currentTarget).data('cat');
+
+    log('filtering likes to show: ' + likesType + ' > ' + likesCategory);
 
     // Set active class on tab
     this.$(".likeCategoryTitle").removeClass('active');
