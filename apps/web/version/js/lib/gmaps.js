@@ -1,5 +1,5 @@
 /*!
- * GMaps.js v0.2.14
+ * GMaps.js v0.2.26
  * http://hpneo.github.com/gmaps/
  *
  * Copyright 2012, Gustavo Leon
@@ -26,11 +26,13 @@ if(window.google && window.google.maps){
       var self = this;
       window.context_menu = {};
 
-      if(typeof(options.div)=='string'){
-        this.div = getElementById(options.div, options.context);
-      }else{this.div = options.div;};
-      this.div.style.width = options.width || this.div.scrollWidth || this.div.offsetWidth;
-      this.div.style.height = options.height || this.div.scrollHeight || this.div.offsetHeight;
+      if (typeof(options.el) === 'string' || typeof(options.div) === 'string') {
+        this.el = getElementById(options.el || options.div, options.context);
+      } else {
+        this.el = options.el || options.div;
+      };
+      this.el.style.width = options.width || this.el.scrollWidth || this.el.offsetWidth;
+      this.el.style.height = options.height || this.el.scrollHeight || this.el.offsetHeight;
 
       this.controls = [];
       this.overlays = [];
@@ -41,8 +43,10 @@ if(window.google && window.google.maps){
       this.routes = [];
       this.polygons = [];
       this.infoWindow = null;
-      this.overlay_div = null;
+      this.overlay_el = null;
       this.zoom = options.zoom || 15;
+
+      var markerClusterer = options.markerClusterer;
 
       //'Hybrid', 'Roadmap', 'Satellite' or 'Terrain'
       var mapType;
@@ -56,12 +60,13 @@ if(window.google && window.google.maps){
 
       var map_center = new google.maps.LatLng(options.lat, options.lng);
 
-      delete options.div;
+      delete options.el;
       delete options.lat;
       delete options.lng;
       delete options.mapType;
       delete options.width;
       delete options.height;
+      delete options.markerClusterer;
 
       var zoomControlOpt = options.zoomControlOpt || {
         style: 'DEFAULT',
@@ -77,10 +82,15 @@ if(window.google && window.google.maps){
           streetViewControl = options.streetViewControl || true,
           overviewMapControl = overviewMapControl || true;
 
+      var map_options = {};
+
       var map_base_options = {
         zoom: this.zoom,
         center: map_center,
-        mapTypeId: mapType,
+        mapTypeId: mapType
+      };
+
+      var map_controls_options = {
         panControl: panControl,
         zoomControl: zoomControl,
         zoomControlOptions: {
@@ -91,11 +101,17 @@ if(window.google && window.google.maps){
         scaleControl: scaleControl,
         streetViewControl: streetViewControl,
         overviewMapControl: overviewMapControl
-      };
+      }
 
-      var map_options = extend_object(map_base_options, options);
+      if(options.disableDefaultUI != true)
+        map_base_options = extend_object(map_base_options, map_controls_options);
 
-      this.map = new google.maps.Map(this.div, map_options);
+      map_options = extend_object(map_base_options, options);
+
+      this.map = new google.maps.Map(this.el, map_options);
+
+      if(markerClusterer)
+        this.markerClusterer = markerClusterer.apply(this, [this.map]);
 
       // Context menus
       var buildContextMenuHTML = function(control, e) {
@@ -124,7 +140,7 @@ if(window.google && window.google.maps){
             var assign_menu_item_action = function(ev){
               ev.preventDefault();
 
-              options[this.id.replace(control + '_', '')].action.call(self, e);
+              options[this.id.replace(control + '_', '')].action.apply(self, [e]);
               self.hideContextMenu();
             };
 
@@ -132,8 +148,8 @@ if(window.google && window.google.maps){
             google.maps.event.addDomListenerOnce(context_menu_item, 'click', assign_menu_item_action, false);
           }
 
-          var left = self.div.offsetLeft + e.pixel.x - 15;
-          var top = self.div.offsetTop + e.pixel.y - 15;
+          var left = self.el.offsetLeft + e.pixel.x - 15;
+          var top = self.el.offsetTop + e.pixel.y - 15;
 
           context_menu_element.style.left = left + "px";
           context_menu_element.style.top = top + "px";
@@ -250,10 +266,10 @@ if(window.google && window.google.maps){
           latLngs.push(this.markers[i].getPosition());
         }
 
-        this.fitBounds(latLngs);
+        this.fitLatLngBounds(latLngs);
       };
 
-      this.fitBounds = function(latLngs) {
+      this.fitLatLngBounds = function(latLngs) {
         var total = latLngs.length;
         var bounds = new google.maps.LatLngBounds();
 
@@ -272,8 +288,8 @@ if(window.google && window.google.maps){
         }
       };
 
-      this.getDiv = function() {
-        return this.div;
+      this.getElement = function() {
+        return this.el;
       };
 
       this.zoomIn = function(value) {
@@ -402,16 +418,16 @@ if(window.google && window.google.maps){
             })(marker, marker_events[ev]);
           }
 
-          for (var ev = 0; ev < marker_events.length; ev++) {
-            (function(object, name) {
+          for (var ev = 0; ev < marker_events_with_mouse.length; ev++) {
+            (function(map, object, name) {
               google.maps.event.addListener(object, name, function(me){
                 if(!me.pixel){
-                  me.pixel = this.map.getProjection().fromLatLngToPoint(me.latLng)
+                  me.pixel = map.getProjection().fromLatLngToPoint(me.latLng)
                 }
                 if (options[name])
                   options[name].apply(this, [me]);
               });
-            })(marker, marker_events_with_mouse[ev]);
+            })(this.map, marker, marker_events_with_mouse[ev]);
           }
 
           google.maps.event.addListener(marker, 'click', function() {
@@ -445,16 +461,28 @@ if(window.google && window.google.maps){
       };
 
       this.addMarker = function(options) {
-        if ((options.hasOwnProperty('lat') && options.hasOwnProperty('lng')) || options.position) {
-          var marker = this.createMarker(options);
-          marker.setMap(this.map);
-          this.markers.push(marker);
-
-          return marker;
+        var marker;
+        if(options.hasOwnProperty('gm_accessors_')) {
+          // Native google.maps.Marker object
+          marker = options;
         }
         else {
-          throw 'No latitude or longitude defined';
+          if ((options.hasOwnProperty('lat') && options.hasOwnProperty('lng')) || options.position) {
+            marker = this.createMarker(options);
+          }
+          else {
+            throw 'No latitude or longitude defined';
+          }
         }
+
+        marker.setMap(this.map);
+
+        if(this.markerClusterer)
+          this.markerClusterer.addMarker(marker);
+
+        this.markers.push(marker);
+
+        return marker;
       };
 
       this.addMarkers = function(array) {
@@ -470,6 +498,18 @@ if(window.google && window.google.maps){
             marker.infoWindow.close();
           }
         }
+      };
+
+      this.removeMarker = function(marker) {
+        for(var i=0; i < this.markers.length; i++) {
+          if(this.markers[i] === marker) {
+            this.markers[i].setMap(null);
+            this.markers.splice(i, 1);
+            break;
+          }
+        }
+
+        return marker;
       };
 
       this.removeMarkers = function(collection) {
@@ -501,21 +541,21 @@ if(window.google && window.google.maps){
           auto_show = options.auto_show;
 
         overlay.onAdd = function() {
-          var div = doc.createElement('div');
-          div.style.borderStyle = "none";
-          div.style.borderWidth = "0px";
-          div.style.position = "absolute";
-          div.style.zIndex = 100;
-          div.innerHTML = options.content;
+          var el = doc.createElement('div');
+          el.style.borderStyle = "none";
+          el.style.borderWidth = "0px";
+          el.style.position = "absolute";
+          el.style.zIndex = 100;
+          el.innerHTML = options.content;
 
-          overlay.div = div;
+          overlay.el = el;
 
           var panes = this.getPanes();
           if (!options.layer) {
             options.layer = 'overlayLayer';
           }
           var overlayLayer = panes[options.layer];
-          overlayLayer.appendChild(div);
+          overlayLayer.appendChild(el);
 
           var stop_overlay_events = ['contextmenu', 'DOMMouseScroll', 'dblclick', 'mousedown'];
 
@@ -530,7 +570,7 @@ if(window.google && window.google.maps){
                   e.stopPropagation();
                 }
               });
-            })(div, stop_overlay_events[ev]);
+            })(el, stop_overlay_events[ev]);
           }
 
           google.maps.event.trigger(this, 'ready');
@@ -543,54 +583,54 @@ if(window.google && window.google.maps){
           options.horizontalOffset = options.horizontalOffset || 0;
           options.verticalOffset = options.verticalOffset || 0;
 
-          var div = overlay.div;
-          var content = div.children[0];
+          var el = overlay.el;
+          var content = el.children[0];
 
           var content_height = content.clientHeight;
           var content_width = content.clientWidth;
 
           switch (options.verticalAlign) {
             case 'top':
-              div.style.top = (pixel.y - content_height + options.verticalOffset) + 'px';
+              el.style.top = (pixel.y - content_height + options.verticalOffset) + 'px';
               break;
             default:
             case 'middle':
-              div.style.top = (pixel.y - (content_height / 2) + options.verticalOffset) + 'px';
+              el.style.top = (pixel.y - (content_height / 2) + options.verticalOffset) + 'px';
               break;
             case 'bottom':
-              div.style.top = (pixel.y + options.verticalOffset) + 'px';
+              el.style.top = (pixel.y + options.verticalOffset) + 'px';
               break;
           }
 
           switch (options.horizontalAlign) {
             case 'left':
-              div.style.left = (pixel.x - content_width + options.horizontalOffset) + 'px';
+              el.style.left = (pixel.x - content_width + options.horizontalOffset) + 'px';
               break;
             default:
             case 'center':
-              div.style.left = (pixel.x - (content_width / 2) + options.horizontalOffset) + 'px';
+              el.style.left = (pixel.x - (content_width / 2) + options.horizontalOffset) + 'px';
               break;
             case 'right':
-              div.style.left = (pixel.x + options.horizontalOffset) + 'px';
+              el.style.left = (pixel.x + options.horizontalOffset) + 'px';
               break;
           }
 
-          div.style.display = auto_show ? 'block' : 'none';
+          el.style.display = auto_show ? 'block' : 'none';
 
           if(!auto_show){
-            options.show.apply(this, [div]);
+            options.show.apply(this, [el]);
           }
         };
 
         overlay.onRemove = function() {
-          var div = overlay.div;
+          var el = overlay.el;
 
           if(options.remove){
-            options.remove.apply(this, [div]);
+            options.remove.apply(this, [el]);
           }
           else{
-            overlay.div.parentNode.removeChild(overlay.div);
-            overlay.div = null;
+            overlay.el.parentNode.removeChild(overlay.el);
+            overlay.el = null;
           }
         };
 
@@ -631,14 +671,31 @@ if(window.google && window.google.maps){
           }
         }
 
-        var polyline = new google.maps.Polyline({
+        var polyline_options = {
           map: this.map,
           path: path,
           strokeColor: options.strokeColor,
           strokeOpacity: options.strokeOpacity,
           strokeWeight: options.strokeWeight,
-          geodesic: options.geodesic
-        });
+          geodesic: options.geodesic,
+          clickable: true,
+          editable: false,
+          visible: true
+        };
+
+        if(options.hasOwnProperty("clickable"))
+          polyline_options.clickable = options.clickable;
+
+        if(options.hasOwnProperty("editable"))
+          polyline_options.editable = options.editable;
+
+        if(options.hasOwnProperty("icons"))
+          polyline_options.icons = options.icons;
+
+        if(options.hasOwnProperty("zIndex"))
+          polyline_options.zIndex = options.zIndex;
+
+        var polyline = new google.maps.Polyline(polyline_options);
 
         var polyline_events = ['click', 'dblclick', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'rightclick'];
 
@@ -713,14 +770,23 @@ if(window.google && window.google.maps){
       };
 
       this.drawPolygon = function(options) {
+        var useGeoJSON = false;
+        if(options.hasOwnProperty("useGeoJSON"))
+          useGeoJSON = options.useGeoJSON;
+
+        delete options.useGeoJSON;
+
         options = extend_object({
           map: this.map
         }, options);
 
+        if(useGeoJSON == false)
+          options.paths = [options.paths.slice(0)];
+
         if(options.paths.length > 0) {
-            if(options.paths[0].length > 0) {
-               options.paths = array_map(options.paths, arrayToLatLng);
-            }
+          if(options.paths[0].length > 0) {
+            options.paths = array_flat(array_map(options.paths, arrayToLatLng, useGeoJSON));
+          }
         }
 
         var polygon = new google.maps.Polygon(options);
@@ -882,7 +948,7 @@ if(window.google && window.google.maps){
 
         if(options.locations.length > 0) {
           if(options.locations[0].length > 0) {
-            options.locations = array_map(options.locations, arrayToLatLng);
+            options.locations = array_flat(array_map([options.locations], arrayToLatLng,  false));
           }
         }
 
@@ -1146,7 +1212,7 @@ if(window.google && window.google.maps){
       this.toImage = function(options) {
         var options = options || {};
         var static_map_options = {};
-        static_map_options['size'] = options['size'] || [this.div.clientWidth, this.div.clientHeight];
+        static_map_options['size'] = options['size'] || [this.el.clientWidth, this.el.clientHeight];
         static_map_options['lat'] = this.getCenter().lat();
         static_map_options['lng'] = this.getCenter().lng();
 
@@ -1170,6 +1236,37 @@ if(window.google && window.google.maps){
         }
         
         return GMaps.staticMapURL(static_map_options);
+      };
+
+      this.addMapType = function(mapTypeId, options) {
+        if(options.hasOwnProperty("getTileUrl") && typeof(options["getTileUrl"]) == "function") {
+          
+          options.tileSize = options.tileSize || new google.maps.Size(256, 256);
+          
+          var mapType = new google.maps.ImageMapType(options);
+
+          this.map.mapTypes.set(mapTypeId, mapType);
+        }
+        else {
+          throw "'getTileUrl' function required";
+        }
+      };
+
+      this.addOverlayMapType = function(options) {
+        if(options.hasOwnProperty("getTile") && typeof(options["getTile"]) == "function") {
+          var overlayMapTypeIndex = options.index;
+
+          delete options.index;
+
+          this.map.overlayMapTypes.insertAt(overlayMapTypeIndex, options);
+        }
+        else {
+          throw "'getTile' function required";
+        }
+      };
+
+      this.removeOverlayMapType = function(overlayMapTypeIndex) {
+        this.map.overlayMapTypes.removeAt(overlayMapTypeIndex);
       };
       
     };
@@ -1215,23 +1312,28 @@ if(window.google && window.google.maps){
 
     // Geolocation (Modern browsers only)
     GMaps.geolocate = function(options) {
+      var complete_callback = options.always || options.complete;
+
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           options.success(position);
-          if (options.always) {
-            options.always();
+
+          if (complete_callback) {
+            complete_callback();
           }
         }, function(error) {
           options.error(error);
-          if (options.always) {
-            options.always();
+
+          if (complete_callback) {
+            complete_callback();
           }
         }, options.options);
       }
       else {
         options.not_supported();
-        if (options.always) {
-          options.always();
+
+        if (complete_callback) {
+          complete_callback();
         }
       }
     };
@@ -1486,43 +1588,96 @@ if(window.google && window.google.maps){
     return GMaps;
   }(this));
 
-  var arrayToLatLng = function(coords) {
-    return new google.maps.LatLng(coords[0], coords[1]);
+  var coordsToLatLngs = function(coords, useGeoJSON) {
+    var first_coord = coords[0];
+    var second_coord = coords[1];
+
+    if(useGeoJSON) {
+      first_coord = coords[1];
+      second_coord = coords[0];
+    }
+
+    return new google.maps.LatLng(first_coord, second_coord);
+  };
+
+  var arrayToLatLng = function(coords, useGeoJSON) {
+    for(var i=0; i < coords.length; i++) {
+      if(coords[i].length > 0 && typeof(coords[i][0]) != "number") {
+        coords[i] = arrayToLatLng(coords[i], useGeoJSON);
+      }
+      else {
+        coords[i] = coordsToLatLngs(coords[i], useGeoJSON);
+      }
+    }
+
+    return coords;
   };
 
   var extend_object = function(obj, new_obj) {
     if(obj === new_obj) return obj;
 
-    for(var name in new_obj){
+    for(var name in new_obj) {
       obj[name] = new_obj[name];
     }
 
     return obj;
   };
 
-  var array_map = function(array, callback) {
-    if (Array.prototype.map && array.map === Array.prototype.map) {
-      return array.map(callback);
-    } else {
-      var array_return = [];
+  var replace_object = function(obj, replace) {
+    if(obj === replace) return obj;
 
+    for(var name in replace) {
+      if(obj[name] != undefined)
+        obj[name] = replace[name];
+    }
+
+    return obj;
+  };
+
+  var array_map = function(array, callback) {
+    var original_callback_params = Array.prototype.slice.call(arguments, 2);
+
+    if (Array.prototype.map && array.map === Array.prototype.map) {
+      return Array.prototype.map.call(array, function(item) {
+        callback_params = original_callback_params;
+        callback_params.splice(0, 0, item);
+
+        return callback.apply(this, callback_params);
+      });
+    }
+    else {
+      var array_return = [];
       var array_length = array.length;
 
       for(var i = 0; i < array_length; i++) {
-        array_return.push(callback(array[i]));
+        callback_params = original_callback_params;
+        callback_params = callback_params.splice(0, 0, array[i]);
+        array_return.push(callback.apply(this, callback_params));
       }
 
       return array_return;
     }
+  };
+
+  var array_flat = function(array) {
+    new_array = [];
+
+    for(var i=0; i < array.length; i++) {
+      new_array = new_array.concat(array[i]);
+    }
+
+    return new_array;
+  };
+
+  if(this.GMaps) {
+    /*Extension: Styled map*/
+    GMaps.prototype.addStyle = function(options){       
+      var styledMapType = new google.maps.StyledMapType(options.styles, options.styledMapName);
+      this.map.mapTypes.set(options.mapTypeId, styledMapType);
+    };
+    GMaps.prototype.setStyle = function(mapTypeId){     
+      this.map.setMapTypeId(mapTypeId);
+    };
   }
 
 }
-
-/*Extension: Styled map*/
-GMaps.prototype.addStyle = function(options){       
-  var styledMapType = new google.maps.StyledMapType(options.styles, options.styledMapName);
-  this.map.mapTypes.set(options.mapTypeId, styledMapType);
-};
-GMaps.prototype.setStyle = function(mapTypeId){     
-  this.map.setMapTypeId(mapTypeId);
-};
