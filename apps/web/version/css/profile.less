@@ -4,6 +4,9 @@
     display: inline-block;
     color: #505050;
   }
+  h1 {
+    text-transform: lowercase;
+  }
   span {
     padding-right: 8px;
     .font-size(2.4);
@@ -12,7 +15,9 @@
     background: url(../images/profile/decoration-top-left-blue.jpg) no-repeat 22px top;
   }
   #profile-picture {
-    min-width: 364px;
+    width: 364px;
+    height: 320px;
+    overflow: hidden;
     span {
       position: absolute;
       top: -52px;
@@ -373,3 +378,17 @@
       }
     }
   }
+
+  #connectOptions {
+    position: absolute;
+    bottom: 0;
+    width: 335px;
+    #sendMessage {
+      width: 200px;
+    }
+    #handleFavourite {
+      width: 135px;
+    }
+  }
+
+

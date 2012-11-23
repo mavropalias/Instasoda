@@ -739,101 +739,117 @@
 
       <script id="tplUsersProfile" type="text/template">
 
-        <div class="column sidebar">
-          <div class="defaultPhoto">
-            {{#p}}
-              {{#d}}
-                <img src="http://img.instasoda.com/u/{{f}}" />
-              {{/d}}
-            {{/p}}
-            {{^p}}
-              <img src="http://img.instasoda.com/i/noPhoto.png" />
-            {{/p}}
-          </div> <!-- .defaultPhoto -->
+        <!-- Profile -->
+        <div id="block-profile">
 
-          <ul class="basicInfo">
-            <li>
-              <span class="icon icon-user"></span>
-              <span class="infoTitle">Gender:</span>
-              <span class="infoData infoVerified">{{fS}}</span>
-            </li>
-            <li>
-              <span class="icon icon-gift"></span>
-              <span class="infoTitle">Age:</span>
-              <span class="infoData infoVerified">{{ag}}</span>
-            </li>
-            <li>
-              <span class="icon icon-heart"></span>
-              <span class="infoTitle">Relationship:</span>
-              <span class="infoData infoVerified">
-                {{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}
-              </span>
-            </li>
-            <li>
-              <span class="icon icon-map-marker"></span>
-              <span class="infoTitle">Location:</span>
-              <span class="infoData infoVerified">
-                {{#fCl}}{{fCl}}{{/fCl}}{{^fCl}}unknown{{/fCl}}
-              </span>
-            </li>
-            <li>
-              <span class="icon icon-glass"></span>
-              <span class="infoTitle ">Wants to meet:</span>
-              <span class="infoData">
-                {{#w}}{{^m}}women{{/m}}{{/w}}
-                {{#w}}{{#m}}women & men{{/m}}{{/w}}
-                {{#m}}{{^w}}men{{/w}}{{/m}}
-              </span>
-            </li>
-            <li>
-              <span class="icon icon-off"></span>
-              <span class="infoTitle">Currently:</span>
-              <span class="infoData">
-                {{#on}}online!{{/on}}{{^on}}offline :({{/on}}
-              </span>
-            </li>
-          </ul>
+          <div class="twelve columns no-padding">
+            <div class="twelve columns">
+              <span class="icon-user"></span>
+              <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}</h1>
+            </div>
 
-          <div id="connectOptions" class="profileButtons">
-            <button id="sendMessage">Send message / Chat</button>
-            <br><br>
-            <button id="handleFavourite">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
-            <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
+            <div id="profile-picture" class="mobile-four columns secondary-block">
+              {{#p}}
+                {{#d}}
+                  <img src="http://img.instasoda.com/u/{{f}}" />
+                  <div id="connectOptions" class="profileButtons">
+                    <button id="sendMessage" class="left">Send message / Chat</button>
+                    <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
+                    <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
+                  </div>   
+                {{/d}}
+              {{/p}}
+              {{^p}}
+                <img src="http://img.instasoda.com/i/noPhoto.png" />
+              {{/p}}
+            </div>
+
+            <div id="profile-details" class="mobile-four columns secondary-block">
+              <h2>details</h2>
+              <span>{{#u}}{{u}}{{/u}}&#8217;s details</span>
+              <div>
+                <span class="icon-user"></span>
+                <h3>GENDER</h3>
+                <h3><strong>{{fS}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-gift"></span>
+                <h3>AGE</h3>
+                <h3><strong>{{ag}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-heart"></span>
+                <h3>RELATIONSHIP</h3>
+                <h3><strong>{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}UNKNOWN{{/fRs}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-map-marker"></span>
+                <h3>LOCATION</h3>
+                <h3><strong>{{#fCl}}{{fCl}}{{/fCl}}{{^fCl}}UNKNOWN{{/fCl}}</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+              <div>
+                <span class="icon-glass"></span>
+                <h3>WANTS TO MEET</h3>
+                <h3><strong>MEN &amp; WOMEN</strong><span class="icon-ok-sign"></span></h3>
+              </div>
+            </div>
+
+            <div id="profile-pictures-wrapper" class="mobile-four columns end secondary-block">
+              <h2>pictures</h2>
+              <span>{{#u}}{{u}}{{/u}}&#8217;s best moments</span>
+
+              <div id="profile-pictures" class="row">
+
+                <!-- <div id="view-all-pictures" class="four mobile-one columns end">
+                  <a href="#">
+                    <span class="icon-share-alt"></span>
+                    <strong>VIEW ALL</strong>
+                  </a>
+                </div> -->
+
+                <div id="userPhotosList">
+                  <!-- USER PHOTOS -->
+                </div>
+
+              </div>
+
+            </div>
+
+            <div id="profile-introduction" class="mobile-four columns secondary-block end">
+              <h2>introduction</h2>
+              <span>A little bit about {{#u}}{{u}}{{/u}}</span>
+              <div class="row">
+                <div class="twelve columns">
+                  <p>{{a}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>   
+
+        <div id="block-likes">
+          <div class="twelve columns">
+            <span class="icon-thumbs-up"></span>
+            <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;<strong class="large counter">{{commonLikesCount}}</strong></h1>
+          </div>  
+
+          <div id="commonLikes" class="twelve mobile-four columns ">
+            <div id="like-block-favourites-placeholder" class="row">You and {{#u}}{{u}}{{/u}} don&#8217;t have any likes in common.</div>
           </div>
 
-        </div> <!-- .sidebar -->
+          <div class="twelve columns">
+            <span class="icon-thumbs-up"></span>
+            <h1>{{#u}}{{u}}{{/u}}&#8217s Likes&nbsp;<strong class="large counter">{{likeCount}}</strong></h1>
+          </div>  
 
-        <div class="column mainContent">
-
-          <h1>{{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}, {{ag}}</h1>
-
-          <section class="aboutMe">
-            <p class="aboutText">{{a}}</p>
-          </section>
-
-          <section id="photoSection">
-            <h2>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}&#8217;s best moments!</h2>
-            <ul id="userPhotos">
-              <div id="userPhotosList" class="noControls">
-                <!-- USER PHOTOS -->
-              </div>
-            </ul>
-          </section>
-
-          <section id="matchingSection">
-            <h2>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;({{commonLikesCount}})</h2>
-            <div id="commonLikes">
-              <p>You do not seem to have anything in common :(</p>
-            </div>
-          </section>
-
-          <section id="likesSection">
-            <h2>Likes & interests ({{likeCount}})</h2>
+          <div id="likesSection" class="twelve mobile-four columns secondary-block end">
             <div id="facebookLikes">
+              <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
             </div>
-          </section>
+          </div>
 
-        </div> <!-- .mainContent -->
+        </div>
+
       </script>
 
 
