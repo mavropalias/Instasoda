@@ -10,6 +10,9 @@ var MatchesView = Backbone.View.extend({
 
     // get template
     this.template = document.getElementById("tplMatches").innerHTML;
+
+    // update view when user models changes
+    this.model.bind('change:tkn', this.refresh);
     
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
@@ -20,6 +23,11 @@ var MatchesView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   render: function() {
     log('rendering MatchesView');
+
+    // fetch collection
+    this.collection.fetch();
+
+    // render html
     this.html = Mustache.to_html(this.template, this.model.toJSON());
 
     // render sub views

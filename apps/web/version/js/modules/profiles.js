@@ -46,10 +46,6 @@ var MyProfileView = Backbone.View.extend({
     this.favouritesView.render(3, null, null, 9);
     this.dislikesView.render(1, null, null, 9);
     this.likesView.render(2, null, null, 30);
-
-    /*setTimeout(function() {
-      _this.onView();
-    }, 0);*/
   },
 
   // show
@@ -75,7 +71,7 @@ var MyProfileView = Backbone.View.extend({
     var iUploads = 0;
     log('creating upload widget');
 
-    var uploader = new qq.FileUploader({
+    /*var uploader = new qq.FileUploader({
       element: document.getElementById('uploadWidget'),
       action: sApi + 'user/' + user.get('_id') + '/photo',
       params: {
@@ -135,7 +131,7 @@ var MyProfileView = Backbone.View.extend({
           _this.save();
         }
       }
-    });
+    });*/
 
     // activate fancybox for photos
     addToFancybox(_this.$(".fancybox-thumb"));

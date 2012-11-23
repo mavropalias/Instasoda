@@ -105,31 +105,11 @@ var Router = Backbone.Router.extend({
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        matchesCollection.fetch({
-          data: {
-            '_id': user.get('_id'),
-            'fTkn': user.get('fTkn')
-          }
-        });
-
-        /*matchesView.render();
-        $('#content > div').detach();
-        $('#content').append(matchesView.el);*/
         IS.changeView(IS.currentView, matchesView);
         IS.setupPage('matches');
       });
       return;
     } else {
-      matchesCollection.fetch({
-        data: {
-          '_id': user.get('_id'),
-          'fTkn': user.get('fTkn')
-        }
-      });
-
-      /*matchesView.render();
-      $('#content > div').detach();
-      $('#content').append(matchesView.el);*/
       IS.changeView(IS.currentView, matchesView);
       IS.setupPage('matches');
     }

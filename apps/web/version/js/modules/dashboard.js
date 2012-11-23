@@ -10,17 +10,22 @@ var DashboardView = Backbone.View.extend({
     // get template
     this.template = document.getElementById("tplDashboard").innerHTML;
 
+    // update view when user models changes
+    this.model.bind('change:tkn', this.refresh);
+
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
-
-    // render
-    this.render();
   },
   
   // render
   // -----------------------------------------------------------------------
   render: function() {
     log('rendering DashboardView');
+
+    // fetch collection
+    this.collection.fetch();
+
+    // render html
     this.html = Mustache.to_html(this.template, this.model.toJSON());
 
     // render sub views
