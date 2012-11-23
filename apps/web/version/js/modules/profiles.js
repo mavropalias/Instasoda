@@ -71,25 +71,46 @@ var MyProfileView = Backbone.View.extend({
     var iUploads = 0;
     log('creating upload widget');
 
-    /*var uploader = new qq.FileUploader({
-      element: document.getElementById('uploadWidget'),
-      action: sApi + 'user/' + user.get('_id') + '/photo',
-      params: {
-
-      },
-      allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
-      acceptFiles: ['jpg', 'jpeg', 'png', 'gif'],
-      debug: false,
-      sizeLimit: 3000000, // 3MB
-      maxConnections: 3,
-      onSubmit: function(id, fileName){
+    $('#uploadWidget').fineUploader({
+        request: {
+            endpoint: sApi + 'user/' + user.get('_id') + '/photo',
+            params: {
+              tkn: user.get('tkn')
+            }
+        },
+        validation: {
+          allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
+          acceptFiles: 'image/*',
+          sizeLimit: 3000000, // 3MB
+        },
+        retry: {
+          enableAuto: true,
+          autoAttemptDelay: 2
+        },
+        text: {
+          uploadButton: 'Upload a photo',
+          dragZone: ''
+        }
+    }).on('submit', function(event, id, fileName){
         iUploads++;
-        //$('.qq-upload-drop-area').addClass('working');
-      },
-      onProgress: function(id, fileName, loaded, total){
+      })
+      .on('progress', function(event, id, fileName, uploadedBytes, totalBytes) {
+         $('.qq-upload-drop-area').addClass('working');
+      })
+      .on('autoRetry', function(event, id, fileName, attemptNumber) {
+        iUploads++;
         $('.qq-upload-drop-area').addClass('working');
-      },
-      onComplete: function(id, fileName, res){
+      })
+      .on('error', function(event, id, filename, reason) {
+        iUploads--;
+        if(iUploads === 0) {
+          // remove loading animation
+          $('.qq-upload-drop-area').removeClass('working');
+        }
+         
+        alert("Error, couldn't upload your photo! :(");
+      })
+      .on('complete', function(event, id, filename, res){
         iUploads--;
 
         if(res.success === true) {
@@ -128,10 +149,9 @@ var MyProfileView = Backbone.View.extend({
           $('.qq-upload-drop-area').removeClass('working');
 
           // save model
-          _this.save();
+          IS.saveUser();
         }
-      }
-    });*/
+      });
 
     // activate fancybox for photos
     addToFancybox(_this.$(".fancybox-thumb"));
