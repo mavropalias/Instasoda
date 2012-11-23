@@ -4,24 +4,28 @@
 var SearchView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {    
+  initialize: function() {
     // bindings
     _.bindAll(this);
 
     // get template
     this.template = document.getElementById("tplSearch").innerHTML;
-    
+
     // initialize sub-views
-    this.searchResultsView = new SearchResultsView({ collection: this.collection });
-    this.searchFiltersView = new SearchFiltersView({ model: this.model });
+    this.searchResultsView = new SearchResultsView({
+      collection: this.collection
+    });
+    this.searchFiltersView = new SearchFiltersView({
+      model: this.model
+    });
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
     log('rendering SearchView');
     this.html = Mustache.to_html(this.template, this.model.toJSON());
-    
+
     // render sub views
     this.searchFiltersView.render();
     this.searchResultsView.render();
@@ -42,6 +46,10 @@ var SearchView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   enter: function() {
     log('entering SearchView');
+
+    // enter sub views
+    this.searchFiltersView.enter();
+    this.searchResultsView.enter();
   },
 
   // leave
@@ -87,7 +95,9 @@ var SearchFiltersView = Backbone.View.extend({
     // get template
     this.template = document.getElementById("tplSearchFilters").innerHTML;
 
-    user.bind('removedSearchLike', this.refresh);
+    // bindings
+    this.model.bind('removedSearchLike', this.refresh);
+    this.model.bind('change:so', this.refresh);
   },
 
   // render
@@ -95,10 +105,10 @@ var SearchFiltersView = Backbone.View.extend({
   render: function() {
     var _this = this;
     log('rendering SearchFiltersView');
-    
+
     // determine default filter values
     this.userSearchOptions = this.model.get('so');
-    
+
     // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());
   },
@@ -115,13 +125,15 @@ var SearchFiltersView = Backbone.View.extend({
   enter: function() {
     log('entering SearchFiltersView');
 
+    var _this = this;
+
     // enable jquery slider
     this.$("#ageRange").slider({
       range: true,
       min: 18,
       max: 70,
-      values: [this.userSearchOptions.ageMin, this.userSearchOptions.ageMax],
-      slide: function (event, ui) {
+      values: [_this.userSearchOptions.ageMin, _this.userSearchOptions.ageMax],
+      slide: function(event, ui) {
         $("#ageNum").text(ui.values[0] + " - " + ui.values[1] + " years old");
       }
     });
@@ -148,7 +160,7 @@ var SearchFiltersView = Backbone.View.extend({
       _this.enter();
     });
   },
-  
+
   // doSearch
   // -----------------------------------------------------------------------
   doSearch: function() {
@@ -161,29 +173,23 @@ var SearchFiltersView = Backbone.View.extend({
       'ageMin': this.$("#ageRange").slider("values", 0),
       'ageMax': this.$("#ageRange").slider("values", 1),
       'l': this.model.get('so').l,
-      'lon': (!!this.model.get('loc')) ? this.model.get('loc')[0] : null,
-      'lat': (!!this.model.get('loc')) ? this.model.get('loc')[1] : null,
+      'lon': ( !! this.model.get('loc')) ? this.model.get('loc')[0] : null,
+      'lat': ( !! this.model.get('loc')) ? this.model.get('loc')[1] : null
     });
 
     // save these preferences into the user model
-    this.model.set({ so: options });
+    this.model.set({
+      so: options
+    });
     IS.saveUser();
-    
-    IS.navigateTo('search/'
-                  + options.m + '/'
-                  + options.w + '/'
-                  + options.nearMe + '/'
-                  + options.ageMin + '/'
-                  + options.ageMax + '/'
-                  + options.on + '/'
-                  + '0'
-    );
+
+    IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + '0');
   },
 
   // doSearchRandom
   // -----------------------------------------------------------------------
   doSearchRandom: function() {
-    var randomMinAge = Math.floor(Math.random()*(65-18+1)+18); // 18-65
+    var randomMinAge = Math.floor(Math.random() * (65 - 18 + 1) + 18); // 18-65
     // fetch search options
     var options = new Object({
       'w': ((this.model.get('w') === 1) ? 'female' : 0),
@@ -197,16 +203,8 @@ var SearchFiltersView = Backbone.View.extend({
       'lat': null,
       'random': 1
     });
-    
-    IS.navigateTo('search/'
-                  + options.m + '/'
-                  + options.w + '/'
-                  + options.nearMe + '/'
-                  + options.ageMin + '/'
-                  + options.ageMax + '/'
-                  + options.on + '/'
-                  + options.random
-    );
+
+    IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + options.random);
   },
 
   // showLikePanel
@@ -248,9 +246,9 @@ var SearchResultsView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   initialize: function() {
     console.log('  ~ initializing SearchResultsView');
-    
+
     _.bindAll(this);
-    
+
     this.collection.bind('reset', this.refresh);
     this.collection.bind('change', this.refresh);
   },
