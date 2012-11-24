@@ -28,6 +28,12 @@ var SettingsUsernameView = Backbone.View.extend({
     this.$el.html($('#tplSettingsUsername').html());
   },
 
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    // nothing yet
+  },
+
   // save
   // -----------------------------------------------------------------------
   save: function() {
@@ -77,7 +83,7 @@ var SettingsLocationView = Backbone.View.extend({
       h1: 'Welcome ' + this.model.get('u') + '! What is your location?',
       h2: 'Instasoda members will see your location. In order to protect your privacy, we recommend only zooming-in up to your general area in your city/town.',
       target: 'drag the map to center at your approximate location!',
-      buttonTxt: 'Ok, my location is <span id="targetAdress"> ...drag the map!</span>'
+      buttonTxt: 'Set my location to <span id="targetAdress"> ...drag the map!</span>'
     };
     this.$el.html(Mustache.to_html(template, mapStrings));
   },
@@ -132,6 +138,12 @@ var SettingsFindTypeView = Backbone.View.extend({
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
   },
 
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    // nothing yet
+  },
+
   // save
   // -----------------------------------------------------------------------
   save: function() {
@@ -181,6 +193,12 @@ var SettingsGenderPrefsView = Backbone.View.extend({
     console.log('  ~ rendering SettingsGenderPrefsView');
     var template = $('#tplSettingsGenderPrefs').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    // nothing yet
   },
 
   // save

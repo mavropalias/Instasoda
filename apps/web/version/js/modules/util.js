@@ -959,6 +959,9 @@ IS.setupUser = function (currentView) {
     // else fadeIn the settings page over the app
     else {
       $(nextView.el).appendTo('body').fadeIn();
+
+      // temporarily remove scrollbars
+      $('body').css('overflow', 'hidden');
     }
 
     // if it was the location page, activate the map by calling the view's show function
@@ -978,7 +981,15 @@ IS.setupUser = function (currentView) {
       IS.navigateTo('');
       router.welcome();
       $('#settingsDone').fadeOut(400, function() {
+        // re-enable scrollbars
+        $('body').css('overflow', 'auto');
+
+        // remove settings screen from DOM
         $(this).remove();
+
+        // DEV
+        /*user.set('u', null);
+        user.set('ff', null);*/
       });
     });
 
@@ -994,10 +1005,15 @@ IS.setupUser = function (currentView) {
  * @param {String} c2
  */
 IS.pageFlip = function (c1, c2) {
+  log('flipping pages', 'info');
+
   var iWidth = $(window).width();
+  var iHeight = $(window).height();
 
   // create a new pageFlip placeholder
-  $('#tplPageFlipPlaceholder').clone().attr('id', 'pageFlipPlaceholder').appendTo('body');
+  $('#tplPageFlipPlaceholder').clone().attr('id', 'pageFlipPlaceholder').css({
+    'height': iHeight + 'px'
+  }).appendTo('body');
 
   // clone page into the placeholder divs
   $(c1).children().clone().appendTo('#pageFlipPlaceholder .pageA, #pageFlipPlaceholder .pageApartialInner');
@@ -1006,7 +1022,7 @@ IS.pageFlip = function (c1, c2) {
   // set CSS before the animation
   $('#pageFlipPlaceholder .pageA').css({
     'left': '-' + (iWidth/2) + 'px',
-    'width': iWidth + 'px'
+    'width': iWidth + 'px',
   });
 
   $('#pageFlipPlaceholder .pageB').css({
@@ -1021,7 +1037,7 @@ IS.pageFlip = function (c1, c2) {
     $('#pageFlipPlaceholder .pageFlip').addClass('pageFlipped');
   }, 0);
 
-  // process UI port-animation
+  // process UI post-animation
   setTimeout(function() {
     // adjust z-index of original divs to bring the new one in front
     $(c1).css('z-index', '998');
