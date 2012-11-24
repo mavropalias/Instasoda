@@ -9,7 +9,7 @@ var socket = io.connect(socketIoHost);
 // Connected
 // -------------------------------------------------------------------------
 socket.on('connected', function (data) {
-  console.log('- SOCKET.IO status: ' + data.status);
+  log('- SOCKET.IO status: ' + data.status, 'info');
   
   // get notifications
   setInterval(function() {
@@ -17,7 +17,7 @@ socket.on('connected', function (data) {
     if(typeof user.get('_id') != 'undefined') {
       socket.emit('getNotifications', {
         _id: user.get('_id'),
-        instasodaToken: user.get('tkn')
+        tkn: user.get('tkn')
       }, function(err, data) {
         if(!IS.nullOrEmpty(data)) {
           
@@ -50,10 +50,10 @@ socket.on('connected', function (data) {
               } else {
                 // chat session is new
                 console.log(' - new chat session notification');
-                chatView.chatSessionTabs.fetchChatSessionFromServerById(newMessages[i].sId);
+                userbarView.chatSessionTabs.fetchChatSessionFromServerById(newMessages[i].sId);
               }
 
-              if(!$('#chatWindow').is(':visible')) IS.notify('New message from ' + newMessages[i].u, null, newMessages[i].m);
+              if(!$('#chat').is(':visible')) IS.notify(newMessages[i].u + ' says:', null, newMessages[i].m);
             }
 
             
@@ -69,10 +69,4 @@ socket.on('connected', function (data) {
 // -------------------------------------------------------------------------
 socket.on('onlineUsers', function (msg) {
   onlineUsers.set({ count: msg.count });
-});
-
-// Receive chat message
-// -------------------------------------------------------------------------
-socket.on('newChatMessage', function (msg) {
-  //TODO handle new message
 });
