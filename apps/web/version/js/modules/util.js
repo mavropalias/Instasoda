@@ -5,16 +5,16 @@ Functions overview
 > notify:
 Create a toast notification
 
-> handleFavourite:  
+> handleFavourite:
 Add/remove a person to the user's favourites
 
-> addOrRemoveLikeFromSearchOptions: 
+> addOrRemoveLikeFromSearchOptions:
 Adds or removes a like from the user's search options
 
-> addOrRemoveLikeAndRate: 
+> addOrRemoveLikeAndRate:
 Adds or removes a like with a rating
 
-> navigateTo: 
+> navigateTo:
 Navigates to a page
 
 > changeView:
@@ -23,52 +23,52 @@ Changes current view
 > animateToView:
 Creates an animated transition from the current page to the destination page
 
-> prepareApp: 
+> prepareApp:
 Prepares App
 
-> facebookAuth: 
+> facebookAuth:
 Attempts to auth a FB user
 
-> login: 
+> login:
 Attempts to log the user into the system
 
-> createAccount: 
+> createAccount:
 Create a new user account by connecting to Facebook
 
-> logout: 
+> logout:
 Logs the user out of the system & clears localStorage
 
-> nullOrEmpty: 
+> nullOrEmpty:
 Checks if a property is null, empty or undefined. If so, returns true
 
-> saveUser: 
+> saveUser:
 Saves the User model to the API
 
-> getCommonLikes: 
+> getCommonLikes:
 Returns common likes between User and another user
 
-> parseLikes: 
+> parseLikes:
 Parses a user's likes and extends model with favs, dislikes and categories
 
-> setupPage: 
+> setupPage:
 Do various admin tasks after loading a page
 
 > showMetabar:
 Shows or hides the metabar
 
-> setupUser: 
+> setupUser:
 Sets user settings (username, sex prefs, etc)
 
-> pageFlip: 
+> pageFlip:
 Creates a page flip animation between two containers
 
-> l: 
+> l:
 Shortcut for console.log()
 
-> showMapAndGetLocation: 
+> showMapAndGetLocation:
 Creates a map widget and returns [lon,lat] per user selection
 
-> addToFancybox: 
+> addToFancybox:
 Fancybox-ise specified images
 
 > Backbone.sync
@@ -87,18 +87,18 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
     title: sTitle,
     subtitle: sSubtitle,
     message: sMessage
-  }
-
-  // push the notification into the array
-  IS.notificationsArray.push(oNotification);
-  console.log('Pushed new notification');
+  };
 
   setTimeout(function() {
+    // push the notification into the array
+    IS.notificationsArray.push(oNotification);
+    log('Pushed new notification', 'info');
+  
     // render template
     var template = $('#tplNotification').html();
     var notification = Mustache.to_html(template, IS.notificationsArray.shift());
-    processNotifications(notification)
-  }, 3000*IS.notificationsArray.length);
+    processNotifications(notification);
+  }, (500 * IS.notificationsArray.length - 1));
 
   // Process the notification
   function processNotifications(notification) {
@@ -106,10 +106,10 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
       displayNotification(notification);
     } else {
       $("body > .notification").each(function() {
-        $(this).animate({'top':'+=80px'}, 500, function() {
+        $(this).animate({'top':'+=60px'}, 500, function() {
           displayNotification(notification);
         });
-      });   
+      });
     }
   }
 
@@ -122,14 +122,14 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
           _notif.css({
             'opacity':0,
             'filter':'opacity(0)'
-          }).delay(600).queue(function() {
+          }).delay(400).queue(function() {
             _notif.remove();
             $(this).dequeue();
           });
       }, 5000);
     });
   }
-}
+};
 
 /**
  * Add a person to the user's favourites.
