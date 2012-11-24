@@ -152,13 +152,15 @@ var SearchFiltersView = Backbone.View.extend({
   refresh: function() {
     log('refreshing SearchFiltersView');
 
-    var _this = this;
+    if( !! user.get('so')) {
+      var _this = this;
 
-    this.leave(function() {
-      _this.render();
-      _this.show();
-      _this.enter();
-    });
+      this.leave(function() {
+        _this.render();
+        _this.show();
+        _this.enter();
+      });
+    }
   },
 
   // doSearch
