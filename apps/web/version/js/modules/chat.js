@@ -262,10 +262,8 @@ var ChatSessionsView = Backbone.View.extend({
     this.$('.chat-session').hide();
 
     if(model.get('active')) {
-      // show chat session, position it and focus on the text input field
-      this.$('#session_' + model.get('_id')).css({
-        'top': $('#' + model.get('_id')).offset().top - $(document).scrollTop() + 'px'
-      }).show().find('.chat-input').focus();
+      // show chat session and focus on the text input field
+      this.$('#session_' + model.get('_id')).show().find('.chat-input').focus();
       
       // convert timestamps to timeago
       this.$('.time').timeago();
