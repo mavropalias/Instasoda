@@ -156,6 +156,13 @@
     perspective: @value;
 }
 
+  .transform(@properties) {
+    -webkit-transform: @properties;
+    -moz-transform: @properties;
+    -o-transform: @properties;
+    transform: @properties;
+  }
+
 .transform-style(@value) {
     -webkit-transform-style: @value;
     -moz-transform-style: @value;
