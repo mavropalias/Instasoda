@@ -253,6 +253,8 @@ var SearchResultsView = Backbone.View.extend({
 
     this.collection.bind('reset', this.refresh);
     this.collection.bind('change', this.refresh);
+    this.collection.bind('add', this.refresh);
+    this.collection.bind('remove', this.refresh);
   },
 
   // renderItem

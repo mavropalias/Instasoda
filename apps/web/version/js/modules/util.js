@@ -93,7 +93,7 @@ IS.notify = function(sTitle, sSubtitle, sMessage) {
     // push the notification into the array
     IS.notificationsArray.push(oNotification);
     log('Pushed new notification', 'info');
-  
+
     // render template
     var template = $('#tplNotification').html();
     var notification = Mustache.to_html(template, IS.notificationsArray.shift());
@@ -139,15 +139,15 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
   socket.emit('handleFavourite', {
     userId: user.get('_id'),
     userToFav: userToFavId,
-    favType: favType,
+    favType: favType
   }, function(err, result) {
     if(!err) {
       
       // update the user model's favs array
       if(!!user.get('favs')) { // favs property exists
         var userFavs = user.get('favs');
-        // check if the userToFavId already exists
 
+        // check if the userToFavId already exists
         var indexOfFav = userFavs.indexOf(userToFavId);
         
         if(favType == 'add') {
@@ -160,26 +160,50 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
           // save user locally
           store.set("user", user);
 
+          // update text in the button
           $('#handleFavourite').text('- Favourite');
 
-          // success - show notification to the user
-          IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
+          // update favsCollection
+          socket.emit('getBasicUserInfoFromId', {
+            userId: userToFavId
+          }, function(err, userToFav) {
+            if(!err) {
+              favsCollection.add(userToFav); //TODO: don't render on every user
 
-          console.log('- added new user to favourites');
+              // render usersFullView
+              usersFullView.render();
+
+              // success - show notification to the user
+              IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
+            } else {
+              log('getBasicUserInfoFromId error', 'error');
+              IS.notify('ERROR :(', err, userToFavName + ' was NOT added to your favourites.');
+            }
+          });
         } else {
-          userFavs.splice(indexOfFav,1); 
 
+          // update favsCollection
+          favsCollection.remove( _.find(favsCollection.models, function(fav) {
+            return fav.get('_id') == userToFavId;
+          }));
+
+          // render usersFullView
+          usersFullView.render();
+
+          // update user model
+          userFavs.splice(indexOfFav,1);
           user.set({
             favs: userFavs
           });
 
+          // save locally
           store.set("user", user);
 
           // Change favourite button text
           $('#handleFavourite').text('+ Favourite');
 
           // success - show notification to the user
-          IS.notify('Removed favourite!', null, userToFavName + ' removed from your favourites.');
+          //IS.notify('Removed favourite!', null, userToFavName + ' removed from your favourites.');
           console.log('- removed user from favourites');
         }
         
@@ -195,7 +219,7 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
       IS.notify(err, null, userToFavName + ' could not be added to your favorites :(');
     }
   });
-}
+};
 
 /**
  * Adds or removes a like from the user's search options
@@ -414,7 +438,7 @@ IS.prepareApp = function(bForceLogin, cb) {
   console.log('> Preparing app');
 
   // Login or register user if bForceLogin == true
-  if(bForceLogin) 
+  if(bForceLogin)
   {
     IS.facebookAuth(function(err, res) {
       if(!err) {
@@ -428,6 +452,12 @@ IS.prepareApp = function(bForceLogin, cb) {
 
             // set user's online status
             IS.userIsOnline(true);
+
+            // fetch matches
+            matchesCollection.fetch();
+
+            // fetch favs
+            favsCollection.fetch();
 
             if(cb) cb();
             else {
@@ -445,6 +475,12 @@ IS.prepareApp = function(bForceLogin, cb) {
                 // set user's online status
                 IS.userIsOnline(true);
 
+                // fetch matches
+                matchesCollection.fetch();
+
+                // fetch favs
+                favsCollection.fetch();
+
                 IS.navigateTo('');
                 router.welcome();
               } else {
@@ -461,9 +497,9 @@ IS.prepareApp = function(bForceLogin, cb) {
         IS.logout();
       }
     });
-  } 
+  }
   // else probe localStorage to see if the user is already logged in
-  else if (!IS.nullOrEmpty(store.get("user"))) 
+  else if (!IS.nullOrEmpty(store.get("user")))
   {
     IS.fbToken = store.get("user").fTkn;
 
@@ -475,6 +511,12 @@ IS.prepareApp = function(bForceLogin, cb) {
 
         // set user's online status
         IS.userIsOnline(true);
+
+        // fetch matches
+        matchesCollection.fetch();
+
+        // fetch favs
+        favsCollection.fetch();
 
         if(cb) cb();
         else {
@@ -492,6 +534,12 @@ IS.prepareApp = function(bForceLogin, cb) {
             // set user's online status
             IS.userIsOnline(true);
 
+            // fetch matches
+            matchesCollection.fetch();
+
+            // fetch favs
+            favsCollection.fetch();
+
             IS.navigateTo('');
             router.welcome();
           } else {
@@ -502,12 +550,12 @@ IS.prepareApp = function(bForceLogin, cb) {
         });
       }
     });
-  } 
+  }
   // else do nothing & redirect to welcome page
   else {
     cb();
   }
-}
+};
 
 /**
  * Attempts to auth a FB user.
@@ -590,26 +638,24 @@ IS.login = function(fTkn, fTid, cb) {
       
       // sync local data from server
       user.fetch(
-        { 
+        {
           data: {
             'fTkn': fTkn
-          }
-        , 
+        },
           error: function(model, response) {
             //TODO: properly handle errors
             //a false might only mean that the API server is N/A
             console.log('- login error: ' + response.error);
             alert('Could not sync your account from server!');
             IS.logout();
-          }
-        ,
+        },
           success: function(model, response) {
             // Ajax call was successful
             // ------------------------
             console.log('- got an API response');
             // Now check if the account was created
             // ------------------------------------
-            if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+            if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
               // store the user details locally
               // ------------------------------
               store.set("user", user);
@@ -955,7 +1001,7 @@ IS.setupUser = function (currentView) {
       setTimeout(function() {
         IS.pageFlip(currentView.$el, nextView.$el);
       }, 0);
-    } 
+    }
     // else fadeIn the settings page over the app
     else {
       $(nextView.el).appendTo('body').fadeIn();
@@ -967,7 +1013,7 @@ IS.setupUser = function (currentView) {
     // if it was the location page, activate the map by calling the view's show function
     if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(locN)) nextView.show();
   }
-  // we don't need to update any more settings, check if the user was previously 
+  // we don't need to update any more settings, check if the user was previously
   // going through the setup process (if currentView is not null) and show the
   // 'done' screen
   else if(currentView) {
@@ -984,12 +1030,11 @@ IS.setupUser = function (currentView) {
         // re-enable scrollbars
         $('body').css('overflow', 'auto');
 
+        // fetch matches
+        matchesCollection.fetch();
+
         // remove settings screen from DOM
         $(this).remove();
-
-        // DEV
-        /*user.set('u', null);
-        user.set('ff', null);*/
       });
     });
 
@@ -997,7 +1042,7 @@ IS.setupUser = function (currentView) {
       IS.pageFlip(currentView.$el, $('#settingsDone'));
     }, 0);
   }
-}
+};
 
 /**
  * Creates a page flip animation between two containers
