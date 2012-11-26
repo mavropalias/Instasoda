@@ -62,7 +62,9 @@
 
   // FavouritesCollection - user's favourite people
   // =========================================================================
-  var FavouritesCollection = Backbone.Collection.extend();
+  var FavouritesCollection = Backbone.Collection.extend({
+    url: sApi + 'user/favourites'
+  });
 
   // ChatSession
   // =========================================================================
@@ -107,6 +109,9 @@
   });
   var chatSessions = new ChatSessions({
     model: ChatSession
+  });
+  var favsCollection = new FavouritesCollection({
+    model: users
   });
   
   // Backbone views
@@ -167,7 +172,8 @@
     });
     favouritesView = new FavouritesView({
       el: document.getElementById('content'),
-      model: user
+      model: user,
+      collection: favsCollection
     });
     usersFullView = new UsersFullView({
       el: document.getElementById('content'),

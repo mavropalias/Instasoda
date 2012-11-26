@@ -4,28 +4,25 @@
 var MatchesView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {    
+  initialize: function() {
     // bindings
     _.bindAll(this);
 
     // get template
     this.template = document.getElementById("tplMatches").innerHTML;
-
-    // update view when user models changes
-    this.model.bind('change:tkn', this.refresh);
     
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
     this.matchesFiltersView = new MatchesFiltersView({ model: this.model });
+
+    // render
+    this.render();
   },
 
   // render
   // -----------------------------------------------------------------------
   render: function() {
     log('rendering MatchesView');
-
-    // fetch collection
-    this.collection.fetch();
 
     // render html
     this.html = Mustache.to_html(this.template, this.model.toJSON());

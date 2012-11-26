@@ -7,48 +7,25 @@ var FavouritesView = Backbone.View.extend({
   initialize: function() {   
     // bindings
     _.bindAll(this);
-
-    // model listener
-    this.model.bind('change:favs', this.refresh);
-
-    // create collection for the view
-    this.favsCollection = new FavouritesCollection();
     
     // initialize sub-views
-    this.favouritesUserListView = new FavouritesUserListView({ collection: this.favsCollection });
+    this.favouritesUserListView = new SearchResultsView({ collection: this.collection });
 
     // get template
     this.template = document.getElementById("tplFavourites").innerHTML;
+
+    // render
+    this.render();
   },
   
   // render
   // -----------------------------------------------------------------------
   render: function() {
     log('rendering FavouritesView');
-
-    var _this = this;
-
-    // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());
 
-    // reset & populate collection from user's 'favs'
-    this.favsCollection.reset();
-    _.each(this.model.get('favs'), function(user){
-
-    // render sub view
-    socket.emit('getBasicUserInfoFromId', {
-      userId: user
-    }, function(err, user) {
-      if(!err) {
-        _this.favsCollection.add(user);
-        _this.favouritesUserListView.render();
-        //TODO: don't render on every user
-      } else {
-        log('getBasicUserInfoFromId error', 'error');
-        //TODO: handle errors
-      }
-    }); 
-  });  
+    // render sub views
+    this.favouritesUserListView.render();
   },
 
   // show
@@ -157,30 +134,23 @@ var FavouritesUserListView = Backbone.View.extend({
 // =============================================================================
 var FavouritesUserView = Backbone.View.extend({
   // properties
-  // ---------------------------------------------------------------------------
+  // -----------------------------------------------------------------------
   className: 'userPreview',
-  tagName: 'div',
-  
-  // events
-  // ---------------------------------------------------------------------------
-  events: {
-    'click': 'viewProfile'
-  },
+  tagName: 'li',
 
-  // viewProfile
+  // initialize
   // ---------------------------------------------------------------------------
-  viewProfile: function(e) {
-    router.navigate(this.model.get('_id'), {trigger: true});
+  initialize: function() {
+    _.bindAll(this);
+
+    // get template
+    this.template = document.getElementById("tplSearchResult").innerHTML;
   },
 
   // render
   // ---------------------------------------------------------------------------
   render: function() {
     log('rendering FavouritesUserView');
-
-    // get template
-    this.template = document.getElementById("tplSearchResult").innerHTML;
-
     this.$el.html(Mustache.to_html(this.template, this.model.toJSON()));
   }
 });
