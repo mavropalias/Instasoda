@@ -11,6 +11,9 @@ var Router = Backbone.Router.extend({
   routes: {
     // Welcome
     "": "welcome",
+
+    // Edit my profile
+    "me/edit": "editMyProfile",
     
     // My profile
     "me": "myProfile",
@@ -72,6 +75,29 @@ var Router = Backbone.Router.extend({
           IS.setupPage('home');
         }
       });
+    }
+  },
+
+  // editMyProfile
+  // -----------------------------------------------------------------------
+  editMyProfile: function() {
+    log('routing editMyProfile page', 'info');
+
+    if(!appReady) {
+      IS.prepareApp(null, function() {
+        /*myProfileView.render();
+        $('#content > div').detach();
+        $('#content').append(myProfileView.el);*/
+        IS.changeView(IS.currentView, editMyProfileView);
+        IS.setupPage('profile');
+      });
+      return;
+    } else {
+      /*myProfileView.render();
+      $('#content > div').detach();
+      $('#content').append(myProfileView.el);*/
+      IS.changeView(IS.currentView, editMyProfileView);
+      IS.setupPage('profile');
     }
   },
   

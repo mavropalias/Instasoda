@@ -121,6 +121,7 @@
   var welcomeView;
   var betaView;
   var myProfileView;
+  var editMyProfileView;
   var searchView;
   var favouritesView;
   var matchesView;
@@ -157,6 +158,10 @@
       el: document.getElementById('content')
     });
     myProfileView = new MyProfileView({
+      el: document.getElementById('content'),
+      model: user
+    });
+    editMyProfileView = new EditMyProfileView({
       el: document.getElementById('content'),
       model: user
     });

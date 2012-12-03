@@ -5,9 +5,6 @@ var MyProfileView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #saveProfileButton': 'save',
-    'click #editProfileButton': 'toggleProfileOptions',
-    'click #cancelProfileButton': 'toggleProfileOptions',
     'click .photoMakeDefault': 'photoMakeDefault',
     'click .photoDelete': 'photoDelete'
   },
@@ -20,6 +17,14 @@ var MyProfileView = Backbone.View.extend({
 
     // get template
     this.template = document.getElementById("tplMyProfile").innerHTML;
+
+    // render on model change
+    this.model.bind('change:u', this.render);
+    this.model.bind('change:a', this.render);
+    this.model.bind('change:m', this.render);
+    this.model.bind('change:w', this.render);
+    this.model.bind('change:ff', this.render);
+    this.model.bind('change:fd', this.render);
 
     // init sub views
     this.myPhotosView = new MyPhotosView({ model: this.model });
@@ -207,54 +212,6 @@ var MyProfileView = Backbone.View.extend({
     });
   },
 
-  // save
-  // -----------------------------------------------------------------------
-  save: function() {
-    log('saving user');
-    _this = this;
-
-    $('#saveProfileButton').addClass('transparent');
-    $('#working').removeClass('transparent');
-
-    this.model.save(
-      {
-        'u': this.$('input[name=username]').val(),
-        'a': this.$('#aboutMe').html(),
-        'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
-        'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0),
-        'ff': ((this.$('input[name=findFriends]:checked').length > 0) ? 1 : 0),
-        'fd': ((this.$('input[name=findDates]:checked').length > 0) ? 1 : 0)
-      },
-      {
-        error: function(model, response) {
-          //TODO: properly handle errors
-          alert('User save failed!');
-          $('#saveProfileButton').removeClass('transparent');
-          $('#working').addClass('transparent');
-        },
-        success: function(model, response) {
-          log('got an API response', 'info');
-          // SUCCESS
-          if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
-            log('API call was successful', 'info');
-            _this.toggleProfileOptions();
-            store.set("user", _this.model);
-            $('#saveProfileButton').removeClass('transparent');
-            $('#working').addClass('transparent');
-          }
-          // FAIL
-          else {
-            log('API call failed: ' + response.error, 'error');
-            alert('User save failed: ' + response.error);
-
-            $('#saveProfileButton').removeClass('transparent');
-            $('#working').addClass('transparent');
-          }
-        }
-      }
-    );
-  },
-
   // photoMakeDefault
   // -----------------------------------------------------------------------
   photoMakeDefault: function(e) {
@@ -360,24 +317,120 @@ var MyProfileView = Backbone.View.extend({
         }
       }
     });
+  }
+});
+
+
+// =============================================================================
+// EditMyProfileView
+// =============================================================================
+var EditMyProfileView = Backbone.View.extend({
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click #saveProfileButton': 'save'
   },
 
-  // toggleProfileOptions
+  // initialize
   // -----------------------------------------------------------------------
-  toggleProfileOptions: function(e) {
-    var container = $('.flipContainer');
+  initialize: function(options) {
+    // bindings
+    _.bindAll(this);
 
-    if(container.hasClass('rotateY')) {
-      container.removeClass('rotateY');
-      $('#aboutMe').hide();
-      $('.aboutText').fadeIn();
-    }
-    else {
-      container.addClass('rotateY');
-      $('#aboutMe').fadeIn();
-      $('.aboutText').hide();
-    }
-    
+    // render on model change
+    this.model.bind('change', this.render);
+
+    // get template
+    this.template = document.getElementById("tplEditMyProfile").innerHTML;
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function(cb) {
+    log('rendering EditMyProfileView');
+    this.html = Mustache.to_html(this.template, this.model.toJSON());
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    log('showing EditMyProfileView');
+    this.$el.html(this.html);
+  },
+
+  // enter
+  // ---------------------------------------------------------------------------
+  enter: function() {
+    log('entering EditMyProfileView');
+  },
+
+  // leave
+  // ---------------------------------------------------------------------------
+  leave: function(cb) {
+    log('leaving EditMyProfileView');
+    cb();
+  },
+
+  // refresh
+  // ---------------------------------------------------------------------------
+  refresh: function() {
+    log('refreshing EditMyProfileView');
+
+    var _this = this;
+
+    this.leave(function() {
+      _this.render();
+      _this.show();
+      _this.enter();
+    });
+  },
+
+  // save
+  // -----------------------------------------------------------------------
+  save: function() {
+    log('saving user');
+    _this = this;
+
+    $('#saveProfileButton').addClass('transparent');
+    $('#working').removeClass('transparent');
+
+    this.model.save(
+      {
+        'u': this.$('input[name=username]').val(),
+        'a': this.$('#aboutMe').html(),
+        'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
+        'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0),
+        'ff': ((this.$('input[name=findFriends]:checked').length > 0) ? 1 : 0),
+        'fd': ((this.$('input[name=findDates]:checked').length > 0) ? 1 : 0)
+      },
+      {
+        error: function(model, response) {
+          //TODO: properly handle errors
+          alert('User save failed!');
+          $('#saveProfileButton').removeClass('transparent');
+          $('#working').addClass('transparent');
+        },
+        success: function(model, response) {
+          log('got an API response', 'info');
+          // SUCCESS
+          if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
+            log('API call was successful', 'info');
+            IS.navigateTo('me');
+            store.set("user", _this.model);
+            $('#saveProfileButton').removeClass('transparent');
+            $('#working').addClass('transparent');
+          }
+          // FAIL
+          else {
+            log('API call failed: ' + response.error, 'error');
+            alert('User save failed: ' + response.error);
+
+            $('#saveProfileButton').removeClass('transparent');
+            $('#working').addClass('transparent');
+          }
+        }
+      }
+    );
   }
 });
 

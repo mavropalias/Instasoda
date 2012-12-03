@@ -829,7 +829,14 @@
               <div>
                 <span class="icon-glass"></span>
                 <h3>WANTS TO MEET</h3>
-                <h3><strong>MEN &amp; WOMEN</strong><span class="icon-ok-sign"></span></h3>
+                <h3>
+                  <strong>
+                    {{#w}}{{^m}}women{{/m}}{{/w}}
+                    {{#w}}{{#m}}women & men{{/m}}{{/w}}
+                    {{#m}}{{^w}}men{{/w}}{{/m}}
+                  </strong>
+                  <span class="icon-ok-sign"></span>
+                </h3>
               </div>
             </div>
 
@@ -904,7 +911,7 @@
           <div class="twelve columns no-padding">
             <div class="twelve columns">
               <span class="icon-user"></span>
-              <h1>my profile</h1>
+              <h1>my profile (<a href="#me/edit">edit</a>)</h1>
             </div>
 
             <div id="profile-picture" class="mobile-four columns secondary-block">
@@ -916,7 +923,6 @@
               {{^p}}
                 <img src="http://img.instasoda.com/i/noPhoto.png" />
               {{/p}}
-              <span class="icon-pencil"></span>
             </div>
 
             <div id="profile-details" class="mobile-four columns secondary-block">
@@ -945,7 +951,14 @@
               <div>
                 <span class="icon-glass"></span>
                 <h3>WANTS TO MEET</h3>
-                <h3><strong>MEN &amp; WOMEN</strong><span class="icon-ok-sign"></span></h3>
+                <h3>
+                  <strong>
+                    {{#w}}{{^m}}women{{/m}}{{/w}}
+                    {{#w}}{{#m}}women & men{{/m}}{{/w}}
+                    {{#m}}{{^w}}men{{/w}}{{/m}}
+                  </strong>
+                  <span class="icon-ok-sign"></span>
+                </h3>
               </div>
             </div>
 
@@ -989,37 +1002,96 @@
 
         <!-- Likes -->
         <div id="block-likes">
-            <div class="twelve columns">
+          <div class="twelve columns">
+            <span class="icon-thumbs-up"></span>
+            <h1>my likes (<a href="#likes">view all</a>)</h1>
+          </div>
+
+          <div id="like-block-favourites" class="twelve mobile-four columns ">
+            <div class="like-type-label">
+              <span class="icon-star"></span>
+              <h2>FAVOURITES&nbsp;<strong class="counter">{{favouritesCount}}</strong></h2>
+            </div>
+            <div id="like-block-favourites-placeholder" class="row">No favs yet!</div>
+          </div>
+
+          <div id="like-block-dislikes" class="twelve mobile-four columns end secondary-block">
+            <div class="like-type-label">
+              <span class="icon-thumbs-down"></span>
+              <h2>DISLIKES&nbsp;<strong class="counter">{{dislikesCount}}</strong></h2>
+            </div>
+            <div id="like-block-dislikes-placeholder" class="row">No dislikes yet!</div>
+          </div>
+
+          <div id="like-block-likes" class="twelve mobile-four columns secondary-block end">
+            <div class="like-type-label">
               <span class="icon-thumbs-up"></span>
-              <h1>my likes (<a href="#likes">view all</a>)</h1>
+              <h2>LIKES&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
             </div>
-
-            <div id="like-block-favourites" class="twelve mobile-four columns ">
-              <div class="like-type-label">
-                <span class="icon-star"></span>
-                <h2>FAVOURITES&nbsp;<strong class="counter">{{favouritesCount}}</strong></h2>
-              </div>
-              <div id="like-block-favourites-placeholder" class="row">No favs yet!</div>
-            </div>
-
-            <div id="like-block-dislikes" class="twelve mobile-four columns end secondary-block">
-              <div class="like-type-label">
-                <span class="icon-thumbs-down"></span>
-                <h2>DISLIKES&nbsp;<strong class="counter">{{dislikesCount}}</strong></h2>
-              </div>
-              <div id="like-block-dislikes-placeholder" class="row">No dislikes yet!</div>
-            </div>
-
-            <div id="like-block-likes" class="twelve mobile-four columns secondary-block end">
-              <div class="like-type-label">
-                <span class="icon-thumbs-up"></span>
-                <h2>LIKES&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
-              </div>
-              <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
-            </div>
-
+            <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
+          </div>
         </div>
 
+      </script>
+
+
+    <!------------------------------------------------------------------------>
+    <!-- EDIT MY PROFILE -->
+    <!------------------------------------------------------------------------>
+
+      <script id="tplEditMyProfile" type="text/template">
+        <div id="block-profile" class="profile-options">
+          <div class="twelve columns no-padding">
+
+            <div class="row">
+              <div class="twelve columns">
+                <span class="icon-user"></span>
+                <h1>edit my profile (<a href="#me">cancel</a>)</h1>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="four columns">
+                <h2>My Instasoda name <span class="tip" title="This is how other instasoda users will see you."></span></h2>
+                <input type="text" name="username" value="{{u}}" required maxlength=50>
+
+                <h2>I am looking for</h2>
+                <label class="findFriends">
+                  <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
+                  <span class="findType">friendship</span>
+                </label>
+                <label class="findDates">
+                  <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
+                  <span class="findType">dating</span>
+                </label>
+
+                <h2>I want to meet</h2>
+                <label class="meetWomen">
+                  <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
+                  <span class="meetGender">women</span>
+                </label>
+                <label class="meetMen">
+                  <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
+                  <span class="meetGender">men</span>
+                </label>
+              </div>
+
+              <div class="eight columns">
+                <h2 title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.">A little bit about myself</h2>
+                <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 30rem;">{{a}}</div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="mobile-twelve columns">
+                <button type="submit" id="saveProfileButton" class="animated">Save my profile</button>
+                <span class="tip" title="Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced periodically & automatically. We will not make any changes (we can&#8217;t!) to your Facebook acount ;)"></span>
+                <div id="working" class="animated transparent"></div>
+              </div>
+            </div>
+
+          </div>
+        </div> <!-- #block-profile -->
       </script>
 
 
