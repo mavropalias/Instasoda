@@ -4,6 +4,20 @@
   }
 }
 
+#likes-type-categories {
+  position: fixed;
+  width: 0;
+  height: 100%;
+  background: #EEE;
+  top: 0;
+  padding-top: 100px;
+  left: 230px;
+  .box-shadow(0, 0, 20px, -5px #888 inset);
+  &.active {
+    width: 200px;
+  }
+}
+
 #block-likes, #likesResults {
   li {
     list-style: none;
