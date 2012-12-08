@@ -6,17 +6,21 @@
   background: #ddd;
   width: 20rem;
   display: none;
+  //border-left: 1px solid #999;
+  //.box-shadow(10px, 0, 20px, -12px #888 inset);
+  .box-shadows(10px 0 20px -12px #777 inset, 1px 0 0 0 #ccc inset);
 
   .chat-tab {
     width: 100%;
     overflow: hidden;
-    border-bottom: 1px solid #ccc;
     cursor: pointer;
     position: relative;
+    padding: 5px;
     
     &:hover {
-      background: #999;
-      color: #fff;
+      background: #fff;
+      color: #444;
+      .box-shadow(10px, 0px, 12px, -5px rgba(0,0,0,.2) inset);
       .user {
         text-decoration: underline;
       }
@@ -29,6 +33,7 @@
       height: 4rem;
       overflow: hidden;
       background-color: #fff;
+      border-radius: 4px;
     }
 
     .user {
@@ -57,8 +62,9 @@
     }
 
     &.active {
-      background: #333;
+      background: @color3;
       color: #fff;
+      .box-shadow(-5px, 5px, 20px, -5px rgba(0,0,0,.2) inset);
     }
   }
 
@@ -68,11 +74,13 @@
     right: 20rem;
     bottom: 0;
     width: 30%;
+    max-width:300px;
     height: 300px;
     font-size: 1.1em;
     background: #f6f6f6;
     overflow: hidden;
-    border: 2px solid #666;
+    border: 2px solid #ccc;
+    border-width: 1px 0 0 1px;
 
     .chat-log-scroll-wrapper {
       position: absolute;

@@ -161,12 +161,20 @@
     }
 
     &.active {
-      background: #eee;
+      background: #bbb;
       padding: 1.5rem 2rem 1.5rem 14.6rem;
-
+      .box-shadows(10px 0 20px -12px #444 inset, 1px 0 0 0 #aaa inset);
       a,
       span {
-        color: @colorBlue3;
+        color: #555;
+        &:hover {
+          color: #555;
+        }
+      }
+      &:hover {
+        a, span {
+          color: #555;
+        }
       }
     }
 
