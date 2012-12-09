@@ -359,7 +359,17 @@ IS.changeView = function(currentView, destinationView) {
     // if leave is not rejected, transition between the two views
     function(cb) {
       log('animating views', 'info');
-      IS.animateToView(currentView, destinationView, cb);
+
+      // only animate when scrollTop < 10
+      // TODO: it's buggy; sometimes returns 0 when it's not actually 0
+      if($(document).scrollTop() < 10) {
+        IS.animateToView(currentView, destinationView, cb);
+      }
+      else {
+        destinationView.show();
+        $(document).scrollTop(0);
+        cb();
+      }
     },
     // execute any further actions defined by the destinationView's enter method
     function(cb){
