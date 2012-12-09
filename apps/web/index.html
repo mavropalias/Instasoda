@@ -521,36 +521,35 @@
 
       <script id="tplLikesFilters" type="text/template">
         <div id="likes-type-categories">
-
+            <ul data-liketype="1" class="likeCategory catDislikes">
+              <li><span class="viewCount">{{dislikesCount}}</span></li>
+              {{#dislikeCategories}}
+                <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+              {{/dislikeCategories}}
+            </ul>
+            <ul data-liketype="2" class="likeCategory catLikes">
+              <li><span class="viewCount">{{likesCount}}</span></li>
+              {{#likeCategories}}
+                <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+              {{/likeCategories}}
+            </ul>
+            <ul data-liketype="3" class="likeCategory catFavourites">
+              <li><span class="viewCount">{{favouritesCount}}</span></li>
+              {{#favsCategories}}
+                <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+              {{/favsCategories}}
+            </ul>
         </div>
         <section class="likeViewsContainer">
           <ul class="likeViews">
             <li class="likeView viewDislikes">
               <span class="icon icon-thumbs-down"></span>
-              <span class="viewCount">{{dislikesCount}}</span>
-              <ul data-liketype="1" class="likeCategory catDislikes">
-                {{#dislikeCategories}}
-                  <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
-                {{/dislikeCategories}}
-              </ul>
             </li>
             <li class="likeView viewLikes current">
               <span class="icon icon-thumbs-up"></span>
-              <span class="viewCount">{{likesCount}}</span>
-              <ul data-liketype="2" class="likeCategory catLikes">
-                {{#likeCategories}}
-                  <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
-                {{/likeCategories}}
-              </ul>
             </li>
             <li class="likeView viewFavs">
               <span class="icon icon-star-empty"></span>
-              <span class="viewCount">{{favouritesCount}}</span>
-              <ul data-liketype="3" class="likeCategory catFavourites">
-                {{#favsCategories}}
-                  <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
-                {{/favsCategories}}
-              </ul>
             </li>
           </ul>
           

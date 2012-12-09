@@ -8,7 +8,8 @@ var LikesView = Backbone.View.extend({
     'click .viewLikes': 'viewLikes',
     'click .viewFavs': 'viewFavs',
     'click .viewDislikes': 'viewDislikes',
-    'click .likeCategoryTitle': 'viewCategory'
+    'click .likeCategoryTitle': 'viewCategory',
+    'click .likeView': 'expandCategories'
   },
 
   // initialize
@@ -97,7 +98,7 @@ var LikesView = Backbone.View.extend({
       this.$('.likeView').removeClass('current');
 
       this.$('.viewLikes').addClass('current');
-      this.$('.catLikes').slideDown();
+      this.$('.catLikes').fadeIn();
     }
 
     // remove active class from sub-tabs
@@ -118,7 +119,7 @@ var LikesView = Backbone.View.extend({
       this.$('.likeView').removeClass('current');
 
       this.$('.viewFavs').addClass('current');
-      this.$('.catFavourites').slideDown();
+      this.$('.catFavourites').fadeIn();
     }
 
     // remove active class from sub-tabs
@@ -139,7 +140,7 @@ var LikesView = Backbone.View.extend({
       this.$('.likeView').removeClass('current');
 
       this.$('.viewDislikes').addClass('current');
-      this.$('.catDislikes').slideDown();
+      this.$('.catDislikes').fadeIn();
     }
 
     // remove active class from sub-tabs
@@ -168,6 +169,26 @@ var LikesView = Backbone.View.extend({
     this.likesListView.render(likesType, likesCategory);
     this.likesListView.show();
     this.likesListView.enter();
+  },
+
+  // expandCategories
+  // -----------------------------------------------------------------------
+  expandCategories: function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!$('#likes-type-categories').hasClass('active')) {
+      $('#likes-type-categories, #likesResults').addClass('active');
+      $('#likes-type-categories').slimScroll({
+        height: '100%',
+        allowPageScroll: false,
+        alwaysVisible: false,
+        railVisible: true,
+        position: 'right',
+        start: '100px',
+        width: '280px'
+      });
+    }
   }
 });
 
