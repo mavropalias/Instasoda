@@ -21,6 +21,9 @@ var LikesView = Backbone.View.extend({
     // get template
     this.template = document.getElementById("tplLikes").innerHTML;
 
+    // render on model change
+    this.model.bind('change:l', this.render);
+
     // initialize sub-views
     this.likesFiltersView = new LikesFiltersView({
       model: this.model
