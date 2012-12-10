@@ -306,7 +306,7 @@ var LikesListView = Backbone.View.extend({
       }
 
       // limit the number of rendered likes
-      if(iLimit > 0) likesToRender = likesToRender.slice(0, iLimit);
+      if(iLimit > 0 && likesToRender) likesToRender = likesToRender.slice(0, iLimit);
     }
 
     this.model.set({

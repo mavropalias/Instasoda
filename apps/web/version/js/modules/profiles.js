@@ -41,7 +41,7 @@ var MyProfileView = Backbone.View.extend({
     var likes = this.model.get('l');
 
     // parse likes and extend user model with favs & dislikes
-    IS.parseLikes(this.model, this.model.get('l'));
+    if(likes) IS.parseLikes(this.model, this.model.get('l'));
 
     // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());
