@@ -25,6 +25,8 @@ var MyProfileView = Backbone.View.extend({
     this.model.bind('change:w', this.render);
     this.model.bind('change:ff', this.render);
     this.model.bind('change:fd', this.render);
+    this.model.bind('change:l', this.render);
+    this.model.bind('change:p', this.render);
 
     // init sub views
     this.myPhotosView = new MyPhotosView({ model: this.model });
