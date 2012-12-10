@@ -865,6 +865,8 @@ IS.getCommonLikes = function(otherUserLikes) {
  * @param {Array} likes
  */
 IS.parseLikes = function(model, likes) {
+
+  if(IS.nullOrEmpty(likes)) return;
   
   var alikes = [];
   var aDislikes = [];
