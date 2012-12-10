@@ -216,13 +216,16 @@ var MyProfileView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   photoMakeDefault: function(e) {
     log('changing default photo', 'info');
-    var _this = this;
+
     e.preventDefault();
     e.stopPropagation();
 
+    var _this = this;
+    var parent = $(e.currentTarget).parent();
+
     // get photo id
-    var photoId = parseInt($(e.currentTarget).parent().children('> img').attr('id'));
-    var photoSrc = $(e.currentTarget).parent().children('img').attr('src');
+    var photoId = parseInt(parent.attr('id'));
+    var photoSrc = parent.data('src');
     var photos = this.model.get('p');
 
     // process and update model photos
@@ -235,28 +238,31 @@ var MyProfileView = Backbone.View.extend({
      }
     }
 
-    // update photo text to working
-    $('#profile-pictures #' + photoId + ' .picture-is-default').html('saving...');
+    // show loading animation
+    parent.children('.loading').fadeIn();
 
     // save model
     this.model.save({ 'p': photos }, {
       error: function(model, res) {
-        $('#profile-pictures #' + photoId + ' .picture-is-default').html('make default');
+        // hide loading animation
+        parent.children('.loading').fadeOut();
+
         alert('Error: could not change photo status');
       },
       success: function(model, res) {
         // save locally
         store.set("user", _this.model);
-        // update UI
-        $('#profile-pictures .photoMakeDefault').removeClass('hidden');
-        $('#profile-pictures .photoIsDefault').addClass('hidden');
 
-        $('#profile-pictures .photo').removeClass('picture-is-default');
-        $('#profile-pictures #' + photoId).addClass('picture-is-default');
+        // update old default photo
+        $('#profile-pictures .photoMakeDefault').removeClass('picture-is-default').html('');
 
-        $('#profile-pictures #' + photoId + ' .photoMakeDefault').addClass('hidden');
-        $('#profile-pictures #' + photoId + ' .photoIsDefault').removeClass('hidden');
-        $('#profile-pictures #' + photoId + ' .photoMakeDefault').html('make default');
+        // update new default photo
+        $('#profile-pictures #' + photoId + ' .photoMakeDefault')
+          .addClass('picture-is-default')
+          .html('<img src="./VERSION/images/profile/bg-default-true.png" alt="">');
+
+        // hide loading animation
+        parent.children('.loading').fadeOut();
 
         // update default profile photo in the page
         _this.$('#profile-picture img').attr('src', photoSrc);

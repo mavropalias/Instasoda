@@ -360,6 +360,20 @@
 
           <div class="row">
             <div class="twelve columns">
+              <div class="welcome">
+                <h2>Welcome to our closed beta {{u}}!</h2>
+                <p>
+                  We are very excited to have the first wave of people joining in! Things might be somewhat quite for a little while as we send out more beta invitations, so take your time to explore and perfect your profile :)
+                </p>
+                <p>We would love to hear your thoughts, ideas or any issues you might encounter.<p/>
+
+                <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">Send us a message</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="twelve columns">
               <h2>Find amazing people</h2>
               <p>
                 <a class="button" href="#search">Search for people</a>
@@ -370,21 +384,9 @@
 
           <div class="row">
             <div class="twelve columns">
-              <strong>or</strong>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="twelve columns">
               <h2>Find the perfect match for you, according to your common likes</h2>
               <div id="dashboard-matches" class="twelve columns">
               </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="twelve columns">
-              <strong>or</strong>
             </div>
           </div>
 
@@ -401,16 +403,7 @@
 
           <div class="row">
             <div class="twelve columns">
-              <strong>or</strong>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="twelve columns">
-              <h2>What do you think?</h2>
-              <p>We would love to hear your feedback about Instasoda. Please let us know your opinion, ideas and any issues you might encounter!<p/>
-
-              <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">What do you think about Instasoda?</a>
+              <p class="instasoda-build-number">Instasoda Closed Beta 1 (build #VERSION)</p>
             </div>
           </div>
 
@@ -1103,10 +1096,11 @@
 
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
-          <div class="four mobile-one columns">
+          <div class="four mobile-one columns" id="{{id}}" data-src="http://img.instasoda.com/u/{{f}}">
             <div class="picture-options photoMakeDefault {{#d}}picture-is-default{{/d}}">
               {{#d}}<img src="./VERSION/images/profile/bg-default-true.png" alt="">{{/d}}
             </div>
+            <div class="loading" class="animated"></div>
             <div class="view-original-image">
               <a href="http://img.instasoda.com/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
                 <span class="icon-search"></span>
