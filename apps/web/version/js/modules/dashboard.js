@@ -39,13 +39,23 @@ var DashboardView = Backbone.View.extend({
     this.$el.html(this.html);
 
     // show sub views
-    this.matchesResultsView.setElement(this.$('#dashboard-matches')).show();
+    this.matchesResultsView.setElement(this.$('#dashboard-matches .slides')).show();
   },
 
   // enter
   // ---------------------------------------------------------------------------
   enter: function() {
     log('entering DashboardView');
+
+    // enable flexSlider
+    $('#dashboard-matches').flexslider({
+      animation: "slide",
+      animationLoop: true,
+      itemWidth: 200,
+      itemMargin: 20,
+      minItems: 2,
+      maxItems: 8
+    });
   },
 
   // leave
