@@ -99,9 +99,14 @@
           height: auto;
         }
         &:hover {
-          .picture-options {
+          .photo-make-default {
             visibility: visible;
             background: url(../images/profile/bg-default-false.png) no-repeat left top;
+            opacity: 100;
+          }
+          .photo-delete {
+            visibility: visible;
+            background: red;
             opacity: 100;
           }
           .view-original-image {
@@ -113,7 +118,7 @@
           }
         }
       }
-      .picture-options {
+      .photo-make-default {
         position: absolute;
         width: 32px;
         height: 30px;
@@ -122,10 +127,10 @@
         background: url(../images/profile/bg-default-false.png) no-repeat left top;
         background-position: -32px -32px;
         z-index: 2;
+        cursor: pointer;
         .transition(all 0.2s ease-in-out);
         img {
           opacity: 0;
-          cursor: pointer;
         }
         &.picture-is-default {
           visibility: visible;
@@ -135,6 +140,19 @@
             opacity: 100;
           }
         }
+      }
+      .photo-delete {
+        position: absolute;
+        right: 0;
+        width: 32px;
+        height: 30px;
+        visibility: hidden;
+        opacity: 0;
+        background: red;
+        background-position: -32px -32px;
+        z-index: 2;
+        cursor: pointer;
+        .transition(all 0.2s ease-in-out);
       }
       .view-original-image {
         position: absolute;
