@@ -5,8 +5,8 @@ var MyProfileView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .photoMakeDefault': 'photoMakeDefault',
-    'click .photoDelete': 'photoDelete'
+    'click .photo-make-default': 'photoMakeDefault',
+    'click .photo-delete': 'photoDelete'
   },
 
   // initialize
@@ -25,6 +25,8 @@ var MyProfileView = Backbone.View.extend({
     this.model.bind('change:w', this.render);
     this.model.bind('change:ff', this.render);
     this.model.bind('change:fd', this.render);
+    this.model.bind('change:l', this.render);
+    this.model.bind('change:p', this.render);
 
     // init sub views
     this.myPhotosView = new MyPhotosView({ model: this.model });
@@ -41,7 +43,7 @@ var MyProfileView = Backbone.View.extend({
     var likes = this.model.get('l');
 
     // parse likes and extend user model with favs & dislikes
-    IS.parseLikes(this.model, this.model.get('l'));
+    if(likes) IS.parseLikes(this.model, this.model.get('l'));
 
     // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());
@@ -80,7 +82,8 @@ var MyProfileView = Backbone.View.extend({
         request: {
             endpoint: sApi + 'user/' + user.get('_id') + '/photo',
             params: {
-              tkn: user.get('tkn')
+              tkn: user.get('tkn'),
+              _id: user.get('_id')
             }
         },
         validation: {
@@ -113,7 +116,7 @@ var MyProfileView = Backbone.View.extend({
           $('.qq-upload-drop-area').removeClass('working');
         }
          
-        alert("Error, couldn't upload your photo! :(");
+        alert("Couldn't upload your photo! " + reason);
       })
       .on('complete', function(event, id, filename, res){
         iUploads--;
@@ -144,8 +147,7 @@ var MyProfileView = Backbone.View.extend({
             }
           });
         } else {
-          // TODO: handle errors
-          log('error uploading photo ' + fileName + ' (' + res.error + ')', 'error')
+          log('error uploading photo (' + res.error + ')', 'error', _this)
         }
 
         // When all photos have been uploaded:
@@ -254,10 +256,10 @@ var MyProfileView = Backbone.View.extend({
         store.set("user", _this.model);
 
         // update old default photo
-        $('#profile-pictures .photoMakeDefault').removeClass('picture-is-default').html('');
+        $('#profile-pictures .photo-make-default').removeClass('picture-is-default').html('');
 
         // update new default photo
-        $('#profile-pictures #' + photoId + ' .photoMakeDefault')
+        $('#profile-pictures #' + photoId + ' .photo-make-default')
           .addClass('picture-is-default')
           .html('<img src="./VERSION/images/profile/bg-default-true.png" alt="">');
 
@@ -273,13 +275,16 @@ var MyProfileView = Backbone.View.extend({
   // photoDelete
   // -----------------------------------------------------------------------
   photoDelete: function(e) {
-    var _this = this;
     log('deleting photo', 'info');
+
     e.preventDefault();
     e.stopPropagation();
 
+    var _this = this;
+    var parent = $(e.currentTarget).parent();
+
     // Get photo id
-    var photoId = parseInt($(e.currentTarget).parent().parent().attr('id'));
+    var photoId = parseInt(parent.attr('id'));
     var isDefault = false;
 
     // Check if this is the default profile photo
@@ -295,7 +300,8 @@ var MyProfileView = Backbone.View.extend({
       url: sApi + 'user/' + user.get('_id') + '/photo/' + photoId,
       type: 'DELETE',
       data: {
-        'fTkn': user.get('fTkn')
+        tkn: user.get('tkn'),
+        _id: user.get('_id')
       },
       success: function(data, textStatus, jqXHR){
         if(textStatus === 'success') {
@@ -309,15 +315,15 @@ var MyProfileView = Backbone.View.extend({
           }
           _this.model.set({ 'p': photos });
 
-          // save view
-          _this.save();
+          // save user
+          IS.saveUser();
 
           // trigger deletePhoto event for myPhotosView
           _this.myPhotosView.trigger('deletePhoto', photoId);
 
           // update default photo in the top sidebar
           log('replacing default photo with a generic one', 'info');
-          if(isDefault) _this.$('#basicInfo .photo img').attr('src', 'http://img.instasoda.com/i/noPhoto.png');
+          if(isDefault) _this.$('#profile-picture img').attr('src', 'http://img.instasoda.com/i/noPhoto.png');
         } else {
           alert('Error deleting photo');
         }

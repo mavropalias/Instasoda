@@ -1097,9 +1097,10 @@
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
           <div class="four mobile-one columns" id="{{id}}" data-src="http://img.instasoda.com/u/{{f}}">
-            <div class="picture-options photoMakeDefault {{#d}}picture-is-default{{/d}}">
+            <div class="picture-options photo-make-default {{#d}}picture-is-default{{/d}}">
               {{#d}}<img src="./VERSION/images/profile/bg-default-true.png" alt="">{{/d}}
             </div>
+            <div class="picture-options photo-delete"></div>
             <div class="loading" class="animated"></div>
             <div class="view-original-image">
               <a href="http://img.instasoda.com/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
