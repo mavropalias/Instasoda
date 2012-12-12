@@ -16,7 +16,7 @@
   background: #EEE;
   top: 0;
   padding: 95px 0 0 96px;
-  left: 92px;
+  left: 87px;
   overflow: hidden;
   border-right: 1px solid #ddd;
   .box-shadow(10px, 0, 20px, -5px #ccc inset);
@@ -130,9 +130,10 @@
     }
     .title {
       display: block;
+      padding-bottom: 10px;
     }
     .icon {
-      padding: 10px 0;
+      padding: 10px 0 0;
       .font-size(5, 5);
       color: #303030;
       .transition(all 0.2s ease-in-out);
@@ -148,8 +149,10 @@
       color: darkorange;
     }
     &.current {
-      background: #f2f2f2;
-      .box-shadow(10px, 0, 20px, -5px #ccc);
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-width: 1px 0 1px 0;
+      .box-shadow(10px, 0, 10px, -10px #ccc inset);
     }
   }
 }
