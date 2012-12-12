@@ -273,7 +273,7 @@ var SearchResultsView = Backbone.View.extend({
     log('rendering SearchResultsView');
     this.html = '';
     if(this.collection.length > 0 ) this.collection.each(this.renderItem);
-    else this.html = '<li class="no-results">nothing found :(</li>';
+    else this.html = '<li class="no-results">no people found :(</li>';
   },
 
   // show
