@@ -96,6 +96,7 @@ var SearchFiltersView = Backbone.View.extend({
     this.template = document.getElementById("tplSearchFilters").innerHTML;
 
     // bindings
+    this.model.bind('newSearchLike', this.refresh);
     this.model.bind('removedSearchLike', this.refresh);
     this.model.bind('change:so', this.refresh);
   },

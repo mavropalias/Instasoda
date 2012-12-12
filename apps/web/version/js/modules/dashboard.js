@@ -16,6 +16,7 @@ var DashboardView = Backbone.View.extend({
     this.model.bind('change:w', this.render);
     this.model.bind('change:ff', this.render);
     this.model.bind('change:fd', this.render);
+    this.collection.bind('reset', this.enter);
 
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });

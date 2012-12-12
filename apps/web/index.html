@@ -204,7 +204,7 @@
             <li id="nav_profile">
               <a class="hide-for-small" href="#me">
                 <span class="navIcon icon-user"></span>
-                <h3>MY PROFILE</h3>
+                <h3>PROFILE</h3>
               </a>
             </li>
           {{/_id}}
@@ -213,7 +213,7 @@
           <li id="nav_likes">
             <a class="hide-for-small" href="#likes">
               <span class="navIcon icon-thumbs-up"></span>
-              <h3>MY LIKES</h3>
+              <h3>INTERESTS</h3>
             </a>
           </li>
           {{/_id}}
@@ -651,7 +651,7 @@
       <script id="tplMatches" type="text/template">
        <div class="twelve mobile-four columns guidance">
           <span class="icon-info-sign"></span>
-          These are the people we think are close to your own interests. Too few? Try adding more likes to your profile. Too many? Try removing generic likes from your profile and add Favourites & Dislikes.
+            Matches are people who share your interests. Too few? Add more interests to your profile. Too many? Remove <a href="#likes">generic interests</a> from your profile and add Favourites & Dislikes, which are more important for matching.
         </div>
         <div id="matchesResults" class="column mainContent"></div>
       </script>
@@ -687,7 +687,7 @@
 
       <script id="tplSearchFilters" type="text/template">
         <section>
-          <h3>I’m interested in meeting...</h3>
+          <h2>I’m interested in meeting...</h2>
           <p>
             <label>
               <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
@@ -701,55 +701,49 @@
             </label>
           </p>
           <p>
-            <h3 id="ageNum"></h3>
+            <span id="ageNum"></span>
             <div id="ageRange"></div>
           </p>
           <p>
             <label>
               <input type="checkbox" name="onlyOnline" value="true" {{#so.on}}checked{{/so.on}}>
-              <span>people who are online now</span>
+              <span>who are online now</span>
             </label>
           </p>
           <p>
             <label>
               <input type="checkbox" name="nearMe" value="true" {{#so.nearMe}}checked{{/so.nearMe}}>
-              <span>people near me</span>
+              <span>near me</span>
             </label>
           </p>
+        </section>
 
-        <!--<section>
-          <h3>I’d like to meet people who live...</h3>
-          <span class="tip">'Near me' will bring up people that live around your area.</span>
-          <p>
-            <label><input type="radio" name="searchLocation" value="near" disabled />Near me</label>
-            <label><input type="radio" name="searchLocation" value="global" checked />Everywhere</label>
-          </p>
-        </section>-->
-        </section>
-        <section>
-          <h3>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
-          <ul class="likes">
-            {{#so.l}}
-              <li class="like" data-id="{{_id}}" data-name="{{n}}">
-                <span class="likePic">
-                  <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
-                </span>
-                <span class="likeName">{{n}}</span>
-              </li>
-            {{/so.l}}
-            {{^so.l}}
-              <p>Add up to 20 likes here and click search to see who likes them.</p>
-            {{/so.l}}
-          </ul>
+        <div class="row search-likes-row">
+          <div class="twelve columns">
+            <h2>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h2>
+            <ul class="likes">
+              {{#so.l}}
+                <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                  <img src="http://img.instasoda.com/l/{{_id}}_100.jpg" width=50 height=50 class="likeImg">
+                </div>
+              {{/so.l}}
+              {{^so.l}}
+                <p>Add up to 10 likes here and click search to see who likes them.</p>
+              {{/so.l}}
+            </ul>
 
-          <a id="buttonAddLikes" class="button" href="#likes">+ Add likes</a>
-        </section>
-        <section>
-          <button id="doSearch">Search for people</button>
-        </section>
-        <section>
-          <button id="doSearchRandom">Do a random search</button>
-        </section>
+            <a id="buttonAddLikes" class="button" href="#likes">+ Add likes</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="eight columns">
+            <button id="doSearch">Search</button>
+          </div>
+          <div class="four columns">
+            <button id="doSearchRandom">Randomize</button>
+          </div>
+        </div>
       </script>
 
 
