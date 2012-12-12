@@ -181,14 +181,6 @@
               <h3>HOME</h3>
             </a>
           </li>
-          {{#_id}}
-            <li id="nav_profile">
-              <a class="hide-for-small" href="#me">
-                <span class="navIcon icon-user"></span>
-                <h3>PROFILE</h3>
-              </a>
-            </li>
-          {{/_id}}
 
           {{#_id}}
           <li id="nav_matches">
@@ -200,30 +192,39 @@
           {{/_id}}
 
           {{#_id}}
-          <li id="nav_favourites">
-            <a class="hide-for-small" href="#favourites">
-              <span class="navIcon icon-user">
-                <span class="icon-star"></span>
-              </span>
-              <h3>FAVOURITES</h3>
+          <li id="nav_search">
+            <a class="hide-for-small" href="#search">
+              <span class="navIcon icon-search"></span>
+              <h3>SEARCH</h3>
             </a>
           </li>
+          {{/_id}}
+
+          {{#_id}}
+            <li id="nav_profile">
+              <a class="hide-for-small" href="#me">
+                <span class="navIcon icon-user"></span>
+                <h3>MY PROFILE</h3>
+              </a>
+            </li>
           {{/_id}}
 
           {{#_id}}
           <li id="nav_likes">
             <a class="hide-for-small" href="#likes">
               <span class="navIcon icon-thumbs-up"></span>
-              <h3>LIKES</h3>
+              <h3>MY LIKES</h3>
             </a>
           </li>
           {{/_id}}
 
           {{#_id}}
-          <li id="nav_search">
-            <a class="hide-for-small" href="#search">
-              <span class="navIcon icon-search"></span>
-              <h3>SEARCH</h3>
+          <li id="nav_favourites">
+            <a class="hide-for-small" href="#favourites">
+              <span class="navIcon icon-user">
+                <span class="icon-star"></span>
+              </span>
+              <h3>FAV PEOPLE</h3>
             </a>
           </li>
           {{/_id}}
@@ -372,21 +373,25 @@
 
           <div class="row">
             <div class="twelve columns">
-              <h2>Find amazing people</h2>
-              <p>
-                <a class="button" href="#search">Search for people</a>
-                <a class="button" href="#likes">Search using likes</a>
-              </p>
+              <h2>
+                {{#w}}{{^m}}Women{{/m}}{{/w}}
+                {{#w}}{{#m}}Women & men{{/m}}{{/w}}
+                {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your interests:
+              </h2>
+              <div id="dashboard-matches">
+                 <ul class="slides">
+                 </ul>
+              </div>
             </div>
           </div>
 
           <div class="row">
             <div class="twelve columns">
-              <h2>Find the perfect match for you, according to your common likes</h2>
-              <div id="dashboard-matches">
-                 <ul class="slides">
-                 </ul>
-              </div>
+              <h2>Find amazing people</h2>
+              <p>
+                <a class="button" href="#search">Search for people</a>
+                <a class="button" href="#likes">Search using likes</a>
+              </p>
             </div>
           </div>
 
@@ -863,14 +868,7 @@
 
             <div id="profile-pictures" class="row">
 
-              <!-- <div id="view-all-pictures" class="four mobile-one columns end">
-                <a href="#">
-                  <span class="icon-share-alt"></span>
-                  <strong>VIEW ALL</strong>
-                </a>
-              </div> -->
-
-              <div id="userPhotosList">
+              <div id="userPhotosList" class="profile-pictures-for-other-user">
                 <!-- USER PHOTOS -->
               </div>
 
