@@ -376,7 +376,7 @@
               <h2>
                 {{#w}}{{^m}}Women{{/m}}{{/w}}
                 {{#w}}{{#m}}Women & men{{/m}}{{/w}}
-                {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your interests:
+                {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your <a href="#likes">interests</a>:
               </h2>
               <div id="dashboard-matches">
                  <ul class="slides">
@@ -390,14 +390,14 @@
               <h2>Find amazing people</h2>
               <p>
                 <a class="button" href="#search">Search for people</a>
-                <a class="button" href="#likes">Search using likes</a>
+                <a class="button" href="#likes">Search using interests</a>
               </p>
             </div>
           </div>
 
           <div class="row">
             <div class="twelve columns">
-              <h2>Play with your likes to improve your matches</h2>
+              <h2>Play with your interests to improve your matches</h2>
               <p>
                 <a class="button" href="#likes">Favourites</a>
                 <a class="button" href="#likes">Likes</a>
@@ -530,55 +530,45 @@
             <ul data-liketype="1" class="likeCategory catDislikes">
               <li><span class="viewCount">{{dislikesCount}}</span></li>
               {{#dislikeCategories}}
-                <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+                <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle">
+                  <span class="likeCategoryTitleName">{{.}}</span>
+                </li>
               {{/dislikeCategories}}
             </ul>
             <ul data-liketype="2" class="likeCategory catLikes">
               <li><span class="viewCount">{{likesCount}}</span></li>
               {{#likeCategories}}
-                <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+                <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle">
+                  <span class="likeCategoryTitleName">{{.}}</span>
+                </li>
               {{/likeCategories}}
             </ul>
             <ul data-liketype="3" class="likeCategory catFavourites">
               <li><span class="viewCount">{{favouritesCount}}</span></li>
               {{#favsCategories}}
-                <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle"><img src="http://lorempixel.com/100/100/" alt><span class="likeCategoryTitleName">{{.}}</span></li>
+                <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle">
+                  <span class="likeCategoryTitleName">{{.}}</span>
+                </li>
               {{/favsCategories}}
             </ul>
         </div>
         <section class="likeViewsContainer">
           <ul class="likeViews">
-            <li class="likeView viewDislikes">
-              <span class="icon icon-thumbs-down"></span>
+            <li class="likeView viewFavs">
+              <span class="icon icon-star-empty"></span>
+              <span class="title">Favourites</span>
             </li>
             <li class="likeView viewLikes current">
               <span class="icon icon-thumbs-up"></span>
+              <span class="title">Likes</span>
             </li>
-            <li class="likeView viewFavs">
-              <span class="icon icon-star-empty"></span>
+            <li class="likeView viewDislikes">
+              <span class="icon icon-thumbs-down"></span>
+              <span class="title">Dislikes</span>
             </li>
           </ul>
           
         </section>
-      </script>
-
-
-    <!------------------------------------------------------------------------>
-    <!-- LIKES CATEGORY VIEW -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplSearchLikes" type="text/template">
-        <h3>Search using likes <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
-        <ul class="likes">
-          {{#so.l}}
-            <li class="like" data-id="{{_id}}" data-name="{{n}}">
-              <span class="likePic">
-                <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
-              </span>
-              <span class="likeName">{{n}}</span>
-            </li>
-          {{/so.l}}
-        </ul>
       </script>
 
 
@@ -728,11 +718,11 @@
                 </div>
               {{/so.l}}
               {{^so.l}}
-                <p>Add up to 10 likes here and click search to see who likes them.</p>
+                <p>Add up to 10 interests here and click search to see who likes them.</p>
               {{/so.l}}
             </ul>
 
-            <a id="buttonAddLikes" class="button" href="#likes">+ Add likes</a>
+            <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
           </div>
         </div>
 
@@ -857,7 +847,7 @@
           </div>
 
           <div id="profile-pictures-wrapper" class="mobile-four twelve columns secondary-block">
-            <h2>pictures</h2>
+            <h2>photos</h2>
             <span>{{#u}}{{u}}{{/u}}&#8217;s best moments</span>
 
             <div id="profile-pictures" class="row">
@@ -884,7 +874,7 @@
 
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
-            <h1>{{#u}}{{u}}{{/u}}&#8217s Likes&nbsp;<strong class="large counter">{{likeCount}}</strong></h1>
+            <h1>{{#u}}{{u}}{{/u}}&#8217s interests&nbsp;<strong class="large counter">{{likeCount}}</strong></h1>
           </div>  
 
           <div id="likesSection" class="twelve mobile-four columns secondary-block end">
@@ -910,7 +900,7 @@
           <div class="twelve columns no-padding">
             <div class="twelve columns">
               <span class="icon-user"></span>
-              <h1>my profile <a class="smaller darkred button" href="#me/edit">edit</a></h1>
+              <h1>{{u}} <a class="smaller darkred button" href="#me/edit">edit my profile</a></h1>
             </div>
 
             <div id="profile-picture" class="mobile-four columns secondary-block">
@@ -973,8 +963,8 @@
           </div>
 
           <div id="profile-pictures-wrapper" class="mobile-four twelve columns secondary-block">
-            <h2>my pictures</h2>
-            <span>YOUR MOST PRECIOUS MOMENTS DEPICTED</span>
+            <h2>my photos</h2>
+            <span>UPLOAD YOUR BEST, HIGH QUALITY PHOTOS</span>
 
             <div id="profile-pictures" class="row">
 
@@ -1002,7 +992,7 @@
         <div id="block-likes">
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
-            <h1>my likes <a class="smaller button" href="#likes">view all</a></h1>
+            <h1>my interests <a class="smaller button" href="#likes">view all</a></h1>
           </div>
 
           <div id="like-block-favourites" class="twelve mobile-four columns ">
@@ -1027,6 +1017,7 @@
               <h2>LIKES&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
             </div>
             <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
+            <a class="button" href="#likes">view all my interests</a>
           </div>
         </div>
 
