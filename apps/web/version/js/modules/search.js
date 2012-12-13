@@ -171,7 +171,7 @@ var SearchFiltersView = Backbone.View.extend({
     var options = new Object({
       'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : 0),
       'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : 0),
-      'on': ((this.$('input[name=onlyOnline]:checked').length > 0) ? true : false),
+      'on': ((this.$('input[name=onlyOnline]:checked').length > 0) ? true : null),
       'nearMe': ((this.$('input[name=nearMe]:checked').length > 0) ? 1 : 0),
       'ageMin': this.$("#ageRange").slider("values", 0),
       'ageMax': this.$("#ageRange").slider("values", 1),
@@ -197,7 +197,7 @@ var SearchFiltersView = Backbone.View.extend({
     var options = new Object({
       'w': ((this.model.get('w') === 1) ? 'female' : 0),
       'm': ((this.model.get('w') === 1) ? 'male' : 0),
-      'on': false,
+      'on': null,
       'nearMe': 0,
       'ageMin': randomMinAge,
       'ageMax': randomMinAge + 5,
