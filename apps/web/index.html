@@ -512,12 +512,14 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikes" type="text/template">
-        <div class="twelve mobile-four columns guidance">
-          <span class="icon-info-sign"></span>
-          We match you with others using your likes, so make sure they really represent your true self! Favourites and dislikes have more weight in matching than regular likes.
-        </div>
         <div id="likesFilters"></div>
-        <div id="likesResults" class="twelve mobile-four columns secondary-block"></div>
+        <div id="likesResultsWrapper" class="twelve mobile-four columns secondary-block">
+            <div class="twelve mobile-four columns guidance">
+              <span class="icon-info-sign"></span>
+              We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes. To set an interest as a favourite/like/dislike just move your mouse cursor over it and click on one of the options. To remove an interest, click on its current type to deselect it and it will be gone the next time you visit this page.
+            </div>
+            <div id="likesResults" class="twelve mobile-four columns"></div>
+        </div>
       </script>
 
 

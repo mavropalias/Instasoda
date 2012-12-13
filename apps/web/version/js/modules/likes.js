@@ -181,7 +181,7 @@ var LikesView = Backbone.View.extend({
     e.stopPropagation();
 
     if (!$('#likes-type-categories').hasClass('active')) {
-      $('#likes-type-categories, #likesResults').addClass('active');
+      $('#likes-type-categories, #likesResultsWrapper').addClass('active');
       $('#likes-type-categories').slimScroll({
         height: '100%',
         allowPageScroll: false,
