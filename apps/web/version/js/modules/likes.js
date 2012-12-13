@@ -450,7 +450,7 @@ var FacebookLikePanelView = Backbone.View.extend({
   // addOrRemoveLikeFromSearchOptions
   // -----------------------------------------------------------------------
   addOrRemoveLikeFromSearchOptions: function(e) {
-    IS.addOrRemoveLikeFromSearchOptions(this.model.get('_id'), this.model.get('n'));
+    IS.addOrRemoveLikeFromSearchOptions(this.model.get('_id').toString(), this.model.get('n'));
   },
 
   // rateLike1
