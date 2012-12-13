@@ -26,7 +26,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <link rel="shortcut icon" href="/favicon.ico">
 
-  <!-- CUSTOM FONTS 
+  <!-- CUSTOM FONTS
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700,600' rel='stylesheet' type='text/css'>-->
 
@@ -489,7 +489,7 @@
 
     <script id="tplOnlineUsers" type="text/template">
       <span id="navOnlineUsersCount">
-        {{count}} 
+        {{count}}
       </span>
     </script>
 
@@ -567,7 +567,7 @@
               <span class="title">Dislikes</span>
             </li>
           </ul>
-          
+
         </section>
       </script>
 
@@ -745,7 +745,7 @@
         <a href="./#{{_id}}">
           {{#p}}
             {{#d}}
-              <div>                
+              <div>
                 {{#on}}
                   <div class='onlineStatus isOnline' title='user is online!'></div>
                 {{/on}}
@@ -790,7 +790,7 @@
                     <button id="sendMessage" class="left">Send message / Chat</button>
                     <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
                     <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
-                  </div>   
+                  </div>
                 {{/d}}
               {{/p}}
               {{^p}}
@@ -860,13 +860,13 @@
 
           </div>
 
-        </div>   
+        </div>
 
         <div id="block-likes">
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
             <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;<strong class="large counter">{{commonLikesCount}}</strong></h1>
-          </div>  
+          </div>
 
           <div id="commonLikes" class="twelve mobile-four columns ">
             <div id="like-block-favourites-placeholder" class="row">You and {{#u}}{{u}}{{/u}} don&#8217;t have any likes in common.</div>
@@ -875,7 +875,7 @@
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
             <h1>{{#u}}{{u}}{{/u}}&#8217s interests&nbsp;<strong class="large counter">{{likeCount}}</strong></h1>
-          </div>  
+          </div>
 
           <div id="likesSection" class="twelve mobile-four columns secondary-block end">
             <div id="facebookLikes">
@@ -956,7 +956,7 @@
               <span>WRITE A LITTLE BIT ABOUT YOURSELF</span>
               <div class="row">
                 <div class="twelve columns">
-                  <p>{{a}}</p>
+                  <p>{{{a}}}</p>
                 </div>
               </div>
             </div>
@@ -1067,7 +1067,7 @@
 
               <div class="eight columns">
                 <h2 title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.">A little bit about myself</h2>
-                <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 30rem;">{{a}}</div>
+                <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 30rem;">{{{a}}}</div>
               </div>
             </div>
 
@@ -1170,7 +1170,7 @@
         <div class="settingContainer settingGenderPrefs">
           <div class="setting">
             <div class="settingTitle">
-              {{u}}, would you like to meet <strong>men</strong> or <strong>women</strong> for 
+              {{u}}, would you like to meet <strong>men</strong> or <strong>women</strong> for
               {{#ff}}
                 {{#fd}}
                   friendship & dating
