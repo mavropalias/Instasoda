@@ -142,21 +142,21 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
     favType: favType
   }, function(err, result) {
     if(!err) {
-      
+
       // update the user model's favs array
       if(!!user.get('favs')) { // favs property exists
         var userFavs = user.get('favs');
 
         // check if the userToFavId already exists
         var indexOfFav = userFavs.indexOf(userToFavId);
-        
+
         if(favType == 'add') {
           userFavs.push(userToFavId);
 
           user.set({
             favs: userFavs
           });
-          
+
           // save user locally
           store.set("user", user);
 
@@ -206,7 +206,7 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
           //IS.notify('Removed favourite!', null, userToFavName + ' removed from your favourites.');
           console.log('- removed user from favourites');
         }
-        
+
       } else { // user has not set any favs yet
         user.set({
           favs: [userToFavId]
@@ -233,7 +233,7 @@ IS.addOrRemoveLikeFromSearchOptions = function(likeId, likeName) {
   // AND is the total likes are no more than 10
   // if so, then add it to the user model
   // ==========================================================
-  if(!_.any(userSearchLikes, function(like) { return like._id == likeId; }) && userSearchLikes.length < 10) 
+  if(!_.any(userSearchLikes, function(like) { return like._id == likeId; }) && userSearchLikes.length < 10)
   {
     console.log(' - adding search like');
 
@@ -273,7 +273,7 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
   // if so, change its rating or remove it
   // ==========================================================
   var like = _.find(userLikes, function(like) { return like._id == likeId; })
-  if(!!like) 
+  if(!!like)
   {
     if(like.r != likeRating) {
       console.log(' - changing like\'s rating to ' + likeRating);
@@ -389,7 +389,7 @@ IS.changeView = function(currentView, destinationView) {
 }
 
 /**
- * Creates an animated transition from the current view to the 
+ * Creates an animated transition from the current view to the
  * destination view.
  * @param currentView
  * @param destinationView
@@ -405,7 +405,7 @@ IS.animateToView = function(currentView, destinationView, cb) {
       {
         opacity: 0,
         'margin-left': '-40px'
-      }, 200, 'easeInQuad', 
+      }, 200, 'easeInQuad',
       function() {
         // hide destinationView
         destinationView.$el.css({
@@ -571,27 +571,27 @@ IS.prepareApp = function(bForceLogin, cb) {
  * Attempts to auth a FB user.
  */
 IS.facebookAuth = function(cb){
-  console.log('> Doing Facebook auth');  
+  console.log('> Doing Facebook auth');
   FB.getLoginStatus(function(res) {
     if (!res.authResponse) {
-      //user is not connected to the app or logged out        
-        FB.login(function(response) { 
+      //user is not connected to the app or logged out
+        FB.login(function(response) {
           IS.facebookAuth(cb);
         },
         {
           scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
           + 'user_activities,user_education_history,user_interests,'
           + 'user_likes,user_photos'
-        });    
-      
+        });
+
     } else {
       if (res.status === 'connected') {
-        console.log('> User is logged into Facebook and has authenticated the application');            
-        
+        console.log('> User is logged into Facebook and has authenticated the application');
+
         // get facebook token data
         IS.fbToken = res.authResponse.accessToken;
         IS.fbTokenExpires = res.authResponse.expiresIn;
-                    
+
         // Check if token is still valid
         if(IS.fbTokenExpires > 0) {
           console.log('> Facebook token expires in ' + (IS.fbTokenExpires / 60) + ' minutes');
@@ -645,7 +645,7 @@ IS.login = function(fTkn, fTid, cb) {
 
     if (user.get('_id')) {
       console.log('- found user in local storage');
-      
+
       // sync local data from server
       user.fetch(
         {
@@ -656,7 +656,7 @@ IS.login = function(fTkn, fTid, cb) {
             //TODO: properly handle errors
             //a false might only mean that the API server is N/A
             console.log('- login error: ' + response.error);
-            alert('Could not sync your account from server!');
+            //alert('Could not sync your account from server!');
             IS.logout();
         },
           success: function(model, response) {
@@ -674,33 +674,33 @@ IS.login = function(fTkn, fTid, cb) {
             // ----
             else {
               console.log('- ' + response.error);
-              alert('Could not sync your account from server!');
+              //alert('Could not sync your account from server!');
               IS.logout();
             }
           }
         }
       );
-      
+
       user.set({ 'fTkn': fTkn });
       store.set("user", user);
 
       cb(null);
     } else {
       console.log('- trying the API: ' + fTid);
-      
+
       user.set({
         '_id': fTid,
         'fTkn': fTkn
       });
-      
+
       // connect to the API server and fetch the user
       // --------------------------------------------
       user.fetch(
-        { 
+        {
           data: {
             'fTkn': fTkn
           }
-        , 
+        ,
           error: function(model, response) {
             //TODO: properly handle errors
             //a false might only mean that the API server is N/A
@@ -714,7 +714,7 @@ IS.login = function(fTkn, fTid, cb) {
             console.log('- got an API response');
             // Now check if the account was created
             // ------------------------------------
-            if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {                    
+            if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
               // store the user details locally
               // ------------------------------
               store.set("user", user);
@@ -867,7 +867,7 @@ IS.getCommonLikes = function(otherUserLikes) {
 IS.parseLikes = function(model, likes) {
 
   if(IS.nullOrEmpty(likes)) return;
-  
+
   var alikes = [];
   var aDislikes = [];
   var aFavs = [];
@@ -950,7 +950,7 @@ IS.setupPage = function (page) {
       size: '10px'
     });
   */
-  
+
 }
 
 /**
@@ -1085,7 +1085,7 @@ IS.pageFlip = function (c1, c2) {
   $('#pageFlipPlaceholder .pageB').css({
     'width': iWidth + 'px'
   });
-  
+
   $('#pageFlipPlaceholder .pageA, #pageFlipPlaceholder .pageApartialInner, #pageFlipPlaceholder .pageB, #pageFlipPlaceholder .pageBpartialInner').children().show();
   $('#pageFlipPlaceholder').show();
 
@@ -1226,7 +1226,7 @@ function addToFancybox(jqObjects) {
  * @param context
  */
 function log(msg, msgType, context) {
-  if (typeof console != "undefined") { 
+  if (typeof console != "undefined") {
     switch(msgType) {
       case 'log':
         console.log('  ~ ' + msg);
@@ -1310,7 +1310,7 @@ Backbone.sync = function(method, model, options) {
   var requestData = {};
 
   // Set UTC timestamp
-  var now = new Date(); 
+  var now = new Date();
   var timestamp = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
   // Create request object
