@@ -713,18 +713,24 @@
         <div class="row search-likes-row">
           <div class="twelve columns">
             <h2>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h2>
-            <ul class="likes">
+
+            <ul class="block-grid six-up">
               {{#so.l}}
-                <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
-                  <img src="http://img.instasoda.com/l/{{_id}}_100.jpg" width=50 height=50 class="likeImg">
-                </div>
+                <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                  <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50>
+                  <div class="remove-search-like icon-remove"></div>
+                </li>
               {{/so.l}}
               {{^so.l}}
                 <p>Add up to 10 interests here and click search to see who likes them.</p>
               {{/so.l}}
             </ul>
 
-            <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
+            <div class="row">
+              <div class="twelve columns">
+                <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
+              </div>
+            </div>
           </div>
         </div>
 

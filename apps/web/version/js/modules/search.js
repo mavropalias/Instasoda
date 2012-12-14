@@ -83,8 +83,7 @@ var SearchFiltersView = Backbone.View.extend({
   events: {
     'click #doSearch': 'doSearch',
     'click #doSearchRandom': 'doSearchRandom',
-    'mouseover .like': 'showLikePanel',
-    'mouseout .like': 'hideLikePanel'
+    'click .remove-search-like': 'removeSearchLike'
   },
 
   // initialize
@@ -210,34 +209,14 @@ var SearchFiltersView = Backbone.View.extend({
     IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + options.random);
   },
 
-  // showLikePanel
+  // removeSearchLike
   // -----------------------------------------------------------------------
-  showLikePanel: function(e) {
-    var target = $(e.currentTarget);
+  removeSearchLike: function(e) {
+    var likeId = $(e.currentTarget).parent().data('id');
+    var likeName = $(e.currentTarget).parent().data('name');
 
-    if(target.find('.likePanel').length > 0) target.find('.likePanel').show();
-    else {
-      // construct a new like model, based on the event's target
-      var likeAttrs = {
-        _id: target.data('id'),
-        n: target.data('name')
-      };
-      var like = new Like(likeAttrs);
-
-      // create the panel view & render it
-      var facebookLikePanelView = new FacebookLikePanelView({
-        model: like
-      });
-      facebookLikePanelView.render();
-      $(e.currentTarget).append(facebookLikePanelView.el);
-    }
+    IS.addOrRemoveLikeFromSearchOptions(likeId, likeName);
   },
-
-  // hideLikePanel
-  // -----------------------------------------------------------------------
-  hideLikePanel: function() {
-    this.$('.likePanel').hide();
-  }
 });
 
 // =========================================================================
