@@ -25,7 +25,8 @@ var SettingsUsernameView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   render: function() {
     console.log('  ~ rendering SettingsUsernameView');
-    this.$el.html($('#tplSettingsUsername').html());
+    var template = $('#tplSettingsUsername').html();
+    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
   },
 
   // show
@@ -41,6 +42,9 @@ var SettingsUsernameView = Backbone.View.extend({
 
     var u = this.$('.settingUsernameInput').val();
     if(!IS.nullOrEmpty(u)) {
+      // delete temp name
+      this.model.unset('tempU', {silent: true});
+
       // save user model
       this.model.set('u', u);
       IS.saveUser();
@@ -97,7 +101,7 @@ var SettingsLocationView = Backbone.View.extend({
     showMapAndGetLocation('#mapContainer', true, function(lat, lng, formattedAddress) {
       _this.model.set('loc', [lng, lat]);
       _this.model.set('locN', formattedAddress);
-      
+
       // save user model
       IS.saveUser();
 
