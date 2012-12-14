@@ -18,6 +18,9 @@ var SearchView = Backbone.View.extend({
     this.searchFiltersView = new SearchFiltersView({
       model: this.model
     });
+
+    // update UI on collection change
+    this.collection.bind('reset', this.refreshSidebarButtons);
   },
 
   // render
@@ -71,6 +74,12 @@ var SearchView = Backbone.View.extend({
       _this.show();
       _this.enter();
     });
+  },
+
+  // refreshSidebarButtons
+  // ---------------------------------------------------------------------------
+  refreshSidebarButtons: function() {
+    this.searchFiltersView.refreshSidebarButtons();
   }
 });
 
@@ -163,9 +172,19 @@ var SearchFiltersView = Backbone.View.extend({
     }
   },
 
+  // refreshSidebarButtons
+  // ---------------------------------------------------------------------------
+  refreshSidebarButtons: function() {
+    this.$('#doSearch, #doSearchRandom').removeClass('transparent hidden');
+    this.$('#working').addClass('transparent hidden');
+  },
+
   // doSearch
   // -----------------------------------------------------------------------
   doSearch: function() {
+    this.$('#doSearch, #doSearchRandom').addClass('transparent hidden');
+    this.$('#working').removeClass('transparent hidden');
+
     // fetch search options
     var options = new Object({
       'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 'female' : 0),
@@ -185,12 +204,20 @@ var SearchFiltersView = Backbone.View.extend({
     });
     IS.saveUser();
 
-    IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + '0');
+    //IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + '0');
+
+    options.l = (!!this.model.get('so').l) ? _.pluck(this.model.get('so').l, '_id') : [];
+    usersCollection.fetch({
+      data: options
+    });
   },
 
   // doSearchRandom
   // -----------------------------------------------------------------------
   doSearchRandom: function() {
+    this.$('#doSearch, #doSearchRandom').addClass('transparent hidden');
+    this.$('#working').removeClass('transparent hidden');
+
     var randomMinAge = Math.floor(Math.random() * (65 - 18 + 1) + 18); // 18-65
     // fetch search options
     var options = new Object({
@@ -206,7 +233,11 @@ var SearchFiltersView = Backbone.View.extend({
       'random': 1
     });
 
-    IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + options.random);
+    //IS.navigateTo('search/' + options.m + '/' + options.w + '/' + options.nearMe + '/' + options.ageMin + '/' + options.ageMax + '/' + options.on + '/' + options.random);
+
+    usersCollection.fetch({
+      data: options
+    });
   },
 
   // removeSearchLike

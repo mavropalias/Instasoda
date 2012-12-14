@@ -14,16 +14,16 @@ var Router = Backbone.Router.extend({
 
     // Edit my profile
     "me/edit": "editMyProfile",
-    
+
     // My profile
     "me": "myProfile",
-    
+
     // Matches
     "matches": "matches",
 
     // Search filters
     "search": "search",
-    
+
     // Search results
     "search/:m/:w/:nearMe/:ageMin/:ageMax/:onlyOnline/:random": "search",
 
@@ -35,18 +35,18 @@ var Router = Backbone.Router.extend({
 
     // Mosaic
     "mosaic": "mosaic",
-    
+
     // Beta message
     "beta": "beta",
-    
+
     // Logout
     "logout": "logout",
-    
+
     // View user
     ":id": "viewUser"
   },
 
-  // welcome 
+  // welcome
   // -----------------------------------------------------------------------
   welcome: function() {
     log('routing welcome page', 'info');
@@ -66,7 +66,7 @@ var Router = Backbone.Router.extend({
           IS.changeView(IS.currentView, welcomeView);
           IS.setupPage('home');
         }
-        else 
+        else
         {
           /*dashboardView.render();
           $('#content > div').detach();
@@ -100,7 +100,7 @@ var Router = Backbone.Router.extend({
       IS.setupPage('profile');
     }
   },
-  
+
   // myProfile
   // -----------------------------------------------------------------------
   myProfile: function() {
@@ -140,7 +140,7 @@ var Router = Backbone.Router.extend({
       IS.setupPage('matches');
     }
   },
-       
+
   // search
   // -----------------------------------------------------------------------
   search: function(m, w, nearMe, ageMin, ageMax, onlyOnline, random) {
@@ -148,7 +148,7 @@ var Router = Backbone.Router.extend({
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        // search by like - array with like id's
+        // search by like - array with like ids
         var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
 
         // fetch options from URL - if null then load user defaults
@@ -191,7 +191,7 @@ var Router = Backbone.Router.extend({
       });
       return;
     } else {
-      // search by like - array with like id's
+      // search by like - array with like ids
       var searchByLike = (!!user.get('so').l) ? _.pluck(user.get('so').l, '_id') : [];
 
       // fetch options - if null then load user defaults
@@ -284,9 +284,9 @@ var Router = Backbone.Router.extend({
   // -----------------------------------------------------------------------
   mosaic: function() {
     log('routing mosaic page', 'info');
-    
+
     $('#content > div').detach();
-    
+
     // create div & iframe for mosaic
     $('<div id="mosaic"/>').appendTo('#content');
     $('<iframe id="mosaicFrame"/>').appendTo('#mosaic');
@@ -297,14 +297,14 @@ var Router = Backbone.Router.extend({
 
     IS.setupPage('mosaic');
   },
-  
+
   // logout
   // -----------------------------------------------------------------------
   logout: function() {
     log('routing logout page', 'info');
     IS.logout();
   },
-  
+
   // viewUser
   // -----------------------------------------------------------------------
   viewUser: function(id) {
@@ -331,12 +331,12 @@ var Router = Backbone.Router.extend({
             usersFullView.render();
             router.previousProfileViewed = id;
           }
-          
+
           IS.changeView(IS.currentView, usersFullView);
           IS.setupPage('viewprofile');
         }
       });
     }
-  }  
-}); 
+  }
+});
 var router = null;
