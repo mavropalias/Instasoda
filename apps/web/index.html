@@ -656,8 +656,8 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearch" type="text/template">
-        <div id="searchFilters" class="three columns sidebar"></div>
-        <div id="searchResults" class="nine columns mainContent"></div>
+        <div id="searchFilters" class="mobile-four columns"></div>
+        <div id="searchResults" class="twelve mobile-four columns secondary-block"></div>
       </script>
 
 
@@ -667,22 +667,20 @@
 
       <script id="tplSearchFilters" type="text/template">
         <section>
-          <h2>I’m interested in meeting...</h2>
-          <p>
+          <h3>I’m interested in meeting...</h3>
+          <p class="menWomenSelect">
             <label>
               <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
               <span>Women</span>
             </label>
-          </p>
-          <p>
             <label>
               <input type="checkbox" name="interestedInMen" value="true" {{#so.m}}checked{{/so.m}}>
               <span>Men</span>
             </label>
           </p>
           <p>
-            <span id="ageNum"></span>
             <div id="ageRange"></div>
+            <span id="ageNum"></span>
           </p>
           <p>
             <label>
@@ -698,30 +696,28 @@
           </p>
         </section>
 
-        <div class="twelve columns search-likes-row">
-          <div class="twelve columns">
-            <h2>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h2>
+        <section class="twelve columns search-likes-row">
+          <h2>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h2>
 
-            <ul class="block-grid six-up">
-              {{#so.l}}
-                <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
-                  <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50>
-                  <div class="remove-search-like icon-remove"></div>
-                </li>
-              {{/so.l}}
-              {{^so.l}}
-                <p>Add up to 10 interests here and click search to see who likes them.</p>
-              {{/so.l}}
-            </ul>
-            <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
-          </div>
-        </div>
+          <ul class="block-grid six-up">
+            {{#so.l}}
+              <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50>
+                <div class="remove-search-like icon-remove"></div>
+              </li>
+            {{/so.l}}
+            {{^so.l}}
+              <p>Add up to 10 interests here and click search to see who likes them.</p>
+            {{/so.l}}
+          </ul>
+          <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
+        </section>
 
-        <div class="">
+        <section class="">
           <div id="working" class="working animated transparent hidden twelve columns"></div>
           <button id="doSearch" class="six columns button animated">Search</button>
           <button id="doSearchRandom" class="five columns button animated">Surprise me</button>
-        </div>
+        </section>
       </script>
 
 
