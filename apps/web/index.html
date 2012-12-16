@@ -357,62 +357,50 @@
       <script id="tplDashboard" type="text/template">
         <div id="dashboard">
 
-          <div class="row">
-            <div class="twelve columns">
-              <div class="welcome">
-                <h2>Welcome to our closed beta {{u}}!</h2>
-                <p>
-                  We are very excited to have the first wave of people joining in! Things might be somewhat quite for a little while as we send out more beta invitations, so take your time to explore and perfect your profile :)
-                </p>
-                <p>We would love to hear your thoughts, ideas or any issues you might encounter.<p/>
-
-                <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">Send us a message</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="twelve columns">
-              <h2>
-                {{#w}}{{^m}}Women{{/m}}{{/w}}
-                {{#w}}{{#m}}Women & men{{/m}}{{/w}}
-                {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your <a href="#likes">interests</a>:
-              </h2>
-              <div id="dashboard-matches">
-                 <ul class="slides">
-                 </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="twelve columns">
-              <h2>Find amazing people</h2>
+          <div class="twelve columns">
+            <div class="welcome">
+              <h2>Welcome to our closed beta {{u}}!</h2>
               <p>
-                <a class="button" href="#search">Search for people</a>
-                <a class="button" href="#likes">Search using interests</a>
+                We are very excited to have the first wave of people joining in! Things might be somewhat quite for a little while as we send out more beta invitations, so take your time to explore and perfect your profile :)
               </p>
+              <p>We would love to hear your thoughts, ideas or any issues you might encounter.<p/>
+
+              <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">Send us a message</a>
             </div>
           </div>
 
-          <div class="row">
-            <div class="twelve columns">
-              <h2>Play with your interests to improve your matches</h2>
-              <p>
-                <a class="button" href="#likes">Favourites</a>
-                <a class="button" href="#likes">Likes</a>
-                <a class="button" href="#likes">Dislikes</a>
-              </p>
+          <div class="twelve columns">
+            <h2>
+              {{#w}}{{^m}}Women{{/m}}{{/w}}
+              {{#w}}{{#m}}Women & men{{/m}}{{/w}}
+              {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your <a href="#likes">interests</a>:
+            </h2>
+            <div id="dashboard-matches">
+               <ul class="slides">
+               </ul>
             </div>
           </div>
 
-          <div class="row">
-            <div class="twelve columns">
-              <p class="instasoda-build-number">Instasoda Closed Beta 1 (build #VERSION)</p>
-            </div>
+          <div class="twelve columns">
+            <h2>Find amazing people</h2>
+            <p>
+              <a class="button" href="#search">Search for people</a>
+              <a class="button" href="#likes">Search using interests</a>
+            </p>
           </div>
 
+          <div class="twelve columns">
+            <h2>Play with your interests to improve your matches</h2>
+            <p>
+              <a class="button" href="#likes">Favourites</a>
+              <a class="button" href="#likes">Likes</a>
+              <a class="button" href="#likes">Dislikes</a>
+            </p>
+          </div>
 
+          <div class="twelve columns">
+            <p class="instasoda-build-number">Instasoda Closed Beta 1 (build #VERSION)</p>
+          </div>
 
         </div>
       </script>
@@ -710,7 +698,7 @@
           </p>
         </section>
 
-        <div class="row search-likes-row">
+        <div class="twelve columns search-likes-row">
           <div class="twelve columns">
             <h2>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h2>
 
@@ -725,19 +713,14 @@
                 <p>Add up to 10 interests here and click search to see who likes them.</p>
               {{/so.l}}
             </ul>
-
-            <div class="row">
-              <div class="twelve columns">
-                <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
-              </div>
-            </div>
+            <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
           </div>
         </div>
 
-        <div class="row">
+        <div class="">
           <div id="working" class="working animated transparent hidden twelve columns"></div>
-          <button id="doSearch" class="seven columns button animated">Search</button>
-          <button id="doSearchRandom" class="four columns button animated">Surprise me</button>
+          <button id="doSearch" class="six columns button animated">Search</button>
+          <button id="doSearchRandom" class="five columns button animated">Surprise me</button>
         </div>
       </script>
 
@@ -959,10 +942,8 @@
             <div id="profile-introduction" class="mobile-four columns secondary-block end">
               <h2>my introduction</h2>
               <span>WRITE A LITTLE BIT ABOUT YOURSELF</span>
-              <div class="row">
-                <div class="twelve columns">
-                  <p>{{{a}}}</p>
-                </div>
+              <div class="twelve columns">
+                <p>{{{a}}}</p>
               </div>
             </div>
           </div>
@@ -1037,15 +1018,12 @@
         <div id="block-profile" class="profile-options">
           <div class="twelve columns no-padding">
 
-            <div class="row">
+
               <div class="twelve columns">
                 <span class="icon-user"></span>
                 <h1>edit my profile <a class="smaller darkred button" href="#me">cancel</a></h1>
               </div>
-            </div>
-
-            <div class="row">
-              <div class="four columns">
+              <div class="four columns sidebar">
                 <h2>My Instasoda name <span class="tip" title="This is how other instasoda users will see you."></span></h2>
                 <input type="text" name="username" value="{{u}}" required maxlength=50>
 
@@ -1074,15 +1052,12 @@
                 <h2 title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.">A little bit about myself</h2>
                 <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 30rem;">{{{a}}}</div>
               </div>
-            </div>
 
-            <div class="row">
               <div class="mobile-twelve columns">
                 <button type="submit" id="saveProfileButton" class="animated">Save my profile</button>
                 <span class="tip" title="Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced periodically & automatically. We will not make any changes (we can&#8217;t!) to your Facebook acount ;)"></span>
                 <div id="working" class="animated transparent"></div>
               </div>
-            </div>
 
           </div>
         </div> <!-- #block-profile -->
