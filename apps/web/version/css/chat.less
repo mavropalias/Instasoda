@@ -6,8 +6,7 @@
   background: #ddd;
   width: 20rem;
   display: none;
-  //border-left: 1px solid #999;
-  //.box-shadow(10px, 0, 20px, -12px #888 inset);
+  word-wrap: break-word;
   .box-shadows(10px 0 20px -12px #777 inset, 1px 0 0 0 #ccc inset);
 
   .chat-tab {
@@ -68,6 +67,18 @@
     }
   }
 
+  .chat-sessions-container {
+    position: fixed;
+    bottom: 0;
+    right: 20rem;
+    width: 30%;
+    background: #eee;
+    border: 1px solid #ddd;
+    border-width: 1px 0 0 1px;
+    padding: 0;
+    z-index: 9999;
+  }
+
   .chat-session {
     display: none;
     position: fixed;
@@ -83,12 +94,7 @@
     border-width: 1px 0 0 1px;
 
     .chat-log-scroll-wrapper {
-      position: absolute;
-      top: 0px;
-      right: 0;
-      left: 0;
-      bottom: 45px;
-      margin: 0 0 0 10px;
+      padding: 1rem;
     }
     
     .chat-log {
