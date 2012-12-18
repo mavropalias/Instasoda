@@ -143,8 +143,21 @@
       }
     }
     .title {
-      display: block;
-      padding-bottom: 10px;
+      display: inline-block;
+      padding: 0.1rem 0.8rem;
+      margin-bottom: 1.4rem;
+      font-size: 1.1rem;
+      border-radius: 10px;
+      color: white;
+    }
+    &.viewFavs .title {
+      background: darkOrange;
+    }
+    &.viewLikes .title {
+      background: #3DBCDF;
+    }
+    &.viewDislikes .title {
+      background: #ccc;
     }
     .icon {
       padding: 10px 0 0;
@@ -157,7 +170,7 @@
       color: @colorBlue3;
     }
     .icon-thumbs-down {
-      color: #ddd;
+      color: #ccc;
     }
     .icon-star-empty {
       color: darkorange;
