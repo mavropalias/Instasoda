@@ -22,10 +22,14 @@
   left: 183px;
   overflow: hidden;
   border-left: 1px solid #c9c9c9;
-  .box-shadow(-10px, 0, 20px, -5px #ddd inset);
   .transition(all 0.3s ease-in-out);
   z-index: 2;
+  .opacity(0);
+  visibility: hidden;
   &.active {
+    .opacity(100);
+    visibility: visible;
+    .box-shadow(-10px, 0, 20px, -5px #ddd inset);
     //width: 280px;
     .likeCategory {
       .opacity(100);
