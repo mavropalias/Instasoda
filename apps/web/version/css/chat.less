@@ -4,7 +4,7 @@
   bottom: 0;
   top: 7rem;
   background: #ddd;
-  width: 20rem;
+  width: 25rem;
   display: none;
   word-wrap: break-word;
   .box-shadows(10px 0 20px -12px #777 inset, 1px 0 0 0 #ccc inset);
@@ -15,7 +15,7 @@
     cursor: pointer;
     position: relative;
     padding: 5px 5px 5px 7px;
-    
+
     &:hover {
       background: #fff;
       color: #444;
@@ -24,7 +24,7 @@
         text-decoration: underline;
       }
     }
-    
+
     .photo {
       float: left;
       margin-right: 0.5rem;
@@ -47,7 +47,7 @@
       font-size: 0.9rem;
       display: block;
     }
-    
+
     .unread-messages {
       font-size: 0.9rem;
       position: absolute;
@@ -70,9 +70,9 @@
   .chat-sessions-container {
     position: fixed;
     bottom: 0;
-    right: 20rem;
-    width: 30%;
-    background: #eee;
+    right: 0;
+    width: 25rem;
+    background: #f6f6f6;
     border: 1px solid #ddd;
     border-width: 1px 0 0 1px;
     padding: 0;
@@ -82,34 +82,33 @@
   .chat-session {
     display: none;
     position: fixed;
-    right: 20rem;
+    right: 0;
     bottom: 0;
-    width: 30%;
-    max-width:300px;
-    height: 300px;
-    font-size: 1.1em;
+    width: 25rem;
     background: #f6f6f6;
+    border: 1px solid #ddd;
+    max-width:400px;
+    height: 30rem;
+    font-size: 1.1em;
     overflow: hidden;
-    border: 2px solid #ccc;
-    border-width: 1px 0 0 1px;
 
     .chat-log-scroll-wrapper {
       padding: 1rem;
     }
-    
+
     .chat-log {
       display: block;
       line-height: 1.5rem;
-      
+
       .chat-log-line {
         font-size: 1.3rem;
         line-height: 1.7rem;
         margin: 0.5rem 1.5rem 0.5rem 0;
-        
+
         .user {
           color: #999;
         }
-        
+
         .time {
           font-size: 1.1rem;
           color: #999;
@@ -117,7 +116,7 @@
         }
       }
     }
-    
+
     .chat-controls {
       position: absolute;
       bottom: 0;
@@ -127,7 +126,7 @@
       #send-sessage-form {
         margin: 0;
       }
-      
+
       .chat-input {
         display: block;
         background: #fff;
@@ -138,7 +137,7 @@
         height: 1.7rem;
         line-height: 1.7rem;
         font-size: 1.3rem;
-        
+
         &:focus {
           outline: none;
         }

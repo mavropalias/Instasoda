@@ -15,13 +15,13 @@ var ChatSessionTabs = Backbone.View.extend({
     // sub-views
     this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
   },
-  
+
   // events
   // -----------------------------------------------------------------------
   events: {
     'click .chat-tab': 'chatSessionsTabClick'
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -52,28 +52,28 @@ var ChatSessionTabs = Backbone.View.extend({
           railVisible: true,
           position: 'right',
           start: 'top',
-          width: '20rem'
+          width: '25rem'
         });
       }
     });
   },
-  
+
   // renderSessionTab
   // -----------------------------------------------------------------------
   renderSessionTab: function(model) {
     console.log('  ~ renderSessionTab');
-    
+
     var _this = this;
-    
+
     // when fetching the chat sessions from the API server, we need to
     // pre-process the 'u' property of the model, and set it to the other
     // person's username
     if(IS.nullOrEmpty(model.get('u'))) {
       var otherPersonsId = (model.get('uA') == user.get('_id')) ? model.get('uB') : model.get('uA');
-      
+
       // now find the other person's username, using his id
       if(!IS.nullOrEmpty(otherPersonsId)) {
-        console.log(' - (chat) looking up username for id #' + otherPersonsId);          
+        console.log(' - (chat) looking up username for id #' + otherPersonsId);
         socket.emit('getBasicUserInfoFromId', {
           userId: otherPersonsId
         }, function(err, user) {
@@ -83,7 +83,7 @@ var ChatSessionTabs = Backbone.View.extend({
               ag: user.ag,
               p: user.p
             })
-            
+
             // render the template
             var template = $('#tplChatSessionsButtons').html();
             _this.$('.chat-tabs').append(Mustache.to_html(template, model.toJSON()));
@@ -91,7 +91,7 @@ var ChatSessionTabs = Backbone.View.extend({
             console.log('!!! ERROR: renderSessionTab -> ' + err);
             //TODO: handle errors
           }
-        }); 
+        });
       } // else do nothing
     } else {
       // render the template
@@ -99,10 +99,10 @@ var ChatSessionTabs = Backbone.View.extend({
       _this.$('.chat-tabs').append(Mustache.to_html(template, model.toJSON()));
     }
   },
-  
+
   // chatSessionsTabClick
   // -----------------------------------------------------------------------
-  chatSessionsTabClick: function(e) {        
+  chatSessionsTabClick: function(e) {
     var _this = this;
     var sSessionId = $(e.currentTarget).attr('id');
     var toHide = false;
@@ -119,16 +119,16 @@ var ChatSessionTabs = Backbone.View.extend({
 
     if(!toHide) this.showChatSession(sSessionId);
   },
-  
+
   // showChatSession
   // -----------------------------------------------------------------------
   showChatSession: function(sSessionId) {
     console.log('  - showChatSession (1): ' + sSessionId);
-    
+
     // apply 'active' style to the tab
     this.$('.chat-tab').removeClass('active');
     this.$('#' + sSessionId).addClass('active');
-    
+
     // set 'active' status for the model in the collection
     this.collection.each(function(m) {
       if(m.get('active')) {
@@ -138,7 +138,7 @@ var ChatSessionTabs = Backbone.View.extend({
     this.collection.each(function(m) {
       if(m.get('_id') == sSessionId ) {
         console.log('  ~ showChatSession (2): ' + m.get('_id'));
-        m.set({ active: true });            
+        m.set({ active: true });
       }
     });
   },
@@ -155,40 +155,40 @@ var ChatSessionTabs = Backbone.View.extend({
       }
     });
   },
-  
+
   // initiateSessionWith
   // -----------------------------------------------------------------------
   initiateSessionWith: function(userId, username, age, photos) {
     var _this = this;
-    
+
     userbarView.showChatWindow();
-    
+
     // get session id
     var sessionId;
     socket.emit('getChatSession', {
-      userA: user.get('_id'), 
+      userA: user.get('_id'),
       userB: userId
     }, function(err, result) {
       if(!err) {
         sessionId = result._id;
-        
+
         var sessionExistsLocally = _this.collection.find(function(session) {
           return session.get('_id') == sessionId;
         });
-        
+
         if(!sessionExistsLocally) {
           _this.collection.add([
-            { 
-              _id: sessionId, 
-              u: username, 
+            {
+              _id: sessionId,
+              u: username,
               ag: age,
               p: photos,
-              m: 0, 
-              active: true, 
+              m: 0,
+              active: true,
               log: result.log }
           ]);
         }
-      
+
         _this.showChatSession(sessionId);
       } else {
         alert("Couldn't initiate chat session!");
@@ -202,7 +202,7 @@ var ChatSessionTabs = Backbone.View.extend({
     console.log('  - fetchChatSessionFromServerById: ' + sessionId);
 
     var _this = this;
-    
+
     // get session details
     socket.emit('getChatSessionById', {
       sId: sessionId
@@ -224,7 +224,7 @@ var ChatSessionTabs = Backbone.View.extend({
 // ChatSessionsView
 // =========================================================================
 
-var ChatSessionsView = Backbone.View.extend({      
+var ChatSessionsView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
@@ -234,7 +234,7 @@ var ChatSessionsView = Backbone.View.extend({
     this.collection.bind('remove', this.render);
     this.collection.bind('change:active', this.showHideSession);
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -242,7 +242,7 @@ var ChatSessionsView = Backbone.View.extend({
     this.$el.html('');
     this.collection.each(this.renderSession);
   },
-  
+
   // renderSession
   // -----------------------------------------------------------------------
   renderSession: function(model) {
@@ -253,7 +253,7 @@ var ChatSessionsView = Backbone.View.extend({
     chatSessionView.render();
     this.$el.append(chatSessionView.el);
   },
-  
+
   // showHideSession
   // -----------------------------------------------------------------------
   showHideSession: function(model) {
@@ -264,7 +264,7 @@ var ChatSessionsView = Backbone.View.extend({
     if(model.get('active')) {
       // show chat session and focus on the text input field
       this.$('#session_' + model.get('_id')).show().find('.chat-input').focus();
-      
+
       // convert timestamps to timeago
       this.$('.time').timeago();
 
@@ -278,7 +278,7 @@ var ChatSessionsView = Backbone.View.extend({
         start: 'bottom'
       });
     }
-    
+
     //TODO: investigate why this gets triggered twice
   }
 });
@@ -294,7 +294,7 @@ var ChatSessionView = Backbone.View.extend({
   events: {
     'submit form#send-sessage-form': 'sendMessage'
   },
-  
+
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
@@ -302,7 +302,7 @@ var ChatSessionView = Backbone.View.extend({
     _.bindAll(this);
     this.model.bind('change:log', this.renderNewChatMessage);
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -310,32 +310,32 @@ var ChatSessionView = Backbone.View.extend({
     var template = $('#tplChatSession').html();
     this.$el.html(Mustache.to_html(template, this.model.toJSON()));
   },
-  
+
   // renderNewChatMessage
   // -----------------------------------------------------------------------
   renderNewChatMessage: function(sMsg) {
     console.log('  ~ (chat) renderNewChatMessage');
     oChatLog = $('.chat-log', this.el);
-    
+
     // append the new msg into the dom
     var template = $('#tplChatLog').html();
     oChatLog.append(Mustache.to_html(template, sMsg));
-    
+
     // convert timestamps to timeago
     $('.chat-log .time', this.el).timeago();
-    
+
     // scroll to the bottom of the chat log
     oChatLog.scrollTop(oChatLog[0].scrollHeight);
   },
-  
+
   // sendMessage
   // -----------------------------------------------------------------------
   sendMessage: function(e) {
     console.log('  - (chat) sendMessage');
-    
+
     // return if msg is empty
     if(this.$('.chat-input').val() == "") return false;
-    
+
     // construct message
     var date = new Date().toJSON();
     var sMsg = {
@@ -343,11 +343,11 @@ var ChatSessionView = Backbone.View.extend({
       t: date,
       m: $('.chat-input', this.el).val()
     };
-    
+
     // update the model's log
     this.model.get('log').push(sMsg);
     this.model.trigger('change:log', sMsg);
-    
+
     // send message to the other person via Socket.IO
     socket.emit('newChatMessage', {
       uid: user.get('_id'),
@@ -356,10 +356,10 @@ var ChatSessionView = Backbone.View.extend({
     }, function(data) {
       // TODO:  handle chat msg response
     });
-    
+
     // clear chat input
     $('.chat-input', this.el).val('');
-    
+
     // done - prevent default form action
     return false;
   }
