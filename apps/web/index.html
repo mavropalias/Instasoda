@@ -211,7 +211,7 @@
 
           {{#_id}}
           <li id="nav_likes">
-            <a class="hide-for-small" href="#likes">
+            <a class="hide-for-small" href="#interests">
               <span class="navIcon icon-thumbs-up"></span>
               <h3>INTERESTS</h3>
             </a>
@@ -373,7 +373,7 @@
             <h2>
               {{#w}}{{^m}}Women{{/m}}{{/w}}
               {{#w}}{{#m}}Women & men{{/m}}{{/w}}
-              {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your <a href="#likes">interests</a>:
+              {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your <a href="#interests">interests</a>:
             </h2>
             <div id="dashboard-matches">
                <ul class="slides">
@@ -385,16 +385,16 @@
             <h2>Find amazing people</h2>
             <p>
               <a class="button" href="#search">Search for people</a>
-              <a class="button" href="#likes">Search using interests</a>
+              <a class="button" href="#interests">Search using interests</a>
             </p>
           </div>
 
           <div class="twelve columns">
             <h2>Play with your interests to improve your matches</h2>
             <p>
-              <a class="button" href="#likes">Favourites</a>
-              <a class="button" href="#likes">Likes</a>
-              <a class="button" href="#likes">Dislikes</a>
+              <a class="button" href="#interests/favourites">Favourites</a>
+              <a class="button" href="#interests/likes">Likes</a>
+              <a class="button" href="#interests/dislikes">Dislikes</a>
             </p>
           </div>
 
@@ -503,7 +503,9 @@
         <div id="likesFilters"></div>
         <div id="likes-type-categories">
             <ul data-liketype="3" class="likeCategory catFavourites">
-              <li><span class="viewCount">{{favouritesCount}} FAVOURITES</span></li>
+              <li data-liketype="3" data-cat="" class="likeCategoryTitle likeCategoryTitleAll">
+                <span class="likeCategoryTitleName">All my favourites ({{favouritesCount}})</span>
+              </li>
               {{#favsCategories}}
                 <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle">
                   <span class="likeCategoryTitleName">{{.}}</span>
@@ -511,7 +513,9 @@
               {{/favsCategories}}
             </ul>
             <ul data-liketype="2" class="likeCategory catLikes">
-              <li><span class="viewCount">{{likesCount}} LIKES</span></li>
+              <li data-liketype="2" data-cat="" class="likeCategoryTitle likeCategoryTitleAll">
+                <span class="likeCategoryTitleName">All my likes ({{likesCount}})</span>
+              </li>
               {{#likeCategories}}
                 <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle">
                   <span class="likeCategoryTitleName">{{.}}</span>
@@ -519,7 +523,9 @@
               {{/likeCategories}}
             </ul>
             <ul data-liketype="1" class="likeCategory catDislikes">
-              <li><span class="viewCount">{{dislikesCount}} DISLIKES</span></li>
+              <li data-liketype="1" data-cat="" class="likeCategoryTitle likeCategoryTitleAll">
+                <span class="likeCategoryTitleName">All my dislikes ({{dislikesCount}})</span>
+              </li>
               {{#dislikeCategories}}
                 <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle">
                   <span class="likeCategoryTitleName">{{.}}</span>
@@ -527,7 +533,7 @@
               {{/dislikeCategories}}
             </ul>
         </div>
-        <div id="likesResultsWrapper" class="twelve mobile-four columns secondary-block">
+        <div id="likesResultsWrapper" class="twelve mobile-four columns secondary-block active">
             <div class="twelve mobile-four columns guidance">
               <span class="icon-info-sign"></span>
               We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes. To set an interest as a favourite/like/dislike just move your mouse cursor over it and click on one of the options. To remove an interest, click on its current type to deselect it and it will be gone the next time you visit this page.
@@ -545,16 +551,22 @@
         <section class="likeViewsContainer">
           <ul class="likeViews">
             <li class="likeView viewFavs">
-              <span class="icon icon-star-empty"></span>
-              <span class="title">Favourites</span>
+              <a href="#interests/favourites">
+                <span class="icon icon-star-empty"></span>
+                <span class="title">Favourites</span>
+              </a>
             </li>
             <li class="likeView viewLikes current">
-              <span class="icon icon-thumbs-up"></span>
-              <span class="title">Likes</span>
+              <a href="#interests/likes">
+                <span class="icon icon-thumbs-up"></span>
+                <span class="title">Likes</span>
+              </a>
             </li>
             <li class="likeView viewDislikes">
-              <span class="icon icon-thumbs-down"></span>
-              <span class="title">Dislikes</span>
+              <a href="#interests/dislikes">
+                <span class="icon icon-thumbs-down"></span>
+                <span class="title">Dislikes</span>
+              </a>
             </li>
           </ul>
 
@@ -594,7 +606,9 @@
         <div class="row">
           {{#likesToRender}}
             <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
-                <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="http://img.instasoda.com/i/loading.gif" width=100 height=100 class="likeImg">
+              <div class="like-image-container">
+                <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="http://img.instasoda.com/i/loading.gif" width="100" class="likeImg">
+              </div>
               <p title="{{n}}">{{n}}</p>
             </div>
           {{/likesToRender}}
@@ -631,7 +645,7 @@
       <script id="tplMatches" type="text/template">
        <div class="twelve mobile-four columns guidance">
           <span class="icon-info-sign"></span>
-            Matches are people who share your interests. Too few? Add more interests to your profile. Too many? Remove <a href="#likes">generic interests</a> from your profile and add Favourites & Dislikes, which are more important for matching.
+            Matches are people who share your interests. Too few? Add more interests to your profile. Too many? Remove <a href="#interests/likes">generic interests</a> from your profile and add <a href="#interests/favourites">Favourites</a> & <a href="#interests/dislikes">Dislikes</a>, which are more important for matching.
         </div>
         <div id="matchesResults" class="twelve columns mainContent"></div>
       </script>
@@ -710,7 +724,7 @@
               <p>Add up to 10 interests here and click search to see who likes them.</p>
             {{/so.l}}
           </ul>
-          <a id="buttonAddLikes" class="smaller button" href="#likes">+ Add interests</a>
+          <a id="buttonAddLikes" class="smaller button" href="#interests">+ Add interests</a>
         </section>
 
         <section class="">
@@ -974,13 +988,13 @@
         <div id="block-likes">
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
-            <h1>my interests <a class="smaller button" href="#likes">view all</a></h1>
+            <h1>my interests <a class="smaller button" href="#interests">view all</a></h1>
           </div>
 
           <div id="like-block-favourites" class="twelve mobile-four columns ">
             <div class="like-type-label">
               <span class="icon-star"></span>
-              <h2>FAVOURITES&nbsp;<strong class="counter">{{favouritesCount}}</strong></h2>
+              <h2><a href="#interests/favourites">FAVOURITES</a>&nbsp;<strong class="counter">{{favouritesCount}}</strong></h2>
             </div>
             <div id="like-block-favourites-placeholder" class="row">No favs yet!</div>
           </div>
@@ -988,7 +1002,7 @@
           <div id="like-block-dislikes" class="twelve mobile-four columns end secondary-block">
             <div class="like-type-label">
               <span class="icon-thumbs-down"></span>
-              <h2>DISLIKES&nbsp;<strong class="counter">{{dislikesCount}}</strong></h2>
+              <h2><a href="#interests/dislikes">DISLIKES</a>&nbsp;<strong class="counter">{{dislikesCount}}</strong></h2>
             </div>
             <div id="like-block-dislikes-placeholder" class="row">No dislikes yet!</div>
           </div>
@@ -996,10 +1010,10 @@
           <div id="like-block-likes" class="twelve mobile-four columns secondary-block end">
             <div class="like-type-label">
               <span class="icon-thumbs-up"></span>
-              <h2>LIKES&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
+              <h2><a href="#interests/likes">LIKES</a>&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
             </div>
             <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
-            <a class="button" href="#likes">view all my interests</a>
+            <a class="button" href="#interests/likes">view all my likes</a>
           </div>
         </div>
 

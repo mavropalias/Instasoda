@@ -5,11 +5,7 @@ var LikesView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .viewLikes': 'viewLikes',
-    'click .viewFavs': 'viewFavs',
-    'click .viewDislikes': 'viewDislikes',
-    'click .likeCategoryTitle': 'viewCategory',
-    'click .likeView': 'expandCategories'
+    'click .likeCategoryTitle': 'viewCategory'
   },
 
   // initialize
@@ -31,6 +27,9 @@ var LikesView = Backbone.View.extend({
     this.likesListView = new LikesListView({
       model: this.model
     });
+
+    // viewMode
+    this.viewMode = 2; // 2 = likes
   },
 
   // render
@@ -46,24 +45,66 @@ var LikesView = Backbone.View.extend({
 
     // render sub views
     this.likesFiltersView.render();
-    this.likesListView.render();
+    this.likesListView.render(this.viewMode);
   },
 
   // show
   // -----------------------------------------------------------------------
-  show: function() {
+  show: function(viewMode) {
     log('showing LikesView');
     this.$el.html(this.html);
 
     // show sub views
     this.likesFiltersView.setElement(this.$('#likesFilters')).show();
     this.likesListView.setElement(this.$('#likesResults')).show();
+
+
+    // update the viewMode
+    this.$('.likeCategory').hide();
+    this.$('.likeView').removeClass('current');
+
+    // dislikes
+    if(viewMode === 1) {
+      this.$('.viewDislikes').addClass('current');
+      this.$('.catDislikes').show();
+    }
+    // favourites
+    else if(viewMode === 3) {
+      this.$('.viewFavs').addClass('current');
+      this.$('.catFavourites').show();
+    }
+    // likes
+    else {
+      this.$('.viewLikes').addClass('current');
+      this.$('.catLikes').show();
+    }
+
+    // remove active class from sub-tabs & activate the "all" tab
+    this.$(".likeCategoryTitle").removeClass('active');
+    this.$(".likeCategoryTitleAll").addClass('active');
+
+    // update this.viewMode
+    this.viewMode = viewMode;
+
+    this.likesListView.render(viewMode);
+    this.likesListView.show();
   },
 
   // enter
   // ---------------------------------------------------------------------------
   enter: function() {
     log('entering LikesView');
+
+    // add slimscroll to the sub-categories panel
+    this.$('#likes-type-categories').slimScroll({
+      height: '100%',
+      allowPageScroll: false,
+      alwaysVisible: false,
+      railVisible: true,
+      position: 'right',
+      start: '100px',
+      width: '235px'
+    });
 
     // enter sub views
     this.likesFiltersView.enter();
@@ -91,69 +132,6 @@ var LikesView = Backbone.View.extend({
     });
   },
 
-  // viewAll
-  // -----------------------------------------------------------------------
-  viewLikes: function() {
-    log('showing likes');
-
-    if(!this.$('.viewLikes').hasClass('current')) {
-      this.$('.likeCategory').hide();
-      this.$('.likeView').removeClass('current');
-
-      this.$('.viewLikes').addClass('current');
-      this.$('.catLikes').fadeIn();
-    }
-
-    // remove active class from sub-tabs
-    this.$(".likeCategoryTitle").removeClass('active');
-
-    this.likesListView.render(2);
-    this.likesListView.show();
-    this.likesListView.enter();
-  },
-
-  // viewFavs
-  // -----------------------------------------------------------------------
-  viewFavs: function() {
-    log('showing favourites');
-
-    if(!this.$('.viewFavs').hasClass('current')) {
-      this.$('.likeCategory').hide();
-      this.$('.likeView').removeClass('current');
-
-      this.$('.viewFavs').addClass('current');
-      this.$('.catFavourites').fadeIn();
-    }
-
-    // remove active class from sub-tabs
-    this.$(".likeCategoryTitle").removeClass('active');
-
-    this.likesListView.render(3);
-    this.likesListView.show();
-    this.likesListView.enter();
-  },
-
-  // viewDislikes
-  // -----------------------------------------------------------------------
-  viewDislikes: function() {
-    log('showing dislikes');
-
-    if(!this.$('.viewDislikes').hasClass('current')) {
-      this.$('.likeCategory').hide();
-      this.$('.likeView').removeClass('current');
-
-      this.$('.viewDislikes').addClass('current');
-      this.$('.catDislikes').fadeIn();
-    }
-
-    // remove active class from sub-tabs
-    this.$(".likeCategoryTitle").removeClass('active');
-
-    this.likesListView.render(1);
-    this.likesListView.show();
-    this.likesListView.enter();
-  },
-
   // viewCategory
   // -----------------------------------------------------------------------
   viewCategory: function(e) {
@@ -172,26 +150,6 @@ var LikesView = Backbone.View.extend({
     this.likesListView.render(likesType, likesCategory);
     this.likesListView.show();
     this.likesListView.enter();
-  },
-
-  // expandCategories
-  // -----------------------------------------------------------------------
-  expandCategories: function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (!$('#likes-type-categories').hasClass('active')) {
-      $('#likes-type-categories, #likesResultsWrapper').addClass('active');
-      $('#likes-type-categories').slimScroll({
-        height: '100%',
-        allowPageScroll: false,
-        alwaysVisible: false,
-        railVisible: true,
-        position: 'right',
-        start: '100px',
-        width: '235px'
-      });
-    }
   }
 });
 

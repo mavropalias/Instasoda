@@ -27,8 +27,9 @@ var Router = Backbone.Router.extend({
     // Search results
     "search/:m/:w/:nearMe/:ageMin/:ageMax/:onlyOnline/:random": "search",
 
-    // Likes
-    "likes": "likes",
+    // Interests
+    "interests/:category": "interests",
+    "interests": "interests",
 
     // Favourites
     "favourites": "favourites",
@@ -52,25 +53,16 @@ var Router = Backbone.Router.extend({
     log('routing welcome page', 'info');
 
     if(appReady) {
-      /*dashboardView.render();
-      $('#content > div').detach();
-      $('#content').append(dashboardView.el);*/
       IS.changeView(IS.currentView, dashboardView);
       IS.setupPage('home');
     } else {
       IS.prepareApp(null, function() {
-        if(user.get('_id') == null) {
-          /*welcomeView.render();
-          $('#content > div').detach();
-          $('#content').append(welcomeView.el);*/
+        if(IS.nullOrEmpty(user.get('_id'))) {
           IS.changeView(IS.currentView, welcomeView);
           IS.setupPage('home');
         }
         else
         {
-          /*dashboardView.render();
-          $('#content > div').detach();
-          $('#content').append(dashboardView.el);*/
           IS.changeView(IS.currentView, dashboardView);
           IS.setupPage('home');
         }
@@ -85,17 +77,11 @@ var Router = Backbone.Router.extend({
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        /*myProfileView.render();
-        $('#content > div').detach();
-        $('#content').append(myProfileView.el);*/
         IS.changeView(IS.currentView, editMyProfileView);
         IS.setupPage('profile');
       });
       return;
     } else {
-      /*myProfileView.render();
-      $('#content > div').detach();
-      $('#content').append(myProfileView.el);*/
       IS.changeView(IS.currentView, editMyProfileView);
       IS.setupPage('profile');
     }
@@ -108,17 +94,11 @@ var Router = Backbone.Router.extend({
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        /*myProfileView.render();
-        $('#content > div').detach();
-        $('#content').append(myProfileView.el);*/
         IS.changeView(IS.currentView, myProfileView);
         IS.setupPage('profile');
       });
       return;
     } else {
-      /*myProfileView.render();
-      $('#content > div').detach();
-      $('#content').append(myProfileView.el);*/
       IS.changeView(IS.currentView, myProfileView);
       IS.setupPage('profile');
     }
@@ -183,9 +163,6 @@ var Router = Backbone.Router.extend({
             }
           });
         }
-        /*searchView.render();
-        $('#content > div').detach();
-        $('#content').append(searchView.el);*/
         IS.changeView(IS.currentView, searchView);
         IS.setupPage('search');
       });
@@ -226,55 +203,44 @@ var Router = Backbone.Router.extend({
           }
         });
       }
-      /*searchView.render();
-      $('#content > div').detach();
-      $('#content').append(searchView.el);*/
       IS.changeView(IS.currentView, searchView);
       IS.setupPage('search');
     }
   },
 
-  // likes
+  // interests
   // -----------------------------------------------------------------------
-  likes: function() {
-    log('routing likes page', 'info');
+  interests: function(category) {
+    log('routing interests page', 'info');
+
+    var viewMode = 2;
+    if(category == "favourites") viewMode = 3;
+    else if(category == "dislikes") viewMode = 1;
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        /*likesView.render();
-        $('#content > div').detach();
-        $('#content').append(likesView.el);*/
-        IS.changeView(IS.currentView, likesView);
+        IS.changeView(IS.currentView, likesView, viewMode);
         IS.setupPage('likes');
       });
       return;
     } else {
-      /*likesView.render();
-      $('#content > div').detach();
-      $('#content').append(likesView.el);*/
-      IS.changeView(IS.currentView, likesView);
+      IS.changeView(IS.currentView, likesView, viewMode);
       IS.setupPage('likes');
     }
   },
 
-  // favourites
+  // favourite users
   // -----------------------------------------------------------------------
   favourites: function() {
     log('routing favourites page', 'info');
 
     if(!appReady) {
       IS.prepareApp(null, function() {
-        /*favouritesView.render();
-        $('#content > div').detach();
-        $('#content').append(favouritesView.el);*/
         IS.changeView(IS.currentView, favouritesView);
         IS.setupPage('favourites');
       });
       return;
     } else {
-      /*favouritesView.render();
-      $('#content > div').detach();
-      $('#content').append(favouritesView.el);*/
       IS.changeView(IS.currentView, favouritesView);
       IS.setupPage('favourites');
     }

@@ -345,7 +345,7 @@ IS.navigateTo = function(path) {
  * @param currentView
  * @param destinationView
  */
-IS.changeView = function(currentView, destinationView) {
+IS.changeView = function(currentView, destinationView, destinationViewMode) {
   async.series([
     // allow the currentView to execute its leave function
     function(cb) {
@@ -360,13 +360,12 @@ IS.changeView = function(currentView, destinationView) {
     function(cb) {
       log('animating views', 'info');
 
-      // only animate when scrollTop < 10
-      // TODO: it's buggy; sometimes returns 0 when it's not actually 0
-      if($(document).scrollTop() < 10) {
-        IS.animateToView(currentView, destinationView, cb);
+      // only animate when scrollTop < 10 && destinationViewMode === null
+      if($(document).scrollTop() < 10 && IS.nullOrEmpty(destinationViewMode)) {
+        IS.animateToView(currentView, destinationView, destinationViewMode, cb);
       }
       else {
-        destinationView.show();
+        destinationView.show(destinationViewMode);
         $(document).scrollTop(0);
         cb();
       }
@@ -394,7 +393,7 @@ IS.changeView = function(currentView, destinationView) {
  * @param currentView
  * @param destinationView
  */
-IS.animateToView = function(currentView, destinationView, cb) {
+IS.animateToView = function(currentView, destinationView, destinationViewMode, cb) {
   // check if destinationView is rendered
   if(!destinationView.html) destinationView.render();
 
@@ -414,7 +413,7 @@ IS.animateToView = function(currentView, destinationView, cb) {
         });
 
         // show destinationView
-        destinationView.show();
+        destinationView.show(destinationViewMode);
         destinationView.$el.stop(true, true).animate({
           opacity: 1,
           'margin-left': '0px'
@@ -431,7 +430,7 @@ IS.animateToView = function(currentView, destinationView, cb) {
     });
 
     // show destinationView
-    destinationView.show();
+    destinationView.show(destinationViewMode);
     destinationView.$el.stop(true, true).animate({
       opacity: 1,
       'margin-left': '0px'

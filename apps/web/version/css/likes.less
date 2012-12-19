@@ -1,6 +1,5 @@
 #likesResultsWrapper {
   padding-top: 30px!important;
-  //.transition(all 0.3s ease-in-out);
   &.secondary-block {
     padding-left: 110px;
   }
@@ -26,15 +25,6 @@
   background: #F9F9F9;
   //.transition(all 0.3s ease-in-out);
   z-index: 2;
-  .opacity(0);
-  visibility: hidden;
-  &.active {
-    .opacity(100);
-    visibility: visible;
-    .likeCategory {
-      .opacity(100);
-    }
-  }
 }
 
 #block-likes, #likesResults {
@@ -48,10 +38,10 @@
   }
 
   .secondary-block, .row {
-    min-height: 00px;
+    min-height: 0px;
     .columns {
       padding: 0 15px;
-      min-width: 100px;
+      min-width: 110px;
       cursor: pointer;
       &:hover {
         img {
@@ -59,9 +49,9 @@
         }
       }
       p {
-        width: 100px;
+        width: 110px;
         height: 40px;
-        min-width: 100px;
+        min-width: 110px;
         margin: 3px 0 12px 0;
         .font-size(1.1, 1.3);
         color: #585858;
@@ -69,14 +59,24 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
-      img {
-        width: 100px;
-        height: 100px;
-        min-width: 100px;
-        min-height: 100px;
+      .like-image-container {
+        width: 110px;
+        height: 110px;
+        overflow: hidden;
+        border: 5px solid #eee;
         background: #eee;
-        border: 1px solid white;
-        .transition(all 0.3s);
+
+        img {
+          width: 100px;
+          background: #eee;
+          .transition(all 0.3s);
+        }
+      }
+      &.rate1 .like-image-container {
+        border: 5px solid @colorRed1;
+      }
+      &.rate3 .like-image-container {
+        border: 5px solid @colorGreen;
       }
     }
     .like-type-label {
@@ -113,8 +113,8 @@
       padding-right: 3px;
       .font-size(1.8, 1.2);
     }
-    .icon-star { color: orange; }
-    .icon-thumbs-down { top: -3px; color: #888; }
+    .icon-star { color: @colorGreen; }
+    .icon-thumbs-down { top: -3px; color: @colorRed1; }
   }
 }
 
@@ -152,13 +152,13 @@
       color: white;
     }
     &.viewFavs .title {
-      background: darkOrange;
+      background: @colorGreen;
     }
     &.viewLikes .title {
-      background: #3DBCDF;
+      background: @colorBlue3;
     }
     &.viewDislikes .title {
-      background: #ccc;
+      background: @colorRed1;
     }
     .icon {
       padding: 10px 0 0;
@@ -171,10 +171,10 @@
       color: @colorBlue3;
     }
     .icon-thumbs-down {
-      color: #ccc;
+      color: @colorRed1;
     }
     .icon-star-empty {
-      color: darkorange;
+      color: @colorGreen;
     }
     &.current {
       background: #f9f9f9;
@@ -190,24 +190,13 @@
   width: 200px;
   padding: 10px;
   z-index: 1;
-  .opacity(0);
-  .transition(all 0.3s ease-in-out);
-  .transitionDelay(0.2s);
-
-  .viewCount {
-    display: block;
-    background: @color2;
-    padding: 0.5rem 1rem;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 0.7rem;
-  }
 
   .likeCategoryTitle {
     display: block;
     max-width: 200px;
     font-weight: bold;
     cursor: pointer;
+    border-bottom: 1px solid #ddd;
     span {
       line-height: 3rem;
       padding: 0.5rem 1rem;
@@ -229,8 +218,14 @@
     .likeCategoryTitleName {
       text-align: left;
       display: block;
+      font-weight: 400;
+      .font-size(1.2,2);
+    }
+  }
+
+  .likeCategoryTitleAll {
+    .likeCategoryTitleName {
       font-weight: bold;
-      .font-size(1.1,1.2);
     }
   }
 }
