@@ -361,14 +361,15 @@ IS.changeView = function(currentView, destinationView, destinationViewMode) {
       log('animating views', 'info');
 
       // only animate when scrollTop < 10 && destinationViewMode === null
-      if($(document).scrollTop() < 10 && IS.nullOrEmpty(destinationViewMode)) {
-        IS.animateToView(currentView, destinationView, destinationViewMode, cb);
-      }
-      else {
+      //if($(document).scrollTop() < 10 && IS.nullOrEmpty(destinationViewMode)) {
+      //  IS.animateToView(currentView, destinationView, destinationViewMode, cb);
+      //}
+      //else {
+        if(!destinationView.html) destinationView.render();
         destinationView.show(destinationViewMode);
         $(document).scrollTop(0);
         cb();
-      }
+      //}
     },
     // execute any further actions defined by the destinationView's enter method
     function(cb){
