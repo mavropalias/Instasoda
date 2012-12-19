@@ -271,7 +271,7 @@ var ChatSessionsView = Backbone.View.extend({
       // enable custom scrollbars
       var scroller = this.$('#scroller_' + model.get('_id') + ' > .chat-log');
       scroller.slimScroll({
-        height: '255px',
+        height: '250px',
         allowPageScroll: false,
         alwaysVisible: false,
         railVisible: false,
