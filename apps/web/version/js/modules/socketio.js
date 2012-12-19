@@ -10,7 +10,7 @@ var socket = io.connect(socketIoHost);
 // -------------------------------------------------------------------------
 socket.on('connected', function (data) {
   log('- SOCKET.IO status: ' + data.status, 'info');
-  
+
   // get notifications
   setInterval(function() {
     // only if user is logged-in
@@ -20,7 +20,6 @@ socket.on('connected', function (data) {
         tkn: user.get('tkn')
       }, function(err, data) {
         if(!IS.nullOrEmpty(data)) {
-          
           // check for new chat messages
           // ===========================
           if(!IS.nullOrEmpty(data.chat)) {
@@ -56,8 +55,8 @@ socket.on('connected', function (data) {
               if(!$('#chat').is(':visible')) IS.notify(newMessages[i].u + ' says:', null, newMessages[i].m);
             }
 
-            
-            
+
+
           }
         }
       });
