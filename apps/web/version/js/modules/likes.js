@@ -189,7 +189,7 @@ var LikesView = Backbone.View.extend({
         railVisible: true,
         position: 'right',
         start: '100px',
-        width: '240px'
+        width: '235px'
       });
     }
   }
