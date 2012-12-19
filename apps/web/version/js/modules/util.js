@@ -922,10 +922,8 @@ IS.setupPage = function (page) {
   $('#content').attr('class', page);
 
   // highligh the current page in the navigation menu
-  if(page !== "viewprofile") {
-    $('nav li').removeClass('active');
-    $('#nav_' + page).addClass('active');
-  }
+  $('nav li').removeClass('active');
+  $('#nav_' + page).addClass('active');
 
   // setup user
   if(!IS.nullOrEmpty(user.get('_id'))) IS.setupUser();
@@ -936,21 +934,6 @@ IS.setupPage = function (page) {
   } else {
     IS.showMetabar(false);
   }
-
-  // add custom scrollbar in the main content area
-  var scroller = $('#content .mainContent');
-
-  /*
-    scroller.slimScroll({
-      height: '100%',
-      allowPageScroll: false,
-      alwaysVisible: false,
-      railVisible: true,
-      start: 'top',
-      size: '10px'
-    });
-  */
-
 }
 
 /**
