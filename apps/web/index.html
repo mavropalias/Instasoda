@@ -836,7 +836,7 @@
             <div id="profile-introduction" class="mobile-four columns secondary-block end">
               <h2>introduction</h2>
               <span>A little bit about {{#u}}{{u}}{{/u}}</span>
-              <div class="row">
+              <div>
                 <div class="twelve columns">
                   <p>{{a}}</p>
                 </div>
@@ -863,7 +863,7 @@
         <div id="block-likes">
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
-            <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;<strong class="large counter">{{commonLikesCount}}</strong></h1>
+            <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;have <strong class="large counter">{{commonLikesCount}}</strong> things in common:</h1>
           </div>
 
           <div id="commonLikes" class="twelve mobile-four columns ">
@@ -872,7 +872,7 @@
 
           <div class="twelve columns">
             <span class="icon-thumbs-up"></span>
-            <h1>{{#u}}{{u}}{{/u}}&#8217s interests&nbsp;<strong class="large counter">{{likeCount}}</strong></h1>
+            <h1>{{u}} has <strong class="large counter">{{likeCount}}</strong> interests:</h1>
           </div>
 
           <div id="likesSection" class="twelve mobile-four columns secondary-block end">
