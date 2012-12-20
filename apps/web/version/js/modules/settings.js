@@ -56,6 +56,61 @@ var SettingsUsernameView = Backbone.View.extend({
 });
 
 // =========================================================================
+// SettingsGenderView (male / female)
+// =========================================================================
+var SettingsGenderView = Backbone.View.extend({
+  // properties
+  // -----------------------------------------------------------------------
+  className: 'settings',
+  tagName: 'section',
+
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click #saveGender': 'save'
+  },
+
+  // initialize
+  // -----------------------------------------------------------------------
+  initialize: function() {
+    console.log('  ~ initializing SettingsGenderView');
+    _.bindAll(this);
+    this.render();
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function() {
+    console.log('  ~ rendering SettingsGenderView');
+    var template = $('#tplSettingsGender').html();
+    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    // nothing yet
+  },
+
+  // save
+  // -----------------------------------------------------------------------
+  save: function() {
+    console.log('  ~ saving SettingsGenderView');
+
+    var gender = $('input:radio[name=gender]:checked').val();
+
+    if(!IS.nullOrEmpty(gender)) {
+      // save user model
+      this.model.set('g', gender);
+      IS.saveUser();
+
+      // move on to the next setting
+      IS.setupUser(this);
+    }
+  }
+});
+
+// =========================================================================
 // SettingsLocationView
 // =========================================================================
 var SettingsLocationView = Backbone.View.extend({

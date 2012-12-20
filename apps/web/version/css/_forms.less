@@ -111,6 +111,49 @@
     }
   }
 
+  // RADIO BUTTON
+  input[type="radio"] {
+    .appearance(none);
+    .box-sizing(border-box);
+    position: absolute;
+    display: inline-block;
+    vertical-align: middle;
+    border: 3px solid #ccc;
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    height: 3rem;
+    width: 3rem;
+    font-size: 2rem;
+    line-height: 2.5rem;
+    text-align: center;
+    border-radius: 50px;
+
+    &:before {
+      font-family: FontAwesome;
+      font-weight: normal;
+      font-style: normal;
+      display: inline-block;
+      text-decoration: inherit;
+      content: "";
+      color: #ccc;
+    }
+
+    &:checked {
+      border: 3px solid @colorGreen !important;
+
+      &:before {
+        font-family: FontAwesome;
+        font-weight: normal;
+        font-style: normal;
+        display: inline-block;
+        text-decoration: inherit;
+        content: "\f00c";
+        color: @colorGreen;
+      }
+    }
+  }
+
   // TEXT FIELD
   input[type="text"] {
     border: 3px solid #ccc;

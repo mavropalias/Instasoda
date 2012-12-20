@@ -9,7 +9,7 @@
 
 // Config
 // =============================================================================
-  
+
   var FB = false;
   var appReady = false;
   var userReady = false;
@@ -21,7 +21,7 @@
 
 // Initialize application
 // =============================================================================
-  
+
 
   // User - the person using the app
   // =========================================================================
@@ -40,7 +40,7 @@
     idAttribute: "_id",
     urlRoot: sApi + 'user'
   });
-  
+
   // OnlineUsers
   // =========================================================================
   var OnlineUsers = Backbone.Model.extend({
@@ -113,7 +113,7 @@
   var favsCollection = new FavouritesCollection({
     model: users
   });
-  
+
   // Backbone views
   // -------------------------------------------------------------------------
   var navigationView;
@@ -137,7 +137,7 @@
   var mainContentElement = document.getElementById('content');
   var navigationBarElement = '';//document.getElementById('navigation-bar');
   var userBarElement = '';//document.getElementById('user-bar');
-  
+
   jQuery(function($) {
     // Initialize Backbone views
     // =========================

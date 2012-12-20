@@ -836,7 +836,7 @@
             <div id="profile-introduction" class="mobile-four columns secondary-block end">
               <h2>introduction</h2>
               <span>A little bit about {{#u}}{{u}}{{/u}}</span>
-              <div>
+              <div class="row">
                 <div class="twelve columns">
                   <p>{{a}}</p>
                 </div>
@@ -1127,6 +1127,30 @@
             </div>
             <div class="settingTip">
               (We will never display your real name anywhere else on Instasoda, unless you choose to set it as your nickname.)
+            </div>
+          </div>
+        </div>
+      </script>
+
+      <script id="tplSettingsGender" type="text/template">
+        <div class="settingContainer settingGender">
+          <div class="setting">
+            <div class="settingTitle">
+              {{u}}, what is your gender?
+            </div>
+            <div class="settingContent">
+              <label>
+                <input type="radio" name="gender" value="female">
+                <span>Female</span>
+              </label>
+              <label>
+                <input type="radio" name="gender" value="male">
+                <span>Male</span>
+              </label>
+              <button id="saveGender">Ok</button>
+            </div>
+            <div class="settingTip">
+              (you can change this later)
             </div>
           </div>
         </div>

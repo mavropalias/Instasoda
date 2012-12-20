@@ -959,14 +959,21 @@ IS.setupUser = function (currentView) {
   var fd = user.get('fd');
   var loc = user.get('loc');
   var locN = user.get('locN');
+  var gender = user.get('g');
 
   // check if the user need to update his profile
-  if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(locN) || IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
+  if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(gender) || IS.nullOrEmpty(locN) || IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
     log('setting up user preferences', 'info');
 
     // check username
     if(IS.nullOrEmpty(u)) {
       nextView = new SettingsUsernameView({
+        model: user
+      });
+    }
+    // check gender
+    else if(IS.nullOrEmpty(gender)) {
+      nextView = new SettingsGenderView({
         model: user
       });
     }
