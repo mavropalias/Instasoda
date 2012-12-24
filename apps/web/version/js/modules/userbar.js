@@ -1,7 +1,7 @@
 // =========================================================================
 // Userbar view
 // =========================================================================
-var UserbarView = Backbone.View.extend({      
+var UserbarView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
@@ -28,7 +28,7 @@ var UserbarView = Backbone.View.extend({
   events: {
     'click #chat-button': 'toggleChatWindow'
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -76,25 +76,36 @@ var UserbarView = Backbone.View.extend({
   // toggleChatWindow
   // -----------------------------------------------------------------------
   toggleChatWindow: function() {
-    console.log('  ~ toggling chat window');
-    this.$('#chat').toggle(0, function() {
-      if($(this).is(':visible')) {
-        $('#chat-button').addClass('active');
-        $('body').addClass('chat-is-visible');
-      }
-      else {
-        $('#chat-button').removeClass('active');
-        $('body').removeClass('chat-is-visible');
-      }
+    console.log('  ~ toggling chat panel');
+
+    var chat = this.$('#chat');
+    chat.toggleClass('expanded');
+
+    if(chat.hasClass('expanded')) {
+      this.$('#chat-button').addClass('active');
+      $('body').addClass('chat-is-visible');
+      this.$('.chat-sessions-container').show();
+    }
+    else {
+      this.$('#chat-button').removeClass('active');
+      $('body').removeClass('chat-is-visible');
+      this.$('.chat-sessions-container').hide();
+    }
+
+    // update custom scrollbars
+    $('#chat .slimScrollDiv, #chat .chat-tabs').css({
+      'height': $(window).height() - $('#chat-button').outerHeight() - $('.chat-session:visible').outerHeight() + 'px',
+    'width': $('#chat-button').outerWidth()
     });
   },
-  
+
   // showChatWindow
   // -----------------------------------------------------------------------
   showChatWindow: function() {
     console.log('  ~ showing chat window');
-    this.$('#chat').show();
+    this.$('#chat').addClass('expanded');
     this.$('#chat-button').addClass('active');
+    this.$('.chat-sessions-container').show();
     $('body').addClass('chat-is-visible');
   }
 });

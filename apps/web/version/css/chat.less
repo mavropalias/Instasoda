@@ -1,20 +1,83 @@
 #chat {
   position: fixed;
-  right: 0;
+  right: -17rem;
   bottom: 0;
   top: 7rem;
-  background: #ddd;
   width: 25rem;
-  display: none;
   word-wrap: break-word;
-  .box-shadows(10px 0 20px -12px #777 inset, 1px 0 0 0 #ccc inset);
+
+  &.expanded {
+    .box-shadows(10px 0 20px -12px #777 inset, 1px 0 0 0 #ccc inset);
+    right: 0;
+    background: #E5E5E5;
+
+    .chat-tab {
+      width: 100%;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      padding: 5px 5px 5px 7px;
+      text-align: left;
+
+      &:hover {
+        background: #fff;
+        color: #444;
+        .box-shadow(10px, 0px, 12px, -5px rgba(0,0,0,.2) inset);
+        .user {
+          text-decoration: underline;
+        }
+      }
+
+      .photo {
+        float: left;
+        margin-right: 0.5rem;
+        display: block;
+        height: 4rem;
+        overflow: hidden;
+        background-color: #fff;
+        border-radius: 4px;
+      }
+
+      .user {
+        display: block;
+        padding-top: 0.5rem;
+        font-size: 1.3rem;
+        line-height: 1.5rem;
+      }
+
+      .meta {
+        opacity: 0.5;
+        font-size: 0.9rem;
+        display: block;
+      }
+
+      .unread-messages {
+        font-size: 0.9rem;
+        position: absolute;
+        right: 5px;
+        top: 4px;
+        color: #aaa;
+        background: #fff;
+        padding: 5px;
+        border: 1px solid #eee;
+        display: none; // until it actually works
+      }
+
+      &.active {
+        background: @color3;
+        color: #fff;
+        .box-shadow(-5px, 5px, 20px, -5px rgba(0,0,0,.2) inset);
+      }
+    }
+  }
 
   .chat-tab {
-    width: 100%;
+    width: 8rem;
     overflow: hidden;
     cursor: pointer;
     position: relative;
     padding: 5px 5px 5px 7px;
+    text-align: center;
 
     &:hover {
       background: #fff;
@@ -26,44 +89,17 @@
     }
 
     .photo {
-      float: left;
-      margin-right: 0.5rem;
+      margin-right: 0.5rem auto;
       display: block;
       height: 4rem;
       overflow: hidden;
-      background-color: #fff;
       border-radius: 4px;
     }
 
-    .user {
-      display: block;
-      padding-top: 0.5rem;
-      font-size: 1.3rem;
-      line-height: 1.5rem;
-    }
-
-    .meta {
-      opacity: 0.5;
-      font-size: 0.9rem;
-      display: block;
-    }
-
+    .user,
+    .meta,
     .unread-messages {
-      font-size: 0.9rem;
-      position: absolute;
-      right: 5px;
-      top: 4px;
-      color: #aaa;
-      background: #fff;
-      padding: 5px;
-      border: 1px solid #eee;
-      display: none; // until it actually works
-    }
-
-    &.active {
-      background: @color3;
-      color: #fff;
-      .box-shadow(-5px, 5px, 20px, -5px rgba(0,0,0,.2) inset);
+      display: none;
     }
   }
 
