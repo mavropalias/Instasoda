@@ -417,6 +417,7 @@ var FacebookLikePanelView = Backbone.View.extend({
     var _this = this;
     IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 1, this.model.get('c'), function() {
       _this.render();
+      _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate1');
     });
   },
 
@@ -426,6 +427,7 @@ var FacebookLikePanelView = Backbone.View.extend({
     var _this = this;
     IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 2, this.model.get('c'), function() {
       _this.render();
+      _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate2');
     });
   },
 
@@ -435,6 +437,7 @@ var FacebookLikePanelView = Backbone.View.extend({
     var _this = this;
     IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 3, this.model.get('c'), function() {
       _this.render();
+      _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate3');
     });
   },
 });
