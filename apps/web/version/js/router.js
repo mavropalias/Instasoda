@@ -59,7 +59,7 @@ var Router = Backbone.Router.extend({
       IS.prepareApp(null, function() {
         if(IS.nullOrEmpty(user.get('_id'))) {
           IS.changeView(IS.currentView, welcomeView);
-          IS.setupPage('home');
+          IS.setupPage('welcome');
         }
         else
         {

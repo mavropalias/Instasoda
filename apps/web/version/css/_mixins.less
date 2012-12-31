@@ -205,3 +205,32 @@
     -o-border-radius: @arg;
     border-radius: @arg;
 }
+
+.animation(@keyframes: slide, @duration: 10s, @delay: 1s, @easing: ease-in, @repeat: infinite) {
+-webkit-animation: @keyframes @duration @delay @easing @repeat;
+-moz-animation: @keyframes @duration @delay @easing @repeat;
+-o-animation: @keyframes @duration @delay @easing @repeat;
+-ms-animation: @keyframes @duration @delay @easing @repeat;
+animation: @keyframes @duration @delay @easing @repeat;
+}
+
+.frames() {
+  0% {
+    opacity: 0;
+    left: 20px;
+  }
+  20%{
+    opacity: 1;
+  }
+  100% {
+    top: 0px;
+    left: 650px;
+    opacity: 0;
+  }
+}
+
+@keyframes slide { .frames; }
+@-webkit-keyframes slide { .frames; }
+@-moz-keyframes slide { .frames; }
+@-ms-keyframes slide { .frames; }
+@-o-keyframes slide { .frames; }

@@ -920,6 +920,7 @@ IS.parseLikes = function(model, likes) {
 IS.setupPage = function (page) {
   // set page title as a class name to do targeted styling
   $('#content').attr('class', page);
+  $('body').attr('data-page', page);
 
   // highligh the current page in the navigation menu
   $('nav li').removeClass('active');
