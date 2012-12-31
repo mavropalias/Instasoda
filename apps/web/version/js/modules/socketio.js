@@ -45,18 +45,14 @@ socket.on('connected', function (data) {
                 // update the model
                 model.get('log').push(sMsg);
                 model.trigger('change:log', sMsg);
+                user.trigger('newMessage', newMessages[i].sId);
 
               } else {
                 // chat session is new
                 console.log(' - new chat session notification');
                 userbarView.chatSessionTabs.fetchChatSessionFromServerById(newMessages[i].sId);
               }
-
-              if(!$('#chat').is(':visible')) IS.notify(newMessages[i].u + ' says:', null, newMessages[i].m);
             }
-
-
-
           }
         }
       });

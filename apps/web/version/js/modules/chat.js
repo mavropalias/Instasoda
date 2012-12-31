@@ -11,6 +11,7 @@ var ChatSessionTabs = Backbone.View.extend({
     this.collection.bind('add', this.renderSessionTab);
     this.collection.bind('remove', this.render);
     this.model.bind('change:tkn', this.render);
+    this.model.bind('newMessage', this.incomingMessage);
 
     // sub-views
     this.chatSessionsView = new ChatSessionsView({ collection: chatSessions });
@@ -131,7 +132,7 @@ var ChatSessionTabs = Backbone.View.extend({
 
     // apply 'active' style to the tab
     this.$('.chat-tab').removeClass('active');
-    this.$('#' + sSessionId).addClass('active');
+    this.$('#' + sSessionId).addClass('active').removeClass('new-message');
 
     // set 'active' status for the model in the collection
     this.collection.each(function(m) {
@@ -232,6 +233,13 @@ var ChatSessionTabs = Backbone.View.extend({
         // counld't get chat session
       }
     });
+  },
+
+  // incomingMessage
+  // -----------------------------------------------------------------------
+  incomingMessage: function(sessionId) {
+    console.log('  - incomingMessage: ' + sessionId);
+    this.$('.chat-tab#' + sessionId).not('.active').addClass('new-message');
   }
 });
 
