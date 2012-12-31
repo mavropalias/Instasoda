@@ -105,6 +105,7 @@ var ChatSessionTabs = Backbone.View.extend({
   chatSessionsTabClick: function(e) {
     var _this = this;
     var sSessionId = $(e.currentTarget).attr('id');
+    var sUsername = $(e.currentTarget).data('username');
     var toHide = false;
     console.log('  - chatSessionsTabClick:' + sSessionId);
 
@@ -117,13 +118,13 @@ var ChatSessionTabs = Backbone.View.extend({
       }
     });
 
-    if(!toHide) this.showChatSession(sSessionId);
+    if(!toHide) this.showChatSession(sSessionId, sUsername);
   },
 
   // showChatSession
   // -----------------------------------------------------------------------
-  showChatSession: function(sSessionId) {
-    console.log('  - showChatSession (1): ' + sSessionId);
+  showChatSession: function(sSessionId, sUsername) {
+    console.log('  - showChatSession (1): ' + sUsername);
 
     // show chat window
     userbarView.showChatWindow();
@@ -204,7 +205,7 @@ var ChatSessionTabs = Backbone.View.extend({
           ]);
         }
 
-        _this.showChatSession(sessionId);
+        _this.showChatSession(sessionId, username);
       } else {
         alert("Couldn't initiate chat session!");
       }

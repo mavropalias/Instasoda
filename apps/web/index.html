@@ -288,11 +288,11 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- CHAT SESSIONS (BUTTONS FOR ALL CHAT SESSIONS) -->
+    <!-- CHAT TABS (BUTTONS FOR ALL CHAT SESSIONS) -->
     <!------------------------------------------------------------------------>
 
       <script id="tplChatSessionsButtons" type="text/template">
-        <li class="chat-tab" id="{{_id}}">
+        <li class="chat-tab" id="{{_id}}" data-username="{{u}}">
           <span class="photo">
             {{#p}}
               {{#d}}
@@ -320,9 +320,11 @@
             <ul class="chat-log">
               {{#log}}
                 <li class="chat-log-line">
-                  <span class="user">{{u}}:</span>
-                  <span class="time" title="{{t}}"></span>
-                  <span class="message">{{m}}</span>
+                  <div>
+                    <span class="user">{{u}}:</span>
+                    <span class="time" title="{{t}}"></span>
+                  </div>
+                  <div class="message">{{m}}</div>
                 </li>
               {{/log}}
             </ul>
@@ -342,9 +344,11 @@
 
       <script id="tplChatLog" type="text/template">
           <li class="chat-log-line">
-            <span class="user">{{u}}:</span>
-            <span class="time" title="{{t}}"></span>
-            <span class="message">{{m}}</span>
+            <div>
+              <span class="user">{{u}}:</span>
+              <span class="time" title="{{t}}"></span>
+            </div>
+            <div class="message">{{m}}</div>
           </li>
       </script>
 
