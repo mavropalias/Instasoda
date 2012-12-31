@@ -6,13 +6,14 @@ var DashboardView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   initialize: function() {
     _.bindAll(this);
-    
+
     // get template
     this.template = document.getElementById("tplDashboard").innerHTML;
 
     // update view when user models changes
     this.model.bind('change:tkn', this.refresh);
     this.model.bind('change:m', this.render);
+    this.model.bind('change:u', this.render);
     this.model.bind('change:w', this.render);
     this.model.bind('change:ff', this.render);
     this.model.bind('change:fd', this.render);
@@ -21,7 +22,7 @@ var DashboardView = Backbone.View.extend({
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
