@@ -139,10 +139,10 @@ var SettingsLocationView = Backbone.View.extend({
     console.log('  ~ rendering SettingsLocationView');
     var template = $('#tplMapWidget').html();
     var mapStrings = {
-      h1: 'Welcome ' + this.model.get('u') + '! What is your location?',
-      h2: 'Instasoda members will see your location. In order to protect your privacy, we recommend only zooming-in up to your general area in your city/town.',
-      target: 'drag the map to center at your approximate location!',
-      buttonTxt: 'Set my location to <span id="targetAdress"> ...drag the map!</span>'
+      h1: this.model.get('u') + ', choose your current location.',
+      h2: 'Other Instasoda members will see the location you choose. In order to protect your privacy, we recommend only zooming-in up to your general area in your city/town.',
+      target: 'drag the map to center on your approximate location!',
+      buttonTxt: 'Click here to set your location to: <span id="targetAdress"> ...drag the map!</span>'
     };
     this.$el.html(Mustache.to_html(template, mapStrings));
   },

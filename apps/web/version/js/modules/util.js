@@ -1002,7 +1002,9 @@ IS.setupUser = function (currentView) {
       $(nextView.el).appendTo('body').show();
 
       setTimeout(function() {
-        IS.pageFlip(currentView.$el, nextView.$el);
+        //IS.pageFlip(currentView.$el, nextView.$el);
+        currentView.$el.css('z-index', '998').remove();
+        nextView.$el.css('z-index', '999').show();
       }, 0);
     }
     // else fadeIn the settings page over the app
@@ -1042,7 +1044,9 @@ IS.setupUser = function (currentView) {
     });
 
     setTimeout(function() {
-      IS.pageFlip(currentView.$el, $('#settingsDone'));
+      //IS.pageFlip(currentView.$el, $('#settingsDone'));
+        currentView.$el.css('z-index', '998').remove();
+        $('#settingsDone').css('z-index', '999').show();
     }, 0);
   }
 };
