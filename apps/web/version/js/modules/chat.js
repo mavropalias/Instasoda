@@ -31,14 +31,14 @@ var ChatSessionTabs = Backbone.View.extend({
     var _this = this;
 
     // fetch chat sessions
-    chatSessions.reset();
-    chatSessions.fetch({
+    _this.collection.reset();
+    _this.collection.fetch({
       data: {
         'id': user.get('_id'),
         'fTkn': user.get('fTkn')
       },
       success: function(model, response) {
-        //_this.chatSessionsView.setElement(_this.$('.chatSessionContainer')).render();
+        // render
         _this.$('.chat-tabs').html('');
         _this.collection.each(_this.renderSessionTab);
 
@@ -56,6 +56,14 @@ var ChatSessionTabs = Backbone.View.extend({
           width: $('#user-bar').outerWidth()
         });
       }
+    });
+  },
+
+  // refreshScrollbar
+  // -----------------------------------------------------------------------
+  refreshScrollbar: function() {
+    this.$('.chat-tabs').slimScroll({
+      scroll: this.$('.chat-tab:first-child').position().top
     });
   },
 
@@ -87,7 +95,8 @@ var ChatSessionTabs = Backbone.View.extend({
 
             // render the template
             var template = $('#tplChatSessionsButtons').html();
-            _this.$('.chat-tabs').append(Mustache.to_html(template, model.toJSON()));
+            _this.$('.chat-tabs').prepend(Mustache.to_html(template, model.toJSON()));
+            _this.refreshScrollbar();
           } else {
             console.log('!!! ERROR: renderSessionTab -> ' + err);
             //TODO: handle errors
@@ -97,7 +106,8 @@ var ChatSessionTabs = Backbone.View.extend({
     } else {
       // render the template
       var template = $('#tplChatSessionsButtons').html();
-      _this.$('.chat-tabs').append(Mustache.to_html(template, model.toJSON()));
+      _this.$('.chat-tabs').prepend(Mustache.to_html(template, model.toJSON()));
+      _this.refreshScrollbar();
     }
   },
 
@@ -124,7 +134,7 @@ var ChatSessionTabs = Backbone.View.extend({
 
   // showChatSession
   // -----------------------------------------------------------------------
-  showChatSession: function(sSessionId, sUsername) {
+  showChatSession: function(sSessionId, sUsername, bMoveToTop) {
     console.log('  - showChatSession (1): ' + sUsername);
 
     // show chat window
@@ -133,6 +143,12 @@ var ChatSessionTabs = Backbone.View.extend({
     // apply 'active' style to the tab
     this.$('.chat-tab').removeClass('active');
     this.$('#' + sSessionId).addClass('active').removeClass('new-message');
+
+    // move to top of the list
+    if(bMoveToTop) {
+      this.$('#' + sSessionId).prependTo('.chat-tabs');
+      this.refreshScrollbar();
+    }
 
     // set 'active' status for the model in the collection
     this.collection.each(function(m) {
@@ -202,11 +218,12 @@ var ChatSessionTabs = Backbone.View.extend({
               p: photos,
               m: 0,
               active: true,
+              t: new Date().getTime(),
               log: result.log }
           ]);
         }
 
-        _this.showChatSession(sessionId, username);
+        _this.showChatSession(sessionId, username, true);
       } else {
         alert("Couldn't initiate chat session!");
       }
@@ -241,9 +258,9 @@ var ChatSessionTabs = Backbone.View.extend({
     console.log('  - incomingMessage: ' + sessionId);
 
     if($('#chat').hasClass('expanded')) {
-      this.$('.chat-tab#' + sessionId).not('.active').addClass('new-message');
+      this.$('.chat-tab#' + sessionId).not('.active').addClass('new-message').prependTo('.chat-tabs');;
     } else {
-      this.$('.chat-tab#' + sessionId).addClass('new-message');
+      this.$('.chat-tab#' + sessionId).addClass('new-message').prependTo('.chat-tabs');;
     }
   }
 });

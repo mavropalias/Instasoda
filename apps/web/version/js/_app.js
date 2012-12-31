@@ -110,6 +110,9 @@
   var chatSessions = new ChatSessions({
     model: ChatSession
   });
+    chatSessions.comparator = function(session) {
+      return parseInt(session.get("t"));
+    };
   var favsCollection = new FavouritesCollection({
     model: users
   });
