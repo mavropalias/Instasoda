@@ -239,7 +239,12 @@ var ChatSessionTabs = Backbone.View.extend({
   // -----------------------------------------------------------------------
   incomingMessage: function(sessionId) {
     console.log('  - incomingMessage: ' + sessionId);
-    this.$('.chat-tab#' + sessionId).not('.active').addClass('new-message');
+
+    if($('#chat').hasClass('expanded')) {
+      this.$('.chat-tab#' + sessionId).not('.active').addClass('new-message');
+    } else {
+      this.$('.chat-tab#' + sessionId).addClass('new-message');
+    }
   }
 });
 
