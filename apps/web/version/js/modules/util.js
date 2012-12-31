@@ -803,6 +803,7 @@ IS.userIsOnline = function(bIsOnline) {
   socket.emit('userIsOnline', {
     _id: user.get('_id'),
     fTkn: user.get('fTkn'),
+    tkn: user.get('tkn'),
     isOnline: bIsOnline
   });
 }
