@@ -242,10 +242,33 @@ var ChatSessionTabs = Backbone.View.extend({
       sId: sessionId
     }, function(err, result) {
       if(!err) {
-        // add new chat session into the chatSessions collection
-        _this.collection.add([
-          { _id: result._id, u: result.log[0].u, m: result.log.length, active: false, log: result.log }
-        ]);
+        // get the details of the other user
+      var otherPersonsId = (result.uA == user.get('_id')) ? result.uB : result.uA;
+
+      // now find the other person's username, using his id
+      if(!IS.nullOrEmpty(otherPersonsId)) {
+        console.log(' - (chat) looking up username for id #' + otherPersonsId);
+        socket.emit('getBasicUserInfoFromId', {
+          userId: otherPersonsId
+        }, function(err, user) {
+          if(!err) {
+            // add new chat session into the chatSessions collection
+            _this.collection.add([
+              {
+                _id: result._id,
+                u: user.u,
+                m: result.log.length,
+                active: false,
+                log: result.log,
+                p: user.p,
+                ag: user.ag
+              }
+            ]);
+          } else {
+            console.log('!!! ERROR: getBasicUserInfoFromId -> ' + err);
+          }
+        });
+      }
       } else {
         // counld't get chat session
       }
@@ -258,9 +281,17 @@ var ChatSessionTabs = Backbone.View.extend({
     console.log('  - incomingMessage: ' + sessionId);
 
     if($('#chat').hasClass('expanded')) {
-      this.$('.chat-tab#' + sessionId).not('.active').addClass('new-message').prependTo('.chat-tabs');;
+      this.$('.chat-tab#' + sessionId).not('.active, .new-message').css({
+        left: '25rem'
+      }).addClass('new-message').prependTo('.chat-tabs').animate({
+        left: 0
+      });
     } else {
-      this.$('.chat-tab#' + sessionId).addClass('new-message').prependTo('.chat-tabs');;
+      this.$('.chat-tab#' + sessionId).not('.new-message').css({
+        left: '8rem'
+      }).addClass('new-message').prependTo('.chat-tabs').animate({
+        left: 0
+      });
     }
   }
 });
@@ -315,17 +346,16 @@ var ChatSessionsView = Backbone.View.extend({
       this.$('.time').timeago();
 
       // enable custom scrollbars
-      var scroller = this.$('#scroller_' + model.get('_id') + ' > .chat-log');
+      var scroller = this.$('#scroller_' + model.get('_id'));
       scroller.slimScroll({
-        height: '250px',
+        height: '250',
         allowPageScroll: false,
         alwaysVisible: false,
         railVisible: false,
-        start: 'bottom'
+        start: 'bottom',
+        scroll: scroller.find('.chat-log').height()
       });
     }
-
-    //TODO: investigate why this gets triggered twice
   }
 });
 
@@ -361,7 +391,7 @@ var ChatSessionView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   renderNewChatMessage: function(sMsg) {
     console.log('  ~ (chat) renderNewChatMessage');
-    oChatLog = $('.chat-log', this.el);
+    oChatLog = this.$('.chat-log');
 
     // append the new msg into the dom
     var template = $('#tplChatLog').html();
@@ -371,7 +401,9 @@ var ChatSessionView = Backbone.View.extend({
     $('.chat-log .time', this.el).timeago();
 
     // scroll to the bottom of the chat log
-    oChatLog.scrollTop(oChatLog[0].scrollHeight);
+    oChatLog.closest('.chat-log-scroll-wrapper').slimScroll({
+      scroll: oChatLog.height()
+    });
   },
 
   // sendMessage

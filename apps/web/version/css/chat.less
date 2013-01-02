@@ -6,6 +6,10 @@
   width: 25rem;
   word-wrap: break-word;
 
+  .chat-tabs {
+    margin-bottom: 0;
+  }
+
   &.expanded {
     .box-shadows(10px 0 20px -12px #777 inset, 1px 0 0 0 #ccc inset);
     right: 0;
@@ -128,7 +132,7 @@
 
   .chat-session {
     display: none;
-    position: fixed;
+    position: absolute;
     right: 0;
     bottom: 0;
     width: 25rem;
@@ -138,18 +142,32 @@
     font-size: 1.1em;
     overflow: hidden;
 
+    .slimScrollDiv {
+      height: 25rem !important;
+    }
+
     .chat-log-scroll-wrapper {
-      padding: 0.5rem 0 0 1rem;
+      height: 25rem;
+      position: relative;
+    }
+
+    .slimScrollBar {
+      &:hover,
+      &.ui-draggable-dragging {
+        background: @colorBlue3;
+      }
     }
 
     .chat-log {
       display: block;
       line-height: 1.5rem;
+      margin-bottom: 0;
+      position: relative;
 
       .chat-log-line {
         font-size: 1.3rem;
         line-height: 1.7rem;
-        margin: 0.5rem 1.5rem 0.5rem 0;
+        margin: 0.5rem;
 
         .user {
           color: #999;
@@ -163,6 +181,7 @@
 
         .message {
           color: #fff;
+          padding-right: 1rem;
         }
       }
     }
@@ -170,8 +189,8 @@
     .chat-controls {
       position: absolute;
       bottom: 0;
-      right: 0;
       left: 0;
+      right: 0;
 
       #send-sessage-form {
         margin: 0;
@@ -184,7 +203,7 @@
         margin: 0;
         border: 2px solid #333;
         padding: 2rem 1rem;
-        height: 1.7rem;
+        height: 5rem;
         line-height: 1.7rem;
         font-size: 1.3rem;
 
