@@ -36,7 +36,7 @@
 
   <!-- SCRIPTS START -->
   <script type="text/javascript" src="VERSION/js/lib/jquery.min.js"></script>
-  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false">
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false">
     </script>
   <script type="text/javascript" src="https://localhost/socket.io/socket.io.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
@@ -116,7 +116,7 @@
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '372501186096211', // ##appId##
-          channelUrl : 'http://localhost:8081/is/channel.html', // ##channel##
+          channelUrl : '//localhost:8081/is/channel.html', // ##channel##
           status     : true,
           cookie     : true,
           oauth      : true,
@@ -296,11 +296,11 @@
           <span class="photo">
             {{#p}}
               {{#d}}
-                <img src="http://img.instasoda.com/u/{{f}}" width="40" />
+                <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" width="40" />
               {{/d}}
             {{/p}}
             {{^p}}
-              <img src="http://img.instasoda.com/i/noPhoto.png" width="40" />
+              <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" width="40" />
             {{/p}}
           </span>
           <span class="user">{{u}}</span>
@@ -569,7 +569,7 @@
               {{#l}}
                 <li class="like {{likeType}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
                   <span class="likePic">
-                    <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
+                    <img src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
                   </span>
                   <span class="likeName">{{n}}</span>
                 </li>
@@ -591,7 +591,7 @@
           {{#likesToRender}}
             <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
               <div class="like-image-container">
-                <img data-src="http://img.instasoda.com/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="likeImg">
+                <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="likeImg">
               </div>
               <p title="{{n}}">{{n}}</p>
             </div>
@@ -700,7 +700,7 @@
           <ul class="block-grid six-up">
             {{#so.l}}
               <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
-                <img src="http://img.instasoda.com/l/{{_id}}.jpg" width=50 height=50>
+                <img src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}.jpg" width=50 height=50>
                 <div class="remove-search-like icon-remove"></div>
               </li>
             {{/so.l}}
@@ -735,13 +735,13 @@
                   <div class='onlineStatus isOffline' title='user is offline'></div>
                 {{/on}}
 
-                <img src="http://img.instasoda.com/u/{{f}}" height="150" />
+                <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" height="150" />
               </div>
             {{/d}}
           {{/p}}
           {{^p}}
           <div>
-            <img src="http://img.instasoda.com/i/noPhoto.png" height="150" />
+            <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" height="150" />
           </div>
           {{/p}}
           <div class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</div>
@@ -767,7 +767,7 @@
             <div id="profile-picture" class="mobile-four columns secondary-block">
               {{#p}}
                 {{#d}}
-                  <img src="http://img.instasoda.com/u/{{f}}" />
+                  <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" />
                   <div id="connectOptions" class="profileButtons">
                     <button id="sendMessage" class="left">Send message / Chat</button>
                     <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
@@ -776,7 +776,7 @@
                 {{/d}}
               {{/p}}
               {{^p}}
-                <img src="http://img.instasoda.com/i/noPhoto.png" />
+                <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" />
               {{/p}}
             </div>
 
@@ -888,11 +888,11 @@
             <div id="profile-picture" class="mobile-four columns secondary-block">
               {{#p}}
                 {{#d}}
-                  <img src="http://img.instasoda.com/u/{{f}}" />
+                  <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" />
                 {{/d}}
               {{/p}}
               {{^p}}
-                <img src="http://img.instasoda.com/i/noPhoto.png" />
+                <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" />
               {{/p}}
             </div>
 
@@ -1064,19 +1064,19 @@
 
       <script id="tplMyPhotos" type="text/template">
         {{#p}}
-          <div class="four mobile-one columns" id="{{id}}" data-src="http://img.instasoda.com/u/{{f}}">
+          <div class="four mobile-one columns" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
             <div class="picture-options photo-make-default {{#d}}picture-is-default{{/d}}">
               {{#d}}<img src="./VERSION/images/profile/bg-default-true.png" alt="">{{/d}}
             </div>
             <div class="picture-options photo-delete"></div>
             <div class="loading" class="animated"></div>
             <div class="view-original-image">
-              <a href="http://img.instasoda.com/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
+              <a href="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
                 <span class="icon-search"></span>
                 <strong>VIEW</strong>
               </a>
             </div>
-            <img id="{{id}}" src="http://img.instasoda.com/u/{{f}}" alt="">
+            <img id="{{id}}" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
           </div>
         {{/p}}
       </script>
