@@ -1037,7 +1037,11 @@ IS.setupUser = function (currentView) {
         $('body').css('overflow', 'auto');
 
         // fetch matches
-        matchesCollection.fetch();
+        matchesCollection.fetch({
+          success: function(model, response) {
+            dashboardView.refresh();
+          }
+        });
 
         // remove settings screen from DOM
         $(this).remove();
