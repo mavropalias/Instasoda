@@ -13,7 +13,7 @@
   var FB = false;
   var appReady = false;
   var userReady = false;
-  var socketIoHost = "http://localhost:8082"; //##socketIoHost##
+  var socketIoHost = "https://localhost:443"; //##socketIoHost##
   var sApi = "http://localhost:8080/api/"; //##apiUrl##
   var sApiHttps = "https://localhost/api/"; //##apiHttpsUrl##
   jQuery.support.cors = true;
