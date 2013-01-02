@@ -17,7 +17,10 @@ var DashboardView = Backbone.View.extend({
     this.model.bind('change:w', this.render);
     this.model.bind('change:ff', this.render);
     this.model.bind('change:fd', this.render);
-    this.collection.bind('reset', this.enter);
+    this.collection.bind('reset', this.refresh);
+
+    // fetch collection
+    this.collection.fetch();
 
     // initialize sub-views
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
@@ -27,9 +30,6 @@ var DashboardView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   render: function() {
     log('rendering DashboardView');
-
-    // fetch collection
-    this.collection.fetch();
 
     // render html
     this.html = Mustache.to_html(this.template, this.model.toJSON());
@@ -52,6 +52,8 @@ var DashboardView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   enter: function() {
     log('entering DashboardView');
+
+    this.matchesResultsView.enter();
 
     // enable flexSlider
     $('#dashboard-matches').flexslider({
