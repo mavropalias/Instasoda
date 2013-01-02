@@ -415,9 +415,14 @@ var FacebookLikePanelView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   rateLike1: function() {
     var _this = this;
-    IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 1, this.model.get('c'), function() {
+    IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 1, this.model.get('c'), function(bAdded) {
       _this.render();
-      _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate1');
+
+      if(bAdded) {
+        _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate1');
+      } else {
+        _this.$el.parent().removeClass('rate1 rate2 rate3');
+      }
     });
   },
 
@@ -425,9 +430,14 @@ var FacebookLikePanelView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   rateLike2: function() {
     var _this = this;
-    IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 2, this.model.get('c'), function() {
+    IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 2, this.model.get('c'), function(bAdded) {
       _this.render();
-      _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate2');
+
+      if(bAdded) {
+        _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate2');
+      } else {
+        _this.$el.parent().removeClass('rate1 rate2 rate3');
+      }
     });
   },
 
@@ -435,9 +445,14 @@ var FacebookLikePanelView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   rateLike3: function() {
     var _this = this;
-    IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 3, this.model.get('c'), function() {
+    IS.addOrRemoveLikeAndRate(this.model.get('_id'), this.model.get('n'), 3, this.model.get('c'), function(bAdded) {
       _this.render();
-      _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate3');
+
+      if(bAdded) {
+        _this.$el.parent().removeClass('rate1 rate2 rate3').addClass('rate3');
+      } else {
+        _this.$el.parent().removeClass('rate1 rate2 rate3');
+      }
     });
   },
 });

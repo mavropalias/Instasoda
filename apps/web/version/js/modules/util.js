@@ -288,7 +288,7 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
       // save user model
       user.set('l', updatedLikes);
       IS.saveUser();
-      cb();
+      cb(true);
     } else {
       console.log(' - removing like');
 
@@ -298,7 +298,7 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
       // save user model
       user.set('l', updatedLikes);
       IS.saveUser();
-      cb();
+      cb(false);
     }
   }
   // else add it
@@ -327,7 +327,7 @@ IS.addOrRemoveLikeAndRate = function(likeId, likeName, likeRating, likeCategory,
     // save user model
     user.set('l', userLikes);
     IS.saveUser();
-    cb();
+    cb(true);
   }
 }
 
