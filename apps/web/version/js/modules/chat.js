@@ -118,18 +118,22 @@ var ChatSessionTabs = Backbone.View.extend({
     var sSessionId = $(e.currentTarget).attr('id');
     var sUsername = $(e.currentTarget).data('username');
     var toHide = false;
+
     console.log('  - chatSessionsTabClick:' + sSessionId);
 
-    this.collection.each(function(m) {
-      if(m.get('_id') == sSessionId ) {
-        if(m.get('active'))  {
-          _this.hideChatSession(sSessionId);
-          toHide = true;
+    if($('#chat').hasClass('expanded')) {
+      this.collection.each(function(m) {
+        if(m.get('_id') == sSessionId ) {
+          if(m.get('active'))  {
+            _this.hideChatSession(sSessionId);
+            toHide = true;
+          }
         }
-      }
-    });
+      });
+    }
 
     if(!toHide) this.showChatSession(sSessionId, sUsername);
+    else this.hideChatSession(sSessionId);
   },
 
   // showChatSession

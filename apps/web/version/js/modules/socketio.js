@@ -35,16 +35,19 @@ socket.on('connected', function (data) {
 
               if(!IS.nullOrEmpty(model)) {
 
-                // construct message
-                var sMsg = {
-                  u: newMessages[i].u,
-                  t: newMessages[i].t,
-                  m: newMessages[i].m
-                };
+                // check if it's a complete message of just a notification
+                if(newMessages[i].m) {
+                  // construct message
+                  var sMsg = {
+                    u: newMessages[i].u,
+                    t: newMessages[i].t,
+                    m: newMessages[i].m
+                  };
 
-                // update the model
-                model.get('log').push(sMsg);
-                model.trigger('change:log', sMsg);
+                  // update the model
+                  model.get('log').push(sMsg);
+                  model.trigger('change:log', sMsg);
+                }
                 user.trigger('newMessage', newMessages[i].sId);
 
               } else {
