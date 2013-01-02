@@ -50,7 +50,7 @@ socket.on('connected', function (data) {
                 }
                 user.trigger('newMessage', newMessages[i].sId);
 
-              } else {
+              } else if(newMessages[i].m) {
                 // chat session is new
                 console.log(' - new chat session notification');
                 userbarView.chatSessionTabs.fetchChatSessionFromServerById(newMessages[i].sId);
