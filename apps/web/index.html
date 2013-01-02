@@ -785,13 +785,8 @@
               <span>{{#u}}{{u}}{{/u}}&#8217;s details</span>
               <div>
                 <span class="icon-user"></span>
-                <h3>GENDER</h3>
-                <h3><strong>{{g}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-gift"></span>
-                <h3>AGE</h3>
-                <h3><strong>{{ag}}</strong><span class="icon-ok-sign"></span></h3>
+                <h3>GENDER, AGE</h3>
+                <h3><strong>{{g}}, {{ag}}</strong><span class="icon-ok-sign"></span></h3>
               </div>
               <div>
                 <span class="icon-heart"></span>
@@ -804,13 +799,25 @@
                 <h3><strong>{{#locN}}{{locN}}{{/locN}}{{^locN}}UNKNOWN{{/locN}}</strong><span class="icon-ok-sign"></span></h3>
               </div>
               <div>
-                <span class="icon-glass"></span>
+                <span class="icon-group"></span>
                 <h3>WANTS TO MEET</h3>
                 <h3>
                   <strong>
                     {{#w}}{{^m}}women{{/m}}{{/w}}
                     {{#w}}{{#m}}women & men{{/m}}{{/w}}
                     {{#m}}{{^w}}men{{/w}}{{/m}}
+                  </strong>
+                  <span class="icon-ok-sign"></span>
+                </h3>
+              </div>
+              <div>
+                <span class="icon-share-alt"></span>
+                <h3>FOR</h3>
+                <h3>
+                  <strong>
+                    {{#ff}}{{^fd}}Friendship{{/fd}}{{/ff}}
+                    {{#ff}}{{#fd}}Friendship & Dating{{/fd}}{{/ff}}
+                    {{#fd}}{{^ff}}Dating{{/ff}}{{/fd}}
                   </strong>
                   <span class="icon-ok-sign"></span>
                 </h3>
@@ -901,13 +908,8 @@
               <span>YOUR PERSONAL DETAILS</span>
               <div>
                 <span class="icon-user"></span>
-                <h3>GENDER</h3>
-                <h3><strong>{{g}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-gift"></span>
-                <h3>AGE</h3>
-                <h3><strong>{{ag}}</strong><span class="icon-ok-sign"></span></h3>
+                <h3>GENDER, AGE</h3>
+                <h3><strong>{{g}}, {{ag}}</strong><span class="icon-ok-sign"></span></h3>
               </div>
               <div>
                 <span class="icon-heart"></span>
@@ -920,13 +922,25 @@
                 <h3><strong>{{#locN}}{{locN}}{{/locN}}{{^locN}}UNKNOWN{{/locN}}</strong><span class="icon-ok-sign"></span></h3>
               </div>
               <div>
-                <span class="icon-glass"></span>
+                <span class="icon-group"></span>
                 <h3>WANTS TO MEET</h3>
                 <h3>
                   <strong>
                     {{#w}}{{^m}}women{{/m}}{{/w}}
                     {{#w}}{{#m}}women & men{{/m}}{{/w}}
                     {{#m}}{{^w}}men{{/w}}{{/m}}
+                  </strong>
+                  <span class="icon-ok-sign"></span>
+                </h3>
+              </div>
+              <div>
+                <span class="icon-share-alt"></span>
+                <h3>FOR</h3>
+                <h3>
+                  <strong>
+                    {{#ff}}{{^fd}}Friendship{{/fd}}{{/ff}}
+                    {{#ff}}{{#fd}}Friendship & Dating{{/fd}}{{/ff}}
+                    {{#fd}}{{^ff}}Dating{{/ff}}{{/fd}}
                   </strong>
                   <span class="icon-ok-sign"></span>
                 </h3>
