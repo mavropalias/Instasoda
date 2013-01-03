@@ -1263,11 +1263,15 @@
         <div id="mapWidget">
           <div class="mapTitle">
             <h1>{{h1}}</h1>
-            <h2>{{h2}}</h2>
-            <a class="button" id="setLocation">{{{buttonTxt}}}</a>
+            <h2>Drag the map to circle your location. Then choose your prefered location from the ones that will appear here!</h2>
+            <div class="location-names-container"></div>
+            <button id="setLocation">{{{buttonTxt}}}</button>
+            <p class="tip">{{h2}}</p>
           </div>
-          <div id="mapContainer"></div>
-          <div class="mapCenterLocationMarker">{{target}}</div>
+          <div class="map-outer-container">
+            <div id="mapContainer"></div>
+            <div class="mapCenterLocationMarker">{{target}}</div>
+          </div>
         </div>
       </script>
 

@@ -122,7 +122,7 @@ var SettingsLocationView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    //'click #saveUsername': 'save'
+    'click .location-name-label': 'setLocationName'
   },
 
   // initialize
@@ -130,6 +130,10 @@ var SettingsLocationView = Backbone.View.extend({
   initialize: function() {
     console.log('  ~ initializing SettingsLocationView');
     _.bindAll(this);
+
+    // locations template
+    this.locTemplate = "<label class='location-name-label' data-name='{{location}}'><input type='radio' name='location' value='{{location}}' class='location-name'>{{location}}</label>";
+
     this.render();
   },
 
@@ -139,10 +143,10 @@ var SettingsLocationView = Backbone.View.extend({
     console.log('  ~ rendering SettingsLocationView');
     var template = $('#tplMapWidget').html();
     var mapStrings = {
-      h1: this.model.get('u') + ', choose your current location.',
-      h2: 'Other Instasoda members will see the location you choose. In order to protect your privacy, we recommend only zooming-in up to your general area in your city/town.',
+      h1: 'Choose your current location.',
+      h2: 'Tip: Other Instasoda members will see the location you choose. In order to protect your privacy, be only as specific as you feel comfortable with.',
       target: 'drag the map to center on your approximate location!',
-      buttonTxt: 'Click here to set your location to: <span id="targetAdress"> ...drag the map!</span>'
+      buttonTxt: 'Click here to set your location to: <span id="targetAdress"></span>'
     };
     this.$el.html(Mustache.to_html(template, mapStrings));
   },
@@ -153,7 +157,7 @@ var SettingsLocationView = Backbone.View.extend({
     var _this = this;
 
     // show map widget
-    showMapAndGetLocation('#mapContainer', true, function(lat, lng, formattedAddress) {
+    showMapAndGetLocation('#mapContainer', true, this, function(lat, lng, formattedAddress) {
       _this.model.set('loc', [lng, lat]);
       _this.model.set('locN', formattedAddress);
 
@@ -163,6 +167,29 @@ var SettingsLocationView = Backbone.View.extend({
       // move on to the next setting
       IS.setupUser(_this);
     });
+  },
+
+  // showLocations
+  // -----------------------------------------------------------------------
+  showLocations: function(locations) {
+    var _this = this;
+
+    // clear current locations
+    this.$('.location-names-container').html('');
+
+    locations.forEach(function(loc) {
+      _this.$('.location-names-container').append(Mustache.to_html(_this.locTemplate, {location: loc}));
+    });
+  },
+
+  // setLocationName
+  // -----------------------------------------------------------------------
+  setLocationName: function(e) {
+    if(!$('#setLocation').is(':visible')) {
+      // show submit button
+      $('#setLocation').fadeIn(100);
+    }
+    $('#targetAdress').html($(e.currentTarget).data('name'));
   }
 });
 

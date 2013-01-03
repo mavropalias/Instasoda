@@ -1120,11 +1120,12 @@ function l(msg) {
  * @param {String} container
  * @param {Boolean} bAllowTextInput
  */
-function showMapAndGetLocation(container, bAllowTextInput, cb) {
+function showMapAndGetLocation(container, bAllowTextInput, parentView, cb) {
     var haveAddress = false;
     var lat = null;
     var lng = null;
     var formattedAddress = null;
+    var availableLocations = [];
 
     // init map object
     var map = new GMaps({
@@ -1136,13 +1137,19 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
       height: '100%',
       zoom: 2,
       dragend: function() {
+        $('#targetAdress').html('');
+        $('#setLocation').hide();
+
         GMaps.geocode({
           location: map.getCenter(),
           callback: function(results, status) {
             if (status == 'OK') {
-              $('#targetAdress').html(results[2].formatted_address);
-              $('.mapCenterLocationMarker').html(results[2].formatted_address);
-              haveAddress = true;
+              availableLocations = _.last(_.pluck(results, 'formatted_address'), 5);
+              if(availableLocations.length > 0) {
+                parentView.showLocations(availableLocations);
+                $('.mapCenterLocationMarker').html(availableLocations[0]);
+                haveAddress = true;
+              }
             }
           }
         });
@@ -1151,7 +1158,7 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
 
     // enable button
     $('#setLocation').on('click', function() {
-      if(haveAddress) {
+      if(haveAddress && $('.targetAdress').html() !== "") {
         lat = map.getCenter().lat();
         lng = map.getCenter().lng();
         formattedAddress = $('#targetAdress').text();
@@ -1175,9 +1182,12 @@ function showMapAndGetLocation(container, bAllowTextInput, cb) {
           lng: position.coords.longitude,
           callback: function(results, status) {
             if (status == 'OK') {
-              $('#targetAdress').html(results[2].formatted_address);
-              $('.mapCenterLocationMarker').html(results[2].formatted_address);
-              haveAddress = true;
+              availableLocations = _.last(_.pluck(results, 'formatted_address'), 5);
+              if(availableLocations.length > 0) {
+                parentView.showLocations(availableLocations);
+                $('.mapCenterLocationMarker').html(availableLocations[0]);
+                haveAddress = true;
+              }
             }
           }
         });
