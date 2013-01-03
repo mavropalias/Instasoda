@@ -1025,7 +1025,7 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplEditMyProfile" type="text/template">
-        <div id="block-profile" class="profile-options">
+        <div class="profile-options">
           <div class="twelve columns no-padding">
 
 
@@ -1034,32 +1034,43 @@
                 <h1>edit my profile <a class="smaller darkred button" href="#me">cancel</a></h1>
               </div>
               <div class="four columns sidebar">
-                <h2>My Instasoda name <span class="tip" title="This is how other instasoda users will see you."></span></h2>
-                <input type="text" name="username" value="{{u}}" required maxlength=50>
+                <section>
+                  <span class="option-title">My Instasoda name <span class="tip" title="This is how other instasoda users will see you."></span></span>
+                  <input class="option-username" type="text" name="username" value="{{u}}" required maxlength=50>
+                </section>
 
-                <h2>I am looking for</h2>
-                <label class="findFriends">
-                  <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
-                  <span class="findType">friendship</span>
-                </label>
-                <label class="findDates">
-                  <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
-                  <span class="findType">dating</span>
-                </label>
+                <section>
+                  <span class="option-title">I am looking for</span>
+                  <label class="findFriends">
+                    <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
+                    <span class="findType">friendship</span>
+                  </label>
+                  <label class="findDates">
+                    <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
+                    <span class="findType">dating</span>
+                  </label>
+                </section>
 
-                <h2>I want to meet</h2>
-                <label class="meetWomen">
-                  <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
-                  <span class="meetGender">women</span>
-                </label>
-                <label class="meetMen">
-                  <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
-                  <span class="meetGender">men</span>
-                </label>
+                <section>
+                  <span class="option-title">I want to meet</span>
+                  <label class="meetWomen">
+                    <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
+                    <span class="meetGender">women</span>
+                  </label>
+                  <label class="meetMen">
+                    <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
+                    <span class="meetGender">men</span>
+                  </label>
+                </section>
+
+                <section>
+                  <span class="option-title">My location <button class="smaller change-location">Change</button></span>
+                    <div>{{locN}}</div>
+                </section>
               </div>
 
               <div class="eight columns">
-                <h2 title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.">A little bit about myself</h2>
+                <span class="option-title" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.">A little bit about myself</span>
                 <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 30rem;">{{{a}}}</div>
               </div>
 

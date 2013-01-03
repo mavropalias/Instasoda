@@ -115,7 +115,7 @@ var MyProfileView = Backbone.View.extend({
           // remove loading animation
           $('.qq-upload-drop-area').removeClass('working');
         }
-         
+
         alert("Couldn't upload your photo! " + reason);
       })
       .on('complete', function(event, id, filename, res){
@@ -340,7 +340,8 @@ var EditMyProfileView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #saveProfileButton': 'save'
+    'click #saveProfileButton': 'save',
+    'click .change-location': 'changeLocation'
   },
 
   // initialize
@@ -395,6 +396,13 @@ var EditMyProfileView = Backbone.View.extend({
       _this.show();
       _this.enter();
     });
+  },
+
+  // changeLocation
+  // ---------------------------------------------------------------------------
+  changeLocation: function(cb) {
+    this.model.set('locN', null);
+    IS.setupUser();
   },
 
   // save
@@ -496,7 +504,7 @@ var UsersFullView = Backbone.View.extend({
 
     // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());
-    
+
     // render sub views
     this.myPhotosView.render();
     this.likesListView.render();
@@ -620,7 +628,7 @@ var MyPhotosView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   initialize: function() {
     _.bindAll(this);
-    
+
     // get template
     this.template = document.getElementById("tplMyPhotos").innerHTML;
 
