@@ -816,6 +816,7 @@ IS.logout = function(bStopRedirect) {
   user.clear(); // clear local Backbone model
   store.clear(); // clear localStorage
   appReady = false;
+  $('body').removeClass('chat-is-visible');
   if(!bStopRedirect) {
     router.navigate("", {trigger: true}); // redirect to homepage
     router.welcome();
