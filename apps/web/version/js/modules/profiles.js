@@ -421,7 +421,8 @@ var EditMyProfileView = Backbone.View.extend({
         'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
         'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0),
         'ff': ((this.$('input[name=findFriends]:checked').length > 0) ? 1 : 0),
-        'fd': ((this.$('input[name=findDates]:checked').length > 0) ? 1 : 0)
+        'fd': ((this.$('input[name=findDates]:checked').length > 0) ? 1 : 0),
+        'fn': ((this.$('input[name=notifications]:checked').val() == 'true') ? true : false)
       },
       {
         error: function(model, response) {

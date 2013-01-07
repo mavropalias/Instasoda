@@ -829,7 +829,7 @@ IS.logout = function(bStopRedirect) {
  */
 IS.nullOrEmpty = function(property) {
   if(typeof property == 'undefined') return true;
-  else if(property == '' || property == null) return true;
+  else if(property === '' || property === null) return true;
   else return false;
 }
 
@@ -963,9 +963,10 @@ IS.setupUser = function (currentView) {
   var loc = user.get('loc');
   var locN = user.get('locN');
   var gender = user.get('g');
+  var fn = user.get('fn');
 
   // check if the user need to update his profile
-  if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(gender) || IS.nullOrEmpty(locN) || IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m))) {
+  if(IS.nullOrEmpty(loc) || IS.nullOrEmpty(gender) || IS.nullOrEmpty(locN) || IS.nullOrEmpty(u) || (IS.nullOrEmpty(ff) && IS.nullOrEmpty(fd)) || (IS.nullOrEmpty(w) && IS.nullOrEmpty(m)) || IS.nullOrEmpty(fn)) {
     log('setting up user preferences', 'info');
 
     // check username
@@ -995,6 +996,14 @@ IS.setupUser = function (currentView) {
     // check gender preference
     else if(IS.nullOrEmpty(w) && IS.nullOrEmpty(m)) {
       nextView = new SettingsGenderPrefsView({
+        model: user
+      });
+    }
+    // check facebook notifications
+    else if(IS.nullOrEmpty(fn)) {
+    console.log(IS.nullOrEmpty(fn));
+
+      nextView = new SettingsNotificationsView({
         model: user
       });
     }

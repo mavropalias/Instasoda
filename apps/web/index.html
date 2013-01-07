@@ -1064,6 +1064,18 @@
                 </section>
 
                 <section>
+                  <span class="option-title">Notify me on Facebook when someone sends me a message</span>
+                  <label>
+                    <input type="radio" name="notifications" value="true" {{#fn}}checked = "checked"{{/fn}}>
+                    <span>Yes please</span>
+                  </label>
+                  <label class="">
+                    <input type="radio" name="notifications" value="false" {{^fn}}checked = "checked"{{/fn}}>
+                    <span>No thanks</span>
+                  </label>
+                </section>
+
+                <section>
                   <span class="option-title">My location <button class="smaller change-location">Change</button></span>
                     <div>{{locN}}</div>
                 </section>
@@ -1223,6 +1235,30 @@
             </div>
             <div class="settingTip">
               (you can change this later)
+            </div>
+          </div>
+        </div>
+      </script>
+
+      <script id="tplSettingsNotifications" type="text/template">
+        <div class="settingContainer settingNotifications">
+          <div class="setting">
+            <div class="settingTitle">
+              Would you like us to notify you on Facebook when someone sends you a message?
+            </div>
+            <div class="settingContent">
+              <label>
+                <input type="radio" name="notifications" value="true" checked>
+                <span>Yes please</span>
+              </label>
+              <label>
+                <input type="radio" name="notifications" value="false">
+                <span>No thanks</span>
+              </label>
+              <button id="saveNotifications">Ok</button>
+            </div>
+            <div class="settingTip">
+              (we will not send more than 1 notification per day & you can change this later)
             </div>
           </div>
         </div>

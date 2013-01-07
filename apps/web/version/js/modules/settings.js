@@ -314,3 +314,59 @@ var SettingsGenderPrefsView = Backbone.View.extend({
     }
   }
 });
+
+// =========================================================================
+// SettingsNotificationsView
+// =========================================================================
+var SettingsNotificationsView = Backbone.View.extend({
+  // properties
+  // -----------------------------------------------------------------------
+  className: 'settings',
+  tagName: 'section',
+
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click #saveNotifications': 'save'
+  },
+
+  // initialize
+  // -----------------------------------------------------------------------
+  initialize: function() {
+    console.log('  ~ initializing SettingsNotificationsView');
+    _.bindAll(this);
+    this.render();
+  },
+
+  // render
+  // -----------------------------------------------------------------------
+  render: function() {
+    console.log('  ~ rendering SettingsNotificationsView');
+    var template = $('#tplSettingsNotifications').html();
+    this.$el.html(Mustache.to_html(template, this.model.toJSON()));
+  },
+
+  // show
+  // -----------------------------------------------------------------------
+  show: function() {
+    // nothing yet
+  },
+
+  // save
+  // -----------------------------------------------------------------------
+  save: function() {
+    console.log('  ~ saving SettingsNotificationsView');
+
+    var notifications = $('input:radio[name=notifications]:checked').val();
+
+    if(!IS.nullOrEmpty(notifications)) {
+      notifications = (notifications == 'true') ? true : false;
+      // save user model
+      this.model.set('fn', notifications);
+      IS.saveUser();
+
+      // move on to the next setting
+      IS.setupUser(this);
+    }
+  }
+});
