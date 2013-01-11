@@ -26,6 +26,12 @@ var DashboardView = Backbone.View.extend({
     this.matchesResultsView = new SearchResultsView({ collection: this.collection });
   },
 
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click #facebook-invite': 'facebookInvite'
+  },
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -64,6 +70,9 @@ var DashboardView = Backbone.View.extend({
       minItems: 2,
       maxItems: 8
     });
+
+    // render facebook like-box
+    FB.XFBML.parse(document.getElementById('dashboard'));
   },
 
   // leave
@@ -85,5 +94,20 @@ var DashboardView = Backbone.View.extend({
       _this.show();
       _this.enter();
     });
-  }
+  },
+
+  // facebookInvite
+  // -----------------------------------------------------------------------
+  facebookInvite: function() {
+    log('facebookInvite');
+
+    FB.ui({
+      method: 'apprequests',
+      filter: ['app_non_users'],
+      title: 'Invite your friends to Instasoda!',
+      message: 'Check this app out. It lets you find people who share the things that you like. :)'
+    }, function() {
+
+    });
+  },
 });
