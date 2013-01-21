@@ -650,7 +650,8 @@ IS.login = function(fTkn, fTid, cb) {
       user.fetch(
         {
           data: {
-            'fTkn': fTkn
+            'fTkn': fTkn,
+            '_id': fTid
         },
           error: function(model, response) {
             //TODO: properly handle errors
@@ -698,7 +699,8 @@ IS.login = function(fTkn, fTid, cb) {
       user.fetch(
         {
           data: {
-            'fTkn': fTkn
+            'fTkn': fTkn,
+            '_id': fTid
           }
         ,
           error: function(model, response) {

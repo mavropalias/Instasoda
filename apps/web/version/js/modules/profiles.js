@@ -80,7 +80,7 @@ var MyProfileView = Backbone.View.extend({
 
     $('#uploadWidget').fineUploader({
         request: {
-            endpoint: sApi + 'user/' + user.get('_id') + '/photo',
+            endpoint: sApi + 'me/' + user.get('_id') + '/photo',
             params: {
               tkn: user.get('tkn'),
               _id: user.get('_id')
@@ -297,7 +297,7 @@ var MyProfileView = Backbone.View.extend({
 
     // Make an API call to delete the photo
     $.ajax({
-      url: sApi + 'user/' + user.get('_id') + '/photo/' + photoId,
+      url: sApi + 'me/' + user.get('_id') + '/photo/' + photoId,
       type: 'DELETE',
       data: {
         tkn: user.get('tkn'),

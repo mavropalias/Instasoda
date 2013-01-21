@@ -2,7 +2,7 @@
 // =============================================================================
 
   var IS = {};
-  IS.notificationsArray = new Array;
+  IS.notificationsArray = [];
   IS.fbToken = null;
   IS.fbTokenExpires = null;
   IS.currentView = null;
@@ -29,7 +29,7 @@
     defaults: {
     },
     idAttribute: "_id",
-    urlRoot: sApi + 'user'
+    urlRoot: sApi + 'me'
   });
 
   // Users - all other Instasoda users
@@ -57,13 +57,13 @@
   // MatchesCollection - a collection of matches
   // =========================================================================
   var MatchesCollection = Backbone.Collection.extend({
-    url: sApi + 'user/matches'
+    url: sApi + 'me/matches'
   });
 
   // FavouritesCollection - user's favourite people
   // =========================================================================
   var FavouritesCollection = Backbone.Collection.extend({
-    url: sApi + 'user/favourites'
+    url: sApi + 'me/favourites'
   });
 
   // ChatSession
@@ -82,7 +82,7 @@
   // ChatSessions
   // =========================================================================
   var ChatSessions = Backbone.Collection.extend({
-    url: sApi + 'chat'
+    url: sApi + 'me/chat'
   });
 
   // Like

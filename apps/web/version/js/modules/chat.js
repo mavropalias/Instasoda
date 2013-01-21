@@ -35,7 +35,8 @@ var ChatSessionTabs = Backbone.View.extend({
     _this.collection.fetch({
       data: {
         'id': user.get('_id'),
-        'fTkn': user.get('fTkn')
+        'fTkn': user.get('fTkn'),
+        'tkn': user.get('tkn')
       },
       success: function(model, response) {
         // render
