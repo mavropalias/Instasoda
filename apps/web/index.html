@@ -12,6 +12,15 @@
   	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
 
+  <!-- DNS PREFETCH -->
+  <link rel="dns-prefetch" href="//api.instasoda.com">
+  <link rel="dns-prefetch" href="//img.instasoda.com">
+  <link rel="dns-prefetch" href="//maps.googleapis.com">
+  <link rel="dns-prefetch" href="//www.google-analytics.com">
+  <link rel="dns-prefetch" href="//ssl.google-analytics.com">
+  <link rel="dns-prefetch" href="//connect.facebook.net">
+  <link rel="dns-prefetch" href="//widget.uservoice.com">
+
   <!-- OPEN GRAPH -->
   <meta property="og:title" content="Instasoda" />
   <meta property="og:type" content="website" />
@@ -76,34 +85,8 @@
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
 
 
-  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
+  <!--<script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>-->
   <!-- SCRIPTS END -->
-
-
-  <!-- OPEN GRAPH -->
-  <meta property="og:title" content="Instasoda" />
-  <meta property="og:type" content="blog" />
-  <meta property="og:url" content="http://instasoda.com" />
-  <meta property="og:image" content="" />
-  <meta property="og:site_name" content="Instasoda" />
-  <meta property="fb:admins" content="659710874" />
-
-  <!-- GOOGLE ANALYTICS -->
-  <script type="text/javascript">
-
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-749229-25']);
-    _gaq.push(['_setDomainName', 'instasoda.com']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-
-  </script>
-
 </head>
 <body>
 
@@ -1341,6 +1324,21 @@
       })();
     </script>
 
+  <!-- GOOGLE ANALYTICS -->
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-749229-25']);
+    _gaq.push(['_setDomainName', 'instasoda.com']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
 
 </body>
 </html>

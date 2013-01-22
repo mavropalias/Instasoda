@@ -93,7 +93,8 @@ var MyProfileView = Backbone.View.extend({
         },
         retry: {
           enableAuto: true,
-          autoAttemptDelay: 2
+          autoAttemptDelay: 2,
+          maxAutoAttempts: 1
         },
         text: {
           uploadButton: 'Upload a photo',
