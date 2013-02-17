@@ -1,0 +1,131 @@
+@import "_settings";
+@import "_mixins";
+
+.view-more-people {
+  margin-top: 0.5rem;
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: $colorGreen1;
+
+  .icon {
+    padding: 0.6rem;
+    font-size: 1.8rem;
+    border-radius: 50px;
+    background: $colorGreen1;
+    color: #fff;
+    margin-right: 0.5rem;
+  }
+
+  &:hover {
+    color: $colorGreen2;
+
+    .icon {
+      background: $colorGreen2;
+    }
+  }
+}
+
+.search-filters-row {
+  background: #222;
+  margin-top: 1rem;
+  color: #eee;
+
+  &.sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 8rem;
+    z-index: 2;
+    margin-top: 0;
+    width: auto;
+    float: none;
+    height: 8rem;
+
+    &:hover {
+      height: auto;
+    }
+  }
+
+  #age-num {
+    margin: 2rem 0 1rem 0;
+    display: block;
+  }
+
+  #age-range {
+    border-radius: 20px;
+    width: 100%;
+    margin-bottom: 2rem;
+    background: #888;
+    border: 0 none;
+    padding: 1px 0;
+    box-shadow: 0 5px 15px 0 #404040 inset;
+
+    .ui-slider-range {
+      border: 0 none;
+      background: $colorGreen1;
+    }
+
+    .ui-slider-handle {
+      border-radius: 25px;
+      box-shadow: inset 0 1px 1px 1px hsla(0,0%,100%,1),
+                  inset 0 -1px 1px 1px hsla(0,0%,0%,.25),
+                  0 1px 3px 1px hsla(0,0%,0%,.5),
+                  0 0 2px hsla(0,0%,0%,.25);
+      width: 20px;
+      height: 20px;
+      border: 0 none;
+      cursor: ew-resize;
+      margin-top: 1px;
+      outline: none;
+
+      background-color: #eee;
+      background-image: -webkit-linear-gradient(hsla(0,0%,100%,.1), hsla(0,0%,0%,.1));
+    }
+  }
+
+  label {
+    color: $colorBlue4;
+
+    &:hover {
+      color: $colorBlue3;
+    }
+  }
+
+  .search-likes-row {
+    margin-top: 2rem;
+
+    h3 {
+      color: $colorGreen1;
+      margin: 0;
+      font-size: 3rem;
+      margin-right: 1rem;
+    }
+
+    .add-likes-button {
+      line-height: 3.5rem;
+
+      .icon {
+        margin-right: 0.5rem;
+      }
+    }
+
+    .interests-container {
+      clear: both;
+    }
+
+    .tip {
+      font-size: 1.4rem;
+      color: #666;
+    }
+  }
+
+  .search-buttons-row {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    #do-search-random {
+      display: none;
+    }
+  }
+}

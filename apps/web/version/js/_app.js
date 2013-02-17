@@ -19,12 +19,10 @@
   jQuery.support.cors = true;
 
 
-// Initialize application
+// Bootstrap application
 // =============================================================================
 
-
   // User - the person using the app
-  // =========================================================================
   var User = Backbone.Model.extend({
     defaults: {
     },
@@ -33,7 +31,6 @@
   });
 
   // Users - all other Instasoda users
-  // =========================================================================
   var Users = Backbone.Model.extend({
     defaults: {
     },
@@ -42,65 +39,56 @@
   });
 
   // OnlineUsers
-  // =========================================================================
   var OnlineUsers = Backbone.Model.extend({
     defaults: {
     }
   });
 
   // UsersCollection - a collection of Users
-  // =========================================================================
   var UsersCollection = Backbone.Collection.extend({
     url: sApi + 'search'
   });
 
   // MatchesCollection - a collection of matches
-  // =========================================================================
   var MatchesCollection = Backbone.Collection.extend({
     url: sApi + 'me/matches'
   });
 
   // FavouritesCollection - user's favourite people
-  // =========================================================================
   var FavouritesCollection = Backbone.Collection.extend({
     url: sApi + 'me/favourites'
   });
 
   // ChatSession
-  // =========================================================================
   var ChatSession = Backbone.Model.extend({
     idAttribute: "_id"
   });
 
   // ChatSessionLog
-  // =========================================================================
   var ChatSessionLog = Backbone.Model.extend({
     idAttribute: "_id",
     log: {}
   });
 
   // ChatSessions
-  // =========================================================================
   var ChatSessions = Backbone.Collection.extend({
     url: sApi + 'me/chat'
   });
 
   // Like
-  // =========================================================================
   var Like = Backbone.Model.extend();
 
   // Likes
-  // =========================================================================
   var Likes = Backbone.Model.extend();
 
   // Backbone models
-  // -------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   var user = new User();
   var users = new Users();
   var onlineUsers = new OnlineUsers();
 
   // Backbone collections
-  // -------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   var usersCollection = new UsersCollection({
     model: users
   });
@@ -111,18 +99,17 @@
     model: ChatSession
   });
     chatSessions.comparator = function(session) {
-      return parseInt(session.get("t"));
+      return parseInt(session.get("t"), 10);
     };
   var favsCollection = new FavouritesCollection({
     model: users
   });
 
   // Backbone views
-  // -------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------
   var navigationView;
   var userbarView;
   var welcomeView;
-  var betaView;
   var myProfileView;
   var editMyProfileView;
   var searchView;
@@ -177,11 +164,6 @@
       el: document.getElementById('content'),
       collection: matchesCollection,
       model: user
-    });
-    favouritesView = new FavouritesView({
-      el: document.getElementById('content'),
-      model: user,
-      collection: favsCollection
     });
     usersFullView = new UsersFullView({
       el: document.getElementById('content'),

@@ -1,0 +1,29 @@
+@-webkit-keyframes left {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+
+  100% {
+    -webkit-transform: translateX(-5180px);
+  }
+}
+
+@moz-keyframes left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -200%;
+  }
+}
+
+@keyframes left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -200%;
+  }
+}

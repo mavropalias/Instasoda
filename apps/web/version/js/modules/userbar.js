@@ -93,10 +93,12 @@ var UserbarView = Backbone.View.extend({
     }
 
     // update custom scrollbars
-    $('#chat .slimScrollDiv, #chat .chat-tabs').css({
-      'height': $(window).height() - $('#chat-button').outerHeight() - $('.chat-session:visible').outerHeight() + 'px',
-    'width': $('#chat-button').outerWidth()
-    });
+    setTimeout(function() {
+      $('#chat .slimScrollDiv, #chat .chat-tabs').css({
+        'height': $(window).height() - $('#chat-button').outerHeight() - $('.chat-session:visible').outerHeight() + 'px',
+        'width': $('#chat-button').outerWidth()
+      });
+    }, 510);
   },
 
   // showChatWindow
@@ -107,5 +109,13 @@ var UserbarView = Backbone.View.extend({
     this.$('#chat-button').addClass('active');
     this.$('.chat-sessions-container').show();
     $('body').addClass('chat-is-visible');
+
+    // update custom scrollbars
+    setTimeout(function() {
+      $('#chat .slimScrollDiv, #chat .chat-tabs').css({
+        'height': $(window).height() - $('#chat-button').outerHeight() - $('.chat-session:visible').outerHeight() + 'px',
+        'width': $('#chat-button').outerWidth()
+      });
+    }, 510);
   }
 });

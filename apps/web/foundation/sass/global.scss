@@ -1,0 +1,207 @@
+@import "settings";
+
+  body {
+    background: $backgroundColor;
+    overflow-x: hidden;
+    margin-bottom: 30rem;
+
+    &.sticky-filters {
+      margin-top: 16rem;
+    }
+  }
+
+  ol, ul, li {
+    list-style: none;
+  }
+
+  h2 {
+    font-size: 4rem;
+  }
+
+
+// =============================================================================
+// Buttons
+// =============================================================================
+
+  .button {
+    box-shadow: none;
+    border: 0 none;
+    font-weight: 400;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &.light {
+      font-family: $lightFontFamily;
+      font-weight: 300;
+    }
+  }
+
+
+// =============================================================================
+// Content container
+// =============================================================================
+
+  #content {
+    margin-right: 8rem;
+  }
+
+  // Adjust container when chat is visible or logged-out
+  // ---------------------------------------------------------------------------
+
+    .chat-is-visible {
+      #content {
+        margin-right: 25rem;
+      }
+
+      #starred-people {
+        right: 25rem;
+      }
+
+      nav {
+        padding-right: 25rem;
+      }
+    }
+
+    body[data-page="welcome"] {
+      #content {
+        margin-right: 0;
+      }
+
+      #starred-people {
+        right: 0;
+      }
+    }
+
+
+// =============================================================================
+// Reusable
+// =============================================================================
+
+    .facebook-row {
+      margin-top: 6rem;
+      margin-bottom: 6rem;
+    }
+
+    .no-padding {
+      padding: 0 !important;
+    }
+
+    .no-margin {
+      margin: 0 !important;
+    }
+
+    .indent {
+      padding: 0 10rem;
+
+      &> .columns {
+        padding: 0;
+        max-width: 90rem;
+      }
+    }
+
+    .margin-top {
+      margin-top: 4rem;
+    }
+
+    .margin-top-2x {
+      margin-top: 8rem;
+    }
+
+    .capitalise-first-letter {
+      &:first-letter {
+        text-transform: capitalize;
+      }
+    }
+
+    .bg-green-1 {
+      background: $colorGreen1 !important;
+    }
+
+    .transparent {
+      opacity: 0;
+    }
+
+
+// =============================================================================
+// Fancybox overwrite rules
+// =============================================================================
+
+  // Main image area
+  // ---------------------------------------------------------------------------
+
+    .fancybox-overlay {
+      .fancybox-opened {
+        .fancybox-skin {
+          box-shadow: none;
+        }
+      }
+
+      .fancybox-next {
+        width: 60%;
+      }
+    }
+
+  // Thumb helper
+  // ---------------------------------------------------------------------------
+
+    #fancybox-thumbs {
+
+      &.top {
+        top: 0;
+        //background: $backgroundColor;
+      }
+
+      ul {
+        @include transition-property(left);
+        @include transition-duration(0.2s);
+        -webkit-transform: translate3d(0, 0, 0);
+
+        li {
+          @include grayscale;
+          opacity: 1;
+          padding: 0;
+
+          &:hover {
+            @include full-color;
+            border-bottom: 5px solid $colorBlue2;
+          }
+
+          &.active {
+            @include full-color;
+            opacity: 1;
+            border: 0 none;
+            border-bottom: 5px solid $colorBlue2;
+          }
+
+          a {
+            border: 0 none;
+          }
+        }
+      }
+    }
+
+  // Button helper
+  // ---------------------------------------------------------------------------
+
+    #fancybox-buttons {
+      background: #222;
+
+      &.bottom {
+        bottom: 0;
+      }
+
+      ul {
+        background: #222;
+        border: 0 none;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      a {
+        &.btnNext {
+          //border-right: 1px solid #222;
+        }
+      }
+    }

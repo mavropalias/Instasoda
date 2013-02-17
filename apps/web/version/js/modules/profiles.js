@@ -89,7 +89,7 @@ var MyProfileView = Backbone.View.extend({
         validation: {
           allowedExtensions: ['jpg', 'jpeg', 'png', 'gif'],
           acceptFiles: 'image/*',
-          sizeLimit: 3000000, // 3MB
+          sizeLimit: 3000000 // 3MB
         },
         retry: {
           enableAuto: true,
@@ -148,7 +148,7 @@ var MyProfileView = Backbone.View.extend({
             }
           });
         } else {
-          log('error uploading photo (' + res.error + ')', 'error', _this)
+          log('error uploading photo (' + res.error + ')', 'error', _this);
         }
 
         // When all photos have been uploaded:
@@ -193,7 +193,7 @@ var MyProfileView = Backbone.View.extend({
         },
         function(cb){
           _this.likesView.leave(cb);
-        },
+        }
       ],
       function(err, res){
         cb();
@@ -464,8 +464,10 @@ var UsersFullView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #sendMessage': 'sendMessage',
-    'click #handleFavourite': 'handleFavourite'
+    'click #send-message': 'sendMessage',
+    'click #handle-favourite': 'handleFavourite',
+    'click #view-all-common-interests': 'viewAllCommonInterests',
+    'click #view-all-interests': 'viewAllInterests'
   },
 
   // initialize
@@ -511,10 +513,6 @@ var UsersFullView = Backbone.View.extend({
     this.myPhotosView.render();
     this.likesListView.render();
     this.commonLikesListView.render(null, null, true);
-
-    /*setTimeout(function() {
-      _this.onView();
-    }, 0);*/
   },
 
   // show
@@ -524,7 +522,7 @@ var UsersFullView = Backbone.View.extend({
     this.$el.html(this.html);
 
     // show sub views
-    this.myPhotosView.setElement(this.$('#userPhotosList')).show();
+    this.myPhotosView.setElement(this.$('#user-photos')).show();
     this.likesListView.setElement(this.$('#facebookLikes')).show();
     this.commonLikesListView.setElement(this.$('#commonLikes')).show();
   },
@@ -534,34 +532,34 @@ var UsersFullView = Backbone.View.extend({
   enter: function() {
     log('entering UsersFullView');
 
-    // resize columns
-    var iLikesCount = this.model.get('l').length;
-    var iCommonLikesCount = this.model.get('commonLikesCount');
-    var iPhotosCount = this.model.get('p').length;
-
     // activate fancybox for all photos
     this.$(".fancybox-thumb").fancybox({
-      prevEffect  : 'elastic',
-      nextEffect  : 'elastic',
+      prevEffect  : 'fade',
+      nextEffect  : 'fade',
       padding: 0,
-      helpers : {
-        title : {
+      topRatio: 0,
+      helpers: {
+        title: {
           type: 'outside'
         },
-        overlay : {
-          opacity : 0.85,
-          css : {
-            'background-color' : '#000'
+        overlay: {
+          css: {
+            'background' : 'rgba(0,0,0,.9)'
           }
         },
-        thumbs  : {
-          width : 50,
-          height: 50
+        thumbs: {
+          width: 200,
+          height: 150,
+          position: 'top'
+        },
+        buttons: {
+          position: 'bottom'
         }
       }
     });
 
     // enter sub views
+    this.myPhotosView.enter();
     this.likesListView.enter();
     this.commonLikesListView.enter();
   },
@@ -581,7 +579,7 @@ var UsersFullView = Backbone.View.extend({
         },
         function(cb){
           _this.commonLikesListView.leave(cb);
-        },
+        }
       ],
       function(err, res){
         cb();
@@ -612,12 +610,34 @@ var UsersFullView = Backbone.View.extend({
   // handleFavourite
   // -----------------------------------------------------------------------
   handleFavourite: function() {
+    var favType = null;
+
     if (_.indexOf(user.get('favs'), this.model.get('_id')) === -1) {
-      var favType = 'add'
+      favType = 'add';
     } else {
-      var favType = 'remove'
+      favType = 'remove';
     }
     IS.handleFavourite(this.model.get('_id'), this.model.get('u'), favType);
+  },
+
+  // viewAllCommonInterests
+  // -----------------------------------------------------------------------
+  viewAllCommonInterests: function() {
+    if(this.$('#common-interests').hasClass('expanded')) {
+      this.$('#common-interests, #view-all-common-interests').removeClass('expanded');
+    } else {
+      this.$('#common-interests, #view-all-common-interests').addClass('expanded');
+    }
+  },
+
+  // viewAllInterests
+  // -----------------------------------------------------------------------
+  viewAllInterests: function() {
+    if(this.$('#all-interests').hasClass('expanded')) {
+      this.$('#all-interests, #view-all-interests').removeClass('expanded');
+    } else {
+      this.$('#all-interests, #view-all-interests').addClass('expanded');
+    }
   }
 });
 
@@ -658,9 +678,32 @@ var MyPhotosView = Backbone.View.extend({
     log('entering MyPhotosView');
 
     // fadein user photos
-    this.$('.photo img').load(function(){
-      $(this).parent().removeClass('transparent');
+    this.$('.photo img').each(function(){
+      var self = this;
+      setTimeout(function() {
+        $(self).removeClass('transparent');
+      }, (150 + (150 * Math.floor((Math.random()*3)+1))));
     });
+
+    this.$('.photo img').each(function() {
+      if($(this).height() > 0) {
+        var self = this;
+        setTimeout(function() {
+          $(self).removeClass('transparent');
+        }, (150 + (150 * Math.floor((Math.random()*3)+1))));
+      } else {
+        $(this).load(function(){
+          var self = this;
+          setTimeout(function() {
+            $(self).removeClass('transparent');
+          }, (150 + (150 * Math.floor((Math.random()*3)+1))));
+        });
+      }
+    });
+
+    // set the width of the photo container
+    var iTotalWidth = this.model.get('p').length * 300;
+    this.$('.user-photos-scroller').width(iTotalWidth);
   },
 
   // leave

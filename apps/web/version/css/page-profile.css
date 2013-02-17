@@ -1,0 +1,145 @@
+#user-photos {
+  max-height: 30rem;
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+#user-photos .photo {
+  position: relative;
+  overflow: hidden;
+  float: left;
+}
+#user-photos .photo .photo-action {
+  display: none;
+}
+#user-photos .photo .photo-img {
+  -webkit-transition-property: opacity;
+  -moz-transition-property: opacity;
+  -o-transition-property: opacity;
+  transition-property: opacity;
+  -webkit-transition-duration: 0.4s;
+  -moz-transition-duration: 0.4s;
+  -o-transition-duration: 0.4s;
+  transition-duration: 0.4s;
+  width: 300px;
+}
+
+.name,
+#about-me {
+  margin: 0 2rem 0 0;
+}
+.name:first-letter,
+#about-me:first-letter {
+  text-transform: uppercase;
+}
+
+#handle-favourite,
+#send-message,
+#show-full-about {
+  margin-top: 1.5rem;
+  cursor: pointer;
+}
+#handle-favourite .icon,
+#send-message .icon,
+#show-full-about .icon {
+  padding: 0.6rem;
+  font-size: 1.8rem;
+  border-radius: 50px;
+  background: #007da6;
+  color: #fff;
+}
+
+#handle-favourite .icon-star {
+  background: #74b843;
+}
+#handle-favourite .icon-star:hover {
+  background: #faa73f;
+}
+#handle-favourite .icon-star-empty {
+  background: #faa73f;
+}
+#handle-favourite .icon-star-empty:hover {
+  background: #74b843;
+}
+
+#send-message {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-left: 1rem;
+  color: #007da6;
+}
+#send-message .icon {
+  background: #007da6;
+  margin-right: 0.5rem;
+}
+#send-message:hover {
+  color: #3dbcdf;
+}
+#send-message:hover .icon {
+  background: #3dbcdf;
+}
+
+#show-full-about {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #74b843;
+}
+#show-full-about .icon {
+  background: #74b843;
+  margin-right: 0.5rem;
+}
+#show-full-about:hover {
+  color: #527779;
+}
+#show-full-about:hover .icon {
+  background: #527779;
+}
+
+.user-info {
+  font-size: 1.3rem;
+  color: #527779;
+}
+.user-info strong {
+  color: #d95b43;
+}
+.user-info .user-online-status .icon {
+  color: #be1e2d;
+}
+.user-info .user-online-status.user-is-online .icon {
+  color: #74b843;
+}
+
+.interests-message-row {
+  margin-top: 4rem;
+}
+.interests-message-row .interests-message {
+  margin-bottom: 1rem;
+}
+
+.interests-row {
+  background: #222;
+  height: 10rem;
+  overflow: hidden;
+}
+.interests-row.expanded {
+  height: auto;
+}
+
+.interests-view-all-row .button {
+  width: 20rem;
+}
+.interests-view-all-row .button .icon-collapse {
+  display: none;
+}
+.interests-view-all-row .button.expanded .icon-collapse {
+  display: inline;
+}
+.interests-view-all-row .button.expanded .icon-expand {
+  display: none;
+}
+
+.about-me-row {
+  margin-top: 5rem;
+}
+.about-me-row #about-me {
+  color: #527779;
+}

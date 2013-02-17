@@ -39,16 +39,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- STYLES START -->
-  <link rel="stylesheet" type="text/css" href="VERSION/css/base.css">
   <link rel="stylesheet" type="text/css" href="VERSION/css/app.css">
   <!-- STYLES END -->
 
   <!-- SCRIPTS START -->
-  <script type="text/javascript" src="VERSION/js/lib/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.js"></script>
   <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?sensor=false">
     </script>
   <script type="text/javascript" src="https://localhost/socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="VERSION/js/lib/jquery-ui-1.8.21.custom.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/hmac-sha256.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/underscore-min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/json2.js"></script>
@@ -59,9 +58,10 @@
   <script type="text/javascript" src="VERSION/js/lib/jquery.mousewheel-3.0.6.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.fancybox.pack.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.fancybox-thumbs.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/jquery.fancybox-buttons.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/async.min.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.timeago.js"></script>
-  <script type="text/javascript" src="VERSION/js/lib/slimScroll.js"></script>
+  <script type="text/javascript" src="VERSION/js/lib/jquery.slimscroll.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/iscroll.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/jquery.appear.js"></script>
   <script type="text/javascript" src="VERSION/js/lib/gmaps.js"></script>
@@ -85,7 +85,7 @@
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
 
 
-  <!--<script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>-->
+  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
 </head>
 <body>
@@ -131,15 +131,7 @@
     <div id="user-bar"></div>
 
     <div id="main-content">
-
-      <div id="notifications-important" class="row no-padding">
-        <div class="twelve columns centered">
-          <h2>Konstantinos, your profile appears to be incomplete.</h2>
-          <p>By adding more information you <strong>increase the chances</strong> to find the perfect match!</p>
-        </div>
-      </div>
-      <div id="notifications-important-shadow" class="twelve columns"></div>
-      <div class="main-block row">
+      <div class="main-block">
         <section id="content" role="main"></section>
       </div>
     </div>
@@ -154,84 +146,79 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplNavigation" type="text/template">
-        <div class="navigation-bar-tr"></div>
-        <img class="left" src="./VERSION/img/logo-92x70.png" height="70" width="92" alt="">
+        <img class="left" src="./VERSION/img/logo-92x70.png" height="50" alt="">
         <ul>
           <li id="nav_home" class="active">
-            <a class="hide-for-small" href="#">
-              <span class="navIcon icon-home"></span>
-              <h3>HOME</h3>
+            <a class="nav-link" href="#">
+              <span class="nav-icon icon-home"></span>
+              <span class="nav-title">Home</span>
             </a>
           </li>
 
           {{#_id}}
           <li id="nav_matches">
-            <a class="hide-for-small" href="#matches">
-              <span class="navIcon icon-beaker"></span>
-              <h3>MATCHES</h3>
+            <a class="nav-link" href="#matches">
+              <span class="nav-icon icon-magic"></span>
+              <span class="nav-title">Matches</span>
             </a>
           </li>
           {{/_id}}
 
           {{#_id}}
           <li id="nav_search">
-            <a class="hide-for-small" href="#search">
-              <span class="navIcon icon-search"></span>
-              <h3>SEARCH</h3>
+            <a class="nav-link" href="#search">
+              <span class="nav-icon icon-group"></span>
+              <span class="nav-title">People</span>
             </a>
           </li>
           {{/_id}}
 
           {{#_id}}
             <li id="nav_profile">
-              <a class="hide-for-small" href="#me">
-                <span class="navIcon icon-user"></span>
-                <h3>PROFILE</h3>
+              <a class="nav-link" href="#me">
+                <span class="nav-icon icon-user"></span>
+                <span class="nav-title">{{u}}</span>
               </a>
             </li>
           {{/_id}}
 
           {{#_id}}
           <li id="nav_likes">
-            <a class="hide-for-small" href="#interests">
-              <span class="navIcon icon-thumbs-up"></span>
-              <h3>INTERESTS</h3>
+            <a class="nav-link" href="#interests">
+              <span class="nav-icon icon-thumbs-up"></span>
+              <span class="nav-title">Interests</span>
             </a>
           </li>
           {{/_id}}
 
           {{#_id}}
-          <li id="nav_favourites">
-            <a class="hide-for-small" href="#favourites">
-              <span class="navIcon icon-user">
-                <span class="icon-star"></span>
-              </span>
-              <h3>FAV PEOPLE</h3>
-            </a>
+          <li id="nav-starred-people" title="starred users">
+            <span class="nav-link">
+              <span class="nav-icon icon-star"></span>
+              <span class="nav-title">0</span>
+            </span>
           </li>
           {{/_id}}
 
           {{#_id}}
           <li id="nav_onlineUsers">
-            <a class="hide-for-small" href="#onlineusers">
-              <span class="navIcon icon-group"></span>
-
-              <h3><span class="userCount"></span> ONLINE NOW</h3>
+            <a class="nav-link" href="#onlineusers">
+              <span class="nav-icon icon-group"></span>
+              <span class="nav-title"><span class="userCount"></span> online now</span>
             </a>
           </li>
           {{/_id}}
 
           {{#_id}}
           <li id="nav_logout">
-            <a class="hide-for-small" href="#logout">
-              <span class="navIcon icon-off"></span>
-
-              <h3>LOGOUT</h3>
+            <a class="nav-link" href="#logout">
+              <span class="nav-icon icon-off"></span>
+              <span class="nav-title">Logout</span>
             </a>
           </li>
           {{/_id}}
-
         </ul>
+        <div id="starred-people"></div>
       </script>
 
 
@@ -241,23 +228,8 @@
 
       <script id="tplUserbar" type="text/template">
         {{#_id}}
-          <div id="profile-settings">
-            <h2>{{u}}</h2>
-            <strong>MANAGE YOUR ACCOUNT</strong>
-            <span class="icon-cog"></span>
-          </div>
-        {{/_id}}
-
-        <div id="site-label">
-          <h1>
-            <span>INSTA<strong>SODA</strong></span>
-            <img src="./VERSION/images/main-icon-my-profile.png" alt="">&nbsp;my profile
-          </h1>
-        </div>
-
-        {{#_id}}
           <div id="chat-button">
-            <span class="icon-comments"></span>
+            <span class="icon icon-comment"></span>
             <span class="chat-title">CHAT</span>
           </div>
 
@@ -275,7 +247,7 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplChatSessionsButtons" type="text/template">
-        <li class="chat-tab" id="{{_id}}" data-username="{{u}}">
+        <li class="chat-tab" id="{{_id}}" data-username="{{u}}" title="{{u}}">
           <span class="photo">
             {{#p}}
               {{#d}}
@@ -288,7 +260,7 @@
           </span>
           <span class="user">{{u}}</span>
           <span class="meta">
-            <span class="icon-gift"></span>{{ag}}
+            <span class="icon icon-gift"></span>{{ag}}
           </span>
           <span class="unread-messages icon-comment"></span>
         </li>
@@ -343,58 +315,35 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplDashboard" type="text/template">
-        <div id="dashboard">
-
+        <div class="row facebook-row indent">
           <div class="twelve columns">
-            <div class="welcome">
-              <h2>Welcome to our limited beta {{u}}!</h2>
-              <p>
-                We are very excited to have the first wave of people joining in! Things might be somewhat quiet for a little while as we are in limited beta, so take your time to explore and perfect your profile :)
-              </p>
-              <p>We would love to hear your thoughts, ideas or any issues you might encounter.<p/>
-
-              <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">Send us a message</a>
-              <button id="facebook-invite" title="Open feedback & support dialog">Invite your Facebook friends!</button>
-            </div>
+            <fb:like-box href="http://www.facebook.com/instasoda" width="400" show_faces="false" stream="false" header="false"></fb:like-box>
           </div>
+        </div>
 
+        <div class="row indent">
           <div class="twelve columns">
-            <h2>
-              {{#w}}{{^m}}Women{{/m}}{{/w}}
-              {{#w}}{{#m}}Women & men{{/m}}{{/w}}
-              {{#m}}{{^w}}Men{{/w}}{{/m}}&nbsp;who share your <a href="#interests">interests</a>:
+            <h2>Hi {{u}}, you have something in common with these people! Check them out:
             </h2>
+            <a class="button view-more-people-button" href="#search">view more people</a>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="twelve columns no-padding">
             <div id="dashboard-matches">
                <ul class="slides">
                </ul>
             </div>
           </div>
+        </div>
 
+        <div class="row indent">
           <div class="twelve columns">
-            <h2>Find amazing people</h2>
-            <p>
-              <a class="button" href="#search">Search for people</a>
-              <a class="button" href="#interests">Search using interests</a>
-            </p>
+            <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">Send us a message</a>
+            <button id="facebook-invite" class="button">Invite your Facebook friends!</button>
+            <small class="instasoda-build-number">Instasoda Limited Beta (build #VERSION)</small>
           </div>
-
-          <div class="twelve columns">
-            <h2>Play with your interests to improve your matches</h2>
-            <p>
-              <a class="button" href="#interests/favourites">Favourites</a>
-              <a class="button" href="#interests/likes">Likes</a>
-              <a class="button" href="#interests/dislikes">Dislikes</a>
-            </p>
-          </div>
-
-          <div class="twelve columns">
-            <fb:like-box href="http://www.facebook.com/instasoda" width="292" show_faces="false" stream="false" header="false"></fb:like-box>
-          </div>
-
-          <div class="twelve columns">
-            <p class="instasoda-build-number">Instasoda Closed Beta 1 (build #VERSION)</p>
-          </div>
-
         </div>
       </script>
 
@@ -404,44 +353,50 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplWelcome" type="text/template">
-        <h2>Instasoda is now in limited beta!</h2>
-
-        <p>We have opened access for a small number of users. If you would like to join, use the button bellow to login.</p>
-
-        <p>Please use <strong>Google Chrome</strong> to access Instasoda, while we expand our app to support more browsers.</p>
-
-        <button id="fb-auth">Login with Facebook</button>
-
-        <div class="facebook-plugin">
-          <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2FInstasoda&amp;width=290&amp;height=258&amp;show_faces=true&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=false&amp;appId=159444727449256" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:290px; height:258px;" allowTransparency="true"></iframe>
+        <div class="row facebook-row indent">
+          <div class="twelve columns">
+            <fb:like-box href="http://www.facebook.com/instasoda" width="400" show_faces="false" stream="false" header="false"></fb:like-box>
+          </div>
         </div>
 
-        <span class="instasodaLogoCap"></span>
-        <span class="bubbleTexture"></span>
-        <span class="staticBubbles"></span>
-
-        <div id="animatedBubbles">
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
-          <span class="bubble"></span>
+        <div class="row interests">
+          <div id="interests-slider" class="twelve columns no-padding">
+            <ul class="slides">
+              {{#interests}}
+                <li>
+                  <img class="interest-image" src="//dsonwoik0c9tg.cloudfront.net/l/{{.}}_100.jpg" height="150">
+                </li>
+              {{/interests}}
+            </ul>
+          </div>
+          <div class="message">
+            <p class="message-part-1">tell us what you like</p>
+          </div>
         </div>
+
+        <div class="row users">
+          <div id="users-slider" class="twelve columns no-padding">
+            <ul class="slides">
+              {{#users}}
+                <li>
+                  <img class="user-photo" src="//dsonwoik0c9tg.cloudfront.net/u/{{.}}.jpg" height="150">
+                </li>
+              {{/users}}
+            </ul>
+          </div>
+          <div class="message">
+            <p class="message-part-2">and we’ll show you like-minded people to chat or hang out with</p>
+          </div>
+        </div>
+
+        <div class="row sign-up">
+          <div class="twelve columns">
+            <button id="fb-auth" class="button large light button-sign-up">quick sign-up with Facebook</button>
+            <p>already a user? <a href="#" id="fb-login" class="login">click here to login</a></p>
+            <p><a href="#" class="see-how-it-works">see how it works</a></p>
+          </div>
+        </div>
+
       </script>
 
 
@@ -449,11 +404,11 @@
     <!-- ONLINE USERS VIEW -->
     <!------------------------------------------------------------------------>
 
-    <script id="tplOnlineUsers" type="text/template">
-      <span id="navOnlineUsersCount">
-        {{count}}
-      </span>
-    </script>
+      <script id="tplOnlineUsers" type="text/template">
+        <span id="navOnlineUsersCount">
+          {{count}}
+        </span>
+      </script>
 
 
     <!------------------------------------------------------------------------>
@@ -461,11 +416,14 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplFavourites" type="text/template">
-        <div class="twelve mobile-four columns guidance">
-          <span class="icon-info-sign"></span>
-          Favourites allow you to quickly find people you care about. To favourite a person simply click the <a class="button">+ Favourite</a> button, found in profile pages.
+        <div class="starred-users-tip">
+          <p>Star the people you care about & access them quickly in the future.</p>
+          <p class="how-to">To star a person simply click the <i class="icon icon-star-empty"></i> button on their profile page.</p>
         </div>
-        <div id="favouriteUsers" class="twelve mobile-four columns"></div>
+        <div id="starred-users-container">
+          <ul class="slides">
+          </ul>
+        </div>
       </script>
 
 
@@ -549,7 +507,7 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- LIKES CATEGORY VIEW -->
+    <!-- LIKES CATEGORY VIEW (OLD TEMPLATE?) -->
     <!------------------------------------------------------------------------>
 
       <script id="tplLikesWithCategories" type="text/template">
@@ -573,17 +531,18 @@
       </script>
 
     <!------------------------------------------------------------------------>
-    <!-- LIKES LIST VIEW -->
+    <!-- LIKE LIST VIEW -->
     <!------------------------------------------------------------------------>
 
       <script id="tplLikesList" type="text/template">
         <div class="row">
           {{#likesToRender}}
-            <div class="like rate{{r}} mobile-one columns end" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
+            <div class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
               <div class="like-image-container">
-                <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="likeImg">
+                <div class="interest-rating"></div>
+                <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="like-img transparent">
               </div>
-              <p title="{{n}}">{{n}}</p>
+              <p class="interest-title">{{n}}</p>
             </div>
           {{/likesToRender}}
         </div>
@@ -591,24 +550,45 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- SINGLE LIKE INFO PANEL VIEW -->
+    <!-- LIKE INFO PANEL VIEW -->
     <!------------------------------------------------------------------------>
 
       <script id="tplLikePanel" type="text/template">
-        <ul class="likeAttitudes">
-          <li class="likeAttitude attitude1 {{#dislike}}active{{/dislike}}" title="I don't like this - avoid matching me with people who like it">Dislike</li>
-          <li class="likeAttitude attitude2 {{#like}}active{{/like}}" title="I like this">Like</li>
-          <li class="likeAttitude attitude3 {{#fav}}active{{/fav}}" title="I really like this - put more weight on this when matching me with other people">Favourite</li>
+        <ul class="like-attitudes">
+          <li class="like-attitude attitude3 {{#fav}}active{{/fav}}" title="{{#fav}}Remove this from my favourites.{{/fav}}{{^fav}}I really like this - put more emphasis on this when matching me with other people.{{/fav}}">
+            Favourite
+            <i class="icon icon-plus"></i>
+            <i class="icon icon-minus"></i>
+            <i class="icon icon-star"></i>
+          </li>
+          <li class="like-attitude attitude2 {{#like}}active{{/like}}" title="{{#like}}Remove this from my likes.{{/like}}{{^like}}I like this.{{/like}}">
+            Like
+            <i class="icon icon-plus"></i>
+            <i class="icon icon-minus"></i>
+            <i class="icon icon-star"></i>
+          </li>
+          <li class="like-attitude attitude1 {{#dislike}}active{{/dislike}}" title="{{^dislike}}I don't like this - avoid matching me with people who like it.{{/dislike}}{{#dislike}}Remove this from my dislikes.{{/dislike}}">
+            Dislike
+            <i class="icon icon-plus"></i>
+            <i class="icon icon-minus"></i>
+            <i class="icon icon-star"></i>
+          </li>
         </ul>
 
         {{#isInSearch}}
-          <span class="removeFromSearch" title="Remove this from your search filters"></span>
+          <span class="search-toggle remove-from-search" title="Remove this from your search filters.">
+            <i class="icon icon-zoom-out"></i>
+          </span>
         {{/isInSearch}}
         {{^isInSearch}}
-          <span class="addToSearch" title="Add this to your search filters"></span>
+          <span class="search-toggle add-to-search" title="Add this to your search filters. Go to the People page to see who likes this!">
+            <i class="icon icon-zoom-in"></i>
+          </span>
         {{/isInSearch}}
 
-        <a class="likeFacebookUrl" href="http://www.facebook.com/{{_id}}" target="_blank" title="View this on Facebook"></a>
+        <a class="facebook-url" href="http://www.facebook.com/{{_id}}" target="_blank" title="View this on Facebook.">
+          <i class="icon icon-facebook"></i>
+        </a>
       </script>
 
 
@@ -617,26 +597,19 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplMatches" type="text/template">
-       <div class="twelve mobile-four columns guidance">
-          <span class="icon-info-sign"></span>
-            Matches are people who share your interests. Too few? Add more interests to your profile. Too many? Remove <a href="#interests/likes">generic interests</a> from your profile and add <a href="#interests/favourites">Favourites</a> & <a href="#interests/dislikes">Dislikes</a>, which are more important for matching.
+        <div class="row indent margin-top-2x">
+          <h2>Here&#8217;s <i class="results-counter-icon icon-cog icon-spin"></i><span class="results-counter"></span> people just for you :-)</h2>
+          <p>Too few? Enrich your profile with more interests! Too many? Remove <a href="#interests/likes">generic interests</a> (things that <i>everybody</i> likes) from your profile and add <a href="#interests/favourites">favourites</a> & <a href="#interests/dislikes">dislikes</a>, which are more important for matching.</p>
+          <a href="#search" class="view-more-people left">
+            <i class="icon icon-group"></i>view more people
+          </a>
         </div>
-        <div id="matchesResults" class="twelve columns mainContent"></div>
+
+        <div class="row margin-top">
+          <div id="searchResults" class="twelve columns no-padding"></div>
+        </div>
       </script>
 
-
-    <!------------------------------------------------------------------------>
-    <!-- MATCHES FILTERS VIEW -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplMatchesFilters" type="text/template">
-        <section>
-          <h3>Filter your matches</h3>
-          <p>
-            no options yet
-          </p>
-        </section>
-      </script>
 
 
     <!------------------------------------------------------------------------>
@@ -644,8 +617,17 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearch" type="text/template">
-        <div id="searchFilters" class="mobile-four columns"></div>
-        <div id="searchResults" class="twelve mobile-four columns secondary-block"></div>
+        <div class="row indent margin-top-2x">
+          <h2>We found <i class="results-counter-icon icon-cog icon-spin"></i><span class="results-counter"></span> people that match your criteria:</h2>
+        </div>
+
+        <div class="row indent search-filters-row">
+          <div id="searchFilters" class="twelve columns"></div>
+        </div>
+
+        <div class="row margin-top">
+          <div id="searchResults" class="twelve columns no-padding"></div>
+        </div>
       </script>
 
 
@@ -654,9 +636,15 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearchFilters" type="text/template">
-        <section>
-          <h3>I’m interested in meeting...</h3>
-          <p class="menWomenSelect">
+        <div class="row">
+          <div class="twelve columns">
+            <span id="age-num"></span>
+            <div id="age-range"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="six columns">
             <label>
               <input type="checkbox" name="interestedInWomen" value="true" {{#so.w}}checked{{/so.w}}>
               <span>Women</span>
@@ -665,47 +653,46 @@
               <input type="checkbox" name="interestedInMen" value="true" {{#so.m}}checked{{/so.m}}>
               <span>Men</span>
             </label>
-          </p>
-          <p>
-            <div id="ageRange"></div>
-            <span id="ageNum"></span>
-          </p>
-          <p>
+          </div>
+          <div class="six columns">
             <label>
               <input type="checkbox" name="onlyOnline" value="true" {{#so.on}}checked{{/so.on}}>
               <span>who are online now</span>
             </label>
-          </p>
-          <p>
             <label>
               <input type="checkbox" name="nearMe" value="true" {{#so.nearMe}}checked{{/so.nearMe}}>
               <span>near me</span>
             </label>
-          </p>
-        </section>
+          </div>
+        </div>
 
-        <section class="twelve columns search-likes-row">
-          <h3>Who like... <span class="tip" title="Add up to 20 likes here and click search to see who likes them."></span></h3>
+        <div class="row search-likes-row">
+          <div class="twelve columns">
+            <h3 class="left">Who like...</h3>
+            <a class="left add-likes-button" href="#interests">
+              <i class="icon icon-plus-sign"></i>add interests
+            </a>
+            <ul class="block-grid interests-container">
+              {{#so.l}}
+                <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                  <img src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}.jpg" width=50 height=50>
+                  <div class="remove-search-like icon-remove"></div>
+                </li>
+              {{/so.l}}
+              {{^so.l}}
+                <li class="tip">Add up to 10 interests here to see who likes them.</li>
+              {{/so.l}}
+            </ul>
+          </div>
+        </div>
 
-          <ul class="block-grid six-up">
-            {{#so.l}}
-              <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
-                <img src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}.jpg" width=50 height=50>
-                <div class="remove-search-like icon-remove"></div>
-              </li>
-            {{/so.l}}
-            {{^so.l}}
-              <p>Add up to 10 interests here and click search to see who likes them.</p>
-            {{/so.l}}
-          </ul>
-          <a id="buttonAddLikes" class="smaller button" href="#interests">+ Add interests</a>
-        </section>
-
-        <section class="">
-          <div id="working" class="working animated transparent hidden twelve columns"></div>
-          <button id="doSearch" class="six columns button animated">Search</button>
-          <button id="doSearchRandom" class="five columns button animated">Surprise me</button>
-        </section>
+        <div class="row search-buttons-row">
+          <div class="twelve columns">
+            <div id="working" class="working animated transparent hidden"></div>
+            <button id="do-search" class="button animated"><i class="icon-repeat"></i> Refresh people</button>
+            <button id="do-search-random" class="small button right animated">Surprise me</button>
+          </div>
+        </div>
       </script>
 
 
@@ -714,27 +701,20 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSearchResult" type="text/template">
-        <a href="./#{{_id}}">
+        <a href="./#{{_id}}" class="{{_id}}">
           {{#p}}
             {{#d}}
-              <div>
-                {{#on}}
-                  <div class='onlineStatus isOnline' title='user is online!'></div>
-                {{/on}}
-                {{^on}}
-                  <div class='onlineStatus isOffline' title='user is offline'></div>
-                {{/on}}
-
-                <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" height="150" />
+              <div class="user-preview-photo">
+                <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" />
               </div>
             {{/d}}
           {{/p}}
           {{^p}}
-          <div>
-            <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" height="150" />
-          </div>
+            <div class="user-preview-photo">
+              <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" />
+            </div>
           {{/p}}
-          <div class="userPreviewNickname">{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}, {{ag}}</div>
+          <div class="user-preview-nickname {{#on}}is-online{{/on}}" title="{{u}} is {{#on}}online!{{/on}}{{^on}}offline{{/on}}">{{u}}, {{ag}}</div>
         </a>
       </script>
 
@@ -745,125 +725,84 @@
 
       <script id="tplUsersProfile" type="text/template">
 
-        <!-- Profile -->
-        <div id="block-profile">
-
-          <div class="twelve columns no-padding">
-            <div class="twelve columns">
-              <span class="icon-user {{#on}}green{{/on}}" title="{{#on}}{{u}} is online now!{{/on}}{{^on}}{{u}} is offline now{{/on}}"></span>
-              <h1>{{#u}}{{u}}{{/u}}{{^u}}new user{{/u}}</h1>
-            </div>
-
-            <div id="profile-picture" class="mobile-four columns secondary-block">
-              {{#p}}
-                {{#d}}
-                  <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" />
-                  <div id="connectOptions" class="profileButtons">
-                    <button id="sendMessage" class="left">Send message / Chat</button>
-                    <button id="handleFavourite" class="left">{{#isFaved}}- {{/isFaved}}{{^isFaved}}+{{/isFaved}} Favourite</button>
-                    <!--<button class="left" onclick="IS.navigateTo('beta');">Similar users</button>-->
-                  </div>
-                {{/d}}
-              {{/p}}
-              {{^p}}
-                <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" />
-              {{/p}}
-            </div>
-
-            <div id="profile-details" class="mobile-four columns secondary-block">
-              <h2>details</h2>
-              <span>{{#u}}{{u}}{{/u}}&#8217;s details</span>
-              <div>
-                <span class="icon-user"></span>
-                <h3>GENDER, AGE</h3>
-                <h3><strong>{{g}}, {{ag}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-heart"></span>
-                <h3>RELATIONSHIP</h3>
-                <h3><strong>{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}UNKNOWN{{/fRs}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-map-marker"></span>
-                <h3>LOCATION</h3>
-                <h3><strong>{{#locN}}{{locN}}{{/locN}}{{^locN}}UNKNOWN{{/locN}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-group"></span>
-                <h3>WANTS TO MEET</h3>
-                <h3>
-                  <strong>
-                    {{#w}}{{^m}}women{{/m}}{{/w}}
-                    {{#w}}{{#m}}women & men{{/m}}{{/w}}
-                    {{#m}}{{^w}}men{{/w}}{{/m}}
-                  </strong>
-                  <span class="icon-ok-sign"></span>
-                </h3>
-              </div>
-              <div>
-                <span class="icon-share-alt"></span>
-                <h3>FOR</h3>
-                <h3>
-                  <strong>
-                    {{#ff}}{{^fd}}Friendship{{/fd}}{{/ff}}
-                    {{#ff}}{{#fd}}Friendship & Dating{{/fd}}{{/ff}}
-                    {{#fd}}{{^ff}}Dating{{/ff}}{{/fd}}
-                  </strong>
-                  <span class="icon-ok-sign"></span>
-                </h3>
-              </div>
-            </div>
-
-            <div id="profile-introduction" class="mobile-four columns secondary-block end">
-              <h2>introduction</h2>
-              <span>A little bit about {{#u}}{{u}}{{/u}}</span>
-              <div>
-                <div class="twelve columns">
-                  <p>{{a}}</p>
-                </div>
-              </div>
-            </div>
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            <!-- USER PHOTOS -->
           </div>
-
-          <div id="profile-pictures-wrapper" class="mobile-four twelve columns secondary-block">
-            <h2>photos</h2>
-            <span>{{#u}}{{u}}{{/u}}&#8217;s best moments</span>
-
-            <div id="profile-pictures" class="row">
-
-              <div id="userPhotosList" class="profile-pictures-for-other-user">
-                <!-- USER PHOTOS -->
-              </div>
-
-            </div>
-
-          </div>
-
         </div>
 
-        <div id="block-likes">
+        <div class="row indent">
           <div class="twelve columns">
-            <span class="icon-thumbs-up"></span>
-            <h1>You & {{#u}}{{u}}{{/u}}{{^u}}New user{{/u}}&nbsp;have <strong class="large counter">{{commonLikesCount}}</strong> things in common:</h1>
+            <h2 class="name left">{{u}}, {{ag}}</h2>
+            <span id="handle-favourite" class="left">
+              {{#isFaved}}<i class="icon icon-star" title="Remove {{u}} from your starred users."></i>{{/isFaved}}
+              {{^isFaved}}<i class="icon icon-star-empty" title="Add {{u}} to your starred users."></i>{{/isFaved}}
+            </span>
+            <span id="send-message" class="left" title="Send a message to {{u}}">
+              <i class="icon icon-comments"></i>send message
+            </span>
           </div>
-
-          <div id="commonLikes" class="twelve mobile-four columns ">
-            <div id="like-block-favourites-placeholder" class="row">You and {{#u}}{{u}}{{/u}} don&#8217;t have any likes in common.</div>
-          </div>
-
-          <div class="twelve columns">
-            <span class="icon-thumbs-up"></span>
-            <h1>{{u}} has <strong class="large counter">{{likeCount}}</strong> interests:</h1>
-          </div>
-
-          <div id="likesSection" class="twelve mobile-four columns secondary-block end">
-            <div id="facebookLikes">
-              <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
-            </div>
-          </div>
-
         </div>
 
+        <div class="row indent">
+          <div class="twelve columns">
+            <p class="capitalise-first-letter user-info no-margin">{{g}}, living in <strong>{{locN}}</strong>. Wants to meet
+              <strong>{{#w}}{{^m}}women{{/m}}{{/w}}
+              {{#w}}{{#m}}women & men{{/m}}{{/w}}
+              {{#m}}{{^w}}men{{/w}}{{/m}}</strong>
+             for <strong>{{#ff}}{{^fd}}friendship{{/fd}}{{/ff}}
+                {{#ff}}{{#fd}}friendship & dating{{/fd}}{{/ff}}
+                {{#fd}}{{^ff}}dating{{/ff}}{{/fd}}</strong>.
+              {{u}}&#8217;s relationship status is <strong>{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</strong>.
+              <br>
+              <span class="user-online-status {{#on}}user-is-online{{/on}}">
+                {{#on}}<i class="icon icon-circle"></i> online now!{{/on}}
+                {{^on}}<i class="icon icon-circle-blank"></i> offline now{{/on}}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <div class="row indent interests-message-row">
+          <div class="twelve columns">
+            <h2 class="interests-message">You & {{u}} have {{commonLikesCount}} things in common!</h2>
+          </div>
+        </div>
+
+        <div id="common-interests" class="row interests-row">
+          <div id="commonLikes" class="twelve columns"></div>
+        </div>
+
+        <div class="row indent interests-view-all-row">
+          <div class="twelve columns">
+            <button id="view-all-common-interests" class="button bg-green-1">view all common &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+          </div>
+        </div>
+
+        <div class="row indent about-me-row">
+          <div class="twelve columns">
+            <h2 id="about-me" class="left">"{{a}}"</h2>
+            <span id="show-full-about" class="left">
+              <i class="icon icon-quote-left"></i>read more
+            </span>
+          </div>
+        </div>
+
+        <div class="row indent interests-message-row">
+          <div class="twelve columns">
+            <h2 class="interests-message">Overall, {{u}} has {{likeCount}} interests:</h2>
+          </div>
+        </div>
+
+        <div id="all-interests" class="row interests-row">
+          <div id="facebookLikes" class="twelve columns"></div>
+        </div>
+
+        <div class="row indent interests-view-all-row">
+          <div class="twelve columns">
+            <button id="view-all-interests" class="button">view all interests &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+          </div>
+        </div>
       </script>
 
 
@@ -1090,22 +1029,20 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplMyPhotos" type="text/template">
-        {{#p}}
-          <div class="four mobile-one columns" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
-            <div class="picture-options photo-make-default {{#d}}picture-is-default{{/d}}">
-              {{#d}}<img src="./VERSION/images/profile/bg-default-true.png" alt="">{{/d}}
-            </div>
-            <div class="picture-options photo-delete"></div>
-            <div class="loading" class="animated"></div>
-            <div class="view-original-image">
+        <div class="user-photos-scroller">
+          {{#p}}
+            <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
+              <div class="photo-action photo-make-default {{#d}}picture-is-default{{/d}}">
+                {{#d}}<img src="./VERSION/img/star.png" alt="">{{/d}}
+              </div>
+              <div class="photo-action photo-delete"></div>
+              <div class="loading" class="animated"></div>
               <a href="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
-                <span class="icon-search"></span>
-                <strong>VIEW</strong>
+                <img id="{{id}}" class="photo-img transparent" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
               </a>
             </div>
-            <img id="{{id}}" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
-          </div>
-        {{/p}}
+          {{/p}}
+        </div>
       </script>
 
 

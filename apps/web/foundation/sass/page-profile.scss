@@ -1,0 +1,195 @@
+@import "_settings";
+@import "compass/css3/transition";
+
+// Photos
+// -----------------------------------------------------------------------------
+
+  #user-photos {
+    max-height: 30rem;
+    overflow: hidden;
+    margin-bottom: 4rem;
+
+    .photo {
+      position: relative;
+      overflow: hidden;
+      float: left;
+
+      .photo-action {
+        display: none;
+      }
+
+      .photo-img {
+        @include transition-property(opacity);
+        @include transition-duration(0.4s);
+        width: 300px;
+      }
+    }
+  }
+
+
+// Name
+// -----------------------------------------------------------------------------
+
+  .name,
+  #about-me {
+    margin: 0 2rem 0 0;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
+  }
+
+
+// Action buttons
+// -----------------------------------------------------------------------------
+
+  #handle-favourite,
+  #send-message,
+  #show-full-about {
+    margin-top: 1.5rem;
+    cursor: pointer;
+
+    .icon {
+      padding: 0.6rem;
+      font-size: 1.8rem;
+      border-radius: 50px;
+      background: $colorBlue2;
+      color: #fff;
+    }
+  }
+
+  #handle-favourite {
+    .icon-star {
+      background: $colorGreen1;
+
+      &:hover {
+        background: $colorOrange;
+      }
+    }
+
+    .icon-star-empty {
+      background: $colorOrange;
+
+      &:hover {
+        background: $colorGreen1;
+      }
+    }
+  }
+
+  #send-message {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-left: 1rem;
+    color: $colorBlue2;
+
+    .icon {
+      background: $colorBlue2;
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      color: $colorBlue3;
+
+      .icon {
+        background: $colorBlue3;
+      }
+    }
+  }
+
+  #show-full-about {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $colorGreen1;
+
+    .icon {
+      background: $colorGreen1;
+      margin-right: 0.5rem;
+    }
+
+    &:hover {
+      color: $colorGreen2;
+
+      .icon {
+        background: $colorGreen2;
+      }
+    }
+  }
+
+
+// User info
+// -----------------------------------------------------------------------------
+
+  .user-info {
+    font-size: 1.3rem;
+    color: $colorGreen2;
+
+    strong {
+      color: $colorOrange2;
+    }
+
+    .user-online-status {
+      .icon {
+        color: $colorRed1;
+      }
+
+      &.user-is-online {
+        .icon {
+          color: $colorGreen1;
+        }
+      }
+    }
+  }
+
+
+// Interests
+// -----------------------------------------------------------------------------
+
+  .interests-message-row {
+    margin-top: 4rem;
+
+    .interests-message {
+      margin-bottom: 1rem;
+    }
+  }
+
+  .interests-row {
+    background: #222;
+    height: 10rem;
+    overflow: hidden;
+
+    &.expanded {
+      height: auto;
+    }
+  }
+
+  .interests-view-all-row {
+    .button {
+      width: 20rem;
+
+      .icon-collapse {
+        display: none;
+      }
+
+      &.expanded {
+        .icon-collapse {
+          display: inline;
+        }
+
+        .icon-expand {
+          display: none;
+        }
+      }
+    }
+  }
+
+
+// About me
+// -----------------------------------------------------------------------------
+
+  .about-me-row {
+    margin-top: 5rem;
+
+    #about-me {
+      color: $colorGreen2;
+    }
+  }

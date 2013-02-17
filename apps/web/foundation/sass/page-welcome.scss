@@ -1,0 +1,106 @@
+@import "_settings";
+@import "_mixins";
+
+.welcome {
+  .interests {
+    text-align: center;
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+    position: relative;
+
+    #interests-slider {
+      height: 100px;
+      width: 7100px;
+      overflow: hidden;
+      padding: 0;
+
+      .interest-image {
+        @include animate-left;
+        -webkit-transform: translate3d(0, 0, 0);
+        float: left;
+      }
+    }
+
+    .message {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      text-align: center;
+      pointer-events: none;
+    }
+  }
+
+  .users {
+    margin-bottom: 4rem;
+    text-align: center;
+    width: 100%;
+    height: 150px;
+    overflow: hidden;
+    position: relative;
+
+    #users-slider {
+      height: 150px;
+      width: 7100px;
+      overflow: hidden;
+      padding: 0;
+
+      .user-photo {
+        @include grayscale;
+        float: left;
+        height: 150px;
+      }
+    }
+
+    .message {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      text-align: center;
+      pointer-events: none;
+    }
+  }
+
+  .message-part-1,
+  .message-part-2 {
+    padding: 0.5rem 5rem;
+    text-align: center;
+    font-family: $lightFontFamily;
+    font-weight: 300;
+    font-size: 3rem;
+    display: inline-block;
+    margin: 0 auto;
+  }
+
+  .message-part-1 {
+    background: #ddd;
+    color: $colorGreen2;
+  }
+
+  .message-part-2 {
+    background: $colorBlue2;
+    color: #fff;
+  }
+
+  .sign-up {
+    text-align: center;
+
+    .button-sign-up {
+      background: #245A9A;
+      font-size: 3rem;
+    }
+
+    .login {
+      color: $colorGreen2;
+      text-decoration: underline;
+    }
+
+    .see-how-it-works {
+      color: $colorBlue2;
+      text-decoration: underline;
+      font-size: 2rem;
+    }
+  }
+}

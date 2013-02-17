@@ -66,9 +66,10 @@ var DashboardView = Backbone.View.extend({
       animation: "slide",
       animationLoop: true,
       itemWidth: 200,
-      itemMargin: 20,
-      minItems: 2,
-      maxItems: 8
+      itemMargin: 0,
+      pauseOnHover: true,
+      prevText: "<span class='icon icon-chevron-left'></span>",
+      nextText: "<span class='icon icon-chevron-right'></span>"
     });
 
     // render facebook like-box

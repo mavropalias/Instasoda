@@ -4,20 +4,26 @@
 var FavouritesView = Backbone.View.extend({
   // initialize
   // -----------------------------------------------------------------------
-  initialize: function() {   
+  initialize: function() {
     // bindings
     _.bindAll(this);
-    
+
     // initialize sub-views
     this.favouritesUserListView = new SearchResultsView({ collection: this.collection });
 
     // get template
     this.template = document.getElementById("tplFavourites").innerHTML;
 
+    // update on collection change
+    this.collection.bind('reset', this.enter);
+    this.collection.bind('change', this.enter);
+    this.collection.bind('add', this.addUser);
+    this.collection.bind('remove', this.removeUser);
+
     // render
     this.render();
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -31,30 +37,43 @@ var FavouritesView = Backbone.View.extend({
   // show
   // -----------------------------------------------------------------------
   show: function() {
-    log('showing NavigationView');
+    log('showing FavouritesView');
     this.$el.html(this.html);
 
     // show sub views
-    this.favouritesUserListView.setElement(this.$('#favouriteUsers')).show();
+    this.favouritesUserListView.setElement(this.$('#starred-users-container .slides')).show();
   },
 
   // enter
   // ---------------------------------------------------------------------------
   enter: function() {
-    log('entering NavigationView');
+    log('entering FavouritesView');
+
+    // show tip if collection is empty
+    if(this.collection.length === 0) {
+      this.$('.starred-users-tip').show();
+      this.$('#starred-users-container').width(0);
+    } else {
+      // else size the container
+      this.$('.starred-users-tip').hide();
+      this.$('#starred-users-container').width(this.collection.length * 110);
+    }
+
+    // update counter text
+    $('#nav-starred-people .nav-title').text(this.collection.length);
   },
 
   // leave
   // ---------------------------------------------------------------------------
   leave: function(cb) {
-    log('leaving NavigationView');
+    log('leaving FavouritesView');
     cb();
   },
 
   // refresh
   // ---------------------------------------------------------------------------
   refresh: function() {
-    log('refreshing NavigationView');
+    log('refreshing FavouritesView');
 
     var _this = this;
 
@@ -63,94 +82,22 @@ var FavouritesView = Backbone.View.extend({
       _this.show();
       _this.enter();
     });
-  }
-});
-
-// =========================================================================
-// FavouritesUserListView - a list of favourite users
-// =========================================================================
-var FavouritesUserListView = Backbone.View.extend({
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {   
-    _.bindAll(this);
   },
 
-  // renderItem
-  // -----------------------------------------------------------------------
-  renderItem: function(model) {
-    var favouritesUserView = new FavouritesUserView({
-        model: model
-    });
-    favouritesUserView.render();
-    this.html = this.html + '<div class="userPreview">' + favouritesUserView.$el.html() + '</div>';
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    log('rendering FavouritesUserListView');
-    this.html = '';
-    this.collection.each(this.renderItem);
-  },
-
-  // show
-  // -----------------------------------------------------------------------
-  show: function() {
-    log('showing FavouritesUserListView');
-    this.$el.html(this.html);
-  },
-
-  // enter
+  // addUser
   // ---------------------------------------------------------------------------
-  enter: function() {
-    log('entering FavouritesUserListView');
+  addUser: function(user) {
+    log('addUser');
+
+    this.enter();
+    document.getElementById('starred-people').scrollLeft = $('.' + user.get('_id')).offset().left;
   },
 
-  // leave
+  // removeUser
   // ---------------------------------------------------------------------------
-  leave: function(cb) {
-    log('leaving FavouritesUserListView');
-    cb();
-  },
+  removeUser: function() {
+    log('removeUser');
 
-  // refresh
-  // ---------------------------------------------------------------------------
-  refresh: function() {
-    log('refreshing FavouritesUserListView');
-
-    var _this = this;
-
-    this.leave(function() {
-      _this.render();
-      _this.show();
-      _this.enter();
-    });
-  }
-});
-
-// =============================================================================
-// FavouritesUserView - a basic view of a user appearing in the favourites
-// =============================================================================
-var FavouritesUserView = Backbone.View.extend({
-  // properties
-  // -----------------------------------------------------------------------
-  className: 'userPreview',
-  tagName: 'li',
-
-  // initialize
-  // ---------------------------------------------------------------------------
-  initialize: function() {
-    _.bindAll(this);
-
-    // get template
-    this.template = document.getElementById("tplSearchResult").innerHTML;
-  },
-
-  // render
-  // ---------------------------------------------------------------------------
-  render: function() {
-    log('rendering FavouritesUserView');
-    this.$el.html(Mustache.to_html(this.template, this.model.toJSON()));
+    this.enter();
   }
 });

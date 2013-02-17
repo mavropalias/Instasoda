@@ -21,6 +21,9 @@ var SearchView = Backbone.View.extend({
 
     // update UI on collection change
     this.collection.bind('reset', this.refreshSidebarButtons);
+    this.collection.bind('change', this.refreshResultsCounter);
+    this.collection.bind('add', this.refreshResultsCounter);
+    this.collection.bind('remove', this.refreshResultsCounter);
   },
 
   // render
@@ -53,6 +56,24 @@ var SearchView = Backbone.View.extend({
     // enter sub views
     this.searchFiltersView.enter();
     this.searchResultsView.enter();
+
+    // make filters stick to top
+    var filters = this.$('.search-filters-row');
+    var body = $('body');
+    var filtersInitialTop = filters.offset().top;
+
+    /*$(window).scroll(function () {
+      log('asd');
+      if($(window).scrollTop() > filtersInitialTop) {
+        filters.addClass('sticky');
+        body.addClass('sticky-filters');
+        return;
+      } else {
+        filters.removeClass('sticky');
+        body.removeClass('sticky-filters');
+        return;
+      }
+    });*/
   },
 
   // leave
@@ -80,6 +101,14 @@ var SearchView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   refreshSidebarButtons: function() {
     this.searchFiltersView.refreshSidebarButtons();
+    this.refreshResultsCounter();
+  },
+
+  // refreshResultsCounter
+  // ---------------------------------------------------------------------------
+  refreshResultsCounter: function() {
+    this.$('.results-counter-icon').hide();
+    this.$('.results-counter').text(this.collection.length);
   }
 });
 
@@ -90,8 +119,8 @@ var SearchFiltersView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #doSearch': 'doSearch',
-    'click #doSearchRandom': 'doSearchRandom',
+    'click #do-search': 'doSearch',
+    'click #do-search-random': 'doSearchRandom',
     'click .remove-search-like': 'removeSearchLike'
   },
 
@@ -137,16 +166,16 @@ var SearchFiltersView = Backbone.View.extend({
     var _this = this;
 
     // enable jquery slider
-    this.$("#ageRange").slider({
+    this.$("#age-range").slider({
       range: true,
       min: 18,
       max: 70,
       values: [_this.userSearchOptions.ageMin, _this.userSearchOptions.ageMax],
       slide: function(event, ui) {
-        $("#ageNum").text(ui.values[0] + " - " + ui.values[1] + " years old");
+        $("#age-num").text(ui.values[0] + " - " + ui.values[1] + " years old");
       }
     });
-    this.$("#ageNum").text(this.$("#ageRange").slider("values", 0) + " - " + this.$("#ageRange").slider("values", 1) + " years old");
+    this.$("#age-num").text(this.$("#age-range").slider("values", 0) + " - " + this.$("#age-range").slider("values", 1) + " years old");
   },
 
   // leave
@@ -175,14 +204,14 @@ var SearchFiltersView = Backbone.View.extend({
   // refreshSidebarButtons
   // ---------------------------------------------------------------------------
   refreshSidebarButtons: function() {
-    this.$('#doSearch, #doSearchRandom').removeClass('transparent hidden');
+    this.$('#do-search, #do-search-random').removeClass('transparent hidden');
     this.$('#working').addClass('transparent hidden');
   },
 
   // doSearch
   // -----------------------------------------------------------------------
   doSearch: function() {
-    this.$('#doSearch, #doSearchRandom').addClass('transparent hidden');
+    this.$('#do-search, #do-search-random').addClass('transparent hidden');
     this.$('#working').removeClass('transparent hidden');
 
     // fetch search options
@@ -191,8 +220,8 @@ var SearchFiltersView = Backbone.View.extend({
       'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 'male' : 0),
       'on': ((this.$('input[name=onlyOnline]:checked').length > 0) ? true : null),
       'nearMe': ((this.$('input[name=nearMe]:checked').length > 0) ? 1 : 0),
-      'ageMin': this.$("#ageRange").slider("values", 0),
-      'ageMax': this.$("#ageRange").slider("values", 1),
+      'ageMin': this.$("#age-range").slider("values", 0),
+      'ageMax': this.$("#age-range").slider("values", 1),
       'l': this.model.get('so').l,
       'lon': ( !! this.model.get('loc')) ? this.model.get('loc')[0] : null,
       'lat': ( !! this.model.get('loc')) ? this.model.get('loc')[1] : null
@@ -215,7 +244,7 @@ var SearchFiltersView = Backbone.View.extend({
   // doSearchRandom
   // -----------------------------------------------------------------------
   doSearchRandom: function() {
-    this.$('#doSearch, #doSearchRandom').addClass('transparent hidden');
+    this.$('#do-search, #do-search-sandom').addClass('transparent hidden');
     this.$('#working').removeClass('transparent hidden');
 
     var randomMinAge = Math.floor(Math.random() * (65 - 18 + 1) + 18); // 18-65
@@ -247,7 +276,7 @@ var SearchFiltersView = Backbone.View.extend({
     var likeName = $(e.currentTarget).parent().data('name');
 
     IS.addOrRemoveLikeFromSearchOptions(likeId, likeName);
-  },
+  }
 });
 
 // =========================================================================
@@ -270,21 +299,31 @@ var SearchResultsView = Backbone.View.extend({
 
   // renderItem
   // -----------------------------------------------------------------------
-  renderItem: function(model) {
+  renderItem: function(model, cb) {
     var usersView = new UsersView({
       model: model
     });
     usersView.render();
-    this.html = this.html + '<li class="userPreview">' + usersView.$el.html() + '</li>';
+    this.html = this.html + '<li class="user-preview">' + usersView.$el.html() + '</li>';
+    if(cb) cb();
   },
 
   // render
   // -----------------------------------------------------------------------
-  render: function() {
+  render: function(cb) {
     log('rendering SearchResultsView');
     this.html = '';
-    if(this.collection.length > 0 ) this.collection.each(this.renderItem);
-    else this.html = '<li class="no-results">no people found :(</li>';
+
+    if(this.collection.length > 0 ) {
+      async.forEach(this.collection, this.renderItem, function(err) {
+        if(cb) cb();
+      });
+    }
+    else {
+      log('2');
+      this.html = '<li class="no-results">no people found :(</li>';
+      if(cb) cb();
+    }
   },
 
   // show
@@ -315,9 +354,10 @@ var SearchResultsView = Backbone.View.extend({
     var _this = this;
 
     this.leave(function() {
-      _this.render();
-      _this.show();
-      _this.enter();
+      _this.render(function() {
+        _this.show();
+        _this.enter();
+      });
     });
   }
 });

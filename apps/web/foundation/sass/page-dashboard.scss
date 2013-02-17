@@ -1,0 +1,78 @@
+@import "settings";
+
+.view-more-people-button {
+  background: $colorGreen1;
+  font-size: 1.6rem;
+  margin-bottom: 2rem;
+}
+
+#dashboard-matches {
+  margin-bottom: 9rem;
+  position: relative;
+
+  .slides {
+    max-height: 25rem;
+    overflow: hidden;
+  }
+
+  .user-preview {
+    .user-preview-photo {
+      overflow: visible;
+      width: 20rem;
+      height: auto;
+
+      img {
+        width: 20rem;
+        height: auto;
+        max-width: 500rem;
+      }
+    }
+  }
+
+  .flex-control-paging,
+  .flex-direction-nav {
+    position: absolute;
+    top: 26rem;
+    left: 10rem;
+    margin: 0;
+    display: block;
+
+    li {
+      display: block;
+      float: left;
+
+      a {
+        display: block;
+        background: $colorBlue5;
+        margin-left: 0.5rem;
+        padding: 0.5rem 1.5rem;
+        color: #000;
+        cursor: pointer;
+
+        &:hover {
+          background: $colorBlue3;
+          color: #fff;
+        }
+
+        &.flex-active {
+          background: $colorBlue2;
+          color: #fff;
+        }
+
+        .icon {
+          color: $colorBlue1;
+        }
+      }
+    }
+  }
+
+  .flex-control-paging {
+   left: 23rem;
+  }
+}
+
+.instasoda-build-number {
+  color: $colorGreen2;
+  display: block;
+  margin: 4rem 0 0 0;
+}

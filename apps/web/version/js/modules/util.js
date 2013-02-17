@@ -151,7 +151,7 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
         var indexOfFav = userFavs.indexOf(userToFavId);
 
         if(favType == 'add') {
-          userFavs.push(userToFavId);
+          userFavs.unshift(userToFavId);
 
           user.set({
             favs: userFavs
@@ -160,8 +160,8 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
           // save user locally
           store.set("user", user);
 
-          // update text in the button
-          $('#handleFavourite').text('- Favourite');
+          // update button on user page
+          $('#handle-favourite .icon').removeClass('icon-star-empty').addClass('icon-star').attr('title', 'Remove from your starred users.');
 
           // update favsCollection
           socket.emit('getBasicUserInfoFromId', {
@@ -170,14 +170,8 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
             if(!err) {
               favsCollection.add(userToFav); //TODO: don't render on every user
 
-              // render usersFullView
-              usersFullView.render();
-
-              // success - show notification to the user
-              IS.notify('New favourite!', null, userToFavName + ' added to your favourites.');
             } else {
               log('getBasicUserInfoFromId error', 'error');
-              IS.notify('ERROR :(', err, userToFavName + ' was NOT added to your favourites.');
             }
           });
         } else {
@@ -186,9 +180,6 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
           favsCollection.remove( _.find(favsCollection.models, function(fav) {
             return fav.get('_id') == userToFavId;
           }));
-
-          // render usersFullView
-          usersFullView.render();
 
           // update user model
           userFavs.splice(indexOfFav,1);
@@ -199,8 +190,8 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
           // save locally
           store.set("user", user);
 
-          // Change favourite button text
-          $('#handleFavourite').text('+ Favourite');
+          // update button on user page
+          $('#handle-favourite .icon').removeClass('icon-star').addClass('icon-star-empty').attr('title', 'Add to your starred users.');
 
           // success - show notification to the user
           //IS.notify('Removed favourite!', null, userToFavName + ' removed from your favourites.');
@@ -214,9 +205,12 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
         store.set("user", user);
 
         console.log('- added new user to favourites (first fav)');
+
+        // update button on user page
+        $('#handle-favourite .icon').removeClass('icon-star-empty').addClass('icon-star').attr('title', 'Remove from your starred users.');
       }
     } else {
-      IS.notify(err, null, userToFavName + ' could not be added to your favorites :(');
+      //IS.notify(err, null, userToFavName + ' could not be added to your favorites :(');
     }
   });
 };
@@ -823,7 +817,7 @@ IS.logout = function(bStopRedirect) {
     router.navigate("", {trigger: true}); // redirect to homepage
     router.welcome();
   }
-}
+};
 
 /**
  * Checks if a property is null or empty "". If so, returns true.
@@ -833,7 +827,7 @@ IS.nullOrEmpty = function(property) {
   if(typeof property == 'undefined') return true;
   else if(property === '' || property === null) return true;
   else return false;
-}
+};
 
 /**
  * Saves the User model to the API.
@@ -841,7 +835,7 @@ IS.nullOrEmpty = function(property) {
 IS.saveUser = function() {
   user.save();
   store.set('user', user);
-}
+};
 
 /**
  * Returns common likes between User and another user
@@ -855,14 +849,33 @@ IS.getCommonLikes = function(otherUserLikes) {
 
   // rebuild commonLikes to add all like properties, sort the collection and return it
   return _.sortBy(_.map(commonLikes, function(like) {
-    var fullLike = _.find(user.get('l'), function(myLike) {
+    return _.find(user.get('l'), function(myLike) {
       return myLike._id == like;
     });
-    return fullLike;
+  }), function(like){
+    return -like.r;
+  });
+};
+
+/**
+ * Adds ratings to another person's interests.
+ * @param {Array} otherUserLikes
+ */
+IS.injectRatingsIntoInterests = function(otherUserLikes) {
+  /*var myLikes = _.pluck(user.get('l'), '_id');
+  otherUserLikes = _.pluck(otherUserLikes, '_id');
+
+  var commonLikes = _.intersection(myLikes, otherUserLikes);
+
+  // rebuild commonLikes to add all like properties, sort the collection and return it
+  return _.sortBy(_.map(commonLikes, function(like) {
+    return _.find(user.get('l'), function(myLike) {
+      return myLike._id == like;
+    });
   }), function(like){
     return like.r;
-  });;
-}
+  });*/
+};
 
 /**
  * Parses a user's likes and updates model with favs, dislikes and categories

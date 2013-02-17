@@ -1,0 +1,310 @@
+@import "_settings";
+@import "_mixins";
+
+// =============================================================================
+// Sidebar (#user-bar)
+// =============================================================================
+
+  #user-bar {
+    @include transition-property(right, width);
+    @include transition-duration(0.5s);
+    -webkit-transform: translate3d(0, 0, 0);
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 8rem;
+    background: rgba(255, 255, 255, 0.9);
+    z-index: 3;
+
+    #chat-button {
+      position: relative;
+      padding: 1.5rem 2.2rem;
+      text-align: center;
+      cursor: pointer;
+      color: #ccc;
+
+      .icon {
+        font-size: 3rem;
+      }
+      .chat-title {
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: #999;
+      }
+
+      &.active .icon {
+        color: $colorBlue2;
+      }
+
+      &:hover .icon {
+        color: $colorBlue2;
+      }
+    }
+  }
+
+  // Adjust bar when chat is visible or logged-out
+  // ---------------------------------------------------------------------------
+
+    .chat-is-visible #user-bar {
+      width: 50rem;
+      max-width: 100%;
+      right: -25rem;
+
+      &:hover {
+        right: 0;
+      }
+    }
+
+    body[data-page="welcome"] #user-bar {
+      width: 0rem;
+    }
+
+
+// =============================================================================
+// Chat widget (running within #user-bar)
+// =============================================================================
+
+  #chat {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    top: 7rem;
+    word-wrap: break-word;
+    width: 100%;
+
+    .chat-tabs {
+      margin-bottom: 0;
+    }
+
+    &.expanded {
+      top: 6rem;
+
+      .chat-tab {
+        width: 100%;
+        overflow: hidden;
+        cursor: pointer;
+        position: relative;
+        padding: 5px 5px 5px 7px;
+        text-align: left;
+
+        &:hover {
+          color: #fff;
+
+          .user {
+            text-decoration: underline;
+          }
+
+          .meta {
+            color: #ddd;
+
+            .icon {
+              color: #ddd;
+            }
+          }
+        }
+
+        &.new-message {
+          background: none;
+
+          .unread-messages {
+            font-size: 2.5rem;
+            line-height: 5rem;
+            position: absolute;
+            right: 5px;
+            top: 0;
+            color: $colorGreen1;
+            display: block;
+          }
+        }
+
+        .photo {
+          float: left;
+          margin-right: 0.5rem;
+        }
+
+        .user {
+          display: block;
+          padding-top: 0.5rem;
+          font-size: 1.3rem;
+          line-height: 1.5rem;
+        }
+
+        .meta {
+          font-size: 1rem;
+          display: block;
+          color: #666;
+
+          .icon {
+            color: #8F6868;
+          }
+        }
+
+        &.active {
+          background: $colorGreen1;
+          color: #fff;
+          //.box-shadow(10px, 0px, 12px, -5px rgba(0,0,0,.2) inset);
+        }
+      }
+    }
+
+    .chat-tab {
+      width: 8rem;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+      padding: 5px 5px 5px 7px;
+      text-align: center;
+
+      &:hover {
+        background: $colorBlue2;
+        color: #444;
+
+        .photo {
+          border-color: #fff;
+        }
+
+        .user {
+          text-decoration: underline;
+        }
+      }
+
+      &.new-message {
+        //.box-shadow(10px, 0px, 12px, -5px rgba(0,0,0,.2) inset);
+        background: $colorGreen1;
+      }
+
+      .photo {
+        margin: 0 auto;
+        display: block;
+        height: 4.4rem;
+        width: 4.4rem;
+        overflow: hidden;
+        border-radius: 100rem;
+        border: 3px solid #aaa;
+        background-color: #fff;
+      }
+
+      .user,
+      .meta,
+      .unread-messages {
+        display: none;
+      }
+    }
+
+    .chat-sessions-container {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 100%;
+      background: #333;
+      border-width: 1px 0 0 1px;
+      padding: 0;
+      z-index: 9999;
+    }
+
+    .chat-session {
+      display: none;
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      background: #eee;
+      height: 40rem;
+      font-size: 1.1em;
+      overflow: hidden;
+      border-bottom: 22px solid #fcfcfc;
+
+      .chat-log-scroll-wrapper {
+        height: 25rem;
+        position: relative;
+      }
+
+      .slimScrollBar {
+        &:hover,
+        &.ui-draggable-dragging {
+          background: $colorBlue3;
+        }
+      }
+
+      .chat-log {
+        display: block;
+        line-height: 1.5rem;
+        margin-bottom: 0;
+        position: relative;
+
+        .chat-log-line {
+          font-size: 1.3rem;
+          line-height: 1.7rem;
+          margin: 0.5rem;
+
+          .user {
+            color: #aaa;
+            font-size: 1.4rem;
+            font-weight: 700;
+            cursor: default;
+          }
+
+          .time {
+            font-size: 1.1rem;
+            color: #ccc;
+            float: right;
+            cursor: default;
+            margin-right: 0.5rem;
+          }
+
+          .message {
+            font-size: 1.4rem;
+            color: #222;
+            padding-right: 1rem;
+            cursor: default;
+          }
+
+          &:hover {
+            .user,
+            .time {
+              color: #666;
+            }
+
+            .message{
+              color: #000;
+            }
+          }
+        }
+      }
+
+      .chat-controls {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+
+        #send-sessage-form {
+          margin: 0;
+        }
+
+        .chat-input {
+          display: block !important;
+          background: $colorBlue2;
+          border-radius: 0;
+          width: 100%;
+          margin: 0;
+          border: 0px solid transparent;
+          padding: 0rem 1rem;
+          height: 5rem;
+          line-height: 1.7rem;
+          font-size: 1.3rem;
+          color: #fff;
+
+          &::-webkit-input-placeholder { color: #fff; } /* WebKit browsers */
+          &:-moz-placeholder { color: #fff; } /* Mozilla Firefox 4 to 18 */
+          &::-moz-placeholder { color: #fff; } /* Mozilla Firefox 19+ */
+          &:-ms-input-placeholder { color: #fff; } /* Internet Explorer 10+ */
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+    }
+  }

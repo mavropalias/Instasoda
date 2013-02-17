@@ -31,9 +31,6 @@ var Router = Backbone.Router.extend({
     "interests/:category": "interests",
     "interests": "interests",
 
-    // Favourites
-    "favourites": "favourites",
-
     // Mosaic
     "mosaic": "mosaic",
 
@@ -226,23 +223,6 @@ var Router = Backbone.Router.extend({
     } else {
       IS.changeView(IS.currentView, likesView, viewMode);
       IS.setupPage('likes');
-    }
-  },
-
-  // favourite users
-  // -----------------------------------------------------------------------
-  favourites: function() {
-    log('routing favourites page', 'info');
-
-    if(!appReady) {
-      IS.prepareApp(null, function() {
-        IS.changeView(IS.currentView, favouritesView);
-        IS.setupPage('favourites');
-      });
-      return;
-    } else {
-      IS.changeView(IS.currentView, favouritesView);
-      IS.setupPage('favourites');
     }
   },
 

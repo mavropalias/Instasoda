@@ -1,17 +1,28 @@
 // =========================================================================
 // Navigation view
 // =========================================================================
-var NavigationView = Backbone.View.extend({      
+var NavigationView = Backbone.View.extend({
+
+  // events
+  // -----------------------------------------------------------------------
+  events: {
+    'click #nav-starred-people': 'toggleStarredPeople'
+  },
+
   // initialize
   // -----------------------------------------------------------------------
   initialize: function() {
     _.bindAll(this);
-    
+
     // get template
     this.template = document.getElementById("tplNavigation").innerHTML;
 
     // init sub views
     this.onlineUsersView = new OnlineUsersView({ model: onlineUsers });
+    this.favouritesView = new FavouritesView({
+      model: this.model,
+      collection: favsCollection
+    });
 
     // update nav when user models changes
     this.model.bind('change:tkn', this.refresh);
@@ -19,7 +30,7 @@ var NavigationView = Backbone.View.extend({
     // render
     this.render();
   },
-  
+
   // render
   // -----------------------------------------------------------------------
   render: function() {
@@ -28,6 +39,7 @@ var NavigationView = Backbone.View.extend({
 
     // render sub view
     this.onlineUsersView.render();
+    this.favouritesView.render();
   },
 
   // show
@@ -35,9 +47,10 @@ var NavigationView = Backbone.View.extend({
   show: function() {
     log('showing NavigationView');
     this.$el.html(this.html);
-    
+
     // show sub view
     this.onlineUsersView.setElement(this.$('#nav_onlineUsers .userCount')).show();
+    this.favouritesView.setElement(this.$('#starred-people')).show();
   },
 
   // enter
@@ -51,7 +64,10 @@ var NavigationView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   leave: function(cb) {
     log('leaving NavigationView');
-    cb();
+
+    // leave favourites
+    this.favouritesView.leave(cb);
+
     // TODO: animate icons
   },
 
@@ -67,6 +83,14 @@ var NavigationView = Backbone.View.extend({
       _this.show();
       _this.enter();
     });
+  },
+
+  // toggleStarredPeople
+  // ---------------------------------------------------------------------------
+  toggleStarredPeople: function() {
+    this.favouritesView.enter();
+
+    this.$('#starred-people').toggleClass('docked');
   }
 });
 

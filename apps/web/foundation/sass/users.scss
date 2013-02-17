@@ -1,0 +1,37 @@
+  .user-preview {
+    position: relative;
+    float: left;
+    overflow: hidden;
+
+    .user-preview-photo {
+      max-width: 30rem;
+      overflow: hidden;
+      height: 25rem;
+
+      img {
+        height: 25rem;
+        max-width: 500rem;
+      }
+    }
+
+    .user-preview-nickname {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: $backgroundColor;
+      color: #000;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+
+      &.is-online {
+        background: $colorGreen1;
+        color: $backgroundColor;
+      }
+    }
+
+    &:hover {
+      .user-preview-nickname {
+        text-decoration: underline;
+      }
+    }
+  }

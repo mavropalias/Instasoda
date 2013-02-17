@@ -64,7 +64,7 @@ var ChatSessionTabs = Backbone.View.extend({
   // -----------------------------------------------------------------------
   refreshScrollbar: function() {
     this.$('.chat-tabs').slimScroll({
-      scroll: this.$('.chat-tab:first-child').position().top
+      scrollTo: '0px'
     });
   },
 
@@ -170,7 +170,7 @@ var ChatSessionTabs = Backbone.View.extend({
 
     // update custom scrollbars
     $('#chat .slimScrollDiv, #chat .chat-tabs').css({
-      'height': $(window).height() - $('#chat-button').outerHeight() - 300 + 'px',
+      'height': $(window).height() - $('#chat-button').outerHeight() - 400 + 'px',
       'width': $('#chat-button').outerWidth()
     });
   },
@@ -353,12 +353,12 @@ var ChatSessionsView = Backbone.View.extend({
       // enable custom scrollbars
       var scroller = this.$('#scroller_' + model.get('_id'));
       scroller.slimScroll({
-        height: '250',
+        height: '328px',
         allowPageScroll: false,
-        alwaysVisible: false,
+        alwaysVisible: true,
         railVisible: false,
         start: 'bottom',
-        scroll: scroller.find('.chat-log').height()
+        scrollBy: scroller.find('.chat-log').height()
       });
     }
   }
@@ -407,7 +407,7 @@ var ChatSessionView = Backbone.View.extend({
 
     // scroll to the bottom of the chat log
     oChatLog.closest('.chat-log-scroll-wrapper').slimScroll({
-      scroll: oChatLog.height()
+      scrollTo: oChatLog.height() + 'px'
     });
   },
 

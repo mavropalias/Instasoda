@@ -1,0 +1,224 @@
+@import "foundation/common/ratios";
+
+// =============================================================================
+// Grid Settings
+// =============================================================================
+
+  $rowWidth: 100%;
+  // $columnGutter: 30px;
+  // $totalColumns: 12;
+  // $mobileTotalColumns: 4;
+  // $blockGridElements: 12; // Highest number of block grid elements, Maximum of 24 supported
+
+// =============================================================================
+// COLORS
+// =============================================================================
+
+  // Primary brand colors
+  $color1: #00364d; // dark blue
+  $color2: #3dbcdf; // light blue
+  $color3: #be1e2d; // red
+
+  // Scale of blues including the two primary blues
+  $colorBlue1: #00364d; // darker blue
+  $colorBlue2: #007da6;
+  $colorBlue3: #3dbcdf;
+  $colorBlue4: #96d9ee;
+  $colorBlue5: #d5eef2;
+  $colorBlue6: #eff8fa; // lighter blue
+
+  // Complimentary red, including primary red
+  $colorRed1:  #be1e2d; // darker red (primary)
+  $colorRed2:  #ed1c24; // lighter red
+
+  // Additional colors (use little)
+  $colorGreen1: #74b843;
+  $colorGreen2: #527779; // de-saturated green
+  $colorOrange: #faa73f;
+  $colorOrange2: #D95B43;
+
+  // Other colors
+  $backgroundColor: #f9f9f9;
+
+  $mainColor: #3dbcdf;
+  // $secondaryColor: #e9e9e9;
+  // $alertColor: #c60f13;
+  // $successColor: #5da423;
+  // $txtColor: #222;
+  // $highlightColor: #ffff99;
+  // $black: #000;
+  // $white: #fff;
+  // $shinyEdge: rgba(#fff, .5);
+  // $darkEdge: rgba(#000, .2);
+
+// =============================================================================
+// Font Settings
+// =============================================================================
+
+  // $fontSmoothing: antialiased;
+
+  // bold font
+  $headerFontFamily: "Segoe UI Light", "Segoe UI", "Segoe WP", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  $headerFontWeight: 300;
+
+  // regular font
+  $bodyFontFamily: "Segoe UI", "Segoe WP", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  $bodyFontWeight: 400;
+
+  // light font
+  $lightFontFamily: "Segoe UI Light", "Segoe UI", "Segoe WP", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  $lightFontWeight: 300;
+
+// =============================================================================
+// Button Settings
+// =============================================================================
+
+  $buttonRadius: 0px;
+  // $btnBase: 10px;
+
+  // $tinyBtnBase: $btnBase - 5;
+  // $smallBtnBase: $btnBase - 3;
+  // $largeBtnBase: $btnBase + 5;
+
+// =============================================================================
+// Form Settings
+// =============================================================================
+
+  // $formSpacing: 12px;
+  // $labelFontWeight: 500;
+  // $labelFontColor: lighten(#000, 30%);
+  // $labelBtmMargin: 3px;
+  // $inputFontColor: rgba(0,0,0,0.75);
+  // $inputFontSize: 14px;
+  // $inputBgColor: #fff;
+  // $inputFocusBgColor: darken(#fff, 2%);
+  // $inputBorderColor: darken(#fff, 20%);
+  // $inputFocusBorderColor: darken(#fff, 30%);
+  // $inputBorderStyle: solid;
+  // $inputBorderWidth: 1px;
+  // $inputBorderRadius: 2px;
+  // $fieldsetBorderRadius: 3px;
+
+// =============================================================================
+// Custom Form Settings
+// =============================================================================
+
+  // $custFormBorderColor: #ccc;
+  // $custFormBgColor: #fff;
+  // $custCheckColor: #222;
+  // $custSelectCurrentFontColor: #141414;
+  // $custSelectBgColor: #fff;
+  // $custSelectBorderColor: #ddd;
+  // $custSelectTriangleColor: #aaa;
+  // $custSelectTriangleColorOpen: #222;
+  // $custSelectDropHeight: 200px;
+  // $custDropdownBgColor: #fff;
+  // $custDropdownBorderColor: darken(#fff, 20%);
+  // $custDropdownFontColor: #555;
+  // $custDropdownSelectedBgColor: lighten(#2ba6cb, 40%);
+  // $custDropdownSelectedFontColor: #000;
+  // $custFormDisabledBgColor: #ddd;
+
+// =============================================================================
+// Tab Settings
+// =============================================================================
+
+  // $tabHeight: 40px;
+  // $tabTermFontSize: 12px;
+
+// =============================================================================
+// Nav Bar Settings
+// =============================================================================
+
+  // $navBarHeight: 40px;
+  // $navFlyoutBaseWidth: 250px;
+
+// =============================================================================
+// Top Bar Settings
+// =============================================================================
+
+  // $topBarBgColor: #222;
+  // $topBarHeight: 45px;
+  // $topBarHeightMobile: 45px;
+  // $topBarBtmMargin: 30px;
+  // $topBarTitleWeight: bold;
+  // $topBarTitleSize: 17px;
+  // $topBarLinkColor: #fff;
+  // $topBarLinkWeight: bold;
+  // $topBarLinkSize: 13px;
+  // $topBarDropBgColor: #222;
+  // $topBarDropLinkColor: #fff;
+  // $topBarDropToggleSize: 5px;
+  // $topBarDropToggleColor: #fff;
+  // $topBarDropToggleAlpha: 0.5;
+  // $topBarSearchWidth: 200px;
+  // $topBarBreakPoint: 940px; // Change to 9999px for always mobile layout
+  // $topBarNavToggleSize: 8px;
+  // $topBarNavToggleColor: #fff;
+
+// =============================================================================
+// UI Settings
+// =============================================================================
+
+  // $thumbRadius: 3px;
+  // $progBarHeight: 25px;
+  // $progBarBorderColor: darken(#fff, 20%);
+  // $progBarBorderSize: 1px;
+  // $progBarPad: 2px;
+  // $linkListBottomMargin: 17px -22px;
+  // $tableBorderRadius: 3px;
+  // $alertBorderRadius: 3px;
+
+// =============================================================================
+// Tooltip Settings
+// =============================================================================
+
+  // $hasTipBorderBottom: dotted 1px #ccc;
+  // $hasTipFontWeight: bold;
+  // $hasTipFontColor: #333;
+  // $hasTipBorderBottomHover: dotted 1px darken($mainColor, 20%);
+  // $hasTipFontColorHover: $mainColor;
+  // $tooltipBackgroundColor: #000;
+  // $tooltipBackgroundOpacity: 0.85;
+  // $tooltipFontSize: 12px;
+  // $tooltipFontWeight: bold;
+  // $tooltipFontColor: #fff;
+  // $tapToCloseFontSize: 10;
+  // $tapToCloseFontWeight: normal;
+  // $tapToCloseFontColor: #888;
+  // $tooltipFontSizeScreenSm: 14;
+  // $tooltipBgOpacityScreenSm: 0.85;
+  // $tooltipBorderRadius: 4px;
+
+// =============================================================================
+// Clearing Settings
+// =============================================================================
+
+  // $clearingBg: rgba(0,0,0,0.8);
+  // $clearingOldBrowserBg: rgb(0,0,0);
+  // $clearingCaptionBg: rgba(0,0,0,0.7);
+  // $clearingCaptionOldBrowserBg: rgb(0,0,0);
+  // $clearingCaptionFontColor: #fff;
+  // $clearingCloseColor: #fff;
+  // $clearingArrowColor: #fff;
+  // $clearingArrowSize: 16px;
+  // $clearingCarouselBg: rgba(0,0,0,0.75);
+  // $clearingCarouselOldBrowserBg: rgb(0,0,0);
+  // $clearingCarouselHeight: 150px;
+  // $clearingActiveImgHeight: 75%;
+  // $clearingCarouselThumbWidth: 175px;
+  // $clearingCarouselThumbActiveBorder: 4px solid rgb(255,255,255);
+  // $clearingImgBg: rgba(0,0,0,0.75);
+  // $clearingImgOldBrowserBg: rgb(0,0,0);
+
+// =============================================================================
+// Modular Scale Settings
+// =============================================================================
+
+  // $ratio: $golden; // THIS IS DEFAULT IN MODULAR-SCALE
+  $baseFontSize: 16px;
+  // $importantModNum: 44px;
+  // $base-size: $baseFontSize $importantModNum;
+  // Produced the following list of values: 14, 17, 23, 27, 37, 44, 59, 71, 95, 115;
+  // http://www.modularscale.com by Tim Brown
+  // https://github.com/scottkellum/modular-scale by scottkellum

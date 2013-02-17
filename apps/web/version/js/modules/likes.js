@@ -295,9 +295,10 @@ var LikesListView = Backbone.View.extend({
     log('entering LikesListView');
 
     // load like images only when they appear on the screen
-    this.$('.likeImg').appear();
-    this.$('.likeImg').on('appear', function() {
+    this.$('.like-img').appear();
+    this.$('.like-img').on('appear', function() {
       $(this).attr('src', $(this).data('src'));
+      $(this).removeClass('transparent');
     });
   },
 
@@ -307,7 +308,7 @@ var LikesListView = Backbone.View.extend({
     log('leaving LikesListView');
 
     // remove .appear() event listener
-    this.$('.likeImg').off('appear');
+    this.$('.like-img').off('appear');
 
     cb();
   },
@@ -317,7 +318,7 @@ var LikesListView = Backbone.View.extend({
   showLikePanel: function(e) {
     var target = $(e.currentTarget);
 
-    if(target.find('.likePanel').length > 0) target.find('.likePanel').show();
+    if(target.find('.like-panel').length > 0) target.find('.like-panel').show();
     else {
       // construct a new like model, based on the event's target
       var likeAttrs = {
@@ -339,7 +340,7 @@ var LikesListView = Backbone.View.extend({
   // hideLikePanel
   // -----------------------------------------------------------------------
   hideLikePanel: function() {
-    this.$('.likePanel').hide();
+    this.$('.like-panel').hide();
   }
 });
 
@@ -348,13 +349,13 @@ var LikesListView = Backbone.View.extend({
 // =========================================================================
 var FacebookLikePanelView = Backbone.View.extend({
   // properties
-  className: 'likePanel',
+  className: 'like-panel',
 
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .addToSearch': 'addOrRemoveLikeFromSearchOptions',
-    'click .removeFromSearch': 'addOrRemoveLikeFromSearchOptions',
+    'click .add-to-search': 'addOrRemoveLikeFromSearchOptions',
+    'click .remove-from-search': 'addOrRemoveLikeFromSearchOptions',
     'click .attitude1': 'rateLike1',
     'click .attitude2': 'rateLike2',
     'click .attitude3': 'rateLike3'

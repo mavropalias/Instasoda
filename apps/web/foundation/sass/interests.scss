@@ -1,0 +1,192 @@
+@import "compass/css3/transition";
+
+.like {
+  width: 10rem;
+  float: left;
+  position: relative;
+
+  .like-image-container {
+    width: 10rem;
+    height: 10rem;
+    overflow: hidden;
+    background: #fff;
+    position: relative;
+
+    .interest-rating {
+      position: absolute;
+      bottom: 1rem;
+      left: 1rem;
+      width: 2rem;
+      height: 2rem;
+      opacity: .7;
+    }
+
+    .like-img {
+      @include transition-property(opacity);
+      @include transition-duration(0.3s);
+    }
+  }
+
+  .interest-title {
+    margin-top: 0.3rem;
+    color: #ccc;
+    font-size: 1.1rem;
+    text-align: center;
+    height: 4.0em;
+    line-height: 1.4rem;
+    overflow: hidden;
+    margin-bottom: 1rem;
+    cursor: default;
+  }
+
+  &.rate1 {
+    .interest-rating {
+      background: $colorRed1;
+    }
+  }
+
+  &.rate2 {
+    .interest-rating {
+      background: $colorBlue3;
+    }
+  }
+
+  &.rate3 {
+    .interest-rating {
+      background: $colorGreen1;
+    }
+  }
+
+  // hover state
+  &:hover {
+    .like-image-container {
+      opacity: 0.3;
+
+      .interest-rating {
+        display: none;
+      }
+    }
+  }
+
+  .like-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10rem;
+    height: 10rem;
+
+    .like-attitudes {
+      margin: 0.5rem 0.5rem 0 0.5rem;
+
+      .like-attitude {
+        opacity: .95;
+        font-size: 1.2rem;
+        padding: 0.15rem 0.5rem;
+        cursor: pointer;
+        background: #fff;
+        font-weight: 700;
+        position: relative;
+
+        .icon {
+          float: right;
+          display: none;
+          line-height: 2rem;
+        }
+
+        &.active {
+          .icon-star {
+            display: block;
+          }
+
+          &.attitude1 {
+            color: #fff;
+            background: $colorRed1;
+          }
+
+          &.attitude2 {
+            color: #fff;
+            background: $colorBlue3;
+          }
+
+          &.attitude3 {
+            color: #fff;
+            background: $colorGreen1;
+          }
+        }
+
+        &.attitude1 {
+          color: $colorRed1;
+        }
+
+        &.attitude2 {
+          color: $colorBlue3;
+        }
+
+        &.attitude3 {
+          color: $colorGreen1;
+        }
+
+        &:hover {
+          opacity: 1;
+
+          .icon-star {
+            display: none;
+          }
+
+          .icon-plus {
+            display: block;
+          }
+
+          &.active {
+            .icon-minus {
+              display: block;
+            }
+
+            .icon-plus {
+              display: none;
+            }
+          }
+
+          &.attitude1 {
+            color: #fff;
+            background: $colorRed1;
+          }
+
+          &.attitude2 {
+            color: #fff;
+            background: $colorBlue3;
+          }
+
+          &.attitude3 {
+            color: #fff;
+            background: $colorGreen1;
+          }
+        }
+      }
+    }
+
+    .facebook-url,
+    .search-toggle {
+      background: #fff;
+      display: block;
+      position: absolute;
+      bottom: 0.5rem;
+      right: 0.5rem;
+      width: 2rem;
+      height: 2rem;
+      line-height: 2rem;
+      text-align: center;
+      color: $colorBlue2;
+      font-size: 1.5rem;
+
+      &:hover {
+        background: $colorBlue2;
+        color: #fff;
+      }
+    }
+
+    .search-toggle {
+      right: 3rem;
+    }
+  }
+}
