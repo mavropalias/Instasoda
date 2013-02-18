@@ -112,6 +112,30 @@
 
     .interests-container {
       clear: both;
+
+      .search-like {
+        position: relative;
+
+        .remove-search-like {
+          width: 5rem;
+          height: 5rem;
+          background: rgba(255,255,255,.7);
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          left: 0;
+          font-size: 50px;
+          display: none;
+          cursor: pointer;
+          color: red;
+        }
+
+        &:hover {
+          .remove-search-like {
+            display: block;
+          }
+        }
+      }
     }
 
     .tip {
