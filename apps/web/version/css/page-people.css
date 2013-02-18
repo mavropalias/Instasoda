@@ -142,6 +142,25 @@
 .search-filters-row .search-likes-row .interests-container {
   clear: both;
 }
+.search-filters-row .search-likes-row .interests-container .search-like {
+  position: relative;
+}
+.search-filters-row .search-likes-row .interests-container .search-like .remove-search-like {
+  width: 5rem;
+  height: 5rem;
+  background: rgba(255, 255, 255, 0.7);
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  font-size: 50px;
+  display: none;
+  cursor: pointer;
+  color: red;
+}
+.search-filters-row .search-likes-row .interests-container .search-like:hover .remove-search-like {
+  display: block;
+}
 .search-filters-row .search-likes-row .tip {
   font-size: 1.4rem;
   color: #666;

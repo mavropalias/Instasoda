@@ -163,6 +163,9 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
           // update button on user page
           $('#handle-favourite .icon').removeClass('icon-star-empty').addClass('icon-star').attr('title', 'Remove from your starred users.');
 
+          // render user page - fixes issue when going back to the same profile and fav button is in wrong state due to caching
+          usersFullView.render();
+
           // update favsCollection
           socket.emit('getBasicUserInfoFromId', {
             userId: userToFavId
@@ -192,6 +195,9 @@ IS.handleFavourite = function(userToFavId, userToFavName, favType) {
 
           // update button on user page
           $('#handle-favourite .icon').removeClass('icon-star').addClass('icon-star-empty').attr('title', 'Add to your starred users.');
+
+          // render user page - fixes issue when going back to the same profile and fav button is in wrong state due to caching
+          usersFullView.render();
 
           // success - show notification to the user
           //IS.notify('Removed favourite!', null, userToFavName + ' removed from your favourites.');

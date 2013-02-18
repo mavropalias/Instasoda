@@ -11,6 +11,8 @@
 #######################
 *.log
 temp.*
+*.scssc
+app.css
 
 # OS generated files #
 ######################

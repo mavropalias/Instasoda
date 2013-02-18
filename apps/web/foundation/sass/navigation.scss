@@ -22,14 +22,23 @@ nav {
     cursor: pointer;
     float: right;
 
-    .nav-icon {
-      color: $colorBlue3;
+    &:hover,
+    &.docked {
+      background: $colorGreen1;
+
+      .nav-icon {
+        background: #fff;
+        color: $colorGreen1;
+      }
     }
 
-    &:hover {
-      .nav-icon {
-        color: $colorBlue2;
-      }
+    .nav-icon {
+      padding: 0.6rem;
+      font-size: 1.8rem;
+      border-radius: 50px;
+      background: $colorGreen1;
+      color: #fff;
+      width: auto;
     }
   }
 
@@ -40,8 +49,11 @@ nav {
     color: #fff;
   }
 
-  .active .nav-link {
-    color: $colorBlue3;
+  .active {
+    .nav-link {
+      color: $colorBlue3;
+      background: #222;
+    }
   }
 }
 
@@ -55,11 +67,11 @@ nav {
   right: 8rem;
   overflow: hidden;
   overflow-x: auto;
-  background: rgba(0,0,0,.8);
+  background: rgba(20,20,20,.9);
   height: 0rem;
 
   &.docked {
-    height: 15rem;
+    height: 14rem;
   }
 
   .starred-users-tip {
@@ -90,10 +102,14 @@ nav {
     padding-left: 1rem;
 
     .user-preview {
+      height: 100%;
+      overflow: visible;
+
       .user-preview-photo {
         width: 10rem;
-        margin: 3rem 1rem 0.5rem 0;
+        margin: 1rem 1rem 0.5rem 0;
         max-height: 10rem;
+        background: #222;
 
         img {
           width: 10rem;
@@ -103,7 +119,7 @@ nav {
 
       .user-preview-nickname {
         position: absolute;
-        top: 1rem;
+        top: 10rem;
         width: 10rem;
         background: none transparent;
         background: #222;

@@ -674,9 +674,9 @@
             </a>
             <ul class="block-grid interests-container">
               {{#so.l}}
-                <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                <li class="search-like" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="Click to remove {{n}} from your search filters">
                   <img src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}.jpg" width=50 height=50>
-                  <div class="remove-search-like icon-remove"></div>
+                  <div class="remove-search-like icon-remove-sign"></div>
                 </li>
               {{/so.l}}
               {{^so.l}}
@@ -725,12 +725,16 @@
 
       <script id="tplUsersProfile" type="text/template">
 
+        <!-- PHOTOS -->
+        <!-- --------------------------------------------------------------- -->
         <div id="user-photos" class="row">
           <div class="user-photos-scroller">
             <!-- USER PHOTOS -->
           </div>
         </div>
 
+        <!-- USER NAME & ACTION BUTTONS -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent">
           <div class="twelve columns">
             <h2 class="name left">{{u}}, {{ag}}</h2>
@@ -744,6 +748,8 @@
           </div>
         </div>
 
+        <!-- USER DETAILS -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent">
           <div class="twelve columns">
             <p class="capitalise-first-letter user-info no-margin">{{g}}, living in <strong>{{locN}}</strong>. Wants to meet
@@ -763,6 +769,8 @@
           </div>
         </div>
 
+        <!-- COMMON INTERESTS -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent interests-message-row">
           <div class="twelve columns">
             <h2 class="interests-message">You & {{u}} have {{commonLikesCount}} things in common!</h2>
@@ -779,6 +787,8 @@
           </div>
         </div>
 
+        <!-- ABOUT ME -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent about-me-row">
           <div class="twelve columns">
             <h2 id="about-me" class="left">"{{a}}"</h2>
@@ -788,6 +798,8 @@
           </div>
         </div>
 
+        <!-- ALL INTERESTS -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent interests-message-row">
           <div class="twelve columns">
             <h2 class="interests-message">Overall, {{u}} has {{likeCount}} interests:</h2>

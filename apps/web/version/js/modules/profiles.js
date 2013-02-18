@@ -686,14 +686,13 @@ var MyPhotosView = Backbone.View.extend({
     });
 
     this.$('.photo img').each(function() {
+      var self = this;
       if($(this).height() > 0) {
-        var self = this;
         setTimeout(function() {
           $(self).removeClass('transparent');
         }, (150 + (150 * Math.floor((Math.random()*3)+1))));
       } else {
         $(this).load(function(){
-          var self = this;
           setTimeout(function() {
             $(self).removeClass('transparent');
           }, (150 + (150 * Math.floor((Math.random()*3)+1))));

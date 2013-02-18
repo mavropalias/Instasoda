@@ -1,11 +1,11 @@
 /*
 Syntax error: Undefined mixin 'transition-property'.
-        on line 49 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss, in `transition-property'
-        from line 49 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss
+        on line 61 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss, in `transition-property'
+        from line 61 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss
 
 Backtrace:
-E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss:49:in `transition-property'
-E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss:49
+E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss:61:in `transition-property'
+E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss:61
 C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.3/lib/sass/tree/visitors/perform.rb:251:in `visit_mixin'
 C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.3/lib/sass/tree/visitors/base.rb:37:in `visit'
 C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.3/lib/sass/tree/visitors/perform.rb:98:in `visit'
@@ -74,4 +74,4 @@ C:/Ruby193/bin/compass:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'transition-property'.\A         on line 49 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss, in `transition-property'\A         from line 49 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss"; }
+  content: "Syntax error: Undefined mixin 'transition-property'.\A         on line 61 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss, in `transition-property'\A         from line 61 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/navigation.scss"; }

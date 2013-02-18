@@ -51,14 +51,8 @@
 #handle-favourite .icon-star {
   background: #74b843;
 }
-#handle-favourite .icon-star:hover {
-  background: #faa73f;
-}
 #handle-favourite .icon-star-empty {
   background: #faa73f;
-}
-#handle-favourite .icon-star-empty:hover {
-  background: #74b843;
 }
 
 #send-message {
