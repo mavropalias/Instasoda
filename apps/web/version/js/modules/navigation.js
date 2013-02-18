@@ -90,7 +90,7 @@ var NavigationView = Backbone.View.extend({
   toggleStarredPeople: function() {
     this.favouritesView.enter();
 
-    this.$('#starred-people').toggleClass('docked');
+    this.$('#starred-people, #nav-starred-people').toggleClass('docked');
   }
 });
 
