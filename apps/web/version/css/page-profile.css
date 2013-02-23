@@ -1,5 +1,5 @@
 #user-photos {
-  max-height: 30rem;
+  height: 30rem;
   overflow: hidden;
   margin-bottom: 4rem;
 }
@@ -26,26 +26,38 @@
 .name,
 #about-me {
   margin: 0 2rem 0 0;
+  max-height: 3.4em;
+  overflow: hidden;
 }
 .name:first-letter,
 #about-me:first-letter {
   text-transform: uppercase;
 }
+.name.expanded,
+#about-me.expanded {
+  max-height: 100000%;
+  font-size: 3rem;
+}
 
 #handle-favourite,
 #send-message,
-#show-full-about {
+#show-full-about,
+#edit-profile {
   margin-top: 1.5rem;
   cursor: pointer;
 }
 #handle-favourite .icon,
 #send-message .icon,
-#show-full-about .icon {
+#show-full-about .icon,
+#edit-profile .icon {
   padding: 0.6rem;
   font-size: 1.8rem;
   border-radius: 50px;
   background: #007da6;
   color: #fff;
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
 }
 
 #handle-favourite .icon-star {
@@ -55,21 +67,29 @@
   background: #faa73f;
 }
 
-#send-message {
+#send-message,
+#edit-profile {
   font-size: 1.3rem;
   font-weight: 700;
   margin-left: 1rem;
   color: #007da6;
 }
-#send-message .icon {
+#send-message .icon,
+#edit-profile .icon {
   background: #007da6;
   margin-right: 0.5rem;
 }
-#send-message:hover {
+#send-message:hover,
+#edit-profile:hover {
   color: #3dbcdf;
 }
-#send-message:hover .icon {
+#send-message:hover .icon,
+#edit-profile:hover .icon {
   background: #3dbcdf;
+}
+
+#edit-profile {
+  margin: 1rem 0 0 0;
 }
 
 #show-full-about {

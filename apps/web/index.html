@@ -824,15 +824,50 @@
 
       <script id="tplMyProfile" type="text/template">
 
-        <!-- Profile -->
-        <div id="block-profile">
+        <!-- PHOTOS -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            <!-- USER PHOTOS -->
+          </div>
+        </div>
 
-          <div class="twelve columns no-padding">
-            <div class="twelve columns">
-              <span class="icon-user"></span>
-              <h1>{{u}} <a class="smaller darkred button" href="#me/edit">edit my profile</a></h1>
-            </div>
+        <!-- USER NAME & ACTION BUTTONS -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="name left">{{u}}, {{ag}}</h2>
+            <a id="edit-profile" href="#me/edit" class="left" title="Edit my profile">
+              <i class="icon icon-pencil"></i>edit your profile
+            </a>
+          </div>
+        </div>
 
+        <!-- USER DETAILS -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <p class="capitalise-first-letter user-info no-margin">{{g}}, living in <strong>{{locN}}</strong>. Wants to meet
+              <strong>{{#w}}{{^m}}women{{/m}}{{/w}}
+              {{#w}}{{#m}}women & men{{/m}}{{/w}}
+              {{#m}}{{^w}}men{{/w}}{{/m}}</strong>
+             for <strong>{{#ff}}{{^fd}}friendship{{/fd}}{{/ff}}
+                {{#ff}}{{#fd}}friendship & dating{{/fd}}{{/ff}}
+                {{#fd}}{{^ff}}dating{{/ff}}{{/fd}}</strong>.
+              Your relationship status is <strong>{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}unknown{{/fRs}}</strong>.
+              <br>
+              <span class="user-online-status {{#on}}user-is-online{{/on}}">
+                {{#on}}<i class="icon icon-circle"></i> online now!{{/on}}
+                {{^on}}<i class="icon icon-circle-blank"></i> offline now{{/on}}
+              </span>
+            </p>
+          </div>
+        </div>
+
+        <!-- DEFAULT PHOTO & UPLOAD WIDGET -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
             <div id="profile-picture" class="mobile-four columns secondary-block">
               {{#p}}
                 {{#d}}
@@ -844,115 +879,61 @@
               {{/p}}
             </div>
 
-            <div id="profile-details" class="mobile-four columns secondary-block">
-              <h2>my details</h2>
-              <span>YOUR PERSONAL DETAILS</span>
-              <div>
-                <span class="icon-user"></span>
-                <h3>GENDER, AGE</h3>
-                <h3><strong>{{g}}, {{ag}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-heart"></span>
-                <h3>RELATIONSHIP</h3>
-                <h3><strong>{{#fRs}}{{fRs}}{{/fRs}}{{^fRs}}UNKNOWN{{/fRs}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-map-marker"></span>
-                <h3>LOCATION</h3>
-                <h3><strong>{{#locN}}{{locN}}{{/locN}}{{^locN}}UNKNOWN{{/locN}}</strong><span class="icon-ok-sign"></span></h3>
-              </div>
-              <div>
-                <span class="icon-group"></span>
-                <h3>WANTS TO MEET</h3>
-                <h3>
-                  <strong>
-                    {{#w}}{{^m}}women{{/m}}{{/w}}
-                    {{#w}}{{#m}}women & men{{/m}}{{/w}}
-                    {{#m}}{{^w}}men{{/w}}{{/m}}
-                  </strong>
-                  <span class="icon-ok-sign"></span>
-                </h3>
-              </div>
-              <div>
-                <span class="icon-share-alt"></span>
-                <h3>FOR</h3>
-                <h3>
-                  <strong>
-                    {{#ff}}{{^fd}}Friendship{{/fd}}{{/ff}}
-                    {{#ff}}{{#fd}}Friendship & Dating{{/fd}}{{/ff}}
-                    {{#fd}}{{^ff}}Dating{{/ff}}{{/fd}}
-                  </strong>
-                  <span class="icon-ok-sign"></span>
-                </h3>
-              </div>
-            </div>
-
-            <div id="profile-introduction" class="mobile-four columns secondary-block end">
-              <h2>my introduction</h2>
-              <span>WRITE A LITTLE BIT ABOUT YOURSELF</span>
-              <div class="twelve columns">
-                <p>{{{a}}}</p>
-              </div>
-            </div>
+            <div id="uploadWidget"></div>
           </div>
-
-          <div id="profile-pictures-wrapper" class="mobile-four twelve columns secondary-block">
-            <h2>my photos</h2>
-            <span>UPLOAD YOUR BEST, HIGH QUALITY PHOTOS</span>
-
-            <div id="profile-pictures" class="row">
-
-              <div id="uploadPhoto" class='animated'>
-                <div id="uploadWidget"></div>
-              </div>
-
-              <!-- <div id="view-all-pictures" class="four mobile-one columns end">
-                <a href="#">
-                  <span class="icon-share-alt"></span>
-                  <strong>VIEW ALL</strong>
-                </a>
-              </div> -->
-
-              <div id="userPhotosList">
-                <!-- USER PHOTOS -->
-              </div>
-            </div>
-          </div>
-
         </div>
 
-
-        <!-- Likes -->
-        <div id="block-likes">
+        <!-- MY INTERESTS: FAVOURITES -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent interests-message-row">
           <div class="twelve columns">
-            <span class="icon-thumbs-up"></span>
-            <h1>my interests <a class="smaller button" href="#interests">view all</a></h1>
+            <h2 class="interests-message"><i class="icon-star"></i> <a href="#interests/favourites">You have {{favouritesCount}} Favourites:</a></h2>
           </div>
+        </div>
 
-          <div id="like-block-favourites" class="twelve mobile-four columns ">
-            <div class="like-type-label">
-              <span class="icon-star"></span>
-              <h2><a href="#interests/favourites">FAVOURITES</a>&nbsp;<strong class="counter">{{favouritesCount}}</strong></h2>
-            </div>
-            <div id="like-block-favourites-placeholder" class="row">No favs yet!</div>
+        <div class="row interests-row">
+          <div id="interests-favourites" class="twelve columns"></div>
+        </div>
+
+        <div class="row indent interests-view-all-row">
+          <div class="twelve columns">
+            <button id="view-all-interests" class="button">view all favourites &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
+        </div>
 
-          <div id="like-block-dislikes" class="twelve mobile-four columns end secondary-block">
-            <div class="like-type-label">
-              <span class="icon-thumbs-down"></span>
-              <h2><a href="#interests/dislikes">DISLIKES</a>&nbsp;<strong class="counter">{{dislikesCount}}</strong></h2>
-            </div>
-            <div id="like-block-dislikes-placeholder" class="row">No dislikes yet!</div>
+        <!-- MY INTERESTS: LIKES -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent interests-message-row">
+          <div class="twelve columns">
+            <h2 class="interests-message"><i class="icon-thumbs-up"></i> <a href="#interests/likes">You have {{likesCount}} Likes:</a></h2>
           </div>
+        </div>
 
-          <div id="like-block-likes" class="twelve mobile-four columns secondary-block end">
-            <div class="like-type-label">
-              <span class="icon-thumbs-up"></span>
-              <h2><a href="#interests/likes">LIKES</a>&nbsp;<strong class="counter">{{likesCount}}</strong></h2>
-            </div>
-            <div id="like-block-likes-placeholder" class="row">No likes yet!</div>
-            <a class="button" href="#interests/likes">view all my likes</a>
+        <div class="row interests-row">
+          <div id="interests-likes" class="twelve columns"></div>
+        </div>
+
+        <div class="row indent interests-view-all-row">
+          <div class="twelve columns">
+            <button id="view-all-interests" class="button">view all likes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+          </div>
+        </div>
+
+        <!-- MY INTERESTS: DISLIKES -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent interests-message-row">
+          <div class="twelve columns">
+            <h2 class="interests-message"><i class="icon-thumbs-down"></i> <a href="#interests/dislikes">You have {{dislikesCount}} Dislikes:</a></h2>
+          </div>
+        </div>
+
+        <div class="row interests-row">
+          <div id="interests-dislikes" class="twelve columns"></div>
+        </div>
+
+        <div class="row indent interests-view-all-row">
+          <div class="twelve columns">
+            <button id="view-all-interests" class="button">view all dislikes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
         </div>
 

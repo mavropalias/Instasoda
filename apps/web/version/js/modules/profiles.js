@@ -62,10 +62,10 @@ var MyProfileView = Backbone.View.extend({
     this.$el.html(this.html);
 
     // show sub views
-    this.myPhotosView.setElement(this.$('#userPhotosList')).show();
-    this.favouritesView.setElement(this.$('#like-block-favourites-placeholder')).show();
-    this.dislikesView.setElement(this.$('#like-block-dislikes-placeholder')).show();
-    this.likesView.setElement(this.$('#like-block-likes-placeholder')).show();
+    this.myPhotosView.setElement(this.$('#user-photos')).show();
+    this.favouritesView.setElement(this.$('#interests-favourites')).show();
+    this.dislikesView.setElement(this.$('#interests-dislikes')).show();
+    this.likesView.setElement(this.$('#interests-likes')).show();
   },
 
   // enter
@@ -162,7 +162,30 @@ var MyProfileView = Backbone.View.extend({
       });
 
     // activate fancybox for photos
-    addToFancybox(_this.$(".fancybox-thumb"));
+    this.$("#user-photos .fancybox-thumb").fancybox({
+      prevEffect  : 'fade',
+      nextEffect  : 'fade',
+      padding: 0,
+      topRatio: 0,
+      helpers: {
+        title: {
+          type: 'outside'
+        },
+        overlay: {
+          css: {
+            'background' : 'rgba(0,0,0,.9)'
+          }
+        },
+        thumbs: {
+          width: 200,
+          height: 150,
+          position: 'top'
+        },
+        buttons: {
+          position: 'bottom'
+        }
+      }
+    });
 
     // activate fancybox when user uploads new photos
     this.$("#userPhotosList").on("focusin", function(){
@@ -170,6 +193,7 @@ var MyProfileView = Backbone.View.extend({
     });
 
     // enter sub views
+    this.myPhotosView.enter();
     this.favouritesView.enter();
     this.dislikesView.enter();
     this.likesView.enter();
@@ -467,6 +491,7 @@ var UsersFullView = Backbone.View.extend({
     'click #send-message': 'sendMessage',
     'click #handle-favourite': 'handleFavourite',
     'click #view-all-common-interests': 'viewAllCommonInterests',
+    'click #show-full-about': 'toggleAboutMe',
     'click #view-all-interests': 'viewAllInterests'
   },
 
@@ -533,7 +558,7 @@ var UsersFullView = Backbone.View.extend({
     log('entering UsersFullView');
 
     // activate fancybox for all photos
-    this.$(".fancybox-thumb").fancybox({
+    this.$("#user-photos .fancybox-thumb").fancybox({
       prevEffect  : 'fade',
       nextEffect  : 'fade',
       padding: 0,
@@ -628,6 +653,12 @@ var UsersFullView = Backbone.View.extend({
     } else {
       this.$('#common-interests, #view-all-common-interests').addClass('expanded');
     }
+  },
+
+  // toggleAboutMe
+  // -----------------------------------------------------------------------
+  toggleAboutMe: function() {
+    this.$('#about-me').toggleClass('expanded');
   },
 
   // viewAllInterests

@@ -32,13 +32,17 @@ nav {
       }
     }
 
-    .nav-icon {
-      padding: 0.6rem;
-      font-size: 1.8rem;
-      border-radius: 50px;
-      background: $colorGreen1;
-      color: #fff;
-      width: auto;
+    .nav-link {
+      padding: 0 1.5rem;
+
+      .nav-icon {
+        padding: 0.6rem;
+        font-size: 1.8rem;
+        border-radius: 50px;
+        background: $colorGreen1;
+        color: #fff;
+        width: auto;
+      }
     }
   }
 

@@ -5,7 +5,7 @@
 // -----------------------------------------------------------------------------
 
   #user-photos {
-    max-height: 30rem;
+    height: 30rem;
     overflow: hidden;
     margin-bottom: 4rem;
 
@@ -33,9 +33,16 @@
   .name,
   #about-me {
     margin: 0 2rem 0 0;
+    max-height: 3.4em;
+    overflow: hidden;
 
     &:first-letter {
       text-transform: uppercase;
+    }
+
+    &.expanded {
+      max-height: 100000%;
+      font-size: 3rem;
     }
   }
 
@@ -45,7 +52,8 @@
 
   #handle-favourite,
   #send-message,
-  #show-full-about {
+  #show-full-about,
+  #edit-profile {
     margin-top: 1.5rem;
     cursor: pointer;
 
@@ -55,6 +63,9 @@
       border-radius: 50px;
       background: $colorBlue2;
       color: #fff;
+      width: 3rem;
+      height: 3rem;
+      text-align: center;
     }
   }
 
@@ -76,7 +87,8 @@
     }
   }
 
-  #send-message {
+  #send-message,
+  #edit-profile {
     font-size: 1.3rem;
     font-weight: 700;
     margin-left: 1rem;
@@ -94,6 +106,10 @@
         background: $colorBlue3;
       }
     }
+  }
+
+  #edit-profile {
+    margin: 1rem 0 0 0;
   }
 
   #show-full-about {
