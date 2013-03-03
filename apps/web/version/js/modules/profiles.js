@@ -365,8 +365,9 @@ var EditMyProfileView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click #saveProfileButton': 'save',
-    'click .change-location': 'changeLocation'
+    'click #save-profile-button': 'save',
+    'click .change-location': 'changeLocation',
+    'keyup #aboutMe': 'adjustTextArea'
   },
 
   // initialize
@@ -378,6 +379,9 @@ var EditMyProfileView = Backbone.View.extend({
     // render on model change
     this.model.bind('change', this.render);
 
+    // subviews
+    this.myPhotosView = new MyPhotosView({ model: this.model });
+
     // get template
     this.template = document.getElementById("tplEditMyProfile").innerHTML;
   },
@@ -387,6 +391,9 @@ var EditMyProfileView = Backbone.View.extend({
   render: function(cb) {
     log('rendering EditMyProfileView');
     this.html = Mustache.to_html(this.template, this.model.toJSON());
+
+    // render sub views
+    this.myPhotosView.render();
   },
 
   // show
@@ -394,12 +401,18 @@ var EditMyProfileView = Backbone.View.extend({
   show: function() {
     log('showing EditMyProfileView');
     this.$el.html(this.html);
+
+    // show sub views
+    this.myPhotosView.setElement(this.$('#user-photos')).show();
   },
 
   // enter
   // ---------------------------------------------------------------------------
   enter: function() {
     log('entering EditMyProfileView');
+
+    // enter sub views
+    this.myPhotosView.enter();
   },
 
   // leave
@@ -430,19 +443,25 @@ var EditMyProfileView = Backbone.View.extend({
     IS.setupUser();
   },
 
+  // adjustTextArea
+  // ---------------------------------------------------------------------------
+  adjustTextArea: function(event) {
+    IS.adjustTextArea(event.target);
+  },
+
   // save
   // -----------------------------------------------------------------------
   save: function() {
     log('saving user');
     _this = this;
 
-    $('#saveProfileButton').addClass('transparent');
-    $('#working').removeClass('transparent');
+    $('#save-profile-button .icon').css('display', 'inline-block');
+    $('#save-profile-button .button-title').hide();
 
     this.model.save(
       {
         'u': this.$('input[name=username]').val(),
-        'a': this.$('#aboutMe').html(),
+        'a': this.$('#aboutMe').val(),
         'm': ((this.$('input[name=interestedInMen]:checked').length > 0) ? 1 : 0),
         'w': ((this.$('input[name=interestedInWomen]:checked').length > 0) ? 1 : 0),
         'ff': ((this.$('input[name=findFriends]:checked').length > 0) ? 1 : 0),
@@ -453,26 +472,26 @@ var EditMyProfileView = Backbone.View.extend({
         error: function(model, response) {
           //TODO: properly handle errors
           alert('User save failed!');
-          $('#saveProfileButton').removeClass('transparent');
-          $('#working').addClass('transparent');
+          $('#save-profile-button .icon').hide();
+          $('#save-profile-button .button-title').show();
         },
         success: function(model, response) {
           log('got an API response', 'info');
           // SUCCESS
           if ((typeof model.attributes._id !== 'undefined') && (typeof response.error === 'undefined')) {
             log('API call was successful', 'info');
-            IS.navigateTo('me');
             store.set("user", _this.model);
-            $('#saveProfileButton').removeClass('transparent');
-            $('#working').addClass('transparent');
+            $('#save-profile-button .icon').hide();
+            $('#save-profile-button .button-title').show();
+            IS.navigateTo('me');
           }
           // FAIL
           else {
             log('API call failed: ' + response.error, 'error');
             alert('User save failed: ' + response.error);
 
-            $('#saveProfileButton').removeClass('transparent');
-            $('#working').addClass('transparent');
+            $('#save-profile-button .icon').hide();
+            $('#save-profile-button .button-title').show();
           }
         }
       }

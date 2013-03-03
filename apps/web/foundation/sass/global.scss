@@ -1,4 +1,6 @@
+@import "compass/css3/transition";
 @import "settings";
+@import "_mixins";
 
   body {
     background: $backgroundColor;
@@ -12,6 +14,10 @@
 
   ol, ul, li {
     list-style: none;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    margin-bottom: 0;
   }
 
   h2 {
@@ -95,9 +101,15 @@
     .indent {
       padding: 0 10rem;
 
-      &> .columns {
+      &> .twelve.columns {
         padding: 0;
         max-width: 90rem;
+      }
+
+      &> .six.columns {
+        padding: 0;
+        max-width: 45rem;
+        float: left;
       }
     }
 

@@ -42,14 +42,16 @@
 #handle-favourite,
 #send-message,
 #show-full-about,
-#edit-profile {
+#edit-profile,
+#cancel-edit-profile {
   margin-top: 1.5rem;
   cursor: pointer;
 }
 #handle-favourite .icon,
 #send-message .icon,
 #show-full-about .icon,
-#edit-profile .icon {
+#edit-profile .icon,
+#cancel-edit-profile .icon {
   padding: 0.6rem;
   font-size: 1.8rem;
   border-radius: 50px;
@@ -68,27 +70,32 @@
 }
 
 #send-message,
-#edit-profile {
+#edit-profile,
+#cancel-edit-profile {
   font-size: 1.3rem;
   font-weight: 700;
   margin-left: 1rem;
   color: #007da6;
 }
 #send-message .icon,
-#edit-profile .icon {
+#edit-profile .icon,
+#cancel-edit-profile .icon {
   background: #007da6;
   margin-right: 0.5rem;
 }
 #send-message:hover,
-#edit-profile:hover {
+#edit-profile:hover,
+#cancel-edit-profile:hover {
   color: #3dbcdf;
 }
 #send-message:hover .icon,
-#edit-profile:hover .icon {
+#edit-profile:hover .icon,
+#cancel-edit-profile:hover .icon {
   background: #3dbcdf;
 }
 
-#edit-profile {
+#edit-profile,
+#cancel-edit-profile {
   margin: 1rem 0 0 0;
 }
 
@@ -156,4 +163,19 @@
 }
 .about-me-row #about-me {
   color: #527779;
+}
+
+#save-profile-button .icon {
+  display: none;
+}
+
+.settings {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 200;
+  background: #fff;
+  display: none;
 }

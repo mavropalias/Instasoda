@@ -838,7 +838,7 @@
           <div class="twelve columns">
             <h2 class="name left">{{u}}, {{ag}}</h2>
             <a id="edit-profile" href="#me/edit" class="left" title="Edit my profile">
-              <i class="icon icon-pencil"></i>edit your profile
+              <i class="icon icon-pencil"></i>edit my profile
             </a>
           </div>
         </div>
@@ -880,6 +880,17 @@
             </div>
 
             <div id="uploadWidget"></div>
+          </div>
+        </div>
+
+        <!-- ABOUT ME -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent about-me-row">
+          <div class="twelve columns">
+            <h2 id="about-me" class="left">"{{a}}"</h2>
+            <span id="show-full-about" class="left">
+              <i class="icon icon-quote-left"></i>read more
+            </span>
           </div>
         </div>
 
@@ -945,75 +956,107 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplEditMyProfile" type="text/template">
-        <div class="profile-options">
-          <div class="twelve columns no-padding">
 
-
-              <div class="twelve columns">
-                <span class="icon-user"></span>
-                <h1>edit my profile <a class="smaller darkred button" href="#me">cancel</a></h1>
-              </div>
-              <div class="four columns sidebar">
-                <section>
-                  <span class="option-title">My Instasoda name <span class="tip" title="This is how other instasoda users will see you."></span></span>
-                  <input class="option-username" type="text" name="username" value="{{u}}" required maxlength=50>
-                </section>
-
-                <section>
-                  <span class="option-title">I am looking for</span>
-                  <label class="findFriends">
-                    <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
-                    <span class="findType">friendship</span>
-                  </label>
-                  <label class="findDates">
-                    <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
-                    <span class="findType">dating</span>
-                  </label>
-                </section>
-
-                <section>
-                  <span class="option-title">I want to meet</span>
-                  <label class="meetWomen">
-                    <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
-                    <span class="meetGender">women</span>
-                  </label>
-                  <label class="meetMen">
-                    <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
-                    <span class="meetGender">men</span>
-                  </label>
-                </section>
-
-                <section>
-                  <span class="option-title">Notify me on Facebook when someone sends me a message</span>
-                  <label>
-                    <input type="radio" name="notifications" value="true" {{#fn}}checked = "checked"{{/fn}}>
-                    <span>Yes please</span>
-                  </label>
-                  <label class="">
-                    <input type="radio" name="notifications" value="false" {{^fn}}checked = "checked"{{/fn}}>
-                    <span>No thanks</span>
-                  </label>
-                </section>
-
-                <section>
-                  <span class="option-title">My location <button class="smaller change-location">Change</button></span>
-                    <div>{{locN}}</div>
-                </section>
-              </div>
-
-              <div class="eight columns">
-                <span class="option-title" title="What others should know about you. The second most important element in your profile is this little box. You should be concise, accurate and the content should reflect your personality. You could write about things that you like or dislike, a mini cv or a message to your would-be dates.">A little bit about myself</span>
-                <div id="aboutMe" contentEditable="true" placeholder="type here" class="textArea" style="height: 30rem;">{{{a}}}</div>
-              </div>
-
-              <div class="mobile-twelve columns">
-                <button type="submit" id="saveProfileButton" class="animated">Save my profile</button>
-                <span class="tip" title="Your likes, relationship status, location and other information fetched from your Facebook profile, are re-synced periodically & automatically. We will not make any changes (we can&#8217;t!) to your Facebook acount ;)"></span>
-                <div id="working" class="animated transparent"></div>
-              </div>
-
+        <!-- PHOTOS -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            <!-- USER PHOTOS -->
           </div>
-        </div> <!-- #block-profile -->
+        </div>
+
+        <!-- PAGE TITLE -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="name left">Edit profile</h2>
+            <a id="cancel-edit-profile" href="#me" class="left" title="Go back to my profile">
+              <i class="icon icon-arrow-left"></i>back to my profile
+            </a>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h3>Nickname:</h3>
+            <input class="option-username" type="text" name="username" value="{{u}}" required maxlength=50>
+          </div>
+        </div>
+
+        <div class="row indent">
+          <div class="six columns">
+            <h3>I am looking for:</h3>
+            <label class="findFriends">
+              <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
+              <span class="findType">friendship</span>
+            </label>
+            <label class="findDates">
+              <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
+              <span class="findType">dating</span>
+            </label>
+          </div>
+          <div class="six columns">
+            <h3>I want to meet:</h3>
+            <label class="meetWomen">
+              <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
+              <span class="meetGender">women</span>
+            </label>
+            <label class="meetMen">
+              <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
+              <span class="meetGender">men</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="row indent">
+
+        </div>
+
+        <div class="row indent">
+          <div class="twelve columns">
+            <h3>Notify me on Facebook when someone sends me a message:</h3>
+            <label>
+              <input type="radio" name="notifications" value="true" {{#fn}}checked = "checked"{{/fn}}>
+              <span>Yes please</span>
+            </label>
+            <label class="">
+              <input type="radio" name="notifications" value="false" {{^fn}}checked = "checked"{{/fn}}>
+              <span>No thanks</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="row indent">
+          <div class="twelve columns">
+            <h3>My location:</h3>
+            <div>{{locN}} <button class="button small change-location">Change location</button></div>
+          </div>
+        </div>
+
+        <div class="row indent">
+          <div class="twelve columns">
+            <h3>A little bit about myself:</h3>
+            <textarea id="aboutMe" placeholder="type here" cols="50" rows="5">{{{a}}}</textarea>
+          </div>
+        </div>
+
+        <!-- Save button -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <button type="submit" id="save-profile-button" class="button">
+              <i class="icon icon-cog icon-spin"></i>
+              <span class="button-title">Save profile</span>
+            </button>
+
+            <aside>
+              <p>Your relationship status and any new likes from your Facebook profile are imported automatically to Instasoda periodically.</p>
+            </aside>
+          </div>
+        </div>
+
       </script>
 
 
@@ -1067,7 +1110,7 @@
               <button id="saveUsername">Okay</button>
             </div>
             <div class="settingTip">
-              (We will never display your real name anywhere else on Instasoda, unless you choose to set it as your nickname.)
+              (We will never display your real name anywhere on Instasoda, unless you choose to set it as your nickname.)
             </div>
           </div>
         </div>

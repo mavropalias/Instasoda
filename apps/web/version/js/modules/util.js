@@ -74,6 +74,9 @@ Fancybox-ise specified images
 > Backbone.sync
 Overwrite Backbone's sync method, to hash all requests using HMAC
 
+>textAreaAdjust
+Adjusts the height of a text area
+
 */
 
 
@@ -1378,4 +1381,18 @@ Backbone.sync = function(method, model, options) {
   params.type = 'POST';
 
   return $.ajax(params);
+};
+
+
+/**
+ * Adjusts the height of a text area
+ */
+IS.adjustTextArea = function(t) {
+  a = t.value.split('\n');
+  b = 1;
+  for (x=0;x < a.length; x++) {
+    if (a[x].length >= t.cols) b+= Math.floor(a[x].length/t.cols);
+  }
+  b += a.length;
+  if (b > t.rows) t.rows = b;
 };

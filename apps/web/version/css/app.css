@@ -8925,6 +8925,56 @@ nav .active .nav-link {
   left: 11rem;
 }
 
+@-webkit-keyframes left {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+
+  100% {
+    -webkit-transform: translateX(-5180px);
+  }
+}
+
+@-moz-keyframes left {
+  0% {
+    -moz-transform: translateX(0);
+  }
+
+  100% {
+    -moz-transform: translateX(-5180px);
+  }
+}
+
+@-ms-keyframes left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -5180px;
+  }
+}
+
+@-o-keyframes left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -5180px;
+  }
+}
+
+@keyframes left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-5180px);
+  }
+}
+
 body {
   background: #f9f9f9;
   overflow-x: hidden;
@@ -8936,6 +8986,10 @@ body.sticky-filters {
 
 ol, ul, li {
   list-style: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin-bottom: 0;
 }
 
 h2 {
@@ -8992,9 +9046,14 @@ body[data-page="welcome"] #starred-people {
 .indent {
   padding: 0 10rem;
 }
-.indent > .columns {
+.indent > .twelve.columns, .row .indent > .columns.twelve {
   padding: 0;
   max-width: 90rem;
+}
+.indent > .six.columns, .row .indent > .columns.six {
+  padding: 0;
+  max-width: 45rem;
+  float: left;
 }
 
 .margin-top {
@@ -9838,14 +9897,16 @@ body[data-page="welcome"] #user-bar {
 #handle-favourite,
 #send-message,
 #show-full-about,
-#edit-profile {
+#edit-profile,
+#cancel-edit-profile {
   margin-top: 1.5rem;
   cursor: pointer;
 }
 #handle-favourite .icon,
 #send-message .icon,
 #show-full-about .icon,
-#edit-profile .icon {
+#edit-profile .icon,
+#cancel-edit-profile .icon {
   padding: 0.6rem;
   font-size: 1.8rem;
   border-radius: 50px;
@@ -9864,27 +9925,32 @@ body[data-page="welcome"] #user-bar {
 }
 
 #send-message,
-#edit-profile {
+#edit-profile,
+#cancel-edit-profile {
   font-size: 1.3rem;
   font-weight: 700;
   margin-left: 1rem;
   color: #007da6;
 }
 #send-message .icon,
-#edit-profile .icon {
+#edit-profile .icon,
+#cancel-edit-profile .icon {
   background: #007da6;
   margin-right: 0.5rem;
 }
 #send-message:hover,
-#edit-profile:hover {
+#edit-profile:hover,
+#cancel-edit-profile:hover {
   color: #3dbcdf;
 }
 #send-message:hover .icon,
-#edit-profile:hover .icon {
+#edit-profile:hover .icon,
+#cancel-edit-profile:hover .icon {
   background: #3dbcdf;
 }
 
-#edit-profile {
+#edit-profile,
+#cancel-edit-profile {
   margin: 1rem 0 0 0;
 }
 
@@ -9952,6 +10018,21 @@ body[data-page="welcome"] #user-bar {
 }
 .about-me-row #about-me {
   color: #527779;
+}
+
+#save-profile-button .icon {
+  display: none;
+}
+
+.settings {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 200;
+  background: #fff;
+  display: none;
 }
 
 @-webkit-keyframes left {
