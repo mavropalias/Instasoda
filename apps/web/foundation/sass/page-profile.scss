@@ -9,6 +9,10 @@
     overflow: hidden;
     margin-bottom: 4rem;
 
+    &:hover {
+      overflow-x: auto;
+    }
+
     .photo {
       position: relative;
       overflow: hidden;
@@ -16,6 +20,20 @@
 
       .photo-action {
         display: none;
+        position: absolute;
+        left: 2rem;
+        font-size: 3rem;
+        cursor: pointer;
+
+        &.photo-make-default {
+          color: $colorOrange;
+          top: 2rem;
+        }
+
+        &.photo-delete {
+          color: $colorRed1;
+          top: 6rem;
+        }
       }
 
       .photo-img {
@@ -26,23 +44,23 @@
     }
   }
 
+  body[data-page="profile"] {
+    #user-photos .photo .photo-action {
+      display: block;
+    }
+  }
+
 
 // Name
 // -----------------------------------------------------------------------------
 
-  .name,
-  #about-me {
+  .name {
     margin: 0 2rem 0 0;
-    max-height: 3.4em;
+    max-height: 3em;
     overflow: hidden;
 
     &:first-letter {
       text-transform: uppercase;
-    }
-
-    &.expanded {
-      max-height: 100000%;
-      font-size: 3rem;
     }
   }
 
@@ -90,7 +108,8 @@
 
   #send-message,
   #edit-profile,
-  #cancel-edit-profile {
+  #cancel-edit-profile,
+  #show-full-about {
     font-size: 1.3rem;
     font-weight: 700;
     margin-left: 1rem;
@@ -116,23 +135,9 @@
   }
 
   #show-full-about {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: $colorGreen1;
-
-    .icon {
-      background: $colorGreen1;
-      margin-right: 0.5rem;
-    }
-
-    &:hover {
-      color: $colorGreen2;
-
-      .icon {
-        background: $colorGreen2;
-      }
-    }
+    margin-left: 0;
   }
+
 
 
 // User info
@@ -168,6 +173,21 @@
 
     .interests-message {
       margin-bottom: 1rem;
+
+      &.favourites a,
+      .icon-star {
+        color: $colorGreen1;
+      }
+
+      &.likes a,
+      .icon-thumbs-up {
+        color: $colorBlue3;
+      }
+
+      &.dislikes a,
+      .icon-thumbs-down {
+        color: $colorRed1;
+      }
     }
   }
 
@@ -210,6 +230,39 @@
 
     #about-me {
       color: $colorGreen2;
+      font-size: 4rem;
+      font-family: $lightFontFamily;
+      font-weight: 300;
+      margin: 0 2rem 0 0;
+      max-height: 12rem;
+      overflow: hidden;
+      line-height: 4rem;
+    }
+
+    #about-me-full {
+      font-family: $lightFontFamily;
+      font-weight: 300;
+      display: none;
+      position: fixed;
+      top: 0;
+      bottom: 7.2rem;
+      left: 10rem;
+      right: 33rem;
+      padding: 4rem;
+      background: rgba(20, 20, 20, 0.95);
+      z-index: 2;
+      font-size: 2.5rem;
+      overflow: hidden;
+      overflow-y: auto;
+      max-height: 100%;
+      max-width: 80rem;
+      color: #eee;
+      line-height: 1.3em;
+
+      #close-full-about {
+        margin-top: 2rem;
+        display: block;
+      }
     }
   }
 

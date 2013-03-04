@@ -54,7 +54,7 @@ var ChatSessionTabs = Backbone.View.extend({
           railVisible: true,
           position: 'right',
           start: 'top',
-          width: $('#user-bar').outerWidth()
+          width: (($('#user-bar').outerWidth() > 80 ) ? $('#user-bar').outerWidth() : '80px')
         });
       }
     });
@@ -92,7 +92,7 @@ var ChatSessionTabs = Backbone.View.extend({
               u: user.u,
               ag: user.ag,
               p: user.p
-            })
+            });
 
             // render the template
             var template = $('#tplChatSessionsButtons').html();

@@ -70,11 +70,11 @@ nav {
   left: 0;
   right: 8rem;
   overflow: hidden;
-  overflow-x: auto;
   background: rgba(20,20,20,.9);
   height: 0rem;
 
   &.docked {
+    overflow-x: auto;
     height: 14rem;
   }
 

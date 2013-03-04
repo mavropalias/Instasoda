@@ -791,7 +791,8 @@
         <!-- --------------------------------------------------------------- -->
         <div class="row indent about-me-row">
           <div class="twelve columns">
-            <h2 id="about-me" class="left">"{{a}}"</h2>
+            <div id="about-me" class="left">"{{a}}"</div>
+            <div id="about-me-full"><span class="about-text">{{a}}</span> <button id="close-full-about" class="button">close</button></div>
             <span id="show-full-about" class="left">
               <i class="icon icon-quote-left"></i>read more
             </span>
@@ -887,7 +888,8 @@
         <!-- --------------------------------------------------------------- -->
         <div class="row indent about-me-row">
           <div class="twelve columns">
-            <h2 id="about-me" class="left">"{{a}}"</h2>
+            <div id="about-me" class="left">"{{a}}"</div>
+            <div id="about-me-full"><span class="about-text">{{a}}</span> <button id="close-full-about" class="button">close</button></div>
             <span id="show-full-about" class="left">
               <i class="icon icon-quote-left"></i>read more
             </span>
@@ -898,7 +900,7 @@
         <!-- --------------------------------------------------------------- -->
         <div class="row indent interests-message-row">
           <div class="twelve columns">
-            <h2 class="interests-message"><i class="icon-star"></i> <a href="#interests/favourites">You have {{favouritesCount}} Favourites:</a></h2>
+            <h2 class="interests-message favourites"><i class="icon icon-star"></i> <a href="#interests/favourites">You have {{favouritesCount}} Favourites:</a></h2>
           </div>
         </div>
 
@@ -916,7 +918,7 @@
         <!-- --------------------------------------------------------------- -->
         <div class="row indent interests-message-row">
           <div class="twelve columns">
-            <h2 class="interests-message"><i class="icon-thumbs-up"></i> <a href="#interests/likes">You have {{likesCount}} Likes:</a></h2>
+            <h2 class="interests-message likes"><i class="icon icon-thumbs-up"></i> <a href="#interests/likes">You have {{likesCount}} Likes:</a></h2>
           </div>
         </div>
 
@@ -934,7 +936,7 @@
         <!-- --------------------------------------------------------------- -->
         <div class="row indent interests-message-row">
           <div class="twelve columns">
-            <h2 class="interests-message"><i class="icon-thumbs-down"></i> <a href="#interests/dislikes">You have {{dislikesCount}} Dislikes:</a></h2>
+            <h2 class="interests-message dislikes"><i class="icon icon-thumbs-down"></i> <a href="#interests/dislikes">You have {{dislikesCount}} Dislikes:</a></h2>
           </div>
         </div>
 
@@ -978,69 +980,71 @@
 
         <!-- Options -->
         <!-- --------------------------------------------------------------- -->
-        <div class="row indent">
-          <div class="twelve columns">
-            <h3>Nickname:</h3>
-            <input class="option-username" type="text" name="username" value="{{u}}" required maxlength=50>
-          </div>
-        </div>
 
-        <div class="row indent">
-          <div class="six columns">
-            <h3>I am looking for:</h3>
-            <label class="findFriends">
-              <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
-              <span class="findType">friendship</span>
-            </label>
-            <label class="findDates">
-              <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
-              <span class="findType">dating</span>
-            </label>
+          <!-- nickname -->
+          <div class="row indent">
+            <div class="twelve columns">
+              <h3>Nickname:</h3>
+              <input class="option-username" type="text" name="username" value="{{u}}" required maxlength=50>
+            </div>
           </div>
-          <div class="six columns">
-            <h3>I want to meet:</h3>
-            <label class="meetWomen">
-              <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
-              <span class="meetGender">women</span>
-            </label>
-            <label class="meetMen">
-              <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
-              <span class="meetGender">men</span>
-            </label>
+
+          <!-- sex / date / friends -->
+          <div class="row indent">
+            <div class="six columns">
+              <h3>I am looking for:</h3>
+              <label class="findFriends">
+                <input class="meetToggle" type="checkbox" name="findFriends" value="true" {{#ff}}checked = "checked"{{/ff}}>
+                <span class="findType">friendship</span>
+              </label>
+              <label class="findDates">
+                <input class="meetToggle" type="checkbox" name="findDates" value="true" {{#fd}}checked = "checked"{{/fd}}>
+                <span class="findType">dating</span>
+              </label>
+            </div>
+            <div class="six columns">
+              <h3>I want to meet:</h3>
+              <label class="meetWomen">
+                <input class="meetToggle" type="checkbox" name="interestedInWomen" value="true" {{#w}}checked = "checked"{{/w}}>
+                <span class="meetGender">women</span>
+              </label>
+              <label class="meetMen">
+                <input class="meetToggle" type="checkbox" name="interestedInMen" value="true" {{#m}}checked = "checked"{{/m}}>
+                <span class="meetGender">men</span>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <div class="row indent">
-
-        </div>
-
-        <div class="row indent">
-          <div class="twelve columns">
-            <h3>Notify me on Facebook when someone sends me a message:</h3>
-            <label>
-              <input type="radio" name="notifications" value="true" {{#fn}}checked = "checked"{{/fn}}>
-              <span>Yes please</span>
-            </label>
-            <label class="">
-              <input type="radio" name="notifications" value="false" {{^fn}}checked = "checked"{{/fn}}>
-              <span>No thanks</span>
-            </label>
+          <!-- notifications -->
+          <div class="row indent">
+            <div class="twelve columns">
+              <h3>Notify me on Facebook when someone sends me a message:</h3>
+              <label>
+                <input type="radio" name="notifications" value="true" {{#fn}}checked = "checked"{{/fn}}>
+                <span>Yes please</span>
+              </label>
+              <label class="">
+                <input type="radio" name="notifications" value="false" {{^fn}}checked = "checked"{{/fn}}>
+                <span>No thanks</span>
+              </label>
+            </div>
           </div>
-        </div>
 
-        <div class="row indent">
-          <div class="twelve columns">
-            <h3>My location:</h3>
-            <div>{{locN}} <button class="button small change-location">Change location</button></div>
+          <!-- location -->
+          <div class="row indent">
+            <div class="twelve columns">
+              <h3>My location:</h3>
+              <div>{{locN}} <button class="button small change-location">Change location</button></div>
+            </div>
           </div>
-        </div>
 
-        <div class="row indent">
-          <div class="twelve columns">
-            <h3>A little bit about myself:</h3>
-            <textarea id="aboutMe" placeholder="type here" cols="50" rows="5">{{{a}}}</textarea>
+          <!-- about me -->
+          <div class="row indent">
+            <div class="twelve columns">
+              <h3>A little bit about myself:</h3>
+              <textarea id="aboutMe" placeholder="type here" cols="50" rows="5">{{a}}</textarea>
+            </div>
           </div>
-        </div>
 
         <!-- Save button -->
         <!-- --------------------------------------------------------------- -->
@@ -1069,9 +1073,12 @@
           {{#p}}
             <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
               <div class="photo-action photo-make-default {{#d}}picture-is-default{{/d}}">
-                {{#d}}<img src="./VERSION/img/star.png" alt="">{{/d}}
+                {{#d}}<i class="icon icon-star"></i>{{/d}}
+                {{^d}}<i class="icon icon-star-empty"></i>{{/d}}
               </div>
-              <div class="photo-action photo-delete"></div>
+              <div class="photo-action photo-delete">
+                <i class="icon icon-remove-sign"></i>
+              </div>
               <div class="loading" class="animated"></div>
               <a href="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
                 <img id="{{id}}" class="photo-img transparent" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">

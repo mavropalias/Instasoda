@@ -73,6 +73,9 @@ var MyProfileView = Backbone.View.extend({
   enter: function() {
     log('entering MyProfileView');
 
+    // convert \n to <br> in the about me
+    this.$('#about-me, #about-me-full .about-text').html( this.$('#about-me').html().replace(/\n/g, '<br/><br/>') );
+
     // create upload widget
     var _this = this;
     var iUploads = 0;
@@ -411,6 +414,8 @@ var EditMyProfileView = Backbone.View.extend({
   enter: function() {
     log('entering EditMyProfileView');
 
+    IS.adjustTextArea(document.getElementById('aboutMe'));
+
     // enter sub views
     this.myPhotosView.enter();
   },
@@ -454,6 +459,9 @@ var EditMyProfileView = Backbone.View.extend({
   save: function() {
     log('saving user');
     _this = this;
+
+    // alert(this.$('#aboutMe').val().replace(/\n/g, '<br/>'));
+    // return;
 
     $('#save-profile-button .icon').css('display', 'inline-block');
     $('#save-profile-button .button-title').hide();
@@ -511,6 +519,7 @@ var UsersFullView = Backbone.View.extend({
     'click #handle-favourite': 'handleFavourite',
     'click #view-all-common-interests': 'viewAllCommonInterests',
     'click #show-full-about': 'toggleAboutMe',
+    'click #close-full-about': 'toggleAboutMe',
     'click #view-all-interests': 'viewAllInterests'
   },
 
@@ -575,6 +584,9 @@ var UsersFullView = Backbone.View.extend({
   // ---------------------------------------------------------------------------
   enter: function() {
     log('entering UsersFullView');
+
+    // convert \n to <br> in the about me
+    this.$('#about-me, #about-me-full .about-text').html( this.$('#about-me').html().replace(/\n/g, '<br/><br/>') );
 
     // activate fancybox for all photos
     this.$("#user-photos .fancybox-thumb").fancybox({
@@ -677,7 +689,7 @@ var UsersFullView = Backbone.View.extend({
   // toggleAboutMe
   // -----------------------------------------------------------------------
   toggleAboutMe: function() {
-    this.$('#about-me').toggleClass('expanded');
+    this.$('#about-me-full').toggle();
   },
 
   // viewAllInterests

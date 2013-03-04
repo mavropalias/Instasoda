@@ -8825,11 +8825,11 @@ nav .active .nav-link {
   left: 0;
   right: 8rem;
   overflow: hidden;
-  overflow-x: auto;
   background: rgba(20, 20, 20, 0.9);
   height: 0rem;
 }
 #starred-people.docked {
+  overflow-x: auto;
   height: 14rem;
 }
 #starred-people .starred-users-tip {
@@ -9467,9 +9467,11 @@ body[data-page="welcome"] #user-bar {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
-  width: 2rem;
-  height: 2rem;
+  width: 1.5rem;
+  height: 1.5rem;
   opacity: .7;
+  border: 2px solid #fff;
+  border-radius: 2rem;
 }
 .like .like-image-container .like-img {
   -webkit-transition-property: opacity;
@@ -9858,6 +9860,9 @@ body[data-page="welcome"] #user-bar {
   overflow: hidden;
   margin-bottom: 4rem;
 }
+#user-photos:hover {
+  overflow-x: auto;
+}
 #user-photos .photo {
   position: relative;
   overflow: hidden;
@@ -9865,6 +9870,18 @@ body[data-page="welcome"] #user-bar {
 }
 #user-photos .photo .photo-action {
   display: none;
+  position: absolute;
+  left: 2rem;
+  font-size: 3rem;
+  cursor: pointer;
+}
+#user-photos .photo .photo-action.photo-make-default {
+  color: #faa73f;
+  top: 2rem;
+}
+#user-photos .photo .photo-action.photo-delete {
+  color: #be1e2d;
+  top: 6rem;
 }
 #user-photos .photo .photo-img {
   -webkit-transition-property: opacity;
@@ -9878,20 +9895,17 @@ body[data-page="welcome"] #user-bar {
   width: 300px;
 }
 
-.name,
-#about-me {
+body[data-page="profile"] #user-photos .photo .photo-action {
+  display: block;
+}
+
+.name {
   margin: 0 2rem 0 0;
-  max-height: 3.4em;
+  max-height: 3em;
   overflow: hidden;
 }
-.name:first-letter,
-#about-me:first-letter {
+.name:first-letter {
   text-transform: uppercase;
-}
-.name.expanded,
-#about-me.expanded {
-  max-height: 100000%;
-  font-size: 3rem;
 }
 
 #handle-favourite,
@@ -9926,7 +9940,8 @@ body[data-page="welcome"] #user-bar {
 
 #send-message,
 #edit-profile,
-#cancel-edit-profile {
+#cancel-edit-profile,
+#show-full-about {
   font-size: 1.3rem;
   font-weight: 700;
   margin-left: 1rem;
@@ -9934,18 +9949,21 @@ body[data-page="welcome"] #user-bar {
 }
 #send-message .icon,
 #edit-profile .icon,
-#cancel-edit-profile .icon {
+#cancel-edit-profile .icon,
+#show-full-about .icon {
   background: #007da6;
   margin-right: 0.5rem;
 }
 #send-message:hover,
 #edit-profile:hover,
-#cancel-edit-profile:hover {
+#cancel-edit-profile:hover,
+#show-full-about:hover {
   color: #3dbcdf;
 }
 #send-message:hover .icon,
 #edit-profile:hover .icon,
-#cancel-edit-profile:hover .icon {
+#cancel-edit-profile:hover .icon,
+#show-full-about:hover .icon {
   background: #3dbcdf;
 }
 
@@ -9955,19 +9973,7 @@ body[data-page="welcome"] #user-bar {
 }
 
 #show-full-about {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #74b843;
-}
-#show-full-about .icon {
-  background: #74b843;
-  margin-right: 0.5rem;
-}
-#show-full-about:hover {
-  color: #527779;
-}
-#show-full-about:hover .icon {
-  background: #527779;
+  margin-left: 0;
 }
 
 .user-info {
@@ -9989,6 +9995,18 @@ body[data-page="welcome"] #user-bar {
 }
 .interests-message-row .interests-message {
   margin-bottom: 1rem;
+}
+.interests-message-row .interests-message.favourites a,
+.interests-message-row .interests-message .icon-star {
+  color: #74b843;
+}
+.interests-message-row .interests-message.likes a,
+.interests-message-row .interests-message .icon-thumbs-up {
+  color: #3dbcdf;
+}
+.interests-message-row .interests-message.dislikes a,
+.interests-message-row .interests-message .icon-thumbs-down {
+  color: #be1e2d;
 }
 
 .interests-row {
@@ -10018,6 +10036,37 @@ body[data-page="welcome"] #user-bar {
 }
 .about-me-row #about-me {
   color: #527779;
+  font-size: 4rem;
+  font-family: "Segoe UI Light", "Segoe UI", "Segoe WP", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  margin: 0 2rem 0 0;
+  max-height: 12rem;
+  overflow: hidden;
+  line-height: 4rem;
+}
+.about-me-row #about-me-full {
+  font-family: "Segoe UI Light", "Segoe UI", "Segoe WP", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 7.2rem;
+  left: 10rem;
+  right: 33rem;
+  padding: 4rem;
+  background: rgba(20, 20, 20, 0.95);
+  z-index: 2;
+  font-size: 2.5rem;
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 100%;
+  max-width: 80rem;
+  color: #eee;
+  line-height: 1.3em;
+}
+.about-me-row #about-me-full #close-full-about {
+  margin-top: 2rem;
+  display: block;
 }
 
 #save-profile-button .icon {
