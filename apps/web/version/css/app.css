@@ -9863,25 +9863,76 @@ body[data-page="welcome"] #user-bar {
 #user-photos:hover {
   overflow-x: auto;
 }
+#user-photos:hover .photo .photo-action {
+  display: block;
+}
 #user-photos .photo {
   position: relative;
   overflow: hidden;
   float: left;
 }
+#user-photos .photo:hover .photo-action {
+  width: auto;
+}
 #user-photos .photo .photo-action {
   display: none;
   position: absolute;
-  left: 2rem;
-  font-size: 3rem;
+  left: 0rem;
   cursor: pointer;
+  height: 3rem;
+  width: 3rem;
+  background: #fff;
+  overflow: hidden;
+}
+#user-photos .photo .photo-action:hover .action-text {
+  text-decoration: underline;
 }
 #user-photos .photo .photo-action.photo-make-default {
-  color: #faa73f;
-  top: 2rem;
+  color: #ddd;
+  top: 0rem;
 }
 #user-photos .photo .photo-action.photo-delete {
   color: #be1e2d;
-  top: 6rem;
+  top: 3rem;
+}
+#user-photos .photo .photo-action.picture-is-default .is-default {
+  display: block;
+  color: #74b843;
+}
+#user-photos .photo .photo-action.picture-is-default .make-default {
+  display: none;
+}
+#user-photos .photo .photo-action .is-default {
+  display: none;
+}
+#user-photos .photo .photo-action .make-default {
+  display: block;
+}
+#user-photos .photo .photo-action .icon {
+  text-align: center;
+  font-size: 1.8rem;
+  padding: 0.4rem 0.5rem;
+  height: 3rem;
+  width: 3rem;
+  display: inline-block;
+}
+#user-photos .photo .photo-action .action-text {
+  font-size: 1.2rem;
+  color: #000;
+  line-height: 3rem;
+  height: 3rem;
+  padding: 0 0.5rem;
+  background: #eee;
+  display: inline-block;
+}
+#user-photos .photo .loading {
+  display: none;
+  position: absolute;
+  top: 2rem;
+  width: 100%;
+  text-align: center;
+  font-size: 16rem;
+  color: #fff;
 }
 #user-photos .photo .photo-img {
   -webkit-transition-property: opacity;
@@ -9892,11 +9943,11 @@ body[data-page="welcome"] #user-bar {
   -moz-transition-duration: 0.4s;
   -o-transition-duration: 0.4s;
   transition-duration: 0.4s;
-  width: 300px;
+  width: 30rem;
 }
 
-body[data-page="profile"] #user-photos .photo .photo-action {
-  display: block;
+body[data-page="viewProfile"] #user-photos .photo .photo-action {
+  display: none !important;
 }
 
 .name {

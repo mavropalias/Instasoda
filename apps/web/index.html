@@ -869,17 +869,6 @@
         <!-- --------------------------------------------------------------- -->
         <div class="row indent">
           <div class="twelve columns">
-            <div id="profile-picture" class="mobile-four columns secondary-block">
-              {{#p}}
-                {{#d}}
-                  <img src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" />
-                {{/d}}
-              {{/p}}
-              {{^p}}
-                <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" />
-              {{/p}}
-            </div>
-
             <div id="uploadWidget"></div>
           </div>
         </div>
@@ -1073,13 +1062,20 @@
           {{#p}}
             <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
               <div class="photo-action photo-make-default {{#d}}picture-is-default{{/d}}">
-                {{#d}}<i class="icon icon-star"></i>{{/d}}
-                {{^d}}<i class="icon icon-star-empty"></i>{{/d}}
+                <span class="is-default">
+                  <i class="icon icon-ok-sign"></i>
+                  <span class="action-text">this is your profile photo</span>
+                </span>
+                <span class="make-default">
+                  <i class="icon icon-ok"></i>
+                  <span class="action-text">make this your profile photo</span>
+                </span>
               </div>
               <div class="photo-action photo-delete">
                 <i class="icon icon-remove-sign"></i>
+                <span class="action-text">delete photo<span>
               </div>
-              <div class="loading" class="animated"></div>
+              <div class="loading"><i class="icon-cog icon-spin"></i></div>
               <a href="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" rel="fancybox-thumb" class="fancybox-thumb">
                 <img id="{{id}}" class="photo-img transparent" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
               </a>

@@ -101,7 +101,7 @@ var MyProfileView = Backbone.View.extend({
         },
         text: {
           uploadButton: 'Upload a photo',
-          dragZone: ''
+          dragZone: 'drag here'
         }
     }).on('submit', function(event, id, fileName){
         iUploads++;
@@ -284,18 +284,13 @@ var MyProfileView = Backbone.View.extend({
         store.set("user", _this.model);
 
         // update old default photo
-        $('#profile-pictures .photo-make-default').removeClass('picture-is-default').html('');
+        $('#user-photos .photo-make-default').removeClass('picture-is-default');
 
         // update new default photo
-        $('#profile-pictures #' + photoId + ' .photo-make-default')
-          .addClass('picture-is-default')
-          .html('<img src="./VERSION/images/profile/bg-default-true.png" alt="">');
+        $('#user-photos #' + photoId + ' .photo-make-default').addClass('picture-is-default');
 
         // hide loading animation
         parent.children('.loading').fadeOut();
-
-        // update default profile photo in the page
-        _this.$('#profile-picture img').attr('src', photoSrc);
       }
     });
   },
@@ -348,10 +343,6 @@ var MyProfileView = Backbone.View.extend({
 
           // trigger deletePhoto event for myPhotosView
           _this.myPhotosView.trigger('deletePhoto', photoId);
-
-          // update default photo in the top sidebar
-          log('replacing default photo with a generic one', 'info');
-          if(isDefault) _this.$('#profile-picture img').attr('src', 'http://img.instasoda.com/i/noPhoto.png');
         } else {
           alert('Error deleting photo');
         }

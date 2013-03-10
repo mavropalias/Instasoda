@@ -11,6 +11,10 @@
 
     &:hover {
       overflow-x: auto;
+
+      .photo .photo-action {
+        display: block;
+      }
     }
 
     .photo {
@@ -18,35 +22,96 @@
       overflow: hidden;
       float: left;
 
+      &:hover {
+        .photo-action {
+          width: auto;
+        }
+      }
+
       .photo-action {
         display: none;
         position: absolute;
-        left: 2rem;
-        font-size: 3rem;
+        left: 0rem;
         cursor: pointer;
+        height: 3rem;
+        width: 3rem;
+        background: #fff;
+        overflow: hidden;
+
+        &:hover {
+          .action-text {
+            text-decoration: underline;
+          }
+        }
 
         &.photo-make-default {
-          color: $colorOrange;
-          top: 2rem;
+          color: #ddd;
+          top: 0rem;
         }
 
         &.photo-delete {
           color: $colorRed1;
-          top: 6rem;
+          top: 3rem;
         }
+
+        &.picture-is-default {
+          .is-default {
+            display: block;
+            color: $colorGreen1;
+          }
+          .make-default {
+            display: none;
+          }
+        }
+
+        .is-default {
+          display: none;
+        }
+        .make-default {
+          display: block;
+        }
+
+        .icon {
+          text-align: center;
+          font-size: 1.8rem;
+          padding: 0.4rem 0.5rem;
+          height: 3rem;
+          width: 3rem;
+          display: inline-block;
+        }
+
+        .action-text {
+          font-size: 1.2rem;
+          color: #000;
+          line-height: 3rem;
+          height: 3rem;
+          padding: 0 0.5rem;
+          background: #eee;
+          display: inline-block;
+        }
+      }
+
+      .loading {
+        display: none;
+        position: absolute;
+        top: 2rem;
+        width: 100%;
+        text-align: center;
+        font-size: 16rem;
+        color: #fff;
       }
 
       .photo-img {
         @include transition-property(opacity);
         @include transition-duration(0.4s);
-        width: 300px;
+        width: 30rem;
       }
     }
   }
 
-  body[data-page="profile"] {
+  body[data-page="viewProfile"] {
     #user-photos .photo .photo-action {
-      display: block;
+      display: none !important;
     }
   }
 
