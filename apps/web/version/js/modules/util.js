@@ -478,7 +478,7 @@ IS.prepareApp = function(bForceLogin, cb) {
               router.welcome();
             }
           } else {
-            console.log('> FAIL: Need to create new account');
+            console.log('> FAIL: Need to create new account for: ' + IS.fbToken + '  /  ' + res[0].third_party_id);
             IS.createAccount(IS.fbToken, res[0].third_party_id, function (err, res) {
               if(!err) {
                 console.log('> SUCCESS! Account created');
@@ -756,7 +756,7 @@ IS.createAccount = function(fbToken, fTid, cb) {
   });
 
   // switch to HTTPS while creating new account
-  user.urlRoot = sApiHttps + 'user';
+  user.urlRoot = sApiHttps + 'me';
 
   user.save({
     error: function(model, response) {
@@ -765,7 +765,7 @@ IS.createAccount = function(fbToken, fTid, cb) {
       console.log('- login error: ' + response.error);
 
       // revert to non-https
-      user.urlRoot = sApi + 'user';
+      user.urlRoot = sApi + 'me';
 
       cb(true, response.error);
     }
@@ -775,7 +775,7 @@ IS.createAccount = function(fbToken, fTid, cb) {
       console.log('- got an API response');
 
       // revert to non-https
-      user.urlRoot = sApi + 'user';
+      user.urlRoot = sApi + 'me';
 
       // Now check if the account was created
       // ------------------------------------
@@ -1200,7 +1200,7 @@ function showMapAndGetLocation(container, bAllowTextInput, parentView, cb) {
 
         cb(lat, lng, formattedAddress);
       }
-    })
+    });
 
     // get geoLocation
     GMaps.geolocate({

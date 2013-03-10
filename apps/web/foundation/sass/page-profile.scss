@@ -130,6 +130,70 @@
   }
 
 
+// Upload photo
+// -----------------------------------------------------------------------------
+
+  .upload-photo-row {
+    height: 10rem;
+    background: #fff;
+    margin-top: 4rem;
+
+    .columns {
+      padding: 0;
+    }
+
+    .qq-uploader {
+      position: relative;
+
+      .qq-upload-button {
+        width: 10rem;
+        height: 10rem;
+        position: absolute !important;
+        top: 0;
+        left: 10rem;
+        background: $colorBlue2;
+        color: #fff;
+        text-align: center;
+        padding-top: 2.5rem;
+
+        &:hover {
+          background: $colorBlue3;
+        }
+
+        .icon {
+          display: block;
+          font-size: 4rem;
+          margin-bottom: 0.5rem;
+        }
+
+        .icon-cog {
+          display: none;
+        }
+      }
+
+      .qq-upload-drop-area {
+        font-size: 2.5rem;
+        display: block !important;
+        height: 10rem;
+        font-family: $lightFontFamily;
+        font-weight: 300;
+        padding: 3.5rem 0 0 22rem;
+        color: $colorBlue3;
+        cursor: default;
+      }
+
+      .qq-upload-drop-area-active {
+        background: $colorBlue3;
+        color: #fff;
+      }
+
+      .qq-upload-list {
+        display: none;
+      }
+    }
+  }
+
+
 // Action buttons
 // -----------------------------------------------------------------------------
 

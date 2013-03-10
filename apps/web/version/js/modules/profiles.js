@@ -6,7 +6,10 @@ var MyProfileView = Backbone.View.extend({
   // -----------------------------------------------------------------------
   events: {
     'click .photo-make-default': 'photoMakeDefault',
-    'click .photo-delete': 'photoDelete'
+    'click .photo-delete': 'photoDelete',
+    'click #view-all-my-interests': 'toggleInterests',
+    'click #view-all-favs': 'toggleFavs',
+    'click #view-all-dislikes': 'toggleDislikes'
   },
 
   // initialize
@@ -95,29 +98,32 @@ var MyProfileView = Backbone.View.extend({
           sizeLimit: 3000000 // 3MB
         },
         retry: {
-          enableAuto: true,
+          enableAuto: false,
           autoAttemptDelay: 2,
           maxAutoAttempts: 1
         },
         text: {
-          uploadButton: 'Upload a photo',
-          dragZone: 'drag here'
+          uploadButton: '<i class="icon icon-picture"></i><i class="icon icon-cog icon-spin"></i><span class="upload-text">add photos</span>',
+          dragZone: '&larr; click to browse, or drag & drop your photos here to upload &hellip;'
         }
     }).on('submit', function(event, id, fileName){
         iUploads++;
       })
       .on('progress', function(event, id, fileName, uploadedBytes, totalBytes) {
-         $('.qq-upload-drop-area').addClass('working');
+         $('.qq-upload-button .upload-text, .qq-upload-button .icon-picture').hide();
+         $('.qq-upload-button .icon-cog').css('display', 'block');
       })
       .on('autoRetry', function(event, id, fileName, attemptNumber) {
         iUploads++;
-        $('.qq-upload-drop-area').addClass('working');
+         $('.qq-upload-button .upload-text, .qq-upload-button .icon-picture').hide();
+         $('.qq-upload-button .icon-cog').css('display', 'block');
       })
       .on('error', function(event, id, filename, reason) {
         iUploads--;
         if(iUploads === 0) {
           // remove loading animation
-          $('.qq-upload-drop-area').removeClass('working');
+          $('.qq-upload-button .upload-text, .qq-upload-button .icon-picture').show();
+          $('.qq-upload-button .icon-cog').hide();
         }
 
         alert("Couldn't upload your photo! " + reason);
@@ -157,7 +163,8 @@ var MyProfileView = Backbone.View.extend({
         // When all photos have been uploaded:
         if(iUploads === 0) {
           // remove loading animation
-          $('.qq-upload-drop-area').removeClass('working');
+         $('.qq-upload-button .upload-text, .qq-upload-button .icon-picture').show();
+         $('.qq-upload-button .icon-cog').hide();
 
           // save model
           IS.saveUser();
@@ -348,6 +355,36 @@ var MyProfileView = Backbone.View.extend({
         }
       }
     });
+  },
+
+  // toggleInterests
+  // -----------------------------------------------------------------------
+  toggleInterests: function() {
+    if(this.$('#interests-likes-row').hasClass('expanded')) {
+      this.$('#interests-likes-row, #view-all-my-interests').removeClass('expanded');
+    } else {
+      this.$('#interests-likes-row, #view-all-my-interests').addClass('expanded');
+    }
+  },
+
+  // toggleFavs
+  // -----------------------------------------------------------------------
+  toggleFavs: function() {
+    if(this.$('#interests-favourites-row').hasClass('expanded')) {
+      this.$('#interests-favourites-row, #view-all-favs').removeClass('expanded');
+    } else {
+      this.$('#interests-favourites-row, #view-all-favs').addClass('expanded');
+    }
+  },
+
+  // toggleDislikes
+  // -----------------------------------------------------------------------
+  toggleDislikes: function() {
+    if(this.$('#interests-dislikes-row').hasClass('expanded')) {
+      this.$('#interests-dislikes-row, #view-all-dislikes').removeClass('expanded');
+    } else {
+      this.$('#interests-dislikes-row, #view-all-dislikes').addClass('expanded');
+    }
   }
 });
 

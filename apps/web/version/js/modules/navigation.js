@@ -26,6 +26,7 @@ var NavigationView = Backbone.View.extend({
 
     // update nav when user models changes
     this.model.bind('change:tkn', this.refresh);
+    this.model.bind('change:u', this.refresh);
 
     // render
     this.render();

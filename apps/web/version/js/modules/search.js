@@ -320,7 +320,6 @@ var SearchResultsView = Backbone.View.extend({
       });
     }
     else {
-      log('2');
       this.html = '<li class="no-results">no people found :(</li>';
       if(cb) cb();
     }

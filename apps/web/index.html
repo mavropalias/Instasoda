@@ -85,7 +85,7 @@
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
 
 
-  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
+  <!-- <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script> -->
   <!-- SCRIPTS END -->
 </head>
 <body>
@@ -867,7 +867,7 @@
 
         <!-- DEFAULT PHOTO & UPLOAD WIDGET -->
         <!-- --------------------------------------------------------------- -->
-        <div class="row indent">
+        <div class="row upload-photo-row">
           <div class="twelve columns">
             <div id="uploadWidget"></div>
           </div>
@@ -893,13 +893,13 @@
           </div>
         </div>
 
-        <div class="row interests-row">
+        <div id="interests-favourites-row" class="row interests-row">
           <div id="interests-favourites" class="twelve columns"></div>
         </div>
 
         <div class="row indent interests-view-all-row">
           <div class="twelve columns">
-            <button id="view-all-interests" class="button">view all favourites &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            <button id="view-all-favs" class="button">view all favourites &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
         </div>
 
@@ -911,13 +911,13 @@
           </div>
         </div>
 
-        <div class="row interests-row">
+        <div id="interests-likes-row" class="row interests-row">
           <div id="interests-likes" class="twelve columns"></div>
         </div>
 
         <div class="row indent interests-view-all-row">
           <div class="twelve columns">
-            <button id="view-all-interests" class="button">view all likes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            <button id="view-all-my-interests" class="button">view all likes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
         </div>
 
@@ -929,13 +929,13 @@
           </div>
         </div>
 
-        <div class="row interests-row">
+        <div id="interests-dislikes-row" class="row interests-row">
           <div id="interests-dislikes" class="twelve columns"></div>
         </div>
 
         <div class="row indent interests-view-all-row">
           <div class="twelve columns">
-            <button id="view-all-interests" class="button">view all dislikes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            <button id="view-all-dislikes" class="button">view all dislikes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
         </div>
 
@@ -1045,7 +1045,7 @@
             </button>
 
             <aside>
-              <p>Your relationship status and any new likes from your Facebook profile are imported automatically to Instasoda periodically.</p>
+              <p>Your relationship status and any new likes from your Facebook profile are imported automatically to Instasoda, periodically.</p>
             </aside>
           </div>
         </div>

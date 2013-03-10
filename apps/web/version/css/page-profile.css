@@ -102,6 +102,57 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
   text-transform: uppercase;
 }
 
+.upload-photo-row {
+  height: 10rem;
+  background: #fff;
+  margin-top: 4rem;
+}
+.upload-photo-row .columns {
+  padding: 0;
+}
+.upload-photo-row .qq-uploader {
+  position: relative;
+}
+.upload-photo-row .qq-uploader .qq-upload-button {
+  width: 10rem;
+  height: 10rem;
+  position: absolute !important;
+  top: 0;
+  left: 10rem;
+  background: #007da6;
+  color: #fff;
+  text-align: center;
+  padding-top: 2.5rem;
+}
+.upload-photo-row .qq-uploader .qq-upload-button:hover {
+  background: #3dbcdf;
+}
+.upload-photo-row .qq-uploader .qq-upload-button .icon {
+  display: block;
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+.upload-photo-row .qq-uploader .qq-upload-button .icon-cog {
+  display: none;
+}
+.upload-photo-row .qq-uploader .qq-upload-drop-area {
+  font-size: 2.5rem;
+  display: block !important;
+  height: 10rem;
+  font-family: "Segoe UI Light", "Segoe UI", "Segoe WP", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  padding: 3.5rem 0 0 22rem;
+  color: #3dbcdf;
+  cursor: default;
+}
+.upload-photo-row .qq-uploader .qq-upload-drop-area-active {
+  background: #3dbcdf;
+  color: #fff;
+}
+.upload-photo-row .qq-uploader .qq-upload-list {
+  display: none;
+}
+
 #handle-favourite,
 #send-message,
 #show-full-about,
