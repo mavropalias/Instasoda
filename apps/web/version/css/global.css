@@ -123,10 +123,21 @@ body[data-page="welcome"] #starred-people {
   padding: 0;
   max-width: 90rem;
 }
+.indent > .ten.columns {
+  max-width: 90rem;
+  float: left;
+}
 .indent > .six.columns {
   padding: 0;
   max-width: 45rem;
   float: left;
+}
+
+.indent-left {
+  padding: 0 0 0 10rem;
+}
+.indent-left > .columns {
+  padding: 0;
 }
 
 .margin-top {
@@ -143,6 +154,18 @@ body[data-page="welcome"] #starred-people {
 
 .bg-green-1 {
   background: #74b843 !important;
+}
+
+.green {
+  color: #74b843;
+}
+
+.blue {
+  color: #3dbcdf;
+}
+
+.red {
+  color: #be1e2d;
 }
 
 .transparent {

@@ -157,6 +157,7 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #send-message,
 #show-full-about,
 #edit-profile,
+#logout,
 #cancel-edit-profile {
   margin-top: 1.5rem;
   cursor: pointer;
@@ -165,6 +166,7 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #send-message .icon,
 #show-full-about .icon,
 #edit-profile .icon,
+#logout .icon,
 #cancel-edit-profile .icon {
   padding: 0.6rem;
   font-size: 1.8rem;
@@ -186,6 +188,7 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #send-message,
 #edit-profile,
 #cancel-edit-profile,
+#logout,
 #show-full-about {
   font-size: 1.3rem;
   font-weight: 700;
@@ -195,6 +198,7 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #send-message .icon,
 #edit-profile .icon,
 #cancel-edit-profile .icon,
+#logout .icon,
 #show-full-about .icon {
   background: #007da6;
   margin-right: 0.5rem;
@@ -202,12 +206,14 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #send-message:hover,
 #edit-profile:hover,
 #cancel-edit-profile:hover,
+#logout:hover,
 #show-full-about:hover {
   color: #3dbcdf;
 }
 #send-message:hover .icon,
 #edit-profile:hover .icon,
 #cancel-edit-profile:hover .icon,
+#logout:hover .icon,
 #show-full-about:hover .icon {
   background: #3dbcdf;
 }
@@ -215,6 +221,20 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #edit-profile,
 #cancel-edit-profile {
   margin: 1rem 0 0 0;
+}
+
+#logout {
+  margin: 1rem 0 0 1rem;
+  color: #be1e2d;
+}
+#logout .icon {
+  background: #be1e2d;
+}
+#logout:hover {
+  color: #ed1c24;
+}
+#logout:hover .icon {
+  background: #ed1c24;
 }
 
 #show-full-about {

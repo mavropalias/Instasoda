@@ -1,22 +1,21 @@
 #likes-type-categories {
-  background: #333;
-  color: #fff;
+  color: #999;
   padding: 0;
 
   .like-category {
-    margin-bottom: 0;
+    margin-bottom: 1rem;
   }
 
-  .cat-favourites {
-    background: $colorGreen1;
+  .cat-favourites .like-category-title-all {
+    color: $colorGreen1;
   }
 
-  .cat-likes {
-    background: $colorBlue3;
+  .cat-likes .like-category-title-all {
+    color: $colorBlue3;
   }
 
-  .cat-dislikes {
-    background: $colorRed1;
+  .cat-dislikes .like-category-title-all {
+    color: $colorRed1;
   }
 
   .like-category-title {
@@ -35,11 +34,12 @@
 
     &.active {
       .like-category-title-name {
-        background: #222;
-        color: #fff;
+        text-decoration: underline;
+        color: #333;
 
         .icon {
           display: inline-block;
+          text-decoration: none;
         }
       }
     }
@@ -47,8 +47,8 @@
     .like-category-title-name {
       display: block;
       font-weight: 400;
-      padding: 0.5rem 1rem;
-      font-size: 1.4rem;
+      padding: 0 0.5rem 0.5rem 0;
+      font-size: 1.3rem;
       line-height: 1.5rem;
 
       .icon {
@@ -60,13 +60,14 @@
 
   .like-category-title-all {
     .like-category-title-name {
+      font-size: 1.5rem;
       font-weight: bold;
-      padding-top: 1rem;
     }
   }
 }
 
 #likes-results {
-  background: #222;
-  padding: 1.5rem 0 0 3rem;
+  .like .interest-title {
+    color: #333;
+  }
 }

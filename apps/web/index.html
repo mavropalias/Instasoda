@@ -200,7 +200,7 @@
           </li>
           {{/_id}}
 
-          {{#_id}}
+          <!-- {{#_id}}
           <li id="nav_onlineUsers">
             <a class="nav-link" href="#onlineusers">
               <span class="nav-icon icon-group"></span>
@@ -211,12 +211,12 @@
 
           {{#_id}}
           <li id="nav_logout">
-            <a class="nav-link" href="#logout">
+            <a class="nav-link" href="#logout" title="Logout">
               <span class="nav-icon icon-off"></span>
-              <span class="nav-title">Logout</span>
+              <span class="nav-title"></span>
             </a>
           </li>
-          {{/_id}}
+          {{/_id}} -->
         </ul>
         <div id="starred-people"></div>
       </script>
@@ -436,13 +436,13 @@
         <!-- TITLE -->
         <!-- --------------------------------------------------------------- -->
         <div class="row indent margin-top-2x">
-          <h2>Your interests <i class="icon-star-empty"></i> <i class="icon-thumbs-up"></i> <i class="icon-thumbs-down"></i></h2>
+          <h2>Your interests <i class="icon-star-empty green"></i> <i class="icon-thumbs-up blue"></i> <i class="icon-thumbs-down red"></i></h2>
           <p>We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes.</p>
         </div>
 
         <!-- INTERESTS GRID -->
         <!-- --------------------------------------------------------------- -->
-        <div id="interests-tip" class="row">
+        <div id="interests-grid" class="row indent">
 
           <!-- Categories -->
           <!-- ------------------------------------------------------------- -->
@@ -804,6 +804,9 @@
             <h2 class="name left">{{u}}, {{ag}}</h2>
             <a id="edit-profile" href="#me/edit" class="left" title="Edit my profile">
               <i class="icon icon-pencil"></i>edit my profile
+            </a>
+            <a id="logout" href="#logout" class="left" title="Logout from Instasoda on this device">
+              <i class="icon icon-off"></i>logout
             </a>
           </div>
         </div>

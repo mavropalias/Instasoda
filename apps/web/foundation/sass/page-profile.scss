@@ -201,6 +201,7 @@
   #send-message,
   #show-full-about,
   #edit-profile,
+  #logout,
   #cancel-edit-profile {
     margin-top: 1.5rem;
     cursor: pointer;
@@ -238,6 +239,7 @@
   #send-message,
   #edit-profile,
   #cancel-edit-profile,
+  #logout,
   #show-full-about {
     font-size: 1.3rem;
     font-weight: 700;
@@ -261,6 +263,23 @@
   #edit-profile,
   #cancel-edit-profile {
     margin: 1rem 0 0 0;
+  }
+
+  #logout {
+    margin: 1rem 0 0 1rem;
+    color: $colorRed1;
+
+    .icon {
+      background: $colorRed1;
+    }
+
+    &:hover {
+      color: $colorRed2;
+
+      .icon {
+        background: $colorRed2;
+      }
+    }
   }
 
   #show-full-about {
