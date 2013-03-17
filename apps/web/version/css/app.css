@@ -10384,18 +10384,31 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 #likes-type-categories .like-category-title:hover .like-category-title-name {
   text-decoration: underline;
 }
+#likes-type-categories .like-category-title:hover .like-category-title-name .icon {
+  display: inline-block;
+  text-decoration: none;
+}
 #likes-type-categories .like-category-title.active .like-category-title-name {
   background: #222;
   color: #fff;
+}
+#likes-type-categories .like-category-title.active .like-category-title-name .icon {
+  display: inline-block;
 }
 #likes-type-categories .like-category-title .like-category-title-name {
   display: block;
   font-weight: 400;
   padding: 0.5rem 1rem;
   font-size: 1.4rem;
+  line-height: 1.5rem;
+}
+#likes-type-categories .like-category-title .like-category-title-name .icon {
+  float: right;
+  display: none;
 }
 #likes-type-categories .like-category-title-all .like-category-title-name {
   font-weight: bold;
+  padding-top: 1rem;
 }
 
 #likes-results {

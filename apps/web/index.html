@@ -433,54 +433,55 @@
 
       <script id="tplLikes" type="text/template">
 
-        <!-- GUIDANCE TIP -->
+        <!-- TITLE -->
         <!-- --------------------------------------------------------------- -->
-        <div id="interests-tip" class="row">
-          <div class="twelve columns">
-            <p>
-              <span class="icon-info-sign"></span>
-              We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes. To set an interest as a favourite/like/dislike just move your mouse cursor over it and click on one of the options. To remove an interest, click on its current type to deselect it and it will be gone the next time you visit this page.
-              </p>
-          </div>
+        <div class="row indent margin-top-2x">
+          <h2>Your interests <i class="icon-star-empty"></i> <i class="icon-thumbs-up"></i> <i class="icon-thumbs-down"></i></h2>
+          <p>We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes.</p>
         </div>
 
         <!-- INTERESTS GRID -->
         <!-- --------------------------------------------------------------- -->
         <div id="interests-tip" class="row">
+
+          <!-- Categories -->
+          <!-- ------------------------------------------------------------- -->
           <div id="likes-type-categories" class="two columns">
             <ul data-liketype="3" class="like-category cat-favourites">
               <li data-liketype="3" data-cat="" class="like-category-title like-category-title-all">
-                <span class="like-category-title-name">Favourites ({{favouritesCount}})</span>
+                <span class="like-category-title-name"><i class="icon-star-empty"></i> Favourites ({{favouritesCount}}) <i class="icon icon-caret-right"></i></span>
               </li>
               {{#favsCategories}}
                 <li data-liketype="3" data-cat="{{.}}" class="like-category-title">
-                  <span class="like-category-title-name">{{.}}</span>
+                  <span class="like-category-title-name">{{.}} <i class="icon icon-caret-right"></i></span>
                 </li>
               {{/favsCategories}}
             </ul>
             <ul data-liketype="2" class="like-category cat-likes">
               <li data-liketype="2" data-cat="" class="like-category-title like-category-title-all">
-                <span class="like-category-title-name">Likes ({{likesCount}})</span>
+                <span class="like-category-title-name"><i class="icon-thumbs-up"></i> Likes ({{likesCount}}) <i class="icon icon-caret-right"></i></span>
               </li>
               {{#likeCategories}}
                 <li data-liketype="2" data-cat="{{.}}" class="like-category-title">
-                  <span class="like-category-title-name">{{.}}</span>
+                  <span class="like-category-title-name">{{.}} <i class="icon icon-caret-right"></i></span>
                 </li>
               {{/likeCategories}}
             </ul>
             <ul data-liketype="1" class="like-category cat-dislikes">
               <li data-liketype="1" data-cat="" class="like-category-title like-category-title-all">
-                <span class="like-category-title-name">Dislikes ({{dislikesCount}})</span>
+                <span class="like-category-title-name"><i class="icon-thumbs-down"></i> Dislikes ({{dislikesCount}}) <i class="icon icon-caret-right"></i></span>
               </li>
               {{#dislikeCategories}}
                 <li data-liketype="1" data-cat="{{.}}" class="like-category-title">
-                  <span class="like-category-title-name">{{.}}</span>
+                  <span class="like-category-title-name">{{.}} <i class="icon icon-caret-right"></i></span>
                 </li>
               {{/dislikeCategories}}
             </ul>
           </div>
-          <div id="likes-results" class="ten columns">
-          </div>
+
+          <!-- Interest list -->
+          <!-- ------------------------------------------------------------- -->
+          <div id="likes-results" class="ten columns"></div>
         </div>
 
 
@@ -555,6 +556,9 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplMatches" type="text/template">
+
+        <!-- TITLE -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent margin-top-2x">
           <h2>Here&#8217;s <i class="results-counter-icon icon-cog icon-spin"></i><span class="results-counter"></span> people just for you :-)</h2>
           <p>Too few? Enrich your profile with more interests! Too many? Remove <a href="#interests/likes">generic interests</a> (things that <i>everybody</i> likes) from your profile and add <a href="#interests/favourites">favourites</a> & <a href="#interests/dislikes">dislikes</a>, which are more important for matching.</p>
@@ -563,6 +567,8 @@
           </a>
         </div>
 
+        <!-- MATCHES RESULTS -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row margin-top">
           <div id="searchResults" class="twelve columns no-padding"></div>
         </div>

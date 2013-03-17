@@ -25,6 +25,11 @@
     &:hover {
       .like-category-title-name {
         text-decoration: underline;
+
+        .icon {
+          display: inline-block;
+          text-decoration: none;
+        }
       }
     }
 
@@ -32,6 +37,10 @@
       .like-category-title-name {
         background: #222;
         color: #fff;
+
+        .icon {
+          display: inline-block;
+        }
       }
     }
 
@@ -40,12 +49,19 @@
       font-weight: 400;
       padding: 0.5rem 1rem;
       font-size: 1.4rem;
+      line-height: 1.5rem;
+
+      .icon {
+        float: right;
+        display: none;
+      }
     }
   }
 
   .like-category-title-all {
     .like-category-title-name {
       font-weight: bold;
+      padding-top: 1rem;
     }
   }
 }
