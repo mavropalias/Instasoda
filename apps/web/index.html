@@ -85,7 +85,7 @@
   <script type="text/javascript" src="VERSION/js/modules/dashboard.js"></script>
 
 
-  <!-- <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script> -->
+  <script defer type="text/javascript" src="VERSION/js/lib/cssrefresh.js"></script>
   <!-- SCRIPTS END -->
 </head>
 <body>
@@ -412,7 +412,7 @@
 
 
     <!------------------------------------------------------------------------>
-    <!-- FAVOURITES VIEW -->
+    <!-- STARRED USERS VIEW -->
     <!------------------------------------------------------------------------>
 
       <script id="tplFavourites" type="text/template">
@@ -432,103 +432,61 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplLikes" type="text/template">
-        <div id="likesFilters"></div>
-        <div id="likes-type-categories">
-            <ul data-liketype="3" class="likeCategory catFavourites">
-              <li data-liketype="3" data-cat="" class="likeCategoryTitle likeCategoryTitleAll">
-                <span class="likeCategoryTitleName">All my favourites ({{favouritesCount}})</span>
+
+        <!-- GUIDANCE TIP -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="interests-tip" class="row">
+          <div class="twelve columns">
+            <p>
+              <span class="icon-info-sign"></span>
+              We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes. To set an interest as a favourite/like/dislike just move your mouse cursor over it and click on one of the options. To remove an interest, click on its current type to deselect it and it will be gone the next time you visit this page.
+              </p>
+          </div>
+        </div>
+
+        <!-- INTERESTS GRID -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="interests-tip" class="row">
+          <div id="likes-type-categories" class="two columns">
+            <ul data-liketype="3" class="like-category cat-favourites">
+              <li data-liketype="3" data-cat="" class="like-category-title like-category-title-all">
+                <span class="like-category-title-name">Favourites ({{favouritesCount}})</span>
               </li>
               {{#favsCategories}}
-                <li data-liketype="3" data-cat="{{.}}" class="likeCategoryTitle">
-                  <span class="likeCategoryTitleName">{{.}}</span>
+                <li data-liketype="3" data-cat="{{.}}" class="like-category-title">
+                  <span class="like-category-title-name">{{.}}</span>
                 </li>
               {{/favsCategories}}
             </ul>
-            <ul data-liketype="2" class="likeCategory catLikes">
-              <li data-liketype="2" data-cat="" class="likeCategoryTitle likeCategoryTitleAll">
-                <span class="likeCategoryTitleName">All my likes ({{likesCount}})</span>
+            <ul data-liketype="2" class="like-category cat-likes">
+              <li data-liketype="2" data-cat="" class="like-category-title like-category-title-all">
+                <span class="like-category-title-name">Likes ({{likesCount}})</span>
               </li>
               {{#likeCategories}}
-                <li data-liketype="2" data-cat="{{.}}" class="likeCategoryTitle">
-                  <span class="likeCategoryTitleName">{{.}}</span>
+                <li data-liketype="2" data-cat="{{.}}" class="like-category-title">
+                  <span class="like-category-title-name">{{.}}</span>
                 </li>
               {{/likeCategories}}
             </ul>
-            <ul data-liketype="1" class="likeCategory catDislikes">
-              <li data-liketype="1" data-cat="" class="likeCategoryTitle likeCategoryTitleAll">
-                <span class="likeCategoryTitleName">All my dislikes ({{dislikesCount}})</span>
+            <ul data-liketype="1" class="like-category cat-dislikes">
+              <li data-liketype="1" data-cat="" class="like-category-title like-category-title-all">
+                <span class="like-category-title-name">Dislikes ({{dislikesCount}})</span>
               </li>
               {{#dislikeCategories}}
-                <li data-liketype="1" data-cat="{{.}}" class="likeCategoryTitle">
-                  <span class="likeCategoryTitleName">{{.}}</span>
+                <li data-liketype="1" data-cat="{{.}}" class="like-category-title">
+                  <span class="like-category-title-name">{{.}}</span>
                 </li>
               {{/dislikeCategories}}
             </ul>
+          </div>
+          <div id="likes-results" class="ten columns">
+          </div>
         </div>
-        <div id="likesResultsWrapper" class="twelve mobile-four columns secondary-block active">
-            <div class="twelve mobile-four columns guidance">
-              <span class="icon-info-sign"></span>
-              We match you with others based on your interests, so make sure they represent your true self! Favourites and dislikes have more weight in matching than regular likes. To set an interest as a favourite/like/dislike just move your mouse cursor over it and click on one of the options. To remove an interest, click on its current type to deselect it and it will be gone the next time you visit this page.
-            </div>
-            <div id="likesResults" class="twelve mobile-four columns"></div>
-        </div>
+
+
+
       </script>
 
-
-    <!------------------------------------------------------------------------>
-    <!-- LIKES FILTERS VIEW -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplLikesFilters" type="text/template">
-        <section class="likeViewsContainer">
-          <ul class="likeViews">
-            <li class="likeView viewFavs">
-              <a href="#interests/favourites">
-                <span class="icon icon-star-empty"></span>
-                <span class="title">Favourites</span>
-              </a>
-            </li>
-            <li class="likeView viewLikes current">
-              <a href="#interests/likes">
-                <span class="icon icon-thumbs-up"></span>
-                <span class="title">Likes</span>
-              </a>
-            </li>
-            <li class="likeView viewDislikes">
-              <a href="#interests/dislikes">
-                <span class="icon icon-thumbs-down"></span>
-                <span class="title">Dislikes</span>
-              </a>
-            </li>
-          </ul>
-
-        </section>
-      </script>
-
-
-    <!------------------------------------------------------------------------>
-    <!-- LIKES CATEGORY VIEW (OLD TEMPLATE?) -->
-    <!------------------------------------------------------------------------>
-
-      <script id="tplLikesWithCategories" type="text/template">
-        <div class="left">
-          {{#fLbyCategory}}
-            <ul class="fbCategoryLikes left" data-cat="{{c}}">
-              {{#l}}
-                <li class="like {{likeType}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}">
-                  <span class="likePic">
-                    <img src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}.jpg" width=50 height=50 class="likeImg">
-                  </span>
-                  <span class="likeName">{{n}}</span>
-                </li>
-              {{/l}}
-            </ul>
-          {{/fLbyCategory}}
-          {{^fLbyCategory}}
-            <li>No likes.</li>
-          {{/fLbyCategory}}
-        </div>
-      </script>
 
     <!------------------------------------------------------------------------>
     <!-- LIKE LIST VIEW -->

@@ -10360,3 +10360,45 @@ body[data-page="viewProfile"] #user-photos .photo .photo-action {
 .search-filters-row .search-buttons-row #do-search-random {
   display: none;
 }
+
+#likes-type-categories {
+  background: #333;
+  color: #fff;
+  padding: 0;
+}
+#likes-type-categories .like-category {
+  margin-bottom: 0;
+}
+#likes-type-categories .cat-favourites {
+  background: #74b843;
+}
+#likes-type-categories .cat-likes {
+  background: #3dbcdf;
+}
+#likes-type-categories .cat-dislikes {
+  background: #be1e2d;
+}
+#likes-type-categories .like-category-title {
+  cursor: pointer;
+}
+#likes-type-categories .like-category-title:hover .like-category-title-name {
+  text-decoration: underline;
+}
+#likes-type-categories .like-category-title.active .like-category-title-name {
+  background: #222;
+  color: #fff;
+}
+#likes-type-categories .like-category-title .like-category-title-name {
+  display: block;
+  font-weight: 400;
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+}
+#likes-type-categories .like-category-title-all .like-category-title-name {
+  font-weight: bold;
+}
+
+#likes-results {
+  background: #222;
+  padding: 1.5rem 0 0 3rem;
+}

@@ -5,7 +5,7 @@ var LikesView = Backbone.View.extend({
   // events
   // -----------------------------------------------------------------------
   events: {
-    'click .likeCategoryTitle': 'viewCategory'
+    'click .like-category-title': 'viewCategory'
   },
 
   // initialize
@@ -21,9 +21,6 @@ var LikesView = Backbone.View.extend({
     this.model.bind('change:l', this.render);
 
     // initialize sub-views
-    this.likesFiltersView = new LikesFiltersView({
-      model: this.model
-    });
     this.likesListView = new LikesListView({
       model: this.model
     });
@@ -44,7 +41,6 @@ var LikesView = Backbone.View.extend({
     this.html = Mustache.to_html(this.template, this.model.toJSON());
 
     // render sub views
-    this.likesFiltersView.render();
     this.likesListView.render(this.viewMode);
   },
 
@@ -55,33 +51,13 @@ var LikesView = Backbone.View.extend({
     this.$el.html(this.html);
 
     // show sub views
-    this.likesFiltersView.setElement(this.$('#likesFilters')).show();
-    this.likesListView.setElement(this.$('#likesResults')).show();
+    this.likesListView.setElement(this.$('#likes-results')).show();
 
 
-    // update the viewMode
-    this.$('.likeCategory').hide();
-    this.$('.likeView').removeClass('current');
 
-    // dislikes
-    if(viewMode === 1) {
-      this.$('.viewDislikes').addClass('current');
-      this.$('.catDislikes').show();
-    }
-    // favourites
-    else if(viewMode === 3) {
-      this.$('.viewFavs').addClass('current');
-      this.$('.catFavourites').show();
-    }
-    // likes
-    else {
-      this.$('.viewLikes').addClass('current');
-      this.$('.catLikes').show();
-    }
 
     // remove active class from sub-tabs & activate the "all" tab
-    this.$(".likeCategoryTitle").removeClass('active');
-    this.$(".likeCategoryTitleAll").addClass('active');
+    this.$(".like-category-title").removeClass('active');
 
     // update this.viewMode
     this.viewMode = viewMode;
@@ -96,7 +72,7 @@ var LikesView = Backbone.View.extend({
     log('entering LikesView');
 
     // add slimscroll to the sub-categories panel
-    this.$('#likes-type-categories').slimScroll({
+    /*this.$('#likes-type-categories').slimScroll({
       height: '100%',
       allowPageScroll: false,
       alwaysVisible: false,
@@ -104,10 +80,9 @@ var LikesView = Backbone.View.extend({
       position: 'right',
       start: '100px',
       width: '235px'
-    });
+    });*/
 
     // enter sub views
-    this.likesFiltersView.enter();
     this.likesListView.enter();
   },
 
@@ -144,7 +119,7 @@ var LikesView = Backbone.View.extend({
     log('filtering likes to show: ' + likesType + ' > ' + likesCategory);
 
     // Set active class on tab
-    this.$(".likeCategoryTitle").removeClass('active');
+    this.$(".like-category-title").removeClass('active');
     $(e.currentTarget).addClass('active');
 
     this.likesListView.render(likesType, likesCategory);
@@ -153,63 +128,6 @@ var LikesView = Backbone.View.extend({
   }
 });
 
-// =========================================================================
-// LikesFilters view
-// =========================================================================
-var LikesFiltersView = Backbone.View.extend({
-  // initialize
-  // -----------------------------------------------------------------------
-  initialize: function() {
-    _.bindAll(this);
-
-    this.model.bind('newSearchLike', this.render);
-    this.model.bind('removedSearchLike', this.render);
-
-    // get template
-    this.template = document.getElementById("tplLikesFilters").innerHTML;
-  },
-
-  // render
-  // -----------------------------------------------------------------------
-  render: function() {
-    log('rendering LikesFiltersView');
-    this.html = Mustache.to_html(this.template, this.model.toJSON());
-  },
-
-  // show
-  // -----------------------------------------------------------------------
-  show: function() {
-    log('showing LikesFiltersView');
-    this.$el.html(this.html);
-  },
-
-  // enter
-  // ---------------------------------------------------------------------------
-  enter: function() {
-    log('entering LikesFiltersView');
-  },
-
-  // leave
-  // ---------------------------------------------------------------------------
-  leave: function(cb) {
-    log('leaving LikesFiltersView');
-    cb();
-  },
-
-  // refresh
-  // ---------------------------------------------------------------------------
-  refresh: function() {
-    log('refreshing LikesFiltersView');
-
-    var _this = this;
-
-    this.leave(function() {
-      _this.render();
-      _this.show();
-      _this.enter();
-    });
-  }
-});
 
 // =========================================================================
 // LikesListView - multiple likes

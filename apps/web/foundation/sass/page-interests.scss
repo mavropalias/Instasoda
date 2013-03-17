@@ -1,0 +1,56 @@
+#likes-type-categories {
+  background: #333;
+  color: #fff;
+  padding: 0;
+
+  .like-category {
+    margin-bottom: 0;
+  }
+
+  .cat-favourites {
+    background: $colorGreen1;
+  }
+
+  .cat-likes {
+    background: $colorBlue3;
+  }
+
+  .cat-dislikes {
+    background: $colorRed1;
+  }
+
+  .like-category-title {
+    cursor: pointer;
+
+    &:hover {
+      .like-category-title-name {
+        text-decoration: underline;
+      }
+    }
+
+    &.active {
+      .like-category-title-name {
+        background: #222;
+        color: #fff;
+      }
+    }
+
+    .like-category-title-name {
+      display: block;
+      font-weight: 400;
+      padding: 0.5rem 1rem;
+      font-size: 1.4rem;
+    }
+  }
+
+  .like-category-title-all {
+    .like-category-title-name {
+      font-weight: bold;
+    }
+  }
+}
+
+#likes-results {
+  background: #222;
+  padding: 1.5rem 0 0 3rem;
+}
