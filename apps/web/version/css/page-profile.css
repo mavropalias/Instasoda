@@ -89,7 +89,7 @@
   width: 30rem;
 }
 
-body[data-page="viewProfile"] #user-photos .photo .photo-action {
+body[data-page="viewprofile"] #user-photos .photo .photo-action {
   display: none !important;
 }
 
