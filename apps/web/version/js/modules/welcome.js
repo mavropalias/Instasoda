@@ -108,7 +108,6 @@ var WelcomeView = Backbone.View.extend({
       'PEIS3qvNRn0UktkyZG_oF8Fx-YM_0a542cf0b73f8d616e363935277093bf', // nicola
       'OcYtC-i071U-BKLMhz2jtE-EIqQ_b8e4b75ad16d02e424415817837d5f76', // fotini
       'OQYYdqWl5XrHrG9hSVRRVCvRmF4_53f6f663fdbe55d698f4adeaa2a373ec', // giannis 1
-      'D5kHSpESPs1t7gMvHQvoHHx4o0s_19e7b1e701cca7abe74f6b4b11650089', // andre
       '87Ar0gukdhTcyUN3ps97yDEFZLI_89515dccce41c847d6db296c39269fb1', // noa
       '0YMTBSXaWfmeGQ1p1lzR6gy0xGI_6677c51f6e445bc4f1f41c99323fb67d', // giannis 2
       'Mtk8lCFrK5ybLN8ygSRmjvsJK0M_fd181753e5dcea31db4397484d977f17' // kostas

@@ -393,7 +393,6 @@
           <div class="twelve columns">
             <button id="fb-auth" class="button large light button-sign-up">quick sign-up with Facebook</button>
             <p>already a user? <a href="#" id="fb-login" class="login">click here to login</a></p>
-            <p><a href="#" class="see-how-it-works">see how it works</a></p>
           </div>
         </div>
 
@@ -442,7 +441,7 @@
 
         <!-- INTERESTS GRID -->
         <!-- --------------------------------------------------------------- -->
-        <div id="interests-grid" class="row indent">
+        <div id="interests-grid" class="row indent-left margin-top">
 
           <!-- Categories -->
           <!-- ------------------------------------------------------------- -->
@@ -516,21 +515,21 @@
         <ul class="like-attitudes">
           <li class="like-attitude attitude3 {{#fav}}active{{/fav}}" title="{{#fav}}Remove this from my favourites.{{/fav}}{{^fav}}I really like this - put more emphasis on this when matching me with other people.{{/fav}}">
             Favourite
-            <i class="icon icon-plus"></i>
-            <i class="icon icon-minus"></i>
-            <i class="icon icon-star"></i>
+            <i class="icon add icon-star"></i>
+            <i class="icon remove icon-ban-circle"></i>
+            <i class="icon current icon-star"></i>
           </li>
           <li class="like-attitude attitude2 {{#like}}active{{/like}}" title="{{#like}}Remove this from my likes.{{/like}}{{^like}}I like this.{{/like}}">
             Like
-            <i class="icon icon-plus"></i>
-            <i class="icon icon-minus"></i>
-            <i class="icon icon-star"></i>
+            <i class="icon add icon-thumbs-up"></i>
+            <i class="icon remove icon-ban-circle"></i>
+            <i class="icon current icon-thumbs-up"></i>
           </li>
           <li class="like-attitude attitude1 {{#dislike}}active{{/dislike}}" title="{{^dislike}}I don't like this - avoid matching me with people who like it.{{/dislike}}{{#dislike}}Remove this from my dislikes.{{/dislike}}">
             Dislike
-            <i class="icon icon-plus"></i>
-            <i class="icon icon-minus"></i>
-            <i class="icon icon-star"></i>
+            <i class="icon add icon-thumbs-down"></i>
+            <i class="icon remove icon-ban-circle"></i>
+            <i class="icon current icon-thumbs-down"></i>
           </li>
         </ul>
 
@@ -854,21 +853,23 @@
 
         <!-- MY INTERESTS: FAVOURITES -->
         <!-- --------------------------------------------------------------- -->
-        <div class="row indent interests-message-row">
-          <div class="twelve columns">
-            <h2 class="interests-message favourites"><i class="icon icon-star"></i> <a href="#interests/favourites">You have {{favouritesCount}} Favourites:</a></h2>
+        {{#favourites}}
+          <div class="row indent interests-message-row">
+            <div class="twelve columns">
+              <h2 class="interests-message favourites"><i class="icon icon-star"></i> <a href="#interests/favourites">You have {{favouritesCount}} Favourites:</a></h2>
+            </div>
           </div>
-        </div>
 
-        <div id="interests-favourites-row" class="row interests-row">
-          <div id="interests-favourites" class="twelve columns"></div>
-        </div>
-
-        <div class="row indent interests-view-all-row">
-          <div class="twelve columns">
-            <button id="view-all-favs" class="button">view all favourites &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+          <div id="interests-favourites-row" class="row interests-row">
+            <div id="interests-favourites" class="twelve columns"></div>
           </div>
-        </div>
+
+          <div class="row indent interests-view-all-row">
+            <div class="twelve columns">
+              <button id="view-all-favs" class="button">view all favourites &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            </div>
+          </div>
+        {{/favourites}}
 
         <!-- MY INTERESTS: LIKES -->
         <!-- --------------------------------------------------------------- -->
@@ -890,21 +891,23 @@
 
         <!-- MY INTERESTS: DISLIKES -->
         <!-- --------------------------------------------------------------- -->
-        <div class="row indent interests-message-row">
-          <div class="twelve columns">
-            <h2 class="interests-message dislikes"><i class="icon icon-thumbs-down"></i> <a href="#interests/dislikes">You have {{dislikesCount}} Dislikes:</a></h2>
+        {{#dislikes}}
+          <div class="row indent interests-message-row">
+            <div class="twelve columns">
+              <h2 class="interests-message dislikes"><i class="icon icon-thumbs-down"></i> <a href="#interests/dislikes">You have {{dislikesCount}} Dislikes:</a></h2>
+            </div>
           </div>
-        </div>
 
-        <div id="interests-dislikes-row" class="row interests-row">
-          <div id="interests-dislikes" class="twelve columns"></div>
-        </div>
-
-        <div class="row indent interests-view-all-row">
-          <div class="twelve columns">
-            <button id="view-all-dislikes" class="button">view all dislikes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+          <div id="interests-dislikes-row" class="row interests-row">
+            <div id="interests-dislikes" class="twelve columns"></div>
           </div>
-        </div>
+
+          <div class="row indent interests-view-all-row">
+            <div class="twelve columns">
+              <button id="view-all-dislikes" class="button">view all dislikes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            </div>
+          </div>
+        {{/dislikes}}
 
       </script>
 

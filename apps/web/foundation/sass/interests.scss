@@ -96,7 +96,7 @@
         }
 
         &.active {
-          .icon-star {
+          .current {
             display: block;
           }
 
@@ -131,25 +131,25 @@
         &:hover {
           opacity: 1;
 
-          .icon-star {
+          .current {
             display: none;
           }
 
-          .icon-plus {
+          .add {
             display: block;
           }
 
           &.active {
-            .icon-minus {
+            .remove {
               display: block;
             }
 
-            .icon-plus {
+            .add {
               display: none;
             }
           }
 
-          &.attitude1 {
+          /*&.attitude1 {
             color: #fff;
             background: $colorRed1;
           }
@@ -162,7 +162,7 @@
           &.attitude3 {
             color: #fff;
             background: $colorGreen1;
-          }
+          }*/
         }
       }
     }

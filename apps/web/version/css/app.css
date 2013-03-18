@@ -9063,9 +9063,6 @@ body[data-page="welcome"] #starred-people {
 .indent-left {
   padding: 0 0 0 10rem;
 }
-.indent-left > .columns {
-  padding: 0;
-}
 
 .margin-top {
   margin-top: 4rem;
@@ -9556,7 +9553,7 @@ body[data-page="welcome"] #user-bar {
   display: none;
   line-height: 2rem;
 }
-.like .like-panel .like-attitudes .like-attitude.active .icon-star {
+.like .like-panel .like-attitudes .like-attitude.active .current {
   display: block;
 }
 .like .like-panel .like-attitudes .like-attitude.active.attitude1 {
@@ -9582,30 +9579,32 @@ body[data-page="welcome"] #user-bar {
 }
 .like .like-panel .like-attitudes .like-attitude:hover {
   opacity: 1;
+          /*&.attitude1 {
+            color: #fff;
+            background: $colorRed1;
+          }
+
+          &.attitude2 {
+            color: #fff;
+            background: $colorBlue3;
+          }
+
+          &.attitude3 {
+            color: #fff;
+            background: $colorGreen1;
+          }*/
 }
-.like .like-panel .like-attitudes .like-attitude:hover .icon-star {
+.like .like-panel .like-attitudes .like-attitude:hover .current {
   display: none;
 }
-.like .like-panel .like-attitudes .like-attitude:hover .icon-plus {
+.like .like-panel .like-attitudes .like-attitude:hover .add {
   display: block;
 }
-.like .like-panel .like-attitudes .like-attitude:hover.active .icon-minus {
+.like .like-panel .like-attitudes .like-attitude:hover.active .remove {
   display: block;
 }
-.like .like-panel .like-attitudes .like-attitude:hover.active .icon-plus {
+.like .like-panel .like-attitudes .like-attitude:hover.active .add {
   display: none;
-}
-.like .like-panel .like-attitudes .like-attitude:hover.attitude1 {
-  color: #fff;
-  background: #be1e2d;
-}
-.like .like-panel .like-attitudes .like-attitude:hover.attitude2 {
-  color: #fff;
-  background: #3dbcdf;
-}
-.like .like-panel .like-attitudes .like-attitude:hover.attitude3 {
-  color: #fff;
-  background: #74b843;
 }
 .like .like-panel .facebook-url,
 .like .like-panel .search-toggle {
@@ -10450,8 +10449,8 @@ body[data-page="viewprofile"] #user-photos .photo .photo-action {
   display: none;
 }
 #likes-type-categories .like-category-title-all .like-category-title-name {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.6rem;
+  font-weight: 700;
 }
 
 #likes-results .like .interest-title {
