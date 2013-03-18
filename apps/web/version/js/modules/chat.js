@@ -171,7 +171,7 @@ var ChatSessionTabs = Backbone.View.extend({
     // update custom scrollbars
     $('#chat .slimScrollDiv, #chat .chat-tabs').css({
       'height': $(window).height() - $('#chat-button').outerHeight() - 400 + 'px',
-      'width': $('#chat-button').outerWidth()
+      'width': '50rem'
     });
   },
 

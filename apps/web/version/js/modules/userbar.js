@@ -92,7 +92,12 @@ var UserbarView = Backbone.View.extend({
       this.$('.chat-sessions-container').hide();
     }
 
-    // update custom scrollbars
+    // update custom scrollbars + dimensions 1
+    $('#chat .slimScrollDiv, #chat .chat-tabs').css({
+      'width': '50rem'
+    });
+
+    // update custom scrollbars + dimensions 2
     setTimeout(function() {
       $('#chat .slimScrollDiv, #chat .chat-tabs').css({
         'height': $(window).height() - $('#chat-button').outerHeight() - $('.chat-session:visible').outerHeight() + 'px',
@@ -110,7 +115,12 @@ var UserbarView = Backbone.View.extend({
     this.$('.chat-sessions-container').show();
     $('body').addClass('chat-is-visible');
 
-    // update custom scrollbars
+    // update custom scrollbars + dimensions 1
+    $('#chat .slimScrollDiv, #chat .chat-tabs').css({
+      'width': '50rem'
+    });
+
+    // update custom scrollbars + dimensions 2
     setTimeout(function() {
       $('#chat .slimScrollDiv, #chat .chat-tabs').css({
         'height': $(window).height() - $('#chat-button').outerHeight() - $('.chat-session:visible').outerHeight() + 'px',
