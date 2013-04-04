@@ -258,9 +258,10 @@
               <img src="//dsonwoik0c9tg.cloudfront.net/i/noPhoto.png" width="40" />
             {{/p}}
           </span>
+          <a href="#{{uid}}" class="view-profile"><span class="icon icon-search"></span> view profile</a>
           <span class="user">{{u}}</span>
           <span class="meta">
-            <span class="icon icon-gift"></span>{{ag}}
+            <span class="icon icon-gift"></span> {{ag}}
           </span>
           <span class="unread-messages icon-comment"></span>
         </li>
@@ -315,12 +316,17 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplDashboard" type="text/template">
+
+        <!-- FACEBOOK PLUGIN -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row facebook-row indent">
           <div class="twelve columns">
             <fb:like-box href="http://www.facebook.com/instasoda" width="400" show_faces="false" stream="false" header="false"></fb:like-box>
           </div>
         </div>
 
+        <!-- MATCHES -->
+        <!-- --------------------------------------------------------------- -->
         <div class="row indent">
           <div class="twelve columns">
             <h2>Hi {{u}}, you have something in common with these people! Check them out:
@@ -338,10 +344,32 @@
           </div>
         </div>
 
-        <div class="row indent">
+        <!-- INTERESTS -->
+        <!-- --------------------------------------------------------------- -->
+        {{#hide}}
+        <div class="row indent interests-message-row">
+          <div class="twelve columns">
+            <h2 class="interests-message">Add new interests to your profile:</h2>
+          </div>
+        </div>
+
+        <div id="all-interests" class="row interests-row">
+          <div id="facebookLikes" class="twelve columns"></div>
+        </div>
+
+        <div class="row indent interests-view-all-row">
+          <div class="twelve columns">
+            <button id="view-all-interests" class="button">toggle interests &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+          </div>
+        </div>
+        {{/hide}}
+
+        <!-- OTHER ACTIONS -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent meta-row">
           <div class="twelve columns">
             <a class="button" href="javascript:UserVoice.showPopupWidget();" title="Open feedback & support dialog">Send us a message</a>
-            <button id="facebook-invite" class="button">Invite your Facebook friends!</button>
+            <button id="facebook-invite" class="button"><i class="icon-facebook-sign"></i> Invite your Facebook friends!</button>
             <small class="instasoda-build-number">Instasoda Limited Beta (build #VERSION)</small>
           </div>
         </div>
@@ -495,16 +523,72 @@
       <script id="tplLikesList" type="text/template">
         <div class="row">
           {{#likesToRender}}
-            <div class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
-              <div class="like-image-container">
-                <div class="interest-rating"></div>
-                <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="like-img transparent">
+              <div class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                <div class="like-image-container">
+                  <div class="interest-rating"></div>
+                  <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="like-img transparent">
+                </div>
+                <p class="interest-title">{{n}}</p>
               </div>
-              <p class="interest-title">{{n}}</p>
-            </div>
           {{/likesToRender}}
         </div>
       </script>
+
+
+      <!------------------------------------------------------------------------>
+      <!-- COMMON INTERESTS -->
+      <!------------------------------------------------------------------------>
+
+        <script id="tplCommonInterests" type="text/template">
+          <div class="row">
+
+            {{#commonInterestsInFavouritesFound}}
+              <div class="interests-context context-favourites">
+                In {{u}}&#8217;s favourites:
+              </div>
+            {{/commonInterestsInFavouritesFound}}
+            {{#commonInterestsInFavourites}}
+                <div class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                  <div class="like-image-container">
+                    <div class="interest-rating"></div>
+                    <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="like-img transparent">
+                  </div>
+                  <p class="interest-title">{{n}}</p>
+                </div>
+            {{/commonInterestsInFavourites}}
+
+            {{#commonInterestsInDislikesFound}}
+              <div class="interests-context context-dislikes">
+                In {{u}}&#8217;s dislikes:
+              </div>
+            {{/commonInterestsInDislikesFound}}
+            {{#commonInterestsInDislikes}}
+                <div class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                  <div class="like-image-container">
+                    <div class="interest-rating"></div>
+                    <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="like-img transparent">
+                  </div>
+                  <p class="interest-title">{{n}}</p>
+                </div>
+            {{/commonInterestsInDislikes}}
+
+            {{#commonInterestsInLikesFound}}
+              <div class="interests-context context-likes">
+                In {{u}}&#8217;s likes:
+              </div>
+            {{/commonInterestsInLikesFound}}
+            {{#commonInterestsInLikes}}
+                <div class="like rate{{r}}" data-id="{{_id}}" data-name="{{n}}" data-cat="{{c}}" title="{{n}}">
+                  <div class="like-image-container">
+                    <div class="interest-rating"></div>
+                    <img data-src="//dsonwoik0c9tg.cloudfront.net/l/{{_id}}_100.jpg" src="VERSION/img/white.png" width="100" class="like-img transparent">
+                  </div>
+                  <p class="interest-title">{{n}}</p>
+                </div>
+            {{/commonInterestsInLikes}}
+
+          </div>
+        </script>
 
 
     <!------------------------------------------------------------------------>
@@ -515,21 +599,21 @@
         <ul class="like-attitudes">
           <li class="like-attitude attitude3 {{#fav}}active{{/fav}}" title="{{#fav}}Remove this from my favourites.{{/fav}}{{^fav}}I really like this - put more emphasis on this when matching me with other people.{{/fav}}">
             Favourite
-            <i class="icon add icon-star"></i>
+            <i class="icon add icon-plus"></i>
             <i class="icon remove icon-ban-circle"></i>
-            <i class="icon current icon-star"></i>
+            <i class="icon current icon-ok"></i>
           </li>
           <li class="like-attitude attitude2 {{#like}}active{{/like}}" title="{{#like}}Remove this from my likes.{{/like}}{{^like}}I like this.{{/like}}">
             Like
-            <i class="icon add icon-thumbs-up"></i>
+            <i class="icon add icon-plus"></i>
             <i class="icon remove icon-ban-circle"></i>
-            <i class="icon current icon-thumbs-up"></i>
+            <i class="icon current icon-ok"></i>
           </li>
           <li class="like-attitude attitude1 {{#dislike}}active{{/dislike}}" title="{{^dislike}}I don't like this - avoid matching me with people who like it.{{/dislike}}{{#dislike}}Remove this from my dislikes.{{/dislike}}">
             Dislike
-            <i class="icon add icon-thumbs-down"></i>
+            <i class="icon add icon-plus"></i>
             <i class="icon remove icon-ban-circle"></i>
-            <i class="icon current icon-thumbs-down"></i>
+            <i class="icon current icon-ok"></i>
           </li>
         </ul>
 
@@ -746,7 +830,7 @@
 
         <div class="row indent interests-view-all-row">
           <div class="twelve columns">
-            <button id="view-all-common-interests" class="button bg-green-1">view all common &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            <button id="view-all-common-interests" class="button bg-green-1">toggle common &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
         </div>
 
@@ -776,7 +860,7 @@
 
         <div class="row indent interests-view-all-row">
           <div class="twelve columns">
-            <button id="view-all-interests" class="button">view all interests &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
+            <button id="view-all-interests" class="button">toggle interests &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
           </div>
         </div>
       </script>
@@ -853,7 +937,7 @@
 
         <!-- MY INTERESTS: FAVOURITES -->
         <!-- --------------------------------------------------------------- -->
-        {{#favourites}}
+        {{#hasFavourites}}
           <div class="row indent interests-message-row">
             <div class="twelve columns">
               <h2 class="interests-message favourites"><i class="icon icon-star"></i> <a href="#interests/favourites">You have {{favouritesCount}} Favourites:</a></h2>
@@ -869,7 +953,7 @@
               <button id="view-all-favs" class="button">view all favourites &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
             </div>
           </div>
-        {{/favourites}}
+        {{/hasFavourites}}
 
         <!-- MY INTERESTS: LIKES -->
         <!-- --------------------------------------------------------------- -->
@@ -891,7 +975,7 @@
 
         <!-- MY INTERESTS: DISLIKES -->
         <!-- --------------------------------------------------------------- -->
-        {{#dislikes}}
+        {{#hasDislikes}}
           <div class="row indent interests-message-row">
             <div class="twelve columns">
               <h2 class="interests-message dislikes"><i class="icon icon-thumbs-down"></i> <a href="#interests/dislikes">You have {{dislikesCount}} Dislikes:</a></h2>
@@ -907,7 +991,7 @@
               <button id="view-all-dislikes" class="button">view all dislikes &nbsp;<i class="icon-expand icon-chevron-down"></i><i class="icon-collapse icon-chevron-up"></i></button>
             </div>
           </div>
-        {{/dislikes}}
+        {{/hasDislikes}}
 
       </script>
 
@@ -980,7 +1064,7 @@
               <h3>Notify me on Facebook when someone sends me a message:</h3>
               <label>
                 <input type="radio" name="notifications" value="true" {{#fn}}checked = "checked"{{/fn}}>
-                <span>Yes please</span>
+                <span>Yes please (no more than once per 24 hours)</span>
               </label>
               <label class="">
                 <input type="radio" name="notifications" value="false" {{^fn}}checked = "checked"{{/fn}}>
@@ -1073,14 +1157,32 @@
     <!------------------------------------------------------------------------>
 
       <script id="tplSettingsUsername" type="text/template">
-        <div class="settingContainer settingUsername">
-          <div class="setting">
-            <div class="settingTitle">
-              Hi{{#tempU}}&nbsp;{{tempU}}{{/tempU}}! What nickname would you like to have on Instasoda?
-            </div>
+        <!-- PHOTO -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            {{#p}}
+              {{#d}}
+                <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
+                  <img id="{{id}}" class="photo-img" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
+                </div>
+              {{/d}}
+            {{/p}}
+          </div>
+        </div>
+
+        <!-- SETTING -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="">Welcome{{#tempU}}&nbsp;{{tempU}}&nbsp;{{/tempU}} :) On Instasoda we all leave our real names behind and build our profiles anonymously! Choose your nickname:</h2>
+          </div>
+        </div>
+        <div class="row indent">
+          <div class="twelve columns">
             <div class="settingContent">
               <input class="settingUsernameInput" type="text" name="username" placeholder="type your nickname here ..." required maxlength="50">
-              <button id="saveUsername">Okay</button>
+              <button id="saveUsername" class="button">Okay</button>
             </div>
             <div class="settingTip">
               (We will never display your real name anywhere on Instasoda, unless you choose to set it as your nickname.)
@@ -1090,11 +1192,29 @@
       </script>
 
       <script id="tplSettingsGender" type="text/template">
-        <div class="settingContainer settingGender">
-          <div class="setting">
-            <div class="settingTitle">
-              {{u}}, what is your gender?
-            </div>
+        <!-- PHOTO -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            {{#p}}
+              {{#d}}
+                <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
+                  <img id="{{id}}" class="photo-img" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
+                </div>
+              {{/d}}
+            {{/p}}
+          </div>
+        </div>
+
+        <!-- SETTING -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="">{{u}}, what is your gender?</h2>
+          </div>
+        </div>
+        <div class="row indent">
+          <div class="twelve columns">
             <div class="settingContent">
               <label>
                 <input type="radio" name="gender" value="female">
@@ -1104,7 +1224,7 @@
                 <input type="radio" name="gender" value="male">
                 <span>Male</span>
               </label>
-              <button id="saveGender">Ok</button>
+              <button id="saveGender" class="button">Ok</button>
             </div>
             <div class="settingTip">
               (you can change this later)
@@ -1114,11 +1234,29 @@
       </script>
 
       <script id="tplSettingsFindType" type="text/template">
-        <div class="settingContainer settingFindType">
-          <div class="setting">
-            <div class="settingTitle">
-              What are you looking for in Instasoda?
-            </div>
+        <!-- PHOTO -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            {{#p}}
+              {{#d}}
+                <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
+                  <img id="{{id}}" class="photo-img" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
+                </div>
+              {{/d}}
+            {{/p}}
+          </div>
+        </div>
+
+        <!-- SETTING -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="">On Instasoda you can find like-minded people to chat or hang out with. What are you looking for?</h2>
+          </div>
+        </div>
+        <div class="row indent">
+          <div class="twelve columns">
             <div class="settingContent">
               <label>
                 <input type="checkbox" name="findFriends" value="true">
@@ -1128,7 +1266,7 @@
                 <input type="checkbox" name="findDates" value="true">
                 <span>Find a date</span>
               </label>
-              <button id="saveFindType">Okay</button>
+              <button id="saveFindType" class="button">Okay</button>
             </div>
             <div class="settingTip">
               (you can change this later)
@@ -1138,24 +1276,42 @@
       </script>
 
       <script id="tplSettingsGenderPrefs" type="text/template">
-        <div class="settingContainer settingGenderPrefs">
-          <div class="setting">
-            <div class="settingTitle">
-              {{u}}, would you like to meet <strong>men</strong> or <strong>women</strong> for
-              {{#ff}}
-                {{#fd}}
-                  friendship & dating
-                {{/fd}}
-                {{^fd}}
-                  friendship
-                {{/fd}}
-              {{/ff}}
-              {{^ff}}
-                {{#fd}}
-                  dating
-                {{/fd}}
-              {{/ff}}?
-            </div>
+        <!-- PHOTO -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            {{#p}}
+              {{#d}}
+                <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
+                  <img id="{{id}}" class="photo-img" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
+                </div>
+              {{/d}}
+            {{/p}}
+          </div>
+        </div>
+
+        <!-- SETTING -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="">So, {{u}}, would you like to meet <strong>men</strong> or <strong>women</strong> for
+                {{#ff}}
+                  {{#fd}}
+                    friendship & dating
+                  {{/fd}}
+                  {{^fd}}
+                    friendship
+                  {{/fd}}
+                {{/ff}}
+                {{^ff}}
+                  {{#fd}}
+                    dating
+                  {{/fd}}
+                {{/ff}}?</h2>
+          </div>
+        </div>
+        <div class="row indent">
+          <div class="twelve columns">
             <div class="settingContent">
               <label>
                 <input type="checkbox" name="men" value="true">
@@ -1165,7 +1321,7 @@
                 <input type="checkbox" name="women" value="true">
                 <span>Women</span>
               </label>
-              <button id="saveGenderPrefs">Okay</button>
+              <button id="saveGenderPrefs" class="button">Okay</button>
             </div>
             <div class="settingTip">
               (you can change this later)
@@ -1175,11 +1331,29 @@
       </script>
 
       <script id="tplSettingsNotifications" type="text/template">
-        <div class="settingContainer settingNotifications">
-          <div class="setting">
-            <div class="settingTitle">
-              Would you like us to notify you on Facebook when someone sends you a message?
-            </div>
+        <!-- PHOTO -->
+        <!-- --------------------------------------------------------------- -->
+        <div id="user-photos" class="row">
+          <div class="user-photos-scroller">
+            {{#p}}
+              {{#d}}
+                <div class="photo" id="{{id}}" data-src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}">
+                  <img id="{{id}}" class="photo-img" src="//dsonwoik0c9tg.cloudfront.net/u/{{f}}" alt="">
+                </div>
+              {{/d}}
+            {{/p}}
+          </div>
+        </div>
+
+        <!-- SETTING -->
+        <!-- --------------------------------------------------------------- -->
+        <div class="row indent">
+          <div class="twelve columns">
+            <h2 class="">Would you like us to notify you on Facebook when someone sends you a message?</h2>
+          </div>
+        </div>
+        <div class="row indent">
+          <div class="twelve columns">
             <div class="settingContent">
               <label>
                 <input type="radio" name="notifications" value="true" checked>
@@ -1189,24 +1363,10 @@
                 <input type="radio" name="notifications" value="false">
                 <span>No thanks</span>
               </label>
-              <button id="saveNotifications">Ok</button>
+              <button id="saveNotifications" class="button">Ok</button>
             </div>
             <div class="settingTip">
               (we will not send more than 1 notification per day & you can change this later)
-            </div>
-          </div>
-        </div>
-      </script>
-
-      <script id="tplSettingsDone" type="text/template">
-        <div class="settingContainer settingDone">
-          <div class="setting">
-            <div class="settingTitle">That&#8217;s perfect!</div>
-            <div class="settingTip">
-              Remember that <strong>none</strong> of your activity in Instasoda will be published to Facebook, so feel free to get in touch with other people, upload photos, like new things and explore.
-            </div>
-            <div class="settingContent">
-              <button id="settingsButtonDone">Start meeting new people</button>
             </div>
           </div>
         </div>
@@ -1243,10 +1403,10 @@
       <script id="tplMapWidget" type="text/template">
         <div id="mapWidget">
           <div class="mapTitle">
-            <h1>{{h1}}</h1>
-            <h2>Drag the map to circle your location. Then choose your prefered location from the ones that will appear here!</h2>
+            <h2>{{h1}}</h2>
+            <p>Drag & zoom the map to focus on your location. Then choose your prefered location from the ones that will appear here!</p>
             <div class="location-names-container"></div>
-            <button id="setLocation">{{{buttonTxt}}}</button>
+            <button id="setLocation" class="button">{{{buttonTxt}}}</button>
             <p class="tip">{{h2}}</p>
           </div>
           <div class="map-outer-container">

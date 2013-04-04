@@ -1,0 +1,118 @@
+@-webkit-keyframes left {
+  0% {
+    -webkit-transform: translateX(0);
+  }
+
+  100% {
+    -webkit-transform: translateX(-5180px);
+  }
+}
+
+@-moz-keyframes left {
+  0% {
+    -moz-transform: translateX(0);
+  }
+
+  100% {
+    -moz-transform: translateX(-5180px);
+  }
+}
+
+@-ms-keyframes left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -5180px;
+  }
+}
+
+@-o-keyframes left {
+  0% {
+    left: 0;
+  }
+
+  100% {
+    left: -5180px;
+  }
+}
+
+@keyframes left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-5180px);
+  }
+}
+
+#mapWidget {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+#mapWidget .gmnoprint img {
+  max-width: 1000%;
+}
+#mapWidget .mapTitle {
+  z-index: 2;
+  position: relative;
+  background: #f9f9f9;
+  padding: 2rem 4rem;
+  float: left;
+  height: 100%;
+  max-width: 40rem;
+  overflow-y: auto;
+}
+#mapWidget .mapTitle .location-name-label {
+  display: block;
+  color: #666;
+  margin-bottom: 1rem;
+}
+#mapWidget .mapTitle .location-name-label .location-name {
+  position: relative;
+  margin-right: 0.5rem;
+}
+#mapWidget .mapTitle .location-name-label:hover {
+  color: #74b843;
+}
+#mapWidget .mapTitle .location-name-label:hover .location-name {
+  border: 3px solid #74b843;
+}
+#mapWidget .mapTitle .tip {
+  display: block;
+  margin: 2rem 0;
+  color: #999;
+}
+#mapWidget .map-outer-container {
+  height: 100%;
+  position: relative;
+  margin-left: 40rem;
+}
+#mapWidget .mapCenterLocationMarker {
+  border-radius: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin: -100px auto auto -100px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 20px solid #007da6;
+  text-align: center;
+  cursor: default;
+  z-index: 2;
+  pointer-events: none;
+  padding-top: 60px;
+}
+#mapWidget #setLocation {
+  font-size: 1.4rem;
+  display: none;
+}
+#mapWidget #setLocation #targetAdress {
+  font-weight: bold;
+}

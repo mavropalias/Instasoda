@@ -271,13 +271,9 @@ body[data-page="viewprofile"] #user-photos .photo .photo-action {
 }
 .interests-row .interests-context {
   display: none;
-  font-size: 1.6rem;
+  font-size: 2rem;
   font-weight: 700;
   line-height: 4rem;
-  color: #fff;
-  width: 100%;
-  clear: both;
-  padding-left: 10rem;
 }
 .interests-row .interests-context.context-favourites {
   color: #74b843;

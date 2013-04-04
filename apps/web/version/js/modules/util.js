@@ -472,6 +472,9 @@ IS.prepareApp = function(bForceLogin, cb) {
             // fetch favs
             favsCollection.fetch();
 
+            // fetch interests
+            interestsCollection.fetch();
+
             if(cb) cb();
             else {
               IS.navigateTo('');
@@ -493,6 +496,9 @@ IS.prepareApp = function(bForceLogin, cb) {
 
                 // fetch favs
                 favsCollection.fetch();
+
+                // fetch interests
+                interestsCollection.fetch();
 
                 IS.navigateTo('');
                 router.welcome();
@@ -531,6 +537,9 @@ IS.prepareApp = function(bForceLogin, cb) {
         // fetch favs
         favsCollection.fetch();
 
+        // fetch interests
+        interestsCollection.fetch();
+
         if(cb) cb();
         else {
           IS.navigateTo('');
@@ -552,6 +561,9 @@ IS.prepareApp = function(bForceLogin, cb) {
 
             // fetch favs
             favsCollection.fetch();
+
+            // fetch interests
+            interestsCollection.fetch();
 
             IS.navigateTo('');
             router.welcome();
@@ -848,42 +860,54 @@ IS.saveUser = function() {
 
 /**
  * Returns common likes between User and another user
- * @param {Array} otherUserLikes
+ * @param {Array} otherUserInterests
  */
-IS.getCommonLikes = function(otherUserLikes) {
-  var myLikes = _.pluck(user.get('l'), '_id');
-  otherUserLikes = _.pluck(otherUserLikes, '_id');
+IS.getCommonLikes = function(otherUserInterestsFull) {
+  var myInterestsFull = user.get('l');
+  var myInterests = _.pluck(myInterestsFull, '_id');
+  otherUserInterests = _.pluck(otherUserInterestsFull, '_id');
 
-  var commonLikes = _.intersection(myLikes, otherUserLikes);
+  var commonInterests = _.intersection(myInterests, otherUserInterests);
 
-  // rebuild commonLikes to add all like properties, sort the collection and return it
-  return _.sortBy(_.map(commonLikes, function(like) {
-    return _.find(user.get('l'), function(myLike) {
-      return myLike._id == like;
+  var interestsInOtherUserFavourites = [];
+  var interestsInOtherUserLikes = [];
+  var interestsInOtherUserDislikes = [];
+
+
+  // get favourites, likes and dislikes
+  _.each(commonInterests, function(value) {
+    // find other user's original interest to get the rating
+    var originalInterest = _.find(otherUserInterestsFull, function(like) {
+      return like._id == value;
     });
-  }), function(like){
-    return -like.r;
+
+    if(originalInterest.r === 1) {
+      interestsInOtherUserDislikes.push(
+        _.find(myInterestsFull, function(myLike) {
+          return myLike._id == value;
+        })
+      );
+    } else if(originalInterest.r === 2 || typeof originalInterest.r == 'undefined') {
+      interestsInOtherUserLikes.push(
+        _.find(myInterestsFull, function(myLike) {
+          return myLike._id == value;
+        })
+      );
+    } else if(originalInterest.r === 3) {
+      interestsInOtherUserFavourites.push(
+        _.find(myInterestsFull, function(myLike) {
+          return myLike._id == value;
+        })
+      );
+    }
   });
-};
 
-/**
- * Adds ratings to another person's interests.
- * @param {Array} otherUserLikes
- */
-IS.injectRatingsIntoInterests = function(otherUserLikes) {
-  /*var myLikes = _.pluck(user.get('l'), '_id');
-  otherUserLikes = _.pluck(otherUserLikes, '_id');
+  var commonInterests = [];
+  commonInterests.push(interestsInOtherUserDislikes);
+  commonInterests.push(interestsInOtherUserLikes);
+  commonInterests.push(interestsInOtherUserFavourites);
 
-  var commonLikes = _.intersection(myLikes, otherUserLikes);
-
-  // rebuild commonLikes to add all like properties, sort the collection and return it
-  return _.sortBy(_.map(commonLikes, function(like) {
-    return _.find(user.get('l'), function(myLike) {
-      return myLike._id == like;
-    });
-  }), function(like){
-    return like.r;
-  });*/
+  return commonInterests;
 };
 
 /**
@@ -937,6 +961,10 @@ IS.parseLikes = function(model, likes) {
   model.set({ likesCount: alikes.length });
   model.set({ dislikesCount: aDislikes.length });
   model.set({ favouritesCount: aFavs.length });
+
+  model.set({ hasLikes: (alikes.length > 0) ? true : false });
+  model.set({ hasDislikes: (aDislikes.length > 0) ? true : false });
+  model.set({ hasFavourites: (aFavs.length > 0) ? true : false });
 }
 
 /**
@@ -1058,8 +1086,13 @@ IS.setupUser = function (currentView) {
   // 'done' screen
   else if(currentView) {
     log('user preferences are set - moving to the next page', 'info');
-
-    $('<section/>', {
+    matchesCollection.fetch({
+      success: function(model, response) {
+        dashboardView.refresh();
+      }
+    });
+    currentView.$el.css('z-index', '998').remove();
+    /*$('<section/>', {
         id: 'settingsDone'
     }).html($('#tplSettingsDone').html()).addClass('settings').appendTo('body');
 
@@ -1086,7 +1119,7 @@ IS.setupUser = function (currentView) {
       //IS.pageFlip(currentView.$el, $('#settingsDone'));
         currentView.$el.css('z-index', '998').remove();
         $('#settingsDone').css('z-index', '999').show();
-    }, 0);
+    }, 0);*/
   }
 };
 

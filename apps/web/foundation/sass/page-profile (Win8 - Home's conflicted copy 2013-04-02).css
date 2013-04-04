@@ -6,13 +6,13 @@ Syntax error: File to import not found or unreadable: foundation/common/ratios.
                 C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets
                 Compass::SpriteImporter
         on line 1 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/_settings.scss
-        from line 2 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/interests.scss
+        from line 1 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/page-profile (Win8 - Home's conflicted copy 2013-04-02).scss
 
-1: E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/interests.scss
+1: E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/page-profile (Win8 - Home's conflicted copy 2013-04-02).scss
 
 Backtrace:
 E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/_settings.scss:1
-E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/interests.scss:2
+E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/page-profile (Win8 - Home's conflicted copy 2013-04-02).scss:1
 C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.3/lib/sass/tree/import_node.rb:67:in `rescue in import'
 C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.3/lib/sass/tree/import_node.rb:45:in `import'
 C:/Ruby193/lib/ruby/gems/1.9.1/gems/sass-3.2.3/lib/sass/tree/import_node.rb:28:in `imported_file'
@@ -64,4 +64,4 @@ C:/Ruby193/bin/compass:23:in `<main>'
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: File to import not found or unreadable: foundation/common/ratios.\A               Load paths:\A                 E:/Dropbox/Development/Instasoda/apps/web/foundation/sass\A                 C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/blueprint/stylesheets\A                 C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets\A                 Compass::SpriteImporter\A         on line 1 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/_settings.scss\A         from line 2 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/interests.scss\A \A 1: E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/interests.scss"; }
+  content: "Syntax error: File to import not found or unreadable: foundation/common/ratios.\A               Load paths:\A                 E:/Dropbox/Development/Instasoda/apps/web/foundation/sass\A                 C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/blueprint/stylesheets\A                 C:/Ruby193/lib/ruby/gems/1.9.1/gems/compass-0.12.2/frameworks/compass/stylesheets\A                 Compass::SpriteImporter\A         on line 1 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/_settings.scss\A         from line 1 of E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/page-profile (Win8 - Home's conflicted copy 2013-04-02).scss\A \A 1: E:/Dropbox/Development/Instasoda/apps/web/foundation/sass/page-profile (Win8 - Home's conflicted copy 2013-04-02).scss"; }

@@ -12,12 +12,12 @@ var DashboardView = Backbone.View.extend({
 
     // update view when user models changes
     this.model.bind('change:tkn', this.refresh);
-    this.model.bind('change:m', this.render);
     this.model.bind('change:u', this.render);
-    this.model.bind('change:w', this.render);
-    this.model.bind('change:ff', this.render);
-    this.model.bind('change:fd', this.render);
-    this.collection.bind('reset', this.render);
+    this.model.bind('change:m', this.refreshMatches);
+    this.model.bind('change:w', this.refreshMatches);
+    this.model.bind('change:ff', this.refreshMatches);
+    this.model.bind('change:fd', this.refreshMatches);
+    this.collection.bind('reset', this.refreshMatches);
 
     // fetch collection
     this.collection.fetch();
@@ -95,6 +95,18 @@ var DashboardView = Backbone.View.extend({
       _this.show();
       _this.enter();
     });
+  },
+
+  // refreshMatches
+  // ---------------------------------------------------------------------------
+  refreshMatches: function() {
+    log('refreshing DashboardView matches-only');
+
+    if($('body').data('page') == "home") {
+      this.refresh();
+    } else {
+      this.render();
+    }
   },
 
   // facebookInvite

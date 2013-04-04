@@ -1,4 +1,5 @@
 @import "compass/css3/transition";
+@import "settings";
 
 .like {
   width: 10rem;
@@ -14,13 +15,13 @@
 
     .interest-rating {
       position: absolute;
-      bottom: 1rem;
-      left: 1rem;
-      width: 1.5rem;
-      height: 1.5rem;
-      opacity: .7;
-      border: 2px solid #fff;
-      border-radius: 2rem;
+      bottom: 0;
+      left: 0;
+      width: 0px;
+      height: 0px;
+      border-style: solid;
+      border-width: 20px 0 0 20px;
+      border-color: transparent;
     }
 
     .like-img {
@@ -43,19 +44,19 @@
 
   &.rate1 {
     .interest-rating {
-      background: $colorRed1;
+      border-color: transparent transparent transparent $colorRed1;
     }
   }
 
   &.rate2 {
     .interest-rating {
-      background: $colorBlue3;
+      border-color: transparent transparent transparent $colorBlue3;
     }
   }
 
   &.rate3 {
     .interest-rating {
-      background: $colorGreen1;
+      border-color: transparent transparent transparent $colorGreen1;
     }
   }
 

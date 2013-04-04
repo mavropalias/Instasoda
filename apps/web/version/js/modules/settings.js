@@ -143,9 +143,9 @@ var SettingsLocationView = Backbone.View.extend({
     console.log('  ~ rendering SettingsLocationView');
     var template = $('#tplMapWidget').html();
     var mapStrings = {
-      h1: 'Choose your current location.',
+      h1: 'Set your location',
       h2: 'Tip: Other Instasoda members will see the location you choose. In order to protect your privacy, be only as specific as you feel comfortable with.',
-      target: 'drag the map to center on your approximate location!',
+      target: 'drag the map to centre on your location!',
       buttonTxt: 'Click here to set your location to: <span id="targetAdress"></span>'
     };
     this.$el.html(Mustache.to_html(template, mapStrings));

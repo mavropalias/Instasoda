@@ -333,13 +333,9 @@
 
     .interests-context {
       display: none;
-      font-size: 1.6rem;
+      font-size: 2rem;
       font-weight: 700;
       line-height: 4rem;
-      color: #fff;
-      width: 100%;
-      clear: both;
-      padding-left: 10rem;
 
       &.context-favourites { color: $colorGreen1; }
       &.context-likes { color: $colorBlue3; }

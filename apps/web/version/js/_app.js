@@ -59,6 +59,11 @@
     url: sApi + 'me/favourites'
   });
 
+  // InterestsCollection
+  var InterestsCollection = Backbone.Collection.extend({
+    url: sApi + 'interests'
+  });
+
   // ChatSession
   var ChatSession = Backbone.Model.extend({
     idAttribute: "_id"
@@ -92,6 +97,7 @@
   var usersCollection = new UsersCollection({
     model: users
   });
+  var favsCollection = new FavouritesCollection();
   var matchesCollection = new MatchesCollection({
     model: users
   });
@@ -101,9 +107,7 @@
     chatSessions.comparator = function(session) {
       return parseInt(session.get("t"), 10);
     };
-  var favsCollection = new FavouritesCollection({
-    model: users
-  });
+  var interestsCollection = new InterestsCollection();
 
   // Backbone views
   // ---------------------------------------------------------------------------

@@ -1,0 +1,85 @@
+@import "_settings";
+@import "_mixins";
+
+// Map
+// -----------------------------------------------------------------------------
+
+  #mapWidget {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    .gmnoprint img {
+      max-width: 1000%; // UI fix for map zoom controls
+    }
+
+    .mapTitle {
+      z-index: 2;
+      position: relative;
+      background: #f9f9f9;
+      padding: 2rem 4rem;
+      float: left;
+      height: 100%;
+      max-width: 40rem;
+      overflow-y: auto;
+
+      .location-name-label {
+        display: block;
+        color: #666;
+        margin-bottom: 1rem;
+
+        .location-name {
+          position: relative;
+          margin-right: 0.5rem;
+        }
+
+        &:hover {
+          color: $colorGreen1;
+
+          .location-name {
+            border: 3px solid $colorGreen1;
+          }
+        }
+      }
+
+      .tip {
+        display: block;
+        margin: 2rem 0;
+        color: #999;
+      }
+    }
+
+    .map-outer-container {
+      height: 100%;
+      position: relative;
+      margin-left: 40rem;
+    }
+
+    .mapCenterLocationMarker {
+      border-radius: 100px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      margin: -100px auto auto -100px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 20px solid $colorBlue2;
+      text-align: center;
+      cursor: default;
+      z-index: 2;
+      pointer-events: none;
+      padding-top: 60px;
+    }
+
+    #setLocation {
+      font-size: 1.4rem;
+      display: none;
+
+      #targetAdress {
+        font-weight: bold;
+      }
+    }
+  }

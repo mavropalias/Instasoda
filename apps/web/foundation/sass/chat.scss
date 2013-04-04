@@ -123,6 +123,18 @@
           margin-right: 0.5rem;
         }
 
+        .view-profile {
+          display: block;
+          float: right;
+          margin: 1rem 1rem 0 0;
+          font-size: 1.3rem;
+          color: $colorBlue4;
+
+          &:hover {
+            color: #fff;
+          }
+        }
+
         .user {
           display: block;
           padding-top: 0.5rem;
@@ -143,7 +155,14 @@
         &.active {
           background: $colorGreen1;
           color: #fff;
-          //.box-shadow(10px, 0px, 12px, -5px rgba(0,0,0,.2) inset);
+
+          .view-profile {
+            color: rgba(255,255,255,.5);
+
+            &:hover {
+              color: #fff;
+            }
+          }
         }
       }
     }
@@ -187,6 +206,7 @@
 
       .user,
       .meta,
+      .view-profile,
       .unread-messages {
         display: none;
       }

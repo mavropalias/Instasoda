@@ -584,8 +584,34 @@ var UsersFullView = Backbone.View.extend({
 
     // find common likes
     var commonLikes = IS.getCommonLikes(this.model.get('l'));
-    this.model.set('commonLikesCount', commonLikes.length);
-    this.model.set('commonLikes', commonLikes);
+    this.model.set('commonLikesCount', (commonLikes[0].length + commonLikes[1].length + commonLikes[2].length));
+
+    if(commonLikes[0].length > 0) {
+      this.model.set('commonInterestsInDislikes', commonLikes[0]);
+      this.model.set('commonInterestsInDislikesFound', true);
+    }
+    else {
+      this.model.unset('commonInterestsInDislikes', {silent: true});
+      this.model.unset('commonInterestsInDislikesFound', {silent: true});
+    }
+
+    if(commonLikes[1].length > 0) {
+      this.model.set('commonInterestsInLikes', commonLikes[1]);
+      this.model.set('commonInterestsInLikesFound', true);
+    }
+    else {
+      this.model.unset('commonInterestsInLikes', {silent: true});
+      this.model.unset('commonInterestsInLikesFound', {silent: true});
+    }
+
+    if(commonLikes[2].length > 0) {
+      this.model.set('commonInterestsInFavourites', commonLikes[2]);
+      this.model.set('commonInterestsInFavouritesFound', true);
+    }
+    else {
+      this.model.unset('commonInterestsInFavourites', {silent: true});
+      this.model.unset('commonInterestsInFavouritesFound', {silent: true});
+    }
 
     // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());

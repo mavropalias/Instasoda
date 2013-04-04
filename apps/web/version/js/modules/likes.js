@@ -152,7 +152,7 @@ var LikesListView = Backbone.View.extend({
 
   // render
   // -----------------------------------------------------------------------
-  render: function(iLikesType, sLikesCategory, bShowCommonLikes, iLimit) {
+  render: function(iLikesType, sLikesCategory, bShowCommonLikes, iLimit, bShowGenericInterests) {
     log('rendering LikesListView');
 
     var _this = this;
@@ -163,6 +163,9 @@ var LikesListView = Backbone.View.extend({
     // show common likes
     if(bShowCommonLikes) {
       likesToRender = this.model.get('commonLikes');
+      this.template = document.getElementById("tplCommonInterests").innerHTML;
+    } else if (bShowGenericInterests) {
+      likesToRender = interestsCollection.toJSON();
     } else {
       // show likes of a particular type (dislikes/likes/favourites)
       if(iLikesType > 0) {
@@ -194,10 +197,6 @@ var LikesListView = Backbone.View.extend({
 
     // render template
     this.html = Mustache.to_html(this.template, this.model.toJSON());
-
-    /*setTimeout(function() {
-      _this.onView();
-    }, 0);*/
   },
 
   // show

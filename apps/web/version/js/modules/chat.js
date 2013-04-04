@@ -89,6 +89,7 @@ var ChatSessionTabs = Backbone.View.extend({
         }, function(err, user) {
           if(!err) {
             model.set({
+              uid: otherPersonsId,
               u: user.u,
               ag: user.ag,
               p: user.p
