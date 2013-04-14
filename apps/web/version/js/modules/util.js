@@ -540,6 +540,9 @@ IS.prepareApp = function(bForceLogin, cb) {
         // fetch interests
         interestsCollection.fetch();
 
+        // sync user
+        user.fetch();
+
         if(cb) cb();
         else {
           IS.navigateTo('');
