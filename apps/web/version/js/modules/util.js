@@ -976,6 +976,7 @@ IS.parseLikes = function(model, likes) {
  */
 IS.setupPage = function (page) {
   // set page title as a class name to do targeted styling
+  document.title = "Instasoda / " + page;
   $('#content').attr('class', page);
   $('body').attr('data-page', page);
 
@@ -986,12 +987,8 @@ IS.setupPage = function (page) {
   // setup user
   if(!IS.nullOrEmpty(user.get('_id'))) IS.setupUser();
 
-  // show/hide metabar
-  if(!IS.nullOrEmpty(user.get('_id'))) {
-    IS.showMetabar(true);
-  } else {
-    IS.showMetabar(false);
-  }
+  // track pageview
+  _gaq.push(['_trackPageview', window.location.hash]);
 }
 
 /**
