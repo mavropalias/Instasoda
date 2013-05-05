@@ -590,56 +590,69 @@ IS.prepareApp = function(bForceLogin, cb) {
  */
 IS.facebookAuth = function(cb){
   console.log('> Doing Facebook auth');
-  FB.getLoginStatus(function(res) {
-    if (!res.authResponse) {
-      //user is not connected to the app or logged out
-        FB.login(function(response) {
-          IS.facebookAuth(cb);
-        },
-        {
-          scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
-          + 'user_activities,user_education_history,user_interests,'
-          + 'user_likes,user_photos'
-        });
+  if(!!FB.getLoginStatus) {
+    FB.getLoginStatus(function(res) {
+      if (!res.authResponse) {
+        //user is not connected to the app or logged out
+          FB.login(function(response) {
+            IS.facebookAuth(cb);
+          },
+          {
+            scope:'email,user_relationships,user_location,user_hometown,user_birthday,'
+            + 'user_activities,user_education_history,user_interests,'
+            + 'user_likes,user_photos'
+          });
 
-    } else {
-      if (res.status === 'connected') {
-        console.log('> User is logged into Facebook and has authenticated the application');
-
-        // get facebook token data
-        IS.fbToken = res.authResponse.accessToken;
-        IS.fbTokenExpires = res.authResponse.expiresIn;
-
-        // Check if token is still valid
-        if(IS.fbTokenExpires > 0) {
-          console.log('> Facebook token expires in ' + (IS.fbTokenExpires / 60) + ' minutes');
-          console.log('>   -> ' + IS.fbToken);
-          // get third_party_id from Facebook and login the user
-          FB.api(
-            {
-              method: 'fql.query',
-              query: 'SELECT third_party_id FROM user WHERE uid=me()'
-            },
-            function(res) {
-              console.log('> Got user details from FB');
-              cb(null, res);
-            }
-          );
-        } else {
-          console.log('- Facebook token has expired');
-          FB.logout();
-          cb("Facebook token has expired");
-        }
-      } else if (res.status === 'not_authorized') {
-        console.log('> User is logged into Facebook but has not authenticated the application');
-        cb("User is logged into Facebook but has not authenticated the application");
       } else {
-        console.log('> User is not logged into Facebook at this time');
-        cb("User is not logged into Facebook at this time");
+        if (res.status === 'connected') {
+          console.log('> User is logged into Facebook and has authenticated the application');
+
+          // get facebook token data
+          IS.fbToken = res.authResponse.accessToken;
+          IS.fbTokenExpires = res.authResponse.expiresIn;
+
+          // store token
+          user.set("fTkn", IS.fbToken);
+          var expires = new Date();
+          expires.setSeconds(expires.getSeconds() + res.authResponse.expiresIn);
+          store.set("fbToken", {
+            tkn: res.authResponse.accessToken,
+            expiry: expires
+          });
+
+          // Check if token is still valid
+          if(IS.fbTokenExpires > 0) {
+            console.log('> Facebook token expires in ' + (IS.fbTokenExpires / 60) + ' minutes');
+            console.log('>   -> ' + IS.fbToken);
+            // get third_party_id from Facebook and login the user
+            FB.api(
+              {
+                method: 'fql.query',
+                query: 'SELECT third_party_id FROM user WHERE uid=me()'
+              },
+              function(res) {
+                console.log('> Got user details from FB');
+                cb(null, res);
+              }
+            );
+          } else {
+            console.log('- Facebook token has expired');
+            FB.logout();
+            cb("Facebook token has expired");
+          }
+        } else if (res.status === 'not_authorized') {
+          console.log('> User is logged into Facebook but has not authenticated the application');
+          cb("User is logged into Facebook but has not authenticated the application");
+        } else {
+          console.log('> User is not logged into Facebook at this time');
+          cb("User is not logged into Facebook at this time");
+        }
       }
-    }
-  });
-}
+    });
+  } else {
+    cb(); // fail silently
+  }
+};
 
 /**
  * Attempts to log the user into the system.
@@ -1368,8 +1381,6 @@ Backbone.sync = function(method, model, options) {
     params.processData = false;
   }
 
-  // Make the request, allowing the user to override any Ajax options.
-
   // Get user token
   var userToken = "null";
   var signed = false;
@@ -1380,40 +1391,60 @@ Backbone.sync = function(method, model, options) {
     }
   }
 
-  // Make a hashed request
-  var hashedRequest = {};
 
-  // Set request data
-  var requestData = {};
-
-  // Set UTC timestamp
   var now = new Date();
-  var timestamp = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
-  // Create request object
-  var rawData = (params.data) ? params.data : {};
+  async.auto({
+    // Verify FB token is not expired
+    // -------------------------------------------------------------------------
+    verifyFbToken: function(cb) {
+      var fbtoken = store.get('fbToken');
+      if(!!fbtoken) {
+        var tokenExpiration = new Date(fbtoken.expiry);
+        if(tokenExpiration - now > 0) {
+          cb();
+        } else {
+          IS.facebookAuth(cb);
+        }
+      } else {
+        IS.facebookAuth(cb);
+      }
+    }
+  }, function(err, data) {
+      // Make a hashed request
+      var hashedRequest = {};
 
-  requestData.data = rawData;
-  requestData.timestamp = timestamp; // protection against 'replay' attacks
-  requestData.uri = params.url;
-  requestData.requestType = type; // protection against hash-collision attacks (setting DELETE instead of GET)
+      // Set request data
+      var requestData = {};
 
-  // Create hashed request object
-  hashedRequest.data = rawData;
-  hashedRequest.hashedData = CryptoJS.HmacSHA256(JSON.stringify(requestData), userToken).toString(CryptoJS.enc.Hex);
-  hashedRequest._id = user.get('_id');
-  hashedRequest.isHashed = signed;
-  hashedRequest.timestamp = timestamp;
-  hashedRequest.uri = params.url;
-  hashedRequest.requestType = type;
-  hashedRequest.fTkn = user.get('fTkn');
+      // Set UTC timestamp
+      var timestamp = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate(),  now.getUTCHours(), now.getUTCMinutes(), now.getUTCSeconds());
 
-  // update params with the hashed data
-  params = _.extend(params, options);
-  params.data = JSON.stringify(hashedRequest);
-  params.type = 'POST';
+      // Create request object
+      var rawData = (params.data) ? params.data : {};
 
-  return $.ajax(params);
+      requestData.data = rawData;
+      requestData.timestamp = timestamp; // protection against 'replay' attacks
+      requestData.uri = params.url;
+      requestData.requestType = type; // protection against hash-collision attacks (setting DELETE instead of GET)
+
+      // Create hashed request object
+      hashedRequest.data = rawData;
+      hashedRequest.hashedData = CryptoJS.HmacSHA256(JSON.stringify(requestData), userToken).toString(CryptoJS.enc.Hex);
+      hashedRequest._id = user.get('_id');
+      hashedRequest.isHashed = signed;
+      hashedRequest.timestamp = timestamp;
+      hashedRequest.uri = params.url;
+      hashedRequest.requestType = type;
+      hashedRequest.fTkn = store.get('fbToken').tkn;
+
+      // update params with the hashed data
+      params = _.extend(params, options);
+      params.data = JSON.stringify(hashedRequest);
+      params.type = 'POST';
+
+      return $.ajax(params);
+  });
 };
 
 
