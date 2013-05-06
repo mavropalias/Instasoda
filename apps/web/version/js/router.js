@@ -53,17 +53,31 @@ var Router = Backbone.Router.extend({
       IS.changeView(IS.currentView, dashboardView);
       IS.setupPage('home');
     } else {
-      IS.prepareApp(null, function() {
-        if(IS.nullOrEmpty(user.get('_id'))) {
-          IS.changeView(IS.currentView, welcomeView);
-          IS.setupPage('welcome');
-        }
-        else
-        {
-          IS.changeView(IS.currentView, dashboardView);
-          IS.setupPage('home');
-        }
-      });
+      // check if running on canvas mode and force login
+      if (window.location != window.parent.location) {
+
+        // force login
+        IS.prepareApp(true, function(err) {
+          if(err) {
+            alert(err);
+          } else {
+            IS.changeView(IS.currentView, dashboardView);
+            IS.setupPage('home');
+          }
+        });
+      } else {
+        IS.prepareApp(null, function() {
+          if(IS.nullOrEmpty(user.get('_id'))) {
+            IS.changeView(IS.currentView, welcomeView);
+            IS.setupPage('welcome');
+          }
+          else
+          {
+            IS.changeView(IS.currentView, dashboardView);
+            IS.setupPage('home');
+          }
+        });
+      }
     }
   },
 
